@@ -1,0 +1,6 @@
+Nicholas Clark
+meta-keywords: Nicholas Clark, OSCon, OSCon 2004, open-source, O'Reilly Open Source Conference, Perl, Pumpkin, Pumpking Perl 5.8
+
+<img src="/computers/conferences/oscon2004/nicholas_on_the_rag.jpg" alt="Nick Clark goes Wild!"/>
+
+<p>I just had to share this lovely picture of <a href="http://use.perl.org/~nicholas/journal" title="Nicholas Clark's use Perl Journal">Nick Clark</a>, taken on the Friday night of OSCon 2004 at <a href="http://use.perl.org/~matts/journal/" title="Matt Sergeant's use Perl Journal">Matt Sergeant's</a> party. I honestly have no idea what Nick was doing, but it was worth it for the photo, don't you think?</p>
