@@ -1,0 +1,16 @@
+david.wheeler.net Content Migration
+meta-keywords: David Wheeler, david.wheeler.net, migration, redirect
+
+<p>I've completed the migration of all of the content from my old site,
+david.wheeler.net. All requests to that domain will get a permanent redirect
+to this site. Where possible, I tried to make the old URLs redirect to the new
+URLs. So if you try to connect to <a href="http://david.wheeler.net/osx.html" title="The Old Mac OS X Adventures URL">david.wheeler.net/osx.html</a>, you should
+be automatically redirected to <a href="/computers/os/macosx/my_adventures.html">www.justatheory.com/computers/os/macosx/my_adventures.html</a>. The same goes for the following documents:</p>
+
+<ul>
+  <li><a href="/computers/os/macosx/apache_dbm.patch">Patch for Apache + DBM on Mac OS X</a></li>
+  <li><a href="/computers/os/macosx/migrating_to_macosx.pdf">Migrating to Mac OS X</a></li>
+  <li><a href="/computers/os/macosx/mod_ssl_dylib.patch">Patch for mod_ssl on Mac OS X</a></li>
+</ul>
+
+<p>If you happen to notice that I missed anything, comment on this blog entry to let me know.</p>
