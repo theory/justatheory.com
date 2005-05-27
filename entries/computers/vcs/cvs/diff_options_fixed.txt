@@ -1,0 +1,4 @@
+CVS diff Options Finally Fixed
+meta-keywords: CVS, activitymail
+
+<p><a href="https://ccvs.cvshome.org/issues/show_bug.cgi?id=148" title="CVS Bug Report: cvs diff Should not parse diff options">Better late than never</a>!</p>
