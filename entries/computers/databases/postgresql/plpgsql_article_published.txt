@@ -1,0 +1,8 @@
+PL/pgSQL Article Published
+meta-keywords: postgresql, plpgsql, o'reilly, article
+tags: plpgsql postgresql
+
+<p>The first in a series of articles I've written about PL/pgSQL has been
+published on onLamp.com. The article, <a
+href="http://www.onlamp.com/pub/a/onlamp/2006/05/11/postgresql-plpgsql.html"
+title="Writing PostgreSQL Functions with PL/pgSQL">Check it out</a>!</p>
