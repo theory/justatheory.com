@@ -1,0 +1,12 @@
+Teasers Only Atom Feed
+meta-keywords: RSS, Atom, summary, teaser, feed
+meta-teaser: <p>Introducing a new Atom feed: <a href="/index.atomsum">Teasers Only</a>.</p>
+meta-readmore: Tell me more!
+tags: Atom, feed, blog, RSS
+
+<img src="/computers/internet/weblogs/feeds.png" alt="Select a feed" />
+
+<p>I've just added a new feed: <a href="/index.atomsum">teasers only</a>. It makes things a log shorter for those who just want to get a teaser for each blog entry, rather than <a href="/index.atom">complete entries</a>, such as <a href="http://planet.perl.org">Planet Perl</a> and <a href="http://www.planetpostgresql.org/">Planet PostgreSQL</a>.</p>
+
+<p>Any questions or problems? Leave a comment. Thanks!</p>
+
