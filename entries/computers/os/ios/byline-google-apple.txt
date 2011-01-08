@@ -1,0 +1,41 @@
+Byline: A Case Study Apple and Google Philosophical Differences
+meta-keywords: Byline, iOS, Google, Google Reader, Apple, Philosophy, UI, UX
+tags: Byline iOS Google Google Reader Apple Philosophy UI UX
+
+<p>My favorite iPhone feed reading app is <a href="http://www.phantomfish.com/byline.html" title="Phantom Fish - Byline - Google Reader on the go.">Byline</a> by <a href="http://www.phantomfish.com/">Phantom Fish</a>. It syncs really well with Google Reader, so that things stay more-or-less in sync with <a href="http://netnewswireapp.com/mac/">NetNewsWire</a> on my Mac. Unlike NetNewsWire, which added Google Reader syncing <a href="http://www.macworld.com/article/142009/2009/07/netnewswire_32_beta_arrives_with_google_reader_syncing.html" title="Macworld: “NetNewsWire 3.2 beta arrives with Google Reader syncing”">in 2009</a>, Byline was built with Google Reader syncing from the beginning. Version 3.0 is <a href="http://www.macworld.com/appguide/app.html?id=87018">especially good</a>; I love the ability to swipe between posts. And the killer feature is the archiving of all content after a sync, so that everything loads fast &mdash; or on cross-country flights. News junkie that I am, Byline is one of my most-used apps.</p>
+
+<p><img class="left" src="http://justatheory.com/computers/os/ios/edit_mode.png" alt="Byline Edit Mode" /></p>
+
+<p>Another great feature is Byline&rsquo;s edit mode. When looking at a long list of
+new posts in a particular feed (for me it most often happens with the <a href="http://search.cpan.org/uploads.rdf">CPAN
+Uploads feed</a> &mdash; CPAN gets a <em>lot</em> of
+uploads every day!), most of which I don&rsquo;t care to read, I tap the &ldquo;Edit&rdquo;
+button to enter edit mode and then start tapping the blue dots to mark a whole
+bunch of items as unread. But not all of them; I leave the ones I&rsquo;d like to
+read. But there&rsquo;s a problem. At the top of the screen, directly above the top
+read/unread toggle button, is a button labeled &ldquo;Mark All as Read.&rdquo; As soon as
+you tap this button, Byline exits edit mode and shifts back to the main
+screen.</p>
+
+<p>It&rsquo;s a handy shortcut if you actually want to mark all as read. But what if
+you accidentally hit it, as I&rsquo;ve done, oh, 20 or 30 times? Well, easy, right? Just go back into that feed, enter edit mode again, and then go over the list again and mark those you still want to read as unread, right? Yes, except for one thing: if Byline syncs before you&rsquo;ve had a chance to read those posts you&rsquo;ve just marked as unread, they automatically <em>get marked as unread again</em>.
+If you&rsquo;ve elected to include unread items in Byline (it&rsquo;s a setting), you can&rsquo;t tell which ones were magically marked as unread by the sync. And if you don&rsquo;t have unread items included in Byline, those items are just <em>gone.</em></p>
+
+<p>This has annoyed me many times.</p>
+
+<p>In fairness, it&rsquo;s not entirely Byline&rsquo;s fault. One of its design philosophies is to use the Google API eagerly. So as soon as you&rsquo;re done reading something, it&rsquo;s marked as read, whether or not the app is actively syncing to Google Reader. This is handy because it means as soon as I&rsquo;ve read something, if I sync NetNewsWire on my desktop, it&rsquo;s marked as read there, too. It minimizes the appearance of duplication.</p>
+
+<p><a class="left" href="https://twitter.com/#!/phfish/status/17540435819896832"><img src="http://justatheory.com/computers/os/ios/phfish_tweet.png" alt="@phfish: “@theory I think they do it for performance reasons. It is a bit of an irritation, though.”" /></a></p>
+
+<p>One of the APIs it calls ASAP is Google Reader&rsquo;s &ldquo;Mark All as Read API call&rdquo;, and as Phantom Fish <a href="https://twitter.com/#!/phfish/status/17147289806045184">has said</a>, Google provides no way to un-do that call. The result, for me at least, and certainly <a href="https://twitter.com/#!/flynjets/status/17112345658527744" title="@flynjets: “@phfish Bug: Mark all as read, then edit - mark item as unread, then sync. Unread items disappear every time.”">other users</a>, is the loss of unread items.</p>
+
+<p>I&rsquo;ve had an interesting <a href="http://www.bettween.com/theory/phfish">Twitter conversation with Phantom Fish</a> about this issue this morning, trying to brainstorm ways to work around it. For me, I&rsquo;d like to see either a confirmation button when I hit &ldquo;Mark All as Read,&rdquo; or have it not immediately leave edit mode but turn the &ldquo;Mark All as Read&rdquo; button into an &ldquo;Undo&rdquo; button, so that I have a chance to undo the marking all as read while still in edit mode, before the API call gets sent to Google. Phantom Fish is understandably reluctant to make a change such as this, however, because so many people like and have requested the single-tap to mark all as read. There are users who want both things. And Phantom Fish is reluctant to add a setting for such a feature, and indeed, I also tend to favor convention over configuration.</p>
+
+<iframe src="http://www.bettween.com:80/conversations/embed?user1=@theory&amp;user2=@phfish&amp;date1=Dec-08-2010&amp;date2=Jan-08-2011&amp;order=asc&amp;mainBackgroundColor=30728d&amp;headerFooterColor=ffffff&amp;borderColor=e2e2e2&amp;tweetColor=333333&amp;tweetBackgroundColor=ffffff&amp;tweetDetailColor=999999&amp;detailColor=333333&amp;detailBackgroundColor=ffffff&amp;fontSize=11&amp;width=250&amp;height=189" frameborder="0" framespacing="0" scrolling="no" height="300" width="250" border="0" style="float:right;padding:10px;">
+</iframe>
+
+<p>It&rsquo;s a bit of a thorny issue, but one that I think nicely highlights the philosophical difference between Apple and Google. On iOS, I&rsquo;m used to nothing I do while in an edit mode being committed until I hit the &ldquo;Done&rdquo; button. Byline&rsquo;s &ldquo;Mark All as Read&rdquo; button short-circuits this behavior by ending the editing without me hitting &ldquo;Done,&rdquo; and instantly calls the Reader API. This is very convenient for power users (who never hit the &ldquo;Mark All as Read&rdquo; button accidentally, I guess), and strongly reminds me of how Geek-oriented Google applications like Reader are. I&rsquo;m guessing such power users are Google Reader users. I&rsquo;m not, I just use it for syncing.</p>
+
+<p>The emphasis of &ldquo;Mark all as Read&rdquo; and its underlying API is ro &ldquo;get things done in as few steps as possible.&rdquo; This contrasts with the Apple philosophy exhibited in iOS, where things should of course be done as efficiently as possible, but where, I think, the <a href="http://en.wikipedia.org/wiki/Principle_of_least_astonishment">principle of least surprise</a> is emphasized. It&rsquo;s handy to mark all as read with one tap, unless you didn&rsquo;t want to, in which case it&rsquo;s surprising that you can&rsquo;t get the unread items back&mdash;specially since you never told the app you were done editing. Google Reader power-user types want the convenience of one tap. Folks like me, used to the relatively low levels of the unexpected on iOS, want things to change only when we say we&rsquo;re ready for the change.</p>
+
+<p>Anyway, I expect that Phantom Fish will work out some way to deal with this issue. (Frankly, I&rsquo;d welcome the ability to exclude certain feeds from Byine, as NetNewsWire for iOS does, so that I don&rsquo;t have to bother with some feeds on my iPhone, but that&rsquo;s a different feature request.) But I thought it was interesting, in discussing the issue, how UI philosophical interests can conflict. Frankly, I think that iOS apps should be more iOSy in this respect (in all other ways Byline is <em>very</em> iOSy), but others disagree, and it makes for an interesting conversation.</p>
