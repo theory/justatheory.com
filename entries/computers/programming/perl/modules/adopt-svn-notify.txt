@@ -1,0 +1,11 @@
+Up for Adoption: SVN::Notify
+meta-keywords: Subversion, svn, SVN::Notify, Perl, notification, commit
+tags: svn+notify svn subversion perl
+
+<p>I&rsquo;ve kept my various Perl modules in a Subversion server run by my Bricolage support company, <a href="http://www.kineticode.com/">Kineticode</a>, for many years. However, I&rsquo;m having to shut down the server I&rsquo;ve used for all my services, including Subversion, so I&rsquo;ve moved them all to <a href="https://github.com/theory/">GitHub</a>. As such, I no longer use Subversion in my day-to-day work.</p>
+
+<p>It no longer seems appropriate that I maintain <a href="http://search.cpan.org/dist/SVN-Notify/">SVN::Notify</a>. This has probably been my most popular modules, and I know that it&rsquo;s used a <em>lot.</em> It&rsquo;s also relatively stable, with few bug reports or complaints. Nevertheless, there certainly could be some things that folks want to add, like <a href="https://rt.cpan.org/Ticket/Display.html?id=40188">TLS support</a>, <a href="https://rt.cpan.org/Ticket/Display.html?id=51450">I18N</a>, and <a href="https://rt.cpan.org/Ticket/Display.html?id=52121">inline CSS</a>.</p>
+
+<p>Therefore, SVN::Notify is formally up for adoption. If you&rsquo;re a Subversion users, it&rsquo;s a great tool. Just look at <a href="/computers/programming/perl/modules/svnnotify-2.70_trac_example.html">this sample output</a>. If you&rsquo;d like to take over maintenance, make it even better, please get in touch. Leave a comment on this post, or <code>@theory</code> me on <a href="http://twitter.com/">Twitter</a>, or <a href="http://search.cpan.org/~dwheeler/">send an email</a>.</p>
+
+<p>PS: Would love it if someone also could take over <a href="http://search.cpan.org/dist/activitymail/">activitymail</a>, the CVS notification script from which SVN::Notify was derived &mdash; and which I have even <em>less</em> right to maintain, given that I haven&rsquo;t used CVS in <em>years.</em></p>
