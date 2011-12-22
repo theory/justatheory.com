@@ -1,0 +1,5 @@
+Today on the Perl Advent Calendar
+meta-keywords: Perl, Advent Calendar, DBIx::Connector
+tags: Perl Advent+Calendar DBIx::Connector
+
+<p>Hey look everybody, I wrote today's Perl Advent Calendar post, <a href="http://perladvent.org/2011/2011-12-22.html">Less Tedium, More Transactions</a>. Go read it!</p>
