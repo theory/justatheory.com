@@ -1,0 +1,9 @@
+Sqitch Mail List
+meta-keywords: sqitch, database, change management, mail list
+tags: sqitch mail+list
+
+<p>Just a quick post to announce that I&rsquo;ve set up a
+<a href="https://groups.google.com/forum/#!forum/sqitch-users">Sqitch Google Group</a>. I&rsquo;ve been
+getting a lot more email about it lately, and a fair bit of it should be shared more
+generally. So if you&rsquo;re interested in Sqitch, sign up! (Don&rsquo;t like web forums? Me neither.
+Feel free to <a href="mailto:sqitch-users+subscribe@googlegroups.com">subscribe by email</a>, instead.)</p>
