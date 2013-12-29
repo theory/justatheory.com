@@ -53,7 +53,7 @@ our $plugin_state_dir = "$plugin_dir/state";
 # --- Static Rendering -----
 
 # Where are this blog's static files to be created?
-our $static_dir = '/tmp/justatheory.com';
+our $static_dir = "html";
 
 # What's my administrative password (you must set this for static rendering)?
 our $static_password = 'go';
