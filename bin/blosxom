@@ -110,7 +110,7 @@ $depth += ($datadir =~ tr[/][]) - 1 if $depth;
 
 # Global variable to be used in head/foot.{flavour} templates
 our $path_info = '';
-our $static_or_dynamic = (
+our $static_or_dynamic = 1 || (
     !$ENV{GATEWAY_INTERFACE}
     and param('-password')
     and $static_password
@@ -286,12 +286,7 @@ for my $plugin ( @plugins ) {
 
 # Static
 our ($output, $fn, $path);
-if (
-    !$ENV{GATEWAY_INTERFACE}
-        and param('-password')
-        and $static_password
-        and param('-password') eq $static_password
-    ) {
+if ( $static_or_dynamic eq 'static' ) {
 
     print "Blosxom is generating static index pages...\n" unless param('-quiet');
 
