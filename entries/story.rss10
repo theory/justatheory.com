@@ -4,7 +4,7 @@
     <description>$foreshortened::body</description>
     <dc:subject>$path</dc:subject>
     <dc:creator>$rss10::creator</dc:creator>
-    <dc:date>$yr-$mo_num-$da$rss10::T$hr$rss10::colon$min$rss10::tz_offset</dc:date>
+    <dc:date>$yr-$mo_num-$da$rss10::T$hr$rss10::colon$min$offset</dc:date>
     $rss10::trackback_ping
     <cc:license rdf:resource="http://creativecommons.org/licenses/by-nc/2.0" />
     <content:encoded><![CDATA[$rss10::body]]></content:encoded>

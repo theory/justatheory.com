@@ -342,7 +342,7 @@ for my $plugin ( @plugins ) {
 }
 
 # Generate
-our ($dw, $mo, $mo_num, $da, $ti, $yr, $hr, $min, $hr12, $ampm);
+our ($dw, $mo, $mo_num, $da, $ti, $yr, $hr, $min, $hr12, $ampm, $offset);
 our ($title, $body, $raw, $next_page);
 sub generate {
     my($static_or_dynamic, $currentdir, $date, $flavour, $content_type) = @_;
@@ -443,7 +443,7 @@ sub generate {
             $path &&= "/$path";
 
             # Date fiddling for by-{year,month,day} archive views
-            ($dw, $mo, $mo_num, $da, $ti, $yr) = nice_date($files{"$path_file"});
+            ($dw, $mo, $mo_num, $da, $ti, $yr, $offset) = nice_date($files{"$path_file"});
             ($hr, $min) = split /:/, $ti;
             ($hr12, $ampm) = $hr >= 12 ? ($hr - 12, 'pm') : ($hr, 'am');
             $hr12 =~ s/^0//;
@@ -547,8 +547,9 @@ sub nice_date {
     );
     $da = sprintf '%02d', $da;
     my $mo_num = $month2num{$mo};
+    my $offset = localtime($unixtime)->isdst ? '-09:00' : '-08:00'; #PST
 
-    return ($dw, $mo, $mo_num, $da, $ti, $yr);
+    return ($dw, $mo, $mo_num, $da, $ti, $yr, $offset);
 }
 
 
