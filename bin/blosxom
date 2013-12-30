@@ -53,7 +53,7 @@ our $plugin_state_dir = "$plugin_dir/state";
 # --- Static Rendering -----
 
 # Where are this blog's static files to be created?
-our $static_dir = "html";
+our $static_dir = 'html';
 
 # What's my administrative password (you must set this for static rendering)?
 our $static_password = 'go';
@@ -206,6 +206,15 @@ sub load_template {
     $template->(@_);
 }
 
+sub time_for($) {
+    my $file = shift;
+    if (my $time = `git log -1 --format='%at' --diff-filter=A $file`) {
+        chomp $time;
+        return $time;
+    }
+    return stat($file)->mtime;
+}
+
 # Define default find subroutine
 our $entries = sub {
     my(%files, %indexes, %others);
@@ -222,20 +231,20 @@ our $entries = sub {
               and $2 !~ /^index\d*/ and $2 !~ /^\./ and (-r $File::Find::name)
           ) {
 
+              my $time = time_for $File::Find::name;
               # to show or not to show future entries
               (
-                  $show_future_entries
-                      or stat($File::Find::name)->mtime < time
+                  $show_future_entries or $time < time
               )
 
               # add the file and its associated mtime to the list of files
-              and $files{$File::Find::name} = stat($File::Find::name)->mtime
+              and $files{$File::Find::name} = $time
 
               # static rendering bits
               and (
                   param('-all')
                   or !-f "$static_dir/$1/index." . $static_flavours[0]
-                  or stat("$static_dir/$1/index." . $static_flavours[0])->mtime < stat($File::Find::name)->mtime
+                  or stat("$static_dir/$1/index." . $static_flavours[0])->mtime < $time
               )
               and $indexes{$1} = 1
               and $d = join('/', (nice_date($files{$File::Find::name}))[5,2,3])
@@ -246,7 +255,7 @@ our $entries = sub {
           } else {
               !-d $File::Find::name
                   and -r $File::Find::name
-                  and $others{$File::Find::name} = stat($File::Find::name)->mtime
+                  and $others{$File::Find::name} = time_for $File::Find::name
           }
         }, $datadir
     );
