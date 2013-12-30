@@ -1,0 +1,42 @@
+name: Josh Berkus
+url: http://it.toolbox.com/blogs/database-soup
+title: 
+comment: <p>... so that we can get a clear spec from the application programmers.  Darn it.</p>
+excerpt: 
+blog_name: 
+-----
+name: Joey
+url: 
+title: 
+comment: <p>So you know what you wrote is what you want.</p>
+excerpt: 
+blog_name: 
+-----
+name: David
+url: 
+title: 
+comment: <p>Could you make an example of a something you would catch with a database test, which could not have been cought with a regression test?</p>
+excerpt: 
+blog_name: 
+-----
+name: Rod Taylor
+url: 
+title: 
+comment: <p>I'm convinced. I have a little over 6500 pgTap based tests (4000 lines of pgtap sql).</p><p>Many check that plpgsql and trigger code works correctly. Invaluable when applying structural changes. Being able to remodel portions and coming having it come out 100% functional for 3 different applications, each using different access functions but the same DB structure, is very useful.</p><p>Some check standard security settings to ensure that junior staff cannot directly write to any structure at any time and PUBLIC has no access. Also very useful and immediately applies to new structures added.</p><p>I have one test that simply checks that sequence permissions match table permissions, and complains if they do not.</p><p>A few tests check the plpgsql functions for permissions, behaviour (volatile, stable, immutable at the appropriate time), that they have COMMENTs, that the return datatype is correct (an is_foo function should always return a boolean).</p><p>Given that regression tests are a few layers up on top of Catalyst, this allows me to test DB related stuff much quicker and is much more accurate. A Catalyst regression test could never check the results of an audit trigger since that data is not readable.</p><p>A catalyst regression test cannot tell you, easily, that a function has too many permissions.</p>
+excerpt: 
+blog_name: 
+-----
+name: Bob
+url: 
+title: why wouldn't you?
+comment: <p>I'm utterly amazed of the overall lack of database folks thinking testing is not for them or being ignorant of testing the database.</p><p>Lets get to the point. Why wouldn't you test your database? I hope airplane turbine engineers have a better mind set then some in the database world when it comes to testing.</p><p>I mean if you are going to test that the plane will fly soundly wouldn't you want to test the turbine engine on it's own before doing a flight tests?</p>
+excerpt: 
+blog_name: 
+-----
+name: Ben Finney
+url: 
+title: Resistance to modern testing practices
+comment: <p>I found similar resistance when I <a href="http://groups.google.com/group/comp.databases.postgresql/browse_thread/thread/86e24c8898b08ede/c9203ee54f37e468">asked about the possibility</a> of running a less-capable, in-memory PostgreSQL instance, for the purpose of unit testing the database. After the expected “PostgreSQL can't do that”, I was inundated with “<em>why</em> would you do that?” and staggeringly low awareness of the need for rapid unit testing feedback.</p><p>As perceptively observed in the book “<a href="http://www.databaserefactoring.com/">Refactoring Databases</a>”, software engineering best practice has made great progress in the last twenty years, but database practicioners have largely yet to find out about it.</p>
+excerpt: 
+blog_name: 
+-----

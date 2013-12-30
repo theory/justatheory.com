@@ -1,0 +1,21 @@
+name: Corion
+url: 
+title: Regexp::NamedCaptures
+comment: <p>It's been done for Perl 5.8 already, with <a href="http://search.cpan.org/dist/Regexp-NamedCaptures/">Regexp::NamedCaptures</a> - Yves took parts of that syntax (which was taken from .Net and/or Ruby) when implementing the named captures for Perl 5.10.</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>It’s easy, if verbose, to overcome the limitation: if you use <code>local</code> to assign values, they will disappear on backtracking. But then they also disappear at the end of the match. So what you do is combine the two: while you try to match, you put things into dynamically scoped storage; once the match has succeed but before it is finished, you save them for posterity.</p><pre><code>my %found;{    my %pad;    $string =~ /        (?: (quick|slow) \s+    (?{ local $pad{speed}  = $^N  }) )        (?: (brown|blue) \s+    (?{ local $pad{color}  = $^N  }) )?        (?: (brown\s+fox)       (?{ local $pad{animal} = $^N  }) )        (?{ %found = %pad })    /xms;}</code></pre><p>That should work. Pretty? Not exactly.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Corion: Thanks, good to know about.</p><p>Aristotle: Yes, I forgot to mention <code>local</code>, though I did know about it. What I <em>didn't</em> know about was the need for the final code block to assign it. That bit is key, thouh, yes, U-uu-uu-gly. Thanks for the tip!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

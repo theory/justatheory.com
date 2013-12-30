@@ -1,0 +1,77 @@
+name: Misha
+url: 
+title: hstore data type
+comment: <p>What about hstore?http://www.postgresql.org/docs/9.0/static/hstore.html</p>
+excerpt: 
+blog_name: 
+-----
+name: Hans
+url: 
+title: 
+comment: <p>Same question from me: what's the advantage of this approach over the hstore extension</p>
+excerpt: 
+blog_name: 
+-----
+name: Tick
+url: 
+title: Performance
+comment: <p>Have you done any performance evaluation/comparison for these two methods?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: hstore
+comment: <p>@Misha, @Hans:</p><p>Yes, hstore would be good for this, too, although it's less syntactically sweet:</p><pre><code>SELECT store('"foo" =&gt; "bar", "baz" =&gt; "yow"');</code></pre><p>But not too bad. I like the idea of an ordered pair, though, along with a binary constructor operator for it. Yes, there is one for hstore, too, but it's going away.</p><p>@Tick: Nope, just playing with syntax. I wouldn't expect much difference, though.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: nico
+url: 
+title: 
+comment: <p>Am I missing something or should the third code block:</p><pre>CREATE OR REPLACE FUNCTION store(      params text[][]  ) RETURNS VOID LANGUAGE plpgsql AS $$  BEGIN      FOR i IN 1 .. array_upper(params, 1) LOOP          UPDATE kvstore             SET value      = param.v,                 expires_at = NOW() + '12 hours'::interval           WHERE key        = param.k;          CONTINUE WHEN FOUND;          INSERT INTO kvstore (key, value)          VALUES (params[i][1], params[i][2]);      END LOOP;  END;  $$;</pre><p>read</p><pre>[...]  UPDATE kvstore    SET value = params[i][2],        expires_at = NOW() + '12 hours'::interval    WHERE key = params[i][1];  CONTINUE WHEN FOUND;  [...]</pre><p>I suppose it is a cut-n-paste problem. If I am wrong, please explain why.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Oops
+comment: <p>@nico—</p><p>Yes, fixed, thanks!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Pavel Stehule
+url: www.pgsql.cz
+title: 
+comment: <p>I looked on your examples. You can use a function generate_subscripts(array,1) without generate_series(array_lower(array,1),array_upper(...</p>
+excerpt: 
+blog_name: 
+-----
+name: Misha
+url: 
+title: 
+comment: <p>playing with syntax@Theory </p><p>hstore operator <code>=>(text, text, out hstore)</code> will help us:</p><pre>select store( 'foo' => 'bar', 'baz' => '1' )</pre><p>Notes</p><ol><li><code>-</code>: a small restriction: the need to convert the values to the text before the save <code>//</code> can be solved with trivial wrappers for commonly used (usually two or three) types</li><li><code>+</code>: a developed system of operators and functions, integration with the ( <code>!</code> ) type record, hstore has index support.</li></ol>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Pavel—</p><p>Thank you. I'd completely forgotten about <code>generate_subscripts()</code>. I've changed the examples to use that function, makes things a bit neater.</p><p>@Misha—</p><p>Yes but <code>=&gt;</code> has been deprecated and will be removed in a future version of hstore. You can only rely on <code>hstore()</code>.</p><p>I don't understand your notes, I'm afraid. I don't see anything like that in the <a href="http://developer.postgresql.org/pgdocs/postgres/hstore.html">hstore documentation</a>.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Robert Young
+url: http://drcoddwasright.blogspot.com/
+title: Why?
+comment: <p>EAV and now K/V.  Yet another attempt to subvert the gift Dr. Codd gave us.  If not an academic exercise, what's the point?  You're never, ever, going to convert the NoSql numbies to RDBMS with this sort of circumlocution.  All you'll end up doing is convincing them that what they're doing is intellectually valid.  It isn't.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Robert—</p><p>I could not care less what the NoSQL kiddies think in this case. It was just an example to use for a common requirement: the ability to pass an unbounded number of key/value pairs to a function. Pretend the functions do something else if you want. It's a common requirement for other uses, as well.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

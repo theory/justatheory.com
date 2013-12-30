@@ -1,0 +1,42 @@
+name: Abigail
+url: 
+title: 
+comment: <p>Beside that such safety nets make sloppy programmers it might very well be that whatever safeguards you come up with it will actually hinder someone who uses something on purpose. That is, IMO, a high price to pay. Furthermore, where does one draw the line? Which errors are you going to write defences against? How time are you going to spend on it? Is it worth complicating your code for? </p>
+excerpt: 
+blog_name: 
+-----
+name: Matt S Trout
+url: http://www.shadowcat.co.uk/blog/matt-s-trout/
+title: Don't punish cleverness - especially when 'use warnings' already caught the bug
+comment: <p>Personally, I write "use warnings FATAL => 'all';" in all my code now, which means I'd just have got a test blowup here, rather than error log spew in production.</p><p>But either way, there was already a warning. Perl already told the developer there was something wrong. It ain't broke - no need to fix it.</p>
+excerpt: 
+blog_name: 
+-----
+name: Sam
+url: http://www.illusori.co.uk/
+title: 
+comment: <p>Normally I'd agree and say "garbage in, garbage out", but in this case you're dealing with transactions: you're supposed to be robust in the face of garbage.</p><p>A transaction is supposed to succeed or rollback, there's no third option.</p><p>Now someone can always intentionally write something pathological, but accidentally leaving a next instead of a return when you're turning the code in a loop into a closure, well it happens, that's why there's a warning.</p><p>IMO no reasonable mistake should cause the "success or rollback" model of a transaction to break down, and ideally that promise should be as ironclad as possible.</p>
+excerpt: 
+blog_name: 
+-----
+name: Aran Deltac
+url: http://bluefeet.net
+title: Perl Hacker
+comment: <p>I was the original author of this e-mail to David and I just want to chime in that what Sam just wrote about this fits exactly with my reasoning for suggesting that DBIx::Connector handle this case gracefully.  Sam just said it more eloquently, thanks Sam.</p>
+excerpt: 
+blog_name: 
+-----
+name: Arthur Axel fREW Schmidt
+url: http://blog.afoolishmanifesto.com
+title: Nah
+comment: <p>I'd just put common missteps in the pod.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Went Ahead and Fixed It
+comment: <p>Much as I am loathe to make my code try to work around someone else's mistakes, I went ahead and committed <a href="http://github.com/theory/dbix-connector/commit/8aeec15c7699db8614ac40ad66601735e54c69da">a fix</a> for this particular issue.</p><p>Thanks, Sam, for your comment, which is what brought me around in this case. By returning from a function via <code>next</code> or <code>last</code>, a user was inadvertently exiting from the transactional methods (and perhaps the entire program!), thus skipping the transaction management code. The guarantee was getting violated, and I agree that it should do its best not to let that happen.</p><p>I just hope no one tries to return via <code>exit</code>, as they'll be screwed (any transactions will be rolled back, FWIW).</p><p>Thanks for the feedback, everyone.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

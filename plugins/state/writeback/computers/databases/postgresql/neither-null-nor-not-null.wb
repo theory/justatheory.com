@@ -1,0 +1,63 @@
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>And here I thought that sort of insanity was reserved for MySQL. The mind boggles.</p>
+excerpt: 
+blog_name: 
+-----
+name: Erik
+url: 
+title: 
+comment: <p>Oracle-style syntax would make it much more readable, e.g.</p><pre><code>FETCH have INTO rec_have;FETCH want INTO rec_want;WHILE have%found OR want%found LOOP    IF rec_have IS DISTINCT FROM rec_want THEN        RETURN FALSE;    END IF;    FETCH have INTO rec_have;    FETCH want INTO rec_want;END LOOP;RETURN TRUE;</code></pre><p>or even</p><pre><code>LOOP    FETCH have INTO rec_have;    FETCH want INTO rec_want;    EXIT WHEN have%notfound OR want%notfound    IF rec_have IS DISTINCT FROM rec_want THEN        RETURN FALSE;    END IF;END LOOP;RETURN TRUE;</code></pre>
+excerpt: 
+blog_name: 
+-----
+name: Erik
+url: 
+title: 
+comment: <p>I botched my second example a little, but I hope the concept is clear.  Oracle cursor attributes are documented <a href="http://download.oracle.com/docs/cd/B28359_01/appdev.111/b28370/cursor_attribute.htm">here</a>.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Some Replies
+comment: <p>@Aristotle—</p><p>Where the SQL spec is clear but bizarre, the implementation in PostgreSQL will be bizarre. Where the standard is ambiguous or intuitive, PostgreSQL's implementation tends to be intuitive. This is clearly an example of SQL spec pathology.</p><p>@Erik—</p><p>Oh, yeah, cursor attributes look nice, thanks for the link!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>I never faulted Postgres.</p>
+excerpt: 
+blog_name: 
+-----
+name: Jeff Davis
+url: 
+title: 
+comment: <p>The trick I was suggesting is to detect this specific case by doing something like:</p><p>not x is null and not x is not null</p><p>which would have to be made into a very ugly compound statement:</p><p>(not x is null and not x is not null or x is not null) OR(not y is null and not y is not null or y is not null)</p><p>[ might have made a mistake above, that is just too crazy ]</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Jeff—</p><p>I'm pretty sure I tried that and and it didn't work, because that variation just checks to see if a row is in the ambiguous state (both <code>NULL</code> and <code>NOT NULL</code>). It's the logical equivalent of:</p><pre><code>x IS NOT NULL AND x IS NULL</code></pre><p>Each variation I tried, aside from <code>FOUND</code>, failed to work properly in all circumstances. :-(</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Roland Bouman
+url: http://rpbouman.blogspot.com/
+title: 
+comment: <p>Nice post, interesting stuff :)</p><p>For the record, the relevant part of the standard is:</p><p>ISO/IEC 9075-2:2003 (E) 8.7 <null predicate></p>
+excerpt: 
+blog_name: 
+-----
+name: studdugie
+url: http://designdecisions.blogspot.com
+title: 
+comment: <p>Your post is quite apropos to my current book. I'm reading, "Database In Depth", by C.J. Date; and I'm currently on the section where he is discussing the evils of NULL and how it violates the relational model.</p><p>I'm nowhere near the end of the book but so far I've been struck by the clarity of the relational model, as explained by Date. So now I'm scratching my head wondering, why is the Standard Query Language so far off from the relational model in such important areas as NULL[ability] and duplicates?</p><p>I think it premature to recommend it now because I haven't finished it yet but I plan on doing a full review on my blog when I'm done.</p>
+excerpt: 
+blog_name: 
+-----

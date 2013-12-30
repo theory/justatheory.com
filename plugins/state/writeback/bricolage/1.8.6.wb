@@ -1,0 +1,28 @@
+name: FJ!! (fj.vanwingerde at nokia.com)
+url: 
+title: LDAP
+comment: Hi there,I am evaluating Bricolage, among other CMS Web solutions, for a fairly large, high-profile project at Nokia. Could you tell me when your LDAP authentication will be rolled into a release, or whether a patch of a (future) existing 1.8.6 installation is feasible? 
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: LDAP
+comment: <p>FJ!!</p><p>Yes, LDAP support is in the Bricolage trunk now and will be in 1.10, which I plan to release in September. I also have a patch against 1.8.x that we use internally at Kineticode. It works very well.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: FJ!!
+url: 
+title: 
+comment: Ok, sorry to bother again, but I am still evaluating which CMS to use. I was wondering which books (if any) you would recommend for setting up a fairly complex Bricolage site. I really have the feeling Bricolage would be a good piece of the puzzle, but I am having a hard time customizing it, and the project is so stingy I can't really pay for consulting.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>FJ!!</p><p>I would get the <a href="http://www.masonbook.com/" title="Read the Mason book online for free">Mason book</a> and read <a href="http://www.perl.com/pub/au/Wheeler_David" title="List of my Perl.com articles">my articles</a> on Perl.com.</p><p>Also, I've just release Bricolage 1.9.0, the first development release for Bricoalge 1.10, and it includes the new LDAP support.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

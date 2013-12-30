@@ -1,0 +1,14 @@
+name: Mitch
+url: http://KarateTraining.org
+title: Updates?
+comment: <p>I haven't seen any activity on the Bricolage project since 2006, is this project still active?</p><p>Is there any support for apache 2 yet?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Updates?
+comment: <p>Mitch,</p><p>Yes, the project is still active, though it has been a bit sleepy. Work is underway right now to get 1.10.3 out. And while there is not yet formal support for Apache 2, there is a working patch for it that has been <a href="http://marc.info/?t=117397842700006" title="bricolage-devel thread: “Bricolage Apache2 Success”">submitted to the developers list</a>, and which the author, Chris Heiland, is currently integrating into a branch. That support will be included in Bricolage 2.0.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

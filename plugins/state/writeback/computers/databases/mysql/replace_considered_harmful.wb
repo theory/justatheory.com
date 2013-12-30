@@ -1,0 +1,42 @@
+name: Greg Fortune
+url: 
+title: 
+comment: <blockquote>Yes, it was my responsibility to recognize that it would create new rows and therefore new primary keys.</blockquote><p>Yup :)  You might consider using the <code>ON DUPLICATE KEY UPDATE</code> syntax for insert as it will do exactly what you wanted.  The docs are <a href="http://dev.mysql.com/doc/refman/5.0/en/insert.html">here</a>. Note that the user comments on the <code>REPLACE</code> page mention <code>ON DUPLICATE KEY</code> several times.</p><p>There are actually cases in which REPLACE is useful, but clearly not in the case you describe.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Greg,</p><p>Interesting. I wasn't aware of the <code>ON DUPLICATE KEY UPDATE</code> syntax for <code>INSERT</code> statements. Interesting. Would it respect the primary key, since I don't specify it in an insert statement (I let the <code>AUTOINCREMENT</code> do its thing)?</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: James Day
+url: 
+title: 
+comment: <p>The (current) MySQL 4.1 and 5.n manuals seem pretty clear, with this as the first paragraph of the description:</p><blockquote><p>REPLACE works exactly like INSERT, except that if an old record in the table has the same value as a new record for a PRIMARY KEY or a UNIQUE index, the old record is deleted before the new record is inserted.</p></blockquote><p>Do you have any suggestions for improving how REPLACE is documented? What would have caused you to do a double-take if you'd read it before coding?</p><p>INSERT .. ON DUPLICATE KEY UPDATE seems unlikely to work unless you have a second unique key which contains something to match the existing record. Absent that, your choice to use an autoincrement field as the primary key is going to bite you again.</p><p>I do wonder why you're using an autoincrement field as the primary key in this situation. It doesn't appear to match the logic I'd expect from the description of the application, since the poll IDs (if they exist) and question IDs appear to be fixed and used in the table containing the poll description and answer options. Sounds as though those and some identifier for the end user giving the answer would be a more suitable primary key choice for the results table.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>James</p><blockquote><p>Do you have any suggestions for improving how REPLACE is documented? What would have caused you to do a double-take if you'd read it before coding?</p></blockquote><p>I'd add something like this after the sentences you quoted:</p><blockquote><p><strong>Warning!</strong> If the the match between the new and old records is based on a <code>UNIQUE</code> constraint and you also have an <code>AUTOINCREMENT</code>. primary key, because <code>REPLACE</code> deletes and inserts a new record, <em>the new record will have a new primary key!</em>. If you don't want the value of your <code>AUTOINCREMENT</code> primary key to potentially break foreign key relationships, then use foreign key constraints with <code>ON DELETE RESTRICT</code> to prevent problems.</p></blockquote><p>IOW, I would have done a double-take if it had said, <q>This may change the value of your primary key.</q></p><blockquote><p>INSERT .. ON DUPLICATE KEY UPDATE seems unlikely to work unless you have a second unique key which contains something to match the existing record.</p></blockquote><p>I did. Perhaps I should have just made <em>it</em> the primary key. But I like my primary keys to be <a href="http://en.wikipedia.org/wiki/Surrogate_key" title="Surrogate Keys explained on Wikipedia">surrogate keys</a>.</p><blockquote><p>I do wonder why you're using an autoincrement field as the primary key in this situation. It doesn't appear to match the logic I'd expect from the description of the application, since the poll IDs (if they exist) and question IDs appear to be fixed and used in the table containing the poll description and answer options. Sounds as though those and some identifier for the end user giving the answer would be a more suitable primary key choice for the results table.</p></blockquote><p>That's what I ended up doing. I just had to find a place to store the primary keys in the application that was updating and inserting these records. This is the correct way to do it: If you have an ID, do an <code>UPDATE</code>; otherwise, do an <code>INSERT</code>.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Lukas
+url: http://pooteeweet.org
+title: 
+comment: Well REPLACE requires that you actually set your primary key explicitly inside the query. I think this is rather obvious from the current docs. However you will need the same information to do an UPDATE so I dont really understand the issue at hand.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Lukas</p><p>My <code>REPLACE</code> query was not using or referring to the primary key at all. It was keying off of a different column with a unique index. I was letting the <code>AUTOINCREMENT</code> set the primary key value, and that's where the problem came from.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

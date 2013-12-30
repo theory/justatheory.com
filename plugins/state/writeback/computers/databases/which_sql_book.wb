@@ -1,0 +1,70 @@
+name: Chris
+url: 
+title: 
+comment: I don't know what books are currently up to do, but I suggest just thoroughly reading the entire PostgreSQL online manual first.  I think it's a great reference.
+excerpt: 
+blog_name: 
+-----
+name: greg
+url: www.codetempest.com
+title: Advanced SQL book
+comment: Anything by Ken Henderson (Guru's Guide). I know it's SQL Server specific, but they are such _good_ books!
+excerpt: 
+blog_name: 
+-----
+name: Lukas
+url: http://www.pooteeweet.org
+title: SQL Performance Tuning
+comment: So far my personal favorite book was SQL Performance Tuning by Peter and Trudy. It could use an update as it was written back in 1999 IIRC. It also only partially covers PostGreSQL. Damn we should all get together and lobby the two to update this book!
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: SQL Performance Tuning
+comment: <p>Lukas</p><p><cite><a href="http://www.amazon.com/exec/obidos/ASIN/0201791692/justatheory-20" title="Buy &#x201c;SQL Performance Tuning&#x201d; on Amazon.com">SQL Performance Tuning</a></cite> does indeed look interesting. I'll check it out, thanks!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Garrett Goebel
+url: 
+title: try again...
+comment: I second the Ken Henderson recommendation.You might also consider books by Joe Celko:<ul><li>SQL for Smarties</li><li>Trees and Hierarchies in SQL for Smarties</li><li>SQL Puzzles and Answers</li></ul>and C.J. Date:<ul><li>An Introduction to Database Systems</li><li>Database in Depth</li><li>Foundation for Object / Relational Databases, 2nd Ed (<a href = "http://www.awprofessional.com/titles/0-201-70928-7/">http://www.awprofessional.com/titles/0-201-70928-7/</a>)</li><li>Temporal Data & the Relational Model</li></ul>Don't be put off by the "introduction" in the title. Some consider his writing dry and academic, but most consider him mandatory reading for database theory. His writing is more about understanding than how to and goes well beyond SQL.And while I haven't read any of his books, "The Data Warehouse Toolkit: The Complete Guide to Dimensional Modeling" (Second Edition) by Ralph Kimball comes highly recommended.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Garret</p><p>ETOOMANYBOOKS! :-) I'll check out the Henderson, Celko, and Date books, too. Thanks!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: What I Bought Today
+comment: <p>I went to <a href="http://www.powells.com/" title="Powell's City of Books">Powell's Tech</a> today, and here's what I pickec up:</p><ul>  <li><cite><a href="http://www.amazon.com/exec/obidos/ASIN/0596100124/justatheory-20" title="Buy &#x201c;Database In Depth&#x201d; on Amazon.com">Database In Depth</a></cite> by C.J. Date. This is a brand new book, and quite slim (200 pages), but looks like it'll give me a greate foundation in relational theory.</li>  <li><cite><a href="http://www.amazon.com/exec/obidos/ASIN/1558605762/justatheory-20" title="Buy &#x201c;Joe Celko's SQL for Smarties: Advanced SQL Programming&#x201d; on Amazon.com">Joe Celko's SQL for Smarties: Advanced SQL Programming</a>.</cite> I know that this is one that I hear referred to over and over again.</li>  <li><cite><a href="http://www.amazon.com/exec/obidos/ASIN/1558609202/justatheory-20" title="Buy &#x201c;Joe Celko's Trees and Hierarchies in SQL for Smarties &#x201d; on Amazon.com">Joe Celko's Trees and Hierarchies in SQL for Smarties</a>.</cite> How to model tree structures is something I've thought about in the past, and I'd really like to get it nailed down.</li></ul><p>I wanted to pick up <cite>SQL Performance Tuning,</cite> too, but it was out of stock. These three will probably keep me busy for a while!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Josh Berkus
+url: 
+title: 
+comment: <p>Theory,</p><p>The Joe Celko books are, of course, excellent.   Pascal's <q>Practical Issues in Relational Database Management</q> also has lots of good database design advice, particularly around normalization.</p><p>Do NOT buy <q>SQL Performance Tuning</q>.  The book is a waste of paper; Dan Tow's knowledge of database performance is both extremely narrow and about 4 years out of date.</p><p>--Josh</p>
+excerpt: 
+blog_name: 
+-----
+name: Josh Berkus
+url: 
+title: 
+comment: <p>DW,<p>Ooops!  I thought they were talking about <q>SQL Tuning</q> by Dan Tow.   I don't know this other <q>SQL Performance Tuning</q> book, maybe it's good.</p><p>--Josh</p>
+excerpt: 
+blog_name: 
+-----
+name: 
+url: http://www.tauceti.net/page/cetixx/20051201#welche_bücher_für_fortgeschrittene_sql
+title: Welche Bücher für fortgeschrittene SQL-Programmierer sollte man kaufen?
+comment: 
+excerpt: Fragt David Wheeler. Ein paar Antworten  darauf ...
+blog_name: TauCeti.NET
+-----

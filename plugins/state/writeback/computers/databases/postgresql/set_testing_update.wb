@@ -1,0 +1,35 @@
+name: Tom Davis
+url: 
+title: 
+comment: <p>Instead of a boolean, the function could expect a string case insensitively matching <code>'ordered'</code> or <code>'unordered'</code>. It seems unlikely that the extra overhead of doing that test will have a significant impact on resource usage or run-time while providing a much clearer guide to users and maintainers.</p><p>Likewise having the third argument be required will also provide better guidance as users will no doubt have difficulty remembering what the default is. And while typing <em>, 'unordered'</em> is certainly more time consuming than not typing it but having to look up the function.</p><p>If for some reason you do need to use a boolean, having the boolean describe ORDERED might be better as some people seem to have difficulty with the double negative aspect of UNORDERED = FALSE</p><p>Of course all of this is making me think about the fact that that third argument is really <em>check order</em> and the difference between <code>bag\_eq()</code> and <code>set\_eq()</code> is really <em>disregard duplicates</em> means that you might have a single function with two required arguments and optionally a list of additional attributes  sql_eq( sql, sql [, 'compare order'] [, 'disregard duplicates'] )or some such.</p>
+excerpt: 
+blog_name: 
+-----
+name: Xaprb
+url: http://www.xaprb.com/
+title: A similar problem
+comment: <p>I am working on a somewhat related problem.  You can read all about it here: http://code.google.com/p/maatkit/wiki/mk_upgrade</p><p>This is for MySQL, of course -- and it's not a test suite per se, so there isn't 100% overlap.  But does this give ideas or add color to anything you're working on?  On the other hand, if you have suggestions, I welcome them very warmly.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Replies
+comment: <p>@Tom—</p><p>Thanks, I'll consider using "ordered" or "unordered." That may indeed be the way to go, as it's nice and clear. I'll have to think about whether I'd want it to be required, though. And yeah, maybe another argument for ignoring duplicates is best, as well. Hrm…stuff to ponder.</p><p>@Xaprb—I like the idea of <code>CHECKSUM</code>ing a table in MySQL, although if you want decent diagnostics you'd still have to iterate over all the data on failure anyway.</p><p>BTW, I got an inquiry as to whether there was anything like pgTAP for MySQL. There isn't to the best of my knowledge; have you heard of anything? If not, any interest in implementing myTAP for such folks?</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Joseph Brenner
+url: http://obsidianrook.com/map/
+title: can ordered/unordered also apply to includes?
+comment: <p>An odd thought: couldn't you also use the ordered/unordered parameter with set_includes and bag_includes?  The ordered comparison would allow intervening rows, but insist that the rows of the second result be found in the given sequence. </p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: can ordered/unordered also apply to includes?
+comment: <p>@Joseph—</p><p>Yes, I had the same thought, and I would likely work that in as well, though maybe not at first. Gotta see how difficult this stuff is going to be.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

@@ -1,0 +1,7 @@
+name: Marshall Roch
+url: http://www.spastically.com
+title: 
+comment: <p>I don't think this is a bug per se, but relatively undocumented and hard to figure out:</p><p><code>arguments</code> and certain other <q>variables</q> are read-only.  <code>replace()</code> doesn't work on these; instead, you need to assign them to normal variables first.</p>
+excerpt: 
+blog_name: 
+-----

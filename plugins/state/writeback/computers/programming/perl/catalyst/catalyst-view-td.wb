@@ -1,0 +1,14 @@
+name: Phillip Smith
+url: http://www.communitybandwidth.ca
+title: 
+comment: <p>As always, very impressive. Two questions: </p><p>You write "Then update the list of plugins in MyApp.pm" but there's no reference to Catalyst::View::TD there? Intentional, or mistake? </p><p>Also, you reference /users/list, but the Controller example you provide is about books? </p><p>Otherwise, can't wait to try out the module. On my list for this weekend.  :-)</p><p>Phillip.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Phillip—</p><p>Whoops! <code>s/users/books/g</code>. Thanks!</p><p>And no, there is no need to mention the view in <code>MyApp.pm</code>. All you need is the subclass in MyApp::View::HTML. Catalyst will load it automatically. You might need to identify that as your default view, but since we have only one view so far, it's not necessary.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

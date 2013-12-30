@@ -1,0 +1,28 @@
+name: ty
+url: 
+title: 
+comment: Not a genius and probably completely off the mark, but my assumptions about how javascript and frames work was recently challenged and it seems similar (if not then pls ignore).I thought that loading and external javascript file and having the javascript inline were equivalent, but it seems that the page continues to load after it encounters the script tag while the external javascript is loaded and executed (I presume by another thread). Once the the page loads the onload event is run regardless of if the external javascript has finished.I have been doing javascript for a few years and this is completely at odds with my intuition about how it should work. I also encountered the behaviour inside an iframe in firefox. Not sure if this behaviour is mandated by any particular standard, is present accross browsers, or likely to change(/get fixed?) in the future.I worked around this by using a status variable which is set at the end of the script, and used setInterval to wait for it. YMMV.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>ty</p><p>Thanks for the info. I am aware that there can be async problems with scripts loaded via script tags, annoying as that may be. My problem was more basic than that: Getting the scripts not to hang! But I got some help from another source, on IRC, and now I have pure <code>.js</code> tests working in Firefox, Safari, Opera, and IE (though not with XP SP 2). New release going out now. I'll post an announcement shortly.</p><p>Thanks for validating that the script loading issue is significant, though! I think it's one of the main reasons that <a href="http://www.openjsan.org/doc/c/cw/cwest/JSAN/" title="Download JSAN and start using JavaScript Libraries!">JSAN</a> will continue to use synchronous <code>XMLHttpRequest</code> to load libraries for the forseeable future.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Larry
+url: 
+title: IE hangs (sometimes) on assignment of new Option
+comment: <p>Have you ever encountered a situation in which IE hangs right on a line on which a new Option-object is being assigned to the options-array of a select-object?  It's especially weird, since it seems to happen only when the page is loaded as part of a kind of "bounce-back" in response to a form-validation error (executed on the server-side).  That is, whenever the same page is intially loaded, it works fine; it's only upon "bounce-back" that it consistently hangs, on a line on which a new OPTION is being added to a SELECT.  I think it's dangerous that the script isn't run via onload, but rather is run, so to speak, "inline" at the very bottom of the page; furthermore, the script is pulled in via a script-tag (JavaScript-include, as I think of it) that's situated BELOW the closing HTML-tag.  (BTW, somebody else wrote that code; I'm just trying to use it and maintain it.)  I have yet to experiment with invoking that code via onload and/or pulling the script in, say, right before the closing BODY-tag.  Any feedback would be appreciated.  Thanks.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Larry,</p><p>I'm not familiar with the scenario you describe, but it's valid to put the <code>&lt;script&gt;</code> just inside the closing <code>&lt;/body&gt;</code> tag. It's not valid for it to be outside of the closing <code>&lt;/body&gt;</code>, but it doesn't surprise me that most browsers will accept it anyway.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

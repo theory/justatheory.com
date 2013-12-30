@@ -1,0 +1,63 @@
+name: Anonymous
+url: 
+title: 
+comment: <p>awesome. thanks</p>
+excerpt: 
+blog_name: 
+-----
+name: Ben Finney
+url: 
+title: 
+comment: <p>Thanks, this looks like a good tool.</p><p>I'd ask that the functions, with their very generic names, be put inside some kind of namespace (perhaps a schema?) to avoid name collisions.</p>
+excerpt: 
+blog_name: 
+-----
+name: depesz
+url: http://www.depesz.com/
+title: 
+comment: <p>I think there is a typo at:</p><blockquote><p>And yes, I have ported most of the test functions from Test::More, as well as a couple from Test::More</p></blockquote><p>Second Test::More should be (I guess) Test::Exception.</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>This is incredibly freakin’ cool. And it is precisely what TAP is all about. Way to go!! I can see myself using this in the near future when I finally migrate (thank my fortunes) from MySQL to Postgres.</p><p>Set up a project homepage for this! It absolutely deserves one.</p>
+excerpt: 
+blog_name: 
+-----
+name: Joshua Drake
+url: http://www.commandprompt.com
+title: Linuxpoet :)
+comment: <p>I would use plperl and plperlu instead, to keep it contained to a single tech, you could also probably do some cool stuff with loading your test modules directly within the functions. Other than that, looks very cool.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Thanks For the Comments!
+comment: <p>Thanks for the comments, folks, I appreciate it!</p><p>Ben: Good point. I'll give some thought to adding a makefile that would allow you to specify a schema name when you "build" it. The default would be public, though.</p><p>depesz: Fixed, thanks!</p><p>Aristotle: Thanks! I'll see about setting up a pgFoundry project for it. Anything else I should do? Oh, and congrats on your imminent upgrade to PostgreSQL!</p><p>Linuxpoet: I've already done all the work in plpgsql (today I converted <code>plan()</code> to create the temporary tables itself, so that they don't have to be managed outside the use of the functions), and it's working great. More installations use plpgsql than plperl, anyway—and besides, what these functions do is pretty specific to PostgreSQL. It's only what they emit that's different, namely TAP.</p><p>Oh, and last night I implemented and checked in <code>pg_prove</code>. Check it out! Next up: ensuring proper transactional integrity for the duration of a test script.</p><p>Thanks again, everyone!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: pgTAP 0.02
+comment: <p>Howdy folks,</p><p>I've made a bunch of <a href=" https://svn.kineticode.com/pgtap/trunk/Changes" title="pgTAP Changes">changes</a>, and have stamped pgTAP for 0.02. I'm just waiting to hear from pgFoundry to release it. I'm especially happy with the introduction of a Makefile that lets you specify schema qualification (just for you, Ben) and install everything in the right place, including the new <code>pg_prove</code> app.</p><p>I'll likely post a more formal announcement once I get it on pgFoundry.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Rod Taylor
+url: http://www.simple-knowledge.com
+title: Now with better formatting!
+comment: <p>I found myself trying to do tests with multiple ROLES using SET SESSION AUTHORIZATION. Basically test cases where one user can insert and another can read from a view.</p><p>I added a few grants to the plan() function for temporary table access.</p><pre>CREATE OR REPLACE FUNCTION pgtap.plan( integer ) RETURNS TEXT AS $$BEGIN    BEGIN    EXECUTE '    CREATE TEMP TABLE __tcache__ (        label TEXT    NOT NULL,        value integer NOT NULL    );    GRANT ALL ON TABLE __tcache__ TO PUBLIC;    CREATE TEMP TABLE __tresults__ (        numb   SERIAL           PRIMARY KEY,        ok     BOOLEAN NOT NULL DEFAULT TRUE,        aok    BOOLEAN NOT NULL DEFAULT TRUE,        descr  TEXT    NOT NULL DEFAULT '''',        type   TEXT    NOT NULL DEFAULT '''',        reason TEXT    NOT NULL DEFAULT ''''    );    GRANT ALL ON TABLE __tresults__ TO PUBLIC;    GRANT ALL ON SEQUENCE __tresults___numb_seq TO PUBLIC;    ';    EXCEPTION WHEN duplicate_table THEN        -- Raise an exception if there's already a plan.        EXECUTE 'SELECT TRUE FROM __tcache__ WHERE label = ''plan''';        IF FOUND THEN           RAISE EXCEPTION 'You tried to plan twice!';        END IF;    END;    -- Save the plan and return.    EXECUTE 'INSERT INTO __tcache__ VALUES ( ''plan'', ' || $1 || ' )';    RETURN '1..' || $1;END;$$ LANGUAGE plpgsql strict;</pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Now with Better Formatting!
+comment: <p>Thanks Rod, applied! SVN access is <a href="https://svn.kineticode.com/pgtap/trunk/" title="pgTAP Subversion repository">here</a>, by the way.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

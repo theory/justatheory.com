@@ -1,0 +1,98 @@
+name: Tim Bunce
+url: blog.timbunce.org
+title: 
+comment: <p>Or don't have separate methods for the with and without retry variants.Perhaps something like this:</p><p>$obj->run(sub { ... });</p><p>$obj->run({ retry => 1 }, sub { ... });</p><p>having some way to pass options could be be useful anyway to offer more control over when a retry should or shouldn't be done.</p>
+excerpt: 
+blog_name: 
+-----
+name: notbenh
+url: 
+title: I get to have a title?
+comment: <p>it seems that your combining two distinct ideas: rerun on error &amp; do something. Seems that it might be better to just break those ideas?</p><p>$obj->re->run(sub{});$obj->re->tnx_do(sub{});</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: I get to have a title?
+comment: <p>Ben,</p><p>No, actually the re-run only happens if the block dies and the method finds that the handle isn't disconnected. If the block dies and the handle is connected, it just lets the die pass through.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Tim,</p><p>I think the reason not to do that is that it's not just a retry. It's also the case that it doesn't ping before executing the code! To me, that's an extra effect not adequately expressed in a parameter, but makes more sense as a different method. Basically, it's completely changing the context in which the block is executed. A separate method name is a better expression of that, IMHO.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Brig
+url: 
+title: 
+comment: <p>In the "w/ retry" case, you "fuss" with the code if things aren't quite right.  So how about:  "run_fuss" for "run_with_retry" and "txn_run_fuss" for "txn_run_with_rerun"?  Or, since you are taking extra action if things misfire, i.e. you are certifying or being certain, how about "run_cert" and "txn_run_cert"?</p>
+excerpt: 
+blog_name: 
+-----
+name: Brig
+url: 
+title: 
+comment: <p>of course, maybe 'cert' triggers 'certification' or 'certificate' associations. so maybe 'sure' would be a little softer but still illustrative:  'run_sure' and 'txn_run_sure'</p>
+excerpt: 
+blog_name: 
+-----
+name: Mark Lawrence
+url: 
+title: 
+comment: <p>For the case where no transaction or savepoints are being used, I'm actually wondering if the whole "run <em>code block</em> with retry on disconnected handle" is approaching the problem at the right level. Why would a user want an entire block to be rerun instead of just re-executing the failing DBI method?</p><p>Ie - did you consider sub-classing DBI::db methods instead. Very, very pseudo code to follow:</p><pre><code>sub execute {    eval { SUPER::execute( @_ ) };    if ( &#036;@ and ping_failed ) {        if ( re_connect() ) {            SUPER::execute( @_ );        }        else {            die &#036;@;        }    }}</code></pre>
+excerpt: 
+blog_name: 
+-----
+name: Mark Lawrence
+url: 
+title: 
+comment: <p>I just had another idea while looking at this <a href="http://github.com/theory/dbix-connector/issues/#issue/3">bug report</a> from github. How about extending the try/catch idea I suggested to be try/retry/catch:</p><p>Do the transaction:</p><pre><code>&#036;conn-&gt;txn( sub{    my &#036;dbh = shift;    &#036;dbh-&gt;do('INSERT INTO table1 VALUES (1)');});</code></pre><p>Do the transaction, and catch any error:</p><pre><code>&#036;conn-&gt;txn( sub{    my &#036;dbh = shift;    &#036;dbh-&gt;do('INSERT INTO table1 VALUES (1)');},catch {    # Handle the error});</code></pre><p>Do the transaction, retry on disconnect, catch </p><pre><code>&#036;conn-&gt;txn( sub{    my &#036;dbh = shift;    &#036;dbh-&gt;do('INSERT INTO table1 VALUES (1)');},retry_on_disconnect,catch {    # Handle the error});</code></pre><p>Thoughts?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Mark,</p><p>You don't want to re-execute a single DBI call because any work that comes before it in a transaction will be thrown out. And I certainly don't want to get into the business of subclassing/second-guessing the DBI!</p><p>I like the idea of adding <code>catch</code> support, though; Once I have the main API worked out (and I'm pretty close now), I'll have a think about adding the <code>catch</code> feature.</p>
+excerpt: 
+blog_name: 
+-----
+name: Mark Lawrence
+url: 
+title: run() outside of transactions
+comment: <p>Mark wrote:</p><blockquote>  <p>For the case where no transaction or savepoints are being used...</p></blockquote><p>Then Theory wrote:</p><blockquote>  <p>You don't want to re-execute a single DBI call because any work that comes before it in a transaction will be thrown out...</p></blockquote><p>I don't think you quite got my point. I am questioning the need for the "run()" method. Outside of any transaction I have no need for my code to be re-run, if the DBI handle could redo the DBI call on its own. i.e. the only way I would see to use run() is like this:</p><pre><code>&#036;conn-&gt;run( sub {    &#036;conn-&gt;dbh-&gt;prepare(...);} );&#036;conn-&gt;run( sub {    &#036;conn-&gt;dbh-&gt;execute(...);} );</code></pre><p>Instead of doing the prepare, and execute, and whatever all over again in the event of disconnection:</p><pre><code>&#036;conn-&gt;run( sub {    &#036;conn-&gt;dbh-&gt;prepare(...); # why do this twice?    &#036;conn-&gt;dbh-&gt;execute(...);} );</code></pre>
+excerpt: 
+blog_name: 
+-----
+name: Mark
+url: 
+title: Run with retry
+comment: <p>Sorry, I was actually talking about the "Run with retry" method.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: run() outside of transactions 
+comment: <p>Mark,</p><p>You're right, I missed that you were talking about the non-transactional function. However, the <code>run()</code> function does not re-run; the <code>run::retry()</code> method does.</p><p>However, a lot of this is moot now. I've finally nailed things down and will do a release later today. I'll blog about the changes (substantial, I'm afraid) here as well.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Ron Savage
+url: http://savage.net.au
+title: 
+comment: <p>Hi</p><p>Firstly, why not drop the suffix '_run' to leave txn and svp?</p><p>Secondly, why not add the retry as a prefix: retry_txn?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Ron,</p><p>See my <a href="/computers/programming/perl/modules/dbix-connector-updated.html">followup</a> for what I actually ended up doing.</p><p>Thanks,</p><p>Theory</p>
+excerpt: 
+blog_name: 
+-----

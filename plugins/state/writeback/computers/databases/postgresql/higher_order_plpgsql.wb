@@ -1,0 +1,21 @@
+ame: Nikolas Coukouma
+url: http://atrustheotaku.livejournal.com/
+title: 
+comment: <p>The fibonacci sequence is on my list of "bad examples for recursion that should just die." Even faster than minimal memoization (your last form) is the <a href="http://en.wikipedia.org/wiki/Fibonacci_number#Closed_form_expression">closed form</a>. It runs in constant time, by definition.</p>
+excerpt: 
+blog_name: 
+-----
+name: Walter Cruz
+url: http://walter/devel/log
+title: pllua?
+comment: <p>My secret desire is that someday, someone write a extension to postgres languages, to use Lua. Lua is a powerfull and simple language, with support to closures, and pretty simple to embed in a C program. I can't do that, cause I'm a totally dumb on C! :)</p> <p>And, just to point, table indices in lua begin with 1 :)</p><p>[]'s<br />- Walter</p>
+excerpt: 
+blog_name: 
+-----
+name: Christopher Browne
+url: cbbrowne@gmail.com
+title: How to do memoization
+comment: <p>Somehow, I don't think that approach to eliminating tail calls  is quite "what the doctor ordered."</p><p> The reason to eliminate tail calls is if you have some <strong>efficient</strong> way of managing a stack yourself such that you can avoid having the system do it for you.  As shown, using PostgreSQL arrays for this isn't quite ideal.</p><p> It seems to me that it might be a win to add in a stack pointer variable so that you track where the end of it is supposed to be, and only bother resizing it upwards in size.  No need to downsize the array; it'll just get thrown away altogether when you return from the function.  That should help.  It might also help if you resized less often, adding a bunch of entries in at once.  (People often write malloc() wrappers that only call malloc() once in a while to grab Fairly Large chunks of memory; <em>much</em> cheaper than running malloc() each time you need 8 bytes of RAM...)
+excerpt: 
+blog_name: 
+-----

@@ -1,0 +1,21 @@
+name: Matt Rodriguez
+url: 
+title: 
+comment: I'm having a lot of trouble figuring out how to use the --to_regex_map option. I'm not a perl programmer. I've been reading the man pages for SVN::Notify and Getopt::Long, and I'm still confused about this section in the manpage.--to-regex-map translate@example.com=L18N. I don't know what the L18N is supposed to be. It says that it's be the key of some hash reference that gets passed in somehow.Here is what I want to do:Everything from this part of the repository  branches/testBranch should be sent to this email address. testing@example.com. It's not clear to me what I need to do, to accomplish this.
+excerpt: 
+blog_name: 
+-----
+name: David Carson
+url: 
+title: 
+comment: <p>Is there any way to use to-regex-map, but have it read from a file.  We have a bunch of mappings and I don't thing it would be good to put them on the command line.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>David</p><p>Nope. I've been asked for it before, though. Patches welcome, of course. :-)</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

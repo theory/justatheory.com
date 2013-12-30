@@ -1,0 +1,28 @@
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p><a href="http://diveintomark.org/archives/2004/07/06/nfc">http://diveintomark.org/archives/2004/07/06/nfc</a></p>
+excerpt: 
+blog_name: 
+-----
+name: Peter Karman
+url: http://peknet.com/
+title: 
+comment: <p>Thanks for pointing me at Unicode::Normalize. And to Aristotle for that good humour.</p>
+excerpt: 
+blog_name: 
+-----
+name: Darren Duncan
+url: http://muldis.com
+title: NFC vs NFD
+comment: <p>You say that in general NFC normalization is probably best.  While it may make for more compact strings, I would argue that for the purposes of identity or comparison it is actually NFD that is better.  One main reason that I cite is that NFC doesn't provide a single codepoint for many instances of graphemes using multiple combining characters with a base character, but just provides support each of the combining characters with the base separately.  So to get such a grapheme with base 'B' and 2 combining characters '1','2', you can choose either the 2 codepoints 'B1' plus '2' or 'B2' + 1 but you can't have 'B12'.  So comparing for that grapheme with one input using B1+2 and the other B2+1 will fail.  On the other hand, using NFD you would always have B+1+2 so no problem here.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: NFC vs NFD
+comment: <p>Darren,</p><p>“Die, heretic scum!”</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

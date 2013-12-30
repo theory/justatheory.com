@@ -1,0 +1,21 @@
+name: Marc Alff
+url: 
+title: 
+comment: <p>"There is no way to throw an exception in MySQL functions an procedures"</p><p>Actually, there is, check the SIGNAL statement.</p><p>http://dev.mysql.com/doc/refman/5.5/en/signal-resignal.html</p><p>Regards,-- Marc Alff</p>
+excerpt: 
+blog_name: 
+-----
+name: theory
+url: /
+title: 
+comment: <p>@Marc—Thanks, good to know, and looks useful. I was targeting 5.0, though. If someone would like to start targeting 5.5 and maintaining patches (like <a href="http://github.com/theory/pgtap/tree/master/compat/">pgTAP does</a> and applies via its <a href="http://github.com/theory/pgtap/tree/master/Makefile">Makefile</a>), that would be great!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: dev_interview
+url: http://www.technicalinterviewquestions.net
+title: 
+comment: <p>Is Mysql 5.5 out yet? I thought it was still in development.</p>
+excerpt: 
+blog_name: 
+-----

@@ -1,0 +1,56 @@
+name: Marshall Roch
+url: http://www.spastically.com
+title: 
+comment: IE doesn't let scripts have children.  You need to test for IE and use <code>el.text</code>.  This is what I found somewhere a while back:<pre>  if (null == node.canHaveChildren || node.canHaveChildren) {    node.appendChild(document.createTextNode(text));  } else {    node.text = text;  } </pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Thanks Marshall, that <em>almost</em> gets me there! I added this code:</p><pre>var text = "window.onload(null, Test)";// IE doesn't let script elements have children.if (null != el.canHaveChildren) el.text = text;// But most other browsers do.else el.appendChild(document.createTextNode(text));</pre><p>Now I get two new errors. The first is:</p><pre>A runtime error has occurred.Line: 53162800Error: &quot;Test&quot; is undefined</pre><p>When I go into the debugger, it shows me just a few bytes of binary data. Not very useful. This error goes away if I remove the line that adds the text to the script.</p><p>Once I tell it to ignore that, I get another error, <q>Invalid argument.</q> That's for this line a bit later: <code>body.appendChild(pre);</code>. Again, that succeeds if the script text stuff is commented out. I don't think that IE likes the assignment to the <code>text</code> attribute of a script element. :-(</p><p>Any other ideas?</p><p>Thanks!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Lufo
+url: 
+title: 
+comment: <p>Hi, i'm trying to do this:</p><p>I have functions.js with:</p><pre>  function MyLibraryFunction() {      return "Hello World";  }</pre><p>and then I have runtime.js with:</p><pre>function doIncludes() {	script = document.createElement("script");	script.type = "text/javascript";	script.src = "functions.js";	script.defer = true;	document.getElementsByTagName("head")[0].appendChild(script);}function windowOnLoad(e) {	doIncludes();	setCookie("pepe", "Hola Mundo");	alert(MyLibraryFunction());}if(window.addEventListener)	window.addEventListener("load", windowOnLoad, false);else	window.attachEvent("onload", windowOnLoad);</pre><p>Surprisingly, it's working perfectly in IE6 but not in FireFox. Any ideas?</p>
+excerpt: 
+blog_name: 
+-----
+name: sportyboy56
+url: 
+title: 
+comment: Hi guys...my script also haf the runtime error,I tested my page wif Opera,no complains,only my IE6 complains this line..tooltip.innerHTML = tip;my &lt;div&gt; is inside a table as I using dreamweaver to do...
+excerpt: 
+blog_name: 
+-----
+name: Vip
+url: 
+title: 
+comment: there is no answer for IE innerhtml bug,is it realy a bug is there is any solution what hell is this Even Microsoft mute on this problem what a tragedy they want make money by selling bad products 
+excerpt: 
+blog_name: 
+-----
+name: Christocracy
+url: www.christocracy.ca
+title: 
+comment: <p>if you're trying to attach an onload event to your window, I use the wonderful prototype.js library and attach an event like this:</p><pre>Event.observe(window, 'load', function(){    alert('window onload');    });</pre><p>works great in both IE and FF.</p>
+excerpt: 
+blog_name: 
+-----
+name: intrader
+url: 
+title: I noticed this problem way back in IE4
+comment: and its is still there in IE6. It occurs when I do a replacement of the innerHTML of some table elemen. What I did back then was rearrange the target such that I did an insertAdjacent of a div. However, now, I am trying to replace a placeholder (a tbody with id), with a couple of tds.I get the "Unknown runtime error". If I replace the tbody with a div, the first td will be placed outside of the table, while the second td is replaces the placeholder.It looks like I need to do is put an id in the tr, and then insertCell to accomplish this
+excerpt: 
+blog_name: 
+-----
+name: lowteched
+url: 
+title: this works fine
+comment: <pre>function loadContent(file){  var scriptTag = document.getElementById('loadScript');  var head = document.getElementsByTagName('head').item(0)  if(scriptTag) head.removeChild(scriptTag);  script = document.createElement('script');  script.src = file;	script.type = 'text/javascript';	script.id = 'loadScript';	head.appendChild(script)}</pre><p>as there were issues with the code on this page. this one i found on: http://www.dhtmlcentral.com/tutorials/tutorials.asp?page=1&id=11</p><p>does the tricks. found no problems yet.</p><p>greetings,</p><p>lowteched</p>
+excerpt: 
+blog_name: 
+-----

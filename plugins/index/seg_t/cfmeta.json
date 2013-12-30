@@ -1,0 +1,89 @@
+{
+   "files" : {
+      "documents.dat" : {
+         "length" : "997382",
+         "offset" : "0"
+      },
+      "documents.ix" : {
+         "length" : "2264",
+         "offset" : "997384"
+      },
+      "highlight.dat" : {
+         "length" : "1222950",
+         "offset" : "999648"
+      },
+      "highlight.ix" : {
+         "length" : "2264",
+         "offset" : "2222600"
+      },
+      "lexicon-1.dat" : {
+         "length" : "7451",
+         "offset" : "2224864"
+      },
+      "lexicon-1.ix" : {
+         "length" : "87",
+         "offset" : "2232320"
+      },
+      "lexicon-1.ixix" : {
+         "length" : "64",
+         "offset" : "2232408"
+      },
+      "lexicon-2.dat" : {
+         "length" : "4718",
+         "offset" : "2232472"
+      },
+      "lexicon-2.ix" : {
+         "length" : "58",
+         "offset" : "2237192"
+      },
+      "lexicon-2.ixix" : {
+         "length" : "48",
+         "offset" : "2237256"
+      },
+      "lexicon-3.dat" : {
+         "length" : "54467",
+         "offset" : "2237304"
+      },
+      "lexicon-3.ix" : {
+         "length" : "815",
+         "offset" : "2291776"
+      },
+      "lexicon-3.ixix" : {
+         "length" : "472",
+         "offset" : "2292592"
+      },
+      "lexicon-4.dat" : {
+         "length" : "743",
+         "offset" : "2293064"
+      },
+      "lexicon-4.ix" : {
+         "length" : "4",
+         "offset" : "2293808"
+      },
+      "lexicon-4.ixix" : {
+         "length" : "8",
+         "offset" : "2293816"
+      },
+      "postings-1.dat" : {
+         "length" : "8592",
+         "offset" : "2293824"
+      },
+      "postings-2.dat" : {
+         "length" : "4970",
+         "offset" : "2302416"
+      },
+      "postings-3.dat" : {
+         "length" : "353982",
+         "offset" : "2307392"
+      },
+      "postings-4.dat" : {
+         "length" : "2369",
+         "offset" : "2661376"
+      },
+      "postings.skip" : {
+         "length" : "5366",
+         "offset" : "2663752"
+      }
+   },
+   "format" : "2"
+}

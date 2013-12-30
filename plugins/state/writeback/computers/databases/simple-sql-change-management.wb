@@ -1,0 +1,28 @@
+name: Chris M
+url: 
+title: 
+comment: <p>To get around the need for a configuration file could you not just put all deploy scripts into a sub directory.  For example:</p><pre>sql/deploy/001.alpha/uesrs_tablesql/deploy/002.beta/widgets_table.sqlsql/deploy/002.beta/add_widget.sql</pre><p>and so on.  That way the system knows which order to apply the releases and gives them a human readable name, without needing to set up a configuration file.</p><p>As a by-product it also allows humans to more easily find the files related to a particular release.</p>
+excerpt: 
+blog_name: 
+-----
+name: Adrian Klaver
+url: 
+title: 
+comment: <p>If you are using a VCS could the duplicated function problem be solved with it. In other words have your tags point to revisions, for example:alpha  r1beta   r2Them the app would pull the appropriate version of the file from the VCS.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Chris—On initial thought, I have two objections to using subdirectories for tags:</p><ol><li>You have to name them carefully in order to ensure proper ordering.</li><li>It would be too easy to create conflicts by having two scripts with the same name in two different tags.</li></ol><p>But on reflection, these two issues could be overcome, because:</p><ol><li>Dependency resolution can make the order of application largely irrelevant.</li><li>The name of a change script could be considered unique by tag + file name, rather than just file name.</li></ol><p>So I think there may be a place for this approach, though it does create some more complications in the implementation. However, I have some ideas about changing migration scripts <em>in place</em> that simply would not work for this pattern. If you want some idea how, stay tuned for my next post.</p><p>Speaking of which, @Adrian, don't get ahead of me! ;-P</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Josh Berkus
+url: www.pgexperts.com
+title: CEO, PGX
+comment: <p>I've been doing quite a bit of DevOps for our clients.  There's some issues which the above doesn't address which I'd really like to address:</p><ol><li><p>Making a SQL migrations system work with Git branches/forks, so that you can have fork-per-feature-set, allowing you to easily choose with features to go ahead with at deployment time based on tests.</p></li><li><p>Association of SQL features with application versions.  Possible solved by any solution to (1).</p></li><li><p>Separate SQL features which require conflicting changes to the same objects (i.e. two different features need to modify the same function).</p></li></ol><p>Being who you are, I imagine integrating tests is coming in further posts.</p>
+excerpt: 
+blog_name: 
+-----

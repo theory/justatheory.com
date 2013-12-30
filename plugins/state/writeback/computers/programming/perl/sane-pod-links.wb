@@ -1,0 +1,35 @@
+name: anonymous coward
+url: 
+title: 
+comment: <p>What? That's not a nice link. Have you clicked on it?</p><p>The last piece is only achieved when you get Graham to update Pod::Simple::HTML from the version 2.01 he's running at search.cpan.org.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Wrong Link, AC!
+comment: <p>Hey AC, look at the links in the <a href="http://search.cpan.org/~dwheeler/SVN-Notify-2.80/lib/SVN/Notify.pm">2.80</a> release, not 2.79.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: kentnl
+url: blog.fox.geek.nz
+title: 
+comment: <p>AC is right. Here is where the links point to:</p><p>http://search.cpan.org/perldoc?http%3A#/svn.haxx.se/users/archive-2006-05/0593.shtml</p><p>http://search.cpan.org/perldoc?http%3A#/www.koders.com/csharp/fidE2724F44EF2D47F1C0FE76C538006435FA20051D.aspx</p><p>and neither of those links WorkForMe. </p>
+excerpt: 
+blog_name: 
+-----
+name: kentnl
+url: http://blog.fox.geek.nz
+title: Doh
+comment: <p>Also: if people set their "URL" field on your blog without a prefixing 'http://' it appears to link to 'http://www.justatheory.com/computers/programming/perl/{$URL}'</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: D’oh Indeed!
+comment: <p>@kentnl—Oh, I gotcha, my mistake. The point is that the text is being used for the link, though. I hadn't clicked on them, though, just looked to see that they looked good. Making the link use <code>perldoc</code> is probably a bug in Graham’s subclass of Pod::Simple::HTML. I'll bug him about it.</p><p>And yeah, I've been meaning to modify the Blosxom writeback plugin to put in the "http://" if it's not there. I'll just go do that right now since someone's actually complaining about it. :-)</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

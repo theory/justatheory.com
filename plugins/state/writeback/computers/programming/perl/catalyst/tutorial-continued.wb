@@ -1,0 +1,70 @@
+name: Grrrr
+url: 
+title: 
+comment: <p>I think you did not go far enough in your attempts to make your examples as Perlish as possible.</p><p>Using Template::Declare is a good start.  Not using DBIx::Class is also a step in the right direction.Now all that is needed is to start using DBIx::Perlish for the actual DB queries, and all will be well.  :-)</p><p>Cheers.</p>
+excerpt: 
+blog_name: 
+-----
+name: omega
+url: 
+title: Model?
+comment: <p>I really think you should move the connection handling to a Model?</p>
+excerpt: 
+blog_name: 
+-----
+name: Tim Bunce
+url: blog.timbunce.org
+title: Not lazy by default
+comment: <p>"The nice thing about this is that the DBIx::Connector object won’t be instantiated until it’s actually needed" -- you need to add "lazy => 1," to get that effect.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Replies
+comment: <p>Thanks for the comments, everyone.</p><p>@Grrr—No thanks. I have this really great <a href="http://en.wikipedia.org/wiki/Domain-specific_language" title="Wikipedia: “Domain-specific language">DSL</a> to talk to the database. I don't need to subvert Perl to do it.</p><p>@omega—Why should the connection handling be in a model? It's a single attribute, nothing more.</p><p>@Tim—Ah, right. Fixed, thanks!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Quinn Weaver
+url: http://pgexperts.com/
+title: Nice.  Docs suggestion?
+comment: <p>At first, I did a double-take at list.  Where did $c->{stash}{books} come from?  Was the run method running the callback and then returning its retval?</p><p>I checked the DBIx::Connector POD, which didn't say.  Then I checked the source, where it's obvious that run (and related methods) do indeed return the callback's retval (in scalar or list context, as determined by wantarray()).  Nice.</p><p>I think this should be in the POD.  If you agree, let me know, and I'll send you a </p>
+excerpt: 
+blog_name: 
+-----
+name: Quinn Weaver
+url: http://pgexperts.com/
+title: Docs suggestion
+comment: <p>Send you a <em>patch</em>, that is.</p>
+excerpt: 
+blog_name: 
+-----
+name: Quinn Weaver
+url: http://pgexperts.com/
+title: SQL versus ORMs
+comment: <p>theory wrote:</p><p>No need for an ORM here, as the DBI provides a very Perlish <br />  access to a very capable DSL for models called SQL.</p><p>Heh.  I too prefer raw SQL, much of the time.  It's just easier to think in relational terms.</p><p>At least, this is true for SELECTs.  For UPDATEs, I'm not so sure.  Suppose you have certain columns each from several related rows, pulled via a SELECT with some JOINs.  Now you want to change the values for all these columns, or just a subset.  Isn't it easier to call save() (in Rose::DB::Object) rather than constructing some monster query string with a transaction, the right IDs, proper ordering of UPDATEs?  I for one hate writing complex code in one language to produce strings in another language.  It's like going back to C macros.  Even at its most straightforward, it's not Lazy.</p><p>So I think both SQL and ORMs have their places, and I think that SQL is better for SELECTs and ORMs are better for writes.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: To Quinn
+comment: <p>Hey Quinn,</p><p>Yes, if it's not clear that <code>run()</code> and friends in DBIx::Connector return the return value of the block, it should be made more clear. Patch appreciated.</p><p>As for ORMS for updates, well, we'll see. I'm going to start writing the CRUD stuff in the next part of the article, and I have no plan to use an ORM. See what you think.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>Are you <em>sure</em> that ISBNs make good natural keys? I remember Curtis once writing about that; he listed a number of reasons why ISBNs can be problematic, though unfortunately I cannot find it right now.</p><p>Along the same lines I find more generally that even though natural keys are a good idea in theory, in practice, the identity semantics of the domain you’d want to take your natural keys from do not match the identity semantics you need in the application using the database. (Sometimes you are not aware of this at the time you design the schema; in that case the result is huge headaches later.) In that case you’ll either add more tables to map the mismatch, or just not use natural keys – either way, you end up with keys from some artificial domain, either in addition to or in place of the natural keys.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Hey @Aristotle,</p><p>Thanks for the comments. I'm not positive that ISBNs make the best keys, no. But since this isn't a production app, it's not a big deal. Perhaps in a production system you might need to find ways to disambiguate dupes, which as you say, would likely introduce an artificial domain.</p><p>But my larger point is to really examine your data, and consider whether or not there is a viable natural key to use. ISBNs are a decent candidate, despite their flaws. But there's a reason I didn't go with, say, social security numbers as a natural key for authors, since it's well-known that there are duplicates and meaningless SSNs. Either way, the point is that one should think about identity of objects.</p><p>If I were running, say, a book store, I might want to instead use some other kind of identifier, like SKUs or <a href="http://en.wikipedia.org/wiki/Amazon_Standard_Identification_Number">ASIN</a>s. but in any event, I would always try my hardest to avoid a simple auto-incrementing integer. Frankly, I'd like to find a way to kill it off for authors, too.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

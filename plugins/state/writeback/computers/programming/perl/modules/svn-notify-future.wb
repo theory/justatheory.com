@@ -1,0 +1,28 @@
+name: Justin Mason
+url: http://taint.org/
+title: 
+comment: <p>How I would do that:</p><p>The "main" scripts, one for each combo of vc system and output format, would create the relevant set of handler objects upfront, without providing them with configuration (yet).</p><p>Then, call a ->get_options() method on each one, which would provide their Getopt::Long entries.  Then merge them all for one big Getopt::Long call at the main() level.  (bear in mind G:L can call back to closures, thereby scoping the data returned nicely!)</p><p>Finally call a ->run() method on each handler to actually perform its operations.</p><p>does that make sense?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Justin,</p><p>Yes, it does. And after I shut down and went to bed last night, I realized that this is essentially how SVN::Notify works right now: filters can specify command-line options, and the main class simply instantiates each one and has it process <code>@ARGV</code>. It works pretty well, so it should work well here, too.</p><p>Thanks for the feedback.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Jon Jensen
+url: http://blog.endpoint.com/
+title: 
+comment: <p>I may be missing something, but it sounds like what you want is already distributed with Git, in contrib/hooks/post-receive-email. It doesn't include diffs by default, and a patch I've submitted has been ignored by the maintainers, but works well for me:</p><p>http://www.devcamps.org/cgi-bin/gitweb?p=camps.git;a=blob;f=misc/git-post-receive-email-emaildiff.patch;h=b9c368a7d15c226d9f90a9d58b59949b56bdcd44;hb=HEAD</p><p>Github has its own selectable hook for sending commit notifications too.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Jon,</p><p>SVN::Notify is popular because it sends diffs that look like <a href="http://www.justatheory.com/computers/programming/perl/modules/svnnotify-2.70_colordiff_example.html">this</a>. I want that for my Git repositories, too—or for any SCM. GitHub doesn't have anything like this, and I doubt that Git will ever include anything that does quite this much work. It's the perfect opportunity for a third-party module (which was true for Subversion, too, and is why SVN::Notify is probably my most widely-distributed code).</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

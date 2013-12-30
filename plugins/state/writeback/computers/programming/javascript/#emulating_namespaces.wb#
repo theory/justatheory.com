@@ -1,0 +1,119 @@
+name: 
+url: http://blogs.acceleration.net/ryan/archive/0001/01/01/1065.aspx
+title: js namespaces
+comment: 
+excerpt: 
+blog_name: :-$
+-----
+name: 
+url: http://blogs.acceleration.net/birdman/archive/2005/05/05/1067.aspx
+title: JS Namespaces redux
+comment: 
+excerpt: 
+blog_name: Birdman's land
+-----
+name: Bob Ippolito
+url: http://bob.pythonmac.org/
+title: example broken?
+comment: In the example, you have the following:<br /><samp>// Inherit from CD.Music.<br />CD.Music.Classical.prototype = CD.Music.prototype; // Inheritance.<br /><br />// Add to the class and/or override as necessary.<br />CD.Music.Classical.prototype.composer  = null;<br /></samp><br /><br />Last I checked, JavaScript isn't going to copy <code>CD.Music.prototype</code> here, so you're going to be adding things to both classes, no?  Shouldn't there be a "new" somewhere?
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: example broken?
+comment: <p>Bob</p><p>You are quite right. Fixed&#x2014;thanks!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: 
+url: https://www.acst2.rutgers.edu/confluence/display/EAG/Javascript
+title: Javascript
+comment: 
+excerpt:  Philosophy/PrincipalsJS Usage should be: it must be nongratuitous (i.e. provide real value, that could not be easily achieved another way) it must degrade well (i.e....
+blog_name: Confluence: Enterprise Architecture
+-----
+name: Kevin Bowker
+url: 
+title: 
+comment: <p>Is there a way to construct a class so that the following code would be legitimate?</p><pre>var disc=new CD();disc.Music.Classical.composer='Mozart';orvar disc=new CD();var comp=disc.Music.Classical.composer;comp = 'Mozart';</pre><p>kevin@kbware.com</p>
+excerpt: 
+blog_name: 
+-----
+name: Ben Davies
+url: 
+title: 
+comment: <p>You could put the inheritance code in the constructor, especially as you know the namespace chain anyway (your defining it at this point anyway!):</p><pre>// CD.Music must be loaded already. Create the constructor.CD.Music.Classical = function () {    // Inherit from CD.Music.    CD.Music.Classical.prototype =  CD.Music.prototype; // sets up the prototype inheritance chain    CD.Music.Classical.prototype.constructor =  CD.Music; // constructor property is used in scripts to determine an object's type    CD.Music.Classical.superclass =  CD.Music.prototype; // Sets up reference to superclass    CD.Music.Classical.superclass.constructor.apply(this, arguments); // Call superclass constructor    // Add to the class and/or override as necessary.    this.composer  = null;    this.orchestra = null;    this.conductor = null;    this.soloist   = null;}</pre>
+excerpt: 
+blog_name: 
+-----
+name: i.Skitz
+url: http://ajile.sourceforge.net/
+title: JavaScript Namespace Module Exists
+comment: See http://ajile.sourceforge.net/ for a module that does JavaScript namespaces and more. The Wikipedia gives a good overview: http://en.wikipedia.org/wiki/Javascript_Namespaces.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: JavaScript Namespace Module Exists
+comment: <p>Why would I want horrible Java-style namespces? See <a href="http://www.openjsan.org/" title="JSAN">JSAN</a> for my namespaces vision realized.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: cd music
+url: http://music-db.org/
+title: 
+comment:  <pre>// CD.Music must be loaded already. Create the constructor.CD.Music.Classical = function () {    // Inherit from CD.Music.    CD.Music.Classical.prototype =  CD.Music.prototype; // sets up the prototype inheritance chain    CD.Music.Classical.prototype.constructor =  CD.Music; // constructor property is used in scripts to determine an object's type    CD.Music.Classical.superclass =  CD.Music.prototype; // Sets up reference to superclass    CD.Music.Classical.superclass.constructor.apply(this, arguments); // Call superclass constructor    // Add to the class and/or override as necessary.    this.composer  = null;    this.orchestra = null;    this.conductor = null;    this.soloist   = null;}</pre> Thanks
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>cd music,</p><p>The only problem with that apporoach to implementing the subclass is that you're redefining the inheritance hierarchy every time you instantiage a CD.Music.Classical object. Not very efficient.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Tom Metro
+url: 
+title: 
+comment: <blockquote><p>The only downside to this proposal...we don’t get the block syntax...</p></blockquote><p>You could probably sweeten the syntax with something like:</p><pre>JSAN.subclass('CD::Music','CD::Music::Classical', {  composer:  null;  orchestra: null;  conductor: null;  soloist:   null;});</pre><p>Simply a JSAN variation on the instanceof(), inheritsfrom(), etc. helper functions that people have written.</p><p>Of course subclass() will have some challenges in sifting the newly supplied properties out of the passed object from properties inherited from Object.</p><p> -Tom</p>
+blog_name: 
+-----
+name: lindsay
+url: http://lindsay-lohan2007.info/lindsay-lohan-movies.html
+title: lindsay lohan bikini
+comment: <a href= http://lindsay-lohan2007.info/lindsay-lohan-oscars.html >lindsay lohan oscars</a>  <a href= http://lindsay-lohan2007.info/lindsay-lohan-hot-pictures.html >lindsay lohan hot pictures</a>  <a href= http://lindsay-lohan2007.info/lindsay-lohan-nip.html >lindsay lohan nip</a>  <a href= http://lindsay-lohan2007.info/lindsay-lohan-vanity-fair-cover.html >lindsay lohan vanity fair cover</a>  <a href= http://lindsay-lohan2007.info/lindsay-lohan-nipslip.html >lindsay lohan nipslip</a>  <a href= http://lindsay-lohan2007.info/lindsay-lohan-boob-job.html >lindsay lohan boob job</a>  <a href= http://lindsay-lohan2007.info/lindsay-lohans-nipple.html >lindsay lohans nipple</a>  
+excerpt: 
+blog_name: 
+-----
+name: porn
+url: http://freepornsale.biz/asian-porn-movies.html
+title: porn
+comment: <a href= http://freepornsale.biz/black-porn-star.html >black porn star</a>  <a href= http://freepornsale.biz/simpsons-cartoon-porn.html >simpsons cartoon porn</a>  <a href= http://freepornsale.biz/round-and-brown-porn.html >round and brown porn</a>  <a href= http://freepornsale.biz/preggo-porn.html >preggo porn</a>  <a href= http://freepornsale.biz/ebony-porn-stars.html >ebony porn stars</a>  <a href= http://freepornsale.biz/romanian-porn.html >romanian porn</a>  <a href= http://freepornsale.biz/code-lyoko-porn.html >code lyoko porn</a>  <a href= http://freepornsale.biz/sailor-moon-porn-xxx.html >sailor moon porn xxx</a>  <a href= http://freepornsale.biz/porn-sluts.html >porn sluts</a>  <a href= http://freepornsale.biz/porn-directory.html >porn directory</a>  <a href= http://freepornsale.biz/free-porn-without-credit-card.html >free porn without credit card</a>  <a href= http://freepornsale.biz/monkey-porn.html >monkey porn</a>  
+excerpt: 
+blog_name: 
+-----
+name: vsteszgfcr
+url: http://305.lidomsaz.cn/
+title: vsteszgfcr
+comment: Thanks for this site! <a href=http://305.lidomsaz.cn/>305.lidomsaz</a><a href=http://cca.hwerc.cn/>cca.hwerc</a><a href=http://859.podey.cn/>859.podey</a><a href=http://2c9.cofetw.cn/>2c9.cofetw</a><a href=http://6a1.foqav.cn/>6a1.foqav</a><a href=http://5f8.cofeta.cn/>5f8.cofeta</a><a href=http://a88.lidoa.cn/>a88.lidoa</a><a href=http://5b9.hwerc.cn/>5b9.hwerc</a><a href=http://f13.cofetw.cn/>f13.cofetw</a>
+excerpt: 
+blog_name: 
+-----
+name: gzzegspyem
+url: http://9df.foqav.cn/
+title: gzzegspyem
+comment: Thanks for this site! <a href=http://9df.foqav.cn/>9df.foqav</a><a href=http://50d.lidoa.cn/>50d.lidoa</a><a href=http://27d.hwerc.cn/>27d.hwerc</a><a href=http://61f.podey.cn/>61f.podey</a><a href=http://b01.hwerc.cn/>b01.hwerc</a><a href=http://e52.lidoa.cn/>e52.lidoa</a><a href=http://f62.lidomsaz.cn/>f62.lidomsaz</a><a href=http://f66.podey.cn/>f66.podey</a><a href=http://c7d.foqav.cn/>c7d.foqav</a>
+excerpt: 
+blog_name: 
+-----
+name: mbuanscchm
+url: http://e1c.cofetw.cn/
+title: mbuanscchm
+comment: Thanks for this site! <a href=http://e1c.cofetw.cn/>e1c.cofetw</a><a href=http://ee9.disaz.cn/>ee9.disaz</a><a href=http://6de.disaz.cn/>6de.disaz</a><a href=http://3e5.foqav.cn/>3e5.foqav</a><a href=http://711.foqav.cn/>711.foqav</a><a href=http://ef2.hwerc.cn/>ef2.hwerc</a><a href=http://b31.cofetw.cn/>b31.cofetw</a><a href=http://3b9.cofet.cn/>3b9.cofet</a><a href=http://90d.lidoa.cn/>90d.lidoa</a>
+excerpt: 
+blog_name: 
+-----
+

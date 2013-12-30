@@ -1,0 +1,21 @@
+name: Andy Lester
+url: http://petdance.com/
+title: My tests show unpack faster
+comment: <p>I think your difference is in how you're building the hash.  I removed the hash building and got this:</p><pre>andy@mook[~]$ cat pack2 #!/usr/bin/perl -wuse strict;use Benchmark;my $date = '2005-03-23T19:30:05.1234';my $ISO_TEMPLATE =  'a4 x a2 x a2 x a2 x a2 x a2 a*';sub with_pack {    my @results = unpack $ISO_TEMPLATE, $date;    { no warnings; $results[6] *= 1.0E9; }}sub with_regex {    my @results =        ($date =~ m/^(\d\d\d\d).(\d\d).(\d\d).(\d\d).(\d\d).(\d\d)(\.\d*)?/);    { no warnings; $results[6] *= 1.0E9; }}timethese(100000, {    pack => \&with_pack,    regex => \&with_regex,});__END__andy@mook[~]$ ./pack2Benchmark: timing 100000 iterations of pack, regex...      pack:  4 wallclock secs ( 2.60 usr +  0.03 sys =  2.63 CPU) @ 38022.81/s (n=100000)     regex:  3 wallclock secs ( 2.87 usr +  0.04 sys =  2.91 CPU) @ 34364.26/s (n=100000)</pre>
+excerpt: 
+blog_name: 
+-----
+name: Andy Lester
+url: 
+title: Faster! Faster!
+comment: Removing the my @results makes it even more stark difference in favor of pack()<PRE>alester@goofus[~]$ cat pack3#!/usr/bin/perl -wuse strict;use Benchmark;my $date = '2005-03-23T19:30:05.1234';my $ISO_TEMPLATE =  'a4 x a2 x a2 x a2 x a2 x a2 a*';our @results;sub with_pack {    @results = unpack $ISO_TEMPLATE, $date;}sub with_regex {    @results = ($date =~ m/^(\d\d\d\d).(\d\d).(\d\d).(\d\d).(\d\d).(\d\d)(\.\d*)?/);}timethese(150_000, {    pack => \&with_pack,    regex => \&with_regex,});alester@goofus[~]$ ./pack3Benchmark: timing 150000 iterations of pack, regex...      pack:  6 wallclock secs ( 3.79 usr +  0.08 sys =  3.87 CPU) @ 38759.69/s (n=150000)     regex: 13 wallclock secs ( 5.98 usr +  0.14 sys =  6.12 CPU) @ 24509.80/s (n=150000)</PRE>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Thanks, Andy
+comment: <p>You've nicely demonstrated how important it is to isolate the pieces you're comparing without throwing in other stuff that is just duplicated between the comparisons.</p><p>Now I'll have to go back to using <code>pack()</code>. Glad I figured out how to do it! :-)</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

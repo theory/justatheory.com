@@ -1,0 +1,238 @@
+name: Christoph Martin
+url: christ.martin@web.de
+title: 
+comment: Thanks for your helpful module.You should give a warning somewhere that the password is logged in cleartext when using your module or disable this line. I found it quite annoying to find my password in syslog.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Password Logging
+comment: Yeah, I just left all the print statements in place from the previous version. I should go back and add a DEBUG constant or something...
+excerpt: 
+blog_name: 
+-----
+name: Tim
+url: iluvbbq@sbcglobal.net
+title: 
+comment: If the LDAP directory you're trying to authenticate against is a Windows 2000/2003 Active Directory, then you need to force SSL v3 for secure communications to take place. Add this to your User_Local.pm:$Net::SSLeay::ssl_version = 3;  # Insist on SSLv3and restart Apache.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Debuggin and SSL Version Added
+comment: <p>Thanks for the feedback, Christoph and Tim. I've updated User_Overlay.pm, adding a DEBUG constant that is off by default, meaning that no debug logging is sent out. Turn it on to get the debugging again, including with passwords.</p><p>I've also added a new RT variable, $LdapSSLVersion, to set the SSL version to 3 to keep ADS happy.</p><p>The changes are available <a href="http://www.justatheory.com/computers/programming/perl/rt/User_Local.pm.ldap" title="Download the updated LDAPOverlay">here</a>.</p>
+excerpt: 
+blog_name: 
+-----
+name: Maarten Verwijs
+url: maarten.projectie.com
+title: Working like a charm
+comment: Thanks, man. This works like a charm on my Novell+Debian setup! :-DCheers!
+excerpt: 
+blog_name: 
+-----
+name: Chris Covington
+url: ccovington@plusone.com
+title: 
+comment: I can't seem to get this to work with my (Gentoo) system against Windows 2000 active directory.  I have other Net::LDAP scripts which work against active directory so I'm puzzled.  How can I check logs to see if the /usr/lib/RT/User_Local.pm module is used?  Every change I make to the RT_SiteConfig.pm file seems to be ignored and RT is just using its internal authentication.  These are the changes to my RT_SiteConfig.pm:$LDAPExternalAuth = 1;$LdapServer="dc1.example.com";$LdapUser="cn=user,cn=Users,dc=example,dc=com";$LdapPass="password";$LdapBase="cn=Users,dc=example,dc=com";$LdapUidAttr="sAMAccountName";$LdapFilter="(objectclass=*)";
+excerpt: 
+blog_name: 
+-----
+name: Chris Covington
+url: ccovington@plusone.com
+title: 
+comment: Nevermind, I forgot to chmod +x the User_Local.pm file!  It works great, thanks!
+excerpt: 
+blog_name: 
+-----
+name: Chris Covington
+url: 
+title: multiple ldap servers
+comment: It would be nice to be able to specify multiple LDAP servers.
+excerpt: 
+blog_name: 
+-----
+name: Chris Covington
+url: ccovington@plusone.com
+title: sorry for the spam
+comment: One last thing... I can't get the Group Membership functionality to work under Active Directory.  Maybe because in AD the group "member" value returns the distinguishedName attribute which is formatted like this: distinguisedName:  CN=User\, Test,CN=Users,DC=example,DC=com; - in other words it doesn't show the uid (or sAMAccountName for Active Directory) in the result.  Or maybe I'm using the wrong group attribute.    The Group Attribute should return the members of the group right?
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: sorry for the spam
+comment: <p>Chris,</p><p>Not having used NT in years (let alone ADS), I don't know. You want to use the group attribute that names each group member, genernally uniquely (you don't need to be in a group more than once, after all). If It's using the CN, then perhaps you want to use CN for LdapUidAttr?</p><p>HTH!</p>
+excerpt: 
+blog_name: 
+-----
+name: J Brock
+url: 
+title: 
+comment: Just wanted to say thank you for making my life a million times easier with this awesome overlay.  Combined with the AutoCreateFromExternalUserInfo overlay, it makes setting up RT/LDAP a breeze!  I especially appreciate the built-in TLS support.  Good work!
+excerpt: 
+blog_name: 
+-----
+name: Randy McEoin
+url: 
+title: 
+comment: Thank you for adding the TLS support.  You might want to knowI had to hack the $filter = line to not include the hardcoded (objectclass=person).  You might consider doing similar.  The RT::LdapFilter should have ultimate control over the filter.  Defaulting to (objectclass=person) is fine, but the user configurable RT::LdapFilter should outright replace the default.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Eliminated Default Filter
+comment: <p>Randy</p><p>Thanks for the suggestion. Someone else had the same complaint when I did the same thing in the LDAP support I recently added to <a href="http://www.bricolage.cc/" title="Visit the Bricolage site">Bricolage</a>. So I've removed that default filter from both the LDAP overlay and Bricolage.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Tim Wilson
+url: http://technosavvy.org/
+title: The Savvy Technologist
+comment: So let me see if I understand this. We've got 15 privileged users in RT currently. If I install the LDAPOverlay, will their logins continue to work? Or does every user begin authenticating to LDAP? If the latter, we'll need to muck around in the database a bit to preserve ticket histories.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Fallback
+comment: <p>Tim,</p><p>I pointed Jesse to your query via IRC, and he said, <q>That's what fallback is for.</q> Apparently, there's a config file option to have authentication fallback to RT's default authentication if LDAP authentication fails.</p><p>I would ask on an RT list for more detail, since I don't know much about fallback.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Tim Wilson
+url: http://technosavvy.org/
+title: Where's the IRC
+comment: So where do I find the IRC channel for RT?
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Where's the IRC
+comment: <p>It's #rt on MagNet (I use irc.perl.org).</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Craug Schenk
+url: 
+title: 
+comment: Is there a way to use this only for SelfService, while using a different authentication for the rest of RT? That would be really really useful.
+excerpt: 
+blog_name: 
+-----
+name: Don Beethe
+url: 
+title: 
+comment: <p>Tried implementing this and now RT is erroring out.</p> <pre>error:   	could not find component for path '/l'context:  	...  	92:  	% }93:  	<BR>94:  	<&|/l, "<b>".$session{'CurrentUser'}->Name."</b>" &>Logged in as [_1]</&>95:  	% } else {96:  	<&|/l&>Not logged in.</&>97:  	% }98:  	</td>99:  	</tr>100:  	</table>...  	code stack:  	/opt/rt3/share/html/Elements/Header:96/opt/rt3/share/html/Elements/Login:57/opt/rt3/share/html/autohandler:221The raw error shows: could not find component for path '/l'Trace begun at /usr/perl5/site_perl/5.8.4/HTML/Mason/Request.pm line 1202HTML::Mason::Request::comp('HTML::Mason::Request::ApacheHandler=HASH(0x1c4ef10)', 'HASH(0x1cbf63c)', '/l') called at /opt/rt3/share/html/Elements/Header line 96HTML::Mason::Commands::__ANON__('Title', 'Login', 'Focus', 'user') called at /usr/perl5/site_perl/5.8.4/HTML/Mason/Component.pm line 135HTML::Mason::Component::run('HTML::Mason::Component::FileBased=HASH(0x1cbeb50)', 'Title', 'Login', 'Focus', 'user') called at /usr/perl5/site_perl/5.8.4/HTML/Mason/Request.pm line 1255eval {...} at /usr/perl5/site_perl/5.8.4/HTML/Mason/Request.pm line 1249HTML::Mason::Request::comp(undef, undef, 'Title', 'Login', 'Focus', 'user') called at /opt/rt3/share/html/Elements/Login line 57HTML::Mason::Commands::__ANON__ at /usr/perl5/site_perl/5.8.4/HTML/Mason/Component.pm line 135HTML::Mason::Component::run('HTML::Mason::Component::FileBased=HASH(0x1cabf50)') called at /usr/perl5/site_perl/5.8.4/HTML/Mason/Request.pm line 1255eval {...} at /usr/perl5/site_perl/5.8.4/HTML/Mason/Request.pm line 1249HTML::Mason::Request::comp(undef, undef) called at /opt/rt3/share/html/autohandler line 221HTML::Mason::Commands::__ANON__ at /usr/perl5/site_perl/5.8.4/HTML/Mason/Component.pm line 135HTML::Mason::Component::run('HTML::Mason::Component::FileBased=HASH(0x1c4b6c8)') called at /usr/perl5/site_perl/5.8.4/HTML/Mason/Request.pm line 1250eval {...} at /usr/perl5/site_perl/5.8.4/HTML/Mason/Request.pm line 1249HTML::Mason::Request::comp(undef, undef, undef) called at /usr/perl5/site_perl/5.8.4/HTML/Mason/Request.pm line 461eval {...} at /usr/perl5/site_perl/5.8.4/HTML/Mason/Request.pm line 461eval {...} at /usr/perl5/site_perl/5.8.4/HTML/Mason/Request.pm line 413HTML::Mason::Request::exec('HTML::Mason::Request::ApacheHandler=HASH(0x1c4ef10)') called at /usr/perl5/site_perl/5.8.4/HTML/Mason/ApacheHandler.pm line 167HTML::Mason::Request::ApacheHandler::exec('HTML::Mason::Request::ApacheHandler=HASH(0x1c4ef10)') called at /usr/perl5/site_perl/5.8.4/HTML/Mason/ApacheHandler.pm line 817HTML::Mason::ApacheHandler::handle_request('HTML::Mason::ApacheHandler=HASH(0x11f0bc0)', 'Apache=SCALAR(0x8f5ca0)') called at /opt/rt3/bin/webmux.pl line 123eval {...} at /opt/rt3/bin/webmux.pl line 123RT::Mason::handler('Apache=SCALAR(0x8f5ca0)') called at /dev/null line 0eval {...} at /dev/null line 0</pre><p>I tried taking all the added lines out of RT_SiteConfig.pm and it still errors out with this...</p> <p>Any ideas where I've gone wrong? </p>
+excerpt: 
+blog_name: 
+-----
+name: frank
+url: 
+title: Full example?
+comment: COuld someone please post a full set of instructions for this? I followed what's given and still get the username/password-entry log-on page in RT. I tried putting a 'die' as the first line of the sub IsPassword in the new overlay, but never see an error, presumably indicating that the sub is never called...?
+excerpt: 
+blog_name: 
+-----
+name: Jim Meyer
+url: 
+title: Passwords in logfiles
+comment: <p>Hello!</p><p>I recently discovered that if you set the DEBUG constant (or remove it from the code, as I did), cleartext passwords are once again printed in the logs. I obviously should have read the code more closely to understand this would happen.</p><p>The offending line of code prints "LDAP DN", followed by the LDAP dn and cleartext password. I've nipped off the password bit since I can't conceive a reason I want to see that in a log (and, if I did, I'd put it in by hand and back it out the moment I was done).</p><p>Just a note to make it explicit for anyone else who bumbles into it as I did.</p><p>Cheers!</p><p>--j</p>
+excerpt: 
+blog_name: 
+-----
+name: Ely
+url: 
+title: Help with configuration
+comment: <p>hi</p><p>I'm struggling to get this working with active directory on windows 2003. RT 3.4.4, fedora core 4. apache 2.0.54. I seem to find the LDAP server (If i put in the wrong one I get an error).I seem to bind (again a wrong one gives an error 49).But I then can't login -</p><pre>Jan  5 15:31:03 server RT: Using External Authentication  (/usr/local/rt3/local/lib/RT/User_Local.pm:52)Jan  5 15:31:03 server RT: FAILED LOGIN for username from ip (/usr/local/rt3/local/html/autohandler:144)</pre><p>My RT_SiteConfig.pm has parameters as -</p><pre> $LDAPExternalAuth = 1; $LdapServer="server.domain"; $LdapUser="cn=Administrator,cn=Users,dc=server,dc=domain"; $LdapPass="password"; $LdapBase="dc=server,dc=domain"; $LdapUidAttr="sAMAccountName"; $LdapFilter="(objectclass=*)"; $LdapTLS = 1; $LdapSSLVersion = 3;</pre><p>I've also tried without TLS, no difference. Perl modules are there.I'm wondering if its to do with finding the user; I'm binding as a superuser to rule that out for now (works ok for bugzilla) but its in cn=Users, where my users incl. myself are in staff ous eg. ou=Developers, ou=Sales etc.</p><p>Any help appreciated, thanks.</p><p>Ely</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Ely</p><p>This isn't a support forum. I've never used the LDAP overlay with anything other than OpenLDAP, so my experience is limited. What you should do is see if active directory is logging any errors that could help you figure out why authentication is failing. Other than that, I've got nothin'. Other folks on the <a href="http://bestpractical.com/rt/lists.html" title="Subscribe to the Request Tracker mailing lists">RT mail list</a> can no doubt help, as there are a lot more people who have used the LDAP overlay with different platforms hanging out there.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Ely
+url: 
+title: 
+comment: unfortunately i posted to the RT mail list and got nothing. absolutely zilch. 
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Ely</p><p>Try IRC: <code>#rt</code> on irc.perl.org.</p><p>Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Hossein Rafighi
+url: rafighi@triumf.ca
+title: 
+comment: <p>I recently installed RT and set it to use LDAP for authentication. My problem (if any?!) is that unless users are created locally and given  "Let this user be granted rights", see only a very abbreviated SelfServices screen. Is that normal? All they see are: "OpenTickets", "Closed Tickets", "New Tickets", and "Preferences". Changing Group rights didn't make a difference?!</p><p>Cheers,</p><p>Hossein</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Hossein</p><p>Probably, but I don't know enough about RT to tell you how to set up alternative defaults. I suggest that you ask via on an <a href="http://www.bestpractical.com/rt/lists.html" title="RT Mail Lists">RT mail list</a>.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Steve Trei
+url: dave@frankandbeans.org
+title: 
+comment: This script is now a couple of years old.  Does it still work with the current RT(3.4) release?
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Steve</p><p>Yes, I use it with 3.4.x.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Steve Trei
+url: dave@frankandbeans.org
+title: 
+comment: Thanks, and this is the current link, right?http://www.justatheory.com/computers/programming/perl/rt/User_Local.pm.ldap
+excerpt: 
+blog_name: 
+-----
+name: Fritz
+url: 
+title: 
+comment: I am sorry if this is a simple question but I noticed that after turning on LDAP SSL/TLS, RT still tries to connect to port 389 which is LDAP.  LDAPS on Active Directory is on port 636.  Is there anyway to make RT go to port 636 for LDAPS?  Thanks.
+excerpt: 
+blog_name: 
+-----
+name: Fritz
+url: 
+title: 
+comment: I am sorry if this is a simple question but I noticed that after turning on LDAP SSL/TLS, RT still tries to connect to port 389 which is LDAP.  LDAPS on Active Directory is on port 636.  Is there anyway to make RT go to port 636 for LDAPS?  Thanks.
+excerpt: 
+blog_name: 
+-----
+name: Matt
+url: 
+title: 
+comment: <p>Does anyone have this working against 3.6.3?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p><p>Matt,</p><p>Looks like I have it working against 3.6.0; guess I haven't upgraded yet. What problems are you having with it?</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

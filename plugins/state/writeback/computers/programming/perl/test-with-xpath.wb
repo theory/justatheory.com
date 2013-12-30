@@ -1,0 +1,63 @@
+name: Zbigniew Lukasiak
+url: http://perlalchemy.blogspot.com
+title: 
+comment: <p>I wonder if you have had a look at: http://search.cpan.org/~miyagawa/Web-Scraper-0.31/  It has a different purpose - but gives some similar functionality - maybe there is some space for collaboration.</p>
+excerpt: 
+blog_name: 
+-----
+name: Tatsuhiko Miyagawa
+url: http://bulknews.typepad.com/
+title: 
+comment: <p>Yeah, also: WWW::Mechanize::TreeBuilder, HTML::TreeBuilder::XPath, HTML::Selector::XPath and HTML::TreeBuilder::Select. :)</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>I was just going to pipe up with <a href="http://search.cpan.org/perldoc?HTML::Selector::XPath">HTML::Selector::XPath</a> myself. That would let you write CSS selectors.</p>
+excerpt: 
+blog_name: 
+-----
+name: Michael Peters
+url: 
+title: 
+comment: <p>Have you seen <a href="http://search.cpan.org/perldoc?Test::HTML::Content">Test::HTML::Content</a>? It gives you <code>xpath_ok()</code> and <code>no_xpath()</code>. It doesn't have the nice is(), isnt(), like() and unlike() that yours does, but those could probably be added.</p>
+excerpt: 
+blog_name: 
+-----
+name: Andy Lester
+url: http://perlbuzz.com/
+title: The problems of XPath
+comment: <p>We ran into problems with the LibXML as well.  It wasn't even that fetching from the w3c.org was slow, but that they throttled us (we assume).</p><p>So we switched to mirod's HTML::TreeBuilder::XPath for our XPathing, and it's worked without a hitch.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Thanks for the Suggestions
+comment: <p>Thanks for pointing out all those other modules, folks, greatlyappreciated. I should have known that there would be more choicesthan what I found.</p><p>I wrote a bunch of tests for the new<a href="http://www.pgexperts.com/">PGX</a> app yesterday, and I'm <em>very</em>happy with how well<a href="http://search.cpan.org/perldoc?Test::XPath">Test::XPath</a> works.It's fast, easy to use, and the recursive <code>ok()</code> is just killerfor digging into the guts of my XHTML.</p><p>Some thoughts on your suggestions:</p><p>@Zbigniew—</p><p><a href="http://search.cpan.org/perldoc?Web::Scraper">Web::Scraper</a>looks awesome, and I'd probably use it if I had to do any Webscraping, but I don't think it's appropriate for testing your ownHTML or XML.</p><p>@Tatsuhik-san—</p><ul><li><a href="http://search.cpan.org/perldoc?WWW::Mechanize::TreeBuilder">WWW::Mechanize::TreeBuilder</a>looks like it allows more correct examination of the content andstructure of an HTML document, but, <em>boy</em> is its interface awful.</li><li>I might have to find a use for<a href="http://search.cpan.org/perldoc?HTML::TreeBuilder">HTML::TreeBuilder</a>just so I can call its <code>disembowel()</code> method. :-)</li><li><a href="http://search.cpan.org/perldoc?HTML::TreeBuilder::XPath">HTML::TreeBuilder::XPath</a>looks like a good fit for testing HTML, but the thing I likeabout using XML::LibXML is that I can test either XML or HTML.Also, how complete is the XPath implementation in HTML::TreeBuilder::XPath?</li><li><a href="http://search.cpan.org/perldoc?HTML::Selector::XPath">HTML::Selector::XPath</a>looks awesome. Does it support attribute value operators andother stuff in the Ruby<a href="http://api.rubyonrails.org/classes/HTML/Selector.html">HTML::Selector</a>class?</li><li><a href="http://search.cpan.org/perldoc?HTML::TreeBuilder::Select">HTML::TreeBuilder::Select</a>looks decent, too, but why don't any of these modules documentthe CSS selector syntax that they implement? It's annoying. I verydeliberately added an introduction to XPath syntax to the Test::XPathdocumentation to make it easy for folks to get started, and thenpointed to specific links with more comprehensive documentation.</li></ul><p>@Aristotle—</p><p><a href="http://search.cpan.org/perldoc?HTML::Selector::XPath">HTML::Selector::XPath</a>looks useful. I could certainly see using that in tests. But if Ican write something in XPath to start with, I'm not sure I'dbother with the CSS selector syntax. Maybe if one knows it betterthan XPath then it'd be useful to provide an alternate interfacefor it. But it's mostly redundant, no?</p><p>The thing I liked about the <code>assert_select</code> is all theextra stuff, like the <code>^=</code>, <code>&#036;=</code>, <code>*=</code>, and <code>~=</code> attribute valueoperators. Are they supported by HTML::Selector::XPath? The docsdon't say. On the other hand, I can use core XPath functions formost of these already, so maybe it's moot.</p><p>@Michael—</p><p><a href="http://search.cpan.org/perldoc?Test::HTML::Content">Test::HTML::Content</a>has the same problem as<a href="http://search.cpan.org/perldoc?Test::XML::XPath">Test::XML::XPath</a>in that it works with both<a href="http://search.cpan.org/perldoc?XML::XPath">XML::XPath</a> and<a href="http://search.cpan.org/perldoc?XML::LibXML">XML::LibXML</a>, so youcan get different test results depending on which it uses unlessyou are extremely careful in your tests. I personally find thisunacceptable, which is why I've just gone with XML::LibXML for mymodule. Also like Test::XML::XPath, it has to parse the HTMLagain for every test function call. None too efficient.</p><p>@Andy—</p><p>As I found in playing with<a href="http://search.cpan.org/perldoc?XML::LibXML">XML::LibXML</a>, you canturn off the network access easily enough, then no more hitches.And you can test your XML with it, too, not just HTML.</p><p>@All—</p><p>Great references, many thanks. I might fiddle with the idea ofwriting a Test::Selector module with the same interface as<a href="http://search.cpan.org/perldoc?Test::XPath">Test::XPath</a> butusing CSS selectors instead of XPath expressions. It would use<a href="http://search.cpan.org/perldoc?HTML::Selector::XPath">HTML::Selector::XPath</a>to convert the CSS selectors to XPath expressions and then justpass them back to Test::XPath. But I'm curious as to how completethe implementation is, in terms of the CSS selector syntax.</p><p>Ultimately, though, the recursive functionality of <code>Test::XPath::ok()</code>makes it a clear winner in my book. With none of the existingXPath- or CSS selector-type testing modules did I see anything likeit. Have I missed something?</p><p>Thanks!</p>
+excerpt: 
+blog_name: 
+-----
+name: Tatsuhiko Miyagawa
+url: http://bulknews.typepad.com/
+title: re: HTML::Selector::XPath
+comment: <p>The selector the module implements is all of CSS 2.0 and some of 3, if I recall it correctly. I actually owe @Aristotle for all of those transformations :)http://use.perl.org/~miyagawa/journal/31195</p><p>Re: HTML::TreeBuilder::XPath, actually I maintain another module HTML::TreeBuilder::LibXML, which gives the same API as ::XPath but uses XML::LibXML under the hood. It's becoming so funny that we see lots of modules with names (and implementations) swapping by, like Foo::Bar::Baz, Foo::Baz::Bar and Baz::Bar::Foo :)</p>
+excerpt: 
+blog_name: 
+-----
+name: Phillip Smith
+url: http://www.communitybandwidth.ca
+title: 
+comment: <p>I was trying to figure out what the heck you were talking about in IRC the other day. Now I "get it." Thanks for the write-up, and the module. </p><p>Phillip.</p>
+excerpt: 
+blog_name: 
+-----
+name: Robin Smidsrød
+url: http://robin.smidsrod.no
+title: You should see what I'm doing with Rabbit
+comment: <p>Have a look at http://github.com/robinsmidsrod/Rabbit</p><p>It is my generic method of dealing with XML by using a simple Moose-based role to generate read-only accessors for data using XPath queries.</p><p>My main reason for creating this was to easily make modules that can extract specific XML documents.</p><p>Also have a look at http://github.com/robinsmidsrod/IMS-CP-Manifest and http://github.com/robinsmidsrod/W3C-XMLSchema for examples of usage.</p><p>The last one is my feeble (incomplete) try at extracting useful data from XSD which hopefully could be used to generate Moose classes dynamically, which might eventually make it possible to parse .NET web service calls and such on the fly.</p>
+excerpt: 
+blog_name: 
+-----

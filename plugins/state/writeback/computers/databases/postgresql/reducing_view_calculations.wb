@@ -1,0 +1,98 @@
+name: depesz@depesz.com
+url: http://www.depesz.com/
+title: </depesz>
+comment: <p>it would help a lot if you could show:</p><ol><li>\d events</li><li>explain analyze of the problematic query</li><li>version of pg</li></ol>
+excerpt: 
+blog_name: 
+-----
+name: EdwinF
+url: 
+title: More info needed.
+comment: <p>Hello.  As Depesz said, it is still not enough information to trace the performance issue (explain analyze, column type...).For now, what I can recommend is doing right side transformation before comparing and column redundace with the already calculated field using one index by that column.</p><p>instead of: <code>starts_at Between 'val1' and 'val2'</code>try: <code>starts_at between 'val1'::date and 'val2'::date</code>and make sure you have an index on that column only.</p><p>These are my two cents.</p>
+excerpt: 
+blog_name: 
+-----
+name: Scott Woods
+url: http://westarete.com
+title: Don't forget the PostgreSQL performance mailling list
+comment: <p>If you haven't posted the question there already, you should check out the pgsql-performance list. The content is generally excellent:</p><p><a href="http://archives.postgresql.org/pgsql-performance/">http://archives.postgresql.org/pgsql-performance/</a></p>
+excerpt: 
+blog_name: 
+-----
+name: hernan
+url: http://hjg.com.ar/
+title: 
+comment: <p>So, if I understand righly, you must match the date part of the <code>events.starts_at</code> (stored as timestimes UTC) as seen by the client (i.e. non UTC) to a <code>recurrence_dates.date</code> (plain date).The convertion seems unavoidable, and, as you see, the performance must suffer (dont know if postgresql has some sort of function results cache).</p><p>My first simple hack (obvious and ugly, of course; redundant data...) would be to add a column to <code>events</code> table, <code>starts_at_local</code> = starts_at with the &quot;local&quot; (clientside) timestamp (or perhaps just the date part). It seems you really need that data and it's too costly to compute dynamically. If the view were used only ocassionally (say, for reports and/or in batch mode) you might even produce this column by <code>SELECT</code>ing <code>INTO</code> a temporary table, from the <code>events</code> table, perhaps restricting by date range.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: More Info
+comment: <p>depesz:</p><ol><li><pre>try=# \d events                                        Table "public.events"     Column      |            Type             |                       Modifiers-----------------+-----------------------------+------------------------------------------------------- id              | integer                     | not null default nextval('events_id_seq'::regclass) name            | text                        | not null default ''::text user_id         | integer                     | not null starts_at       | timestamp without time zone |  start_tz        | text                        | not null default ''::text recurrence      | recurrence                  | not nullIndexes:    "events_pkey" PRIMARY KEY, btree (id)    "index_events_on_starts_at" btree (starts_at)    "index_events_on_user_id" btree (user_id)Check constraints:Foreign-key constraints:    "fk_events_users" FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE</pre></li><li>  <p>Here is is the <code>EXPLAIN ANALYZE</code> output using the view two times:</p><pre>try=# EXPLAIN ANALYZE SELECT *try-#   FROM recurring_eventstry-#  WHERE user_id = 2try-#    AND starts_at BETWEEN '2007-11-04 07:00:00' AND '2007-11-10 07:59:59';                                                                                                                                                                                                                                                                                 QUERY PLAN                                                                                                                                                                                                                                                                                 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- Nested Loop  (cost=0.01..701867.56 rows=686202 width=712) (actual time=67.627..13572.904 rows=212 loops=1)   Join Filter: ((timezone(events.start_tz, ((((rd.next_date)::text || ' '::text) || ((timezone(events.start_tz, (events.starts_at)::timestamp with time zone))::time without time zone)::text))::timestamp without time zone) >= '2007-11-04 07:00:00+00'::timestamp with time zone) AND (timezone(events.start_tz, ((((rd.next_date)::text || ' '::text) || ((timezone(events.start_tz, (events.starts_at)::timestamp with time zone))::time without time zone)::text))::timestamp without time zone) <= '2007-11-10 07:59:59+00'::timestamp with time zone))   ->  Index Scan using index_events_on_user_id on events  (cost=0.00..7333.47 rows=4459 width=708) (actual time=16.901..9763.273 rows=5461 loops=1)         Index Cond: (user_id = 2)   ->  Index Scan using recurrence_dates_pkey on recurrence_dates rd  (cost=0.01..42.65 rows=1385 width=10) (actual time=0.411..0.440 rows=5 loops=5461)         Index Cond: (((timezone(events.start_tz, (events.starts_at)::timestamp with time zone))::date = rd.date) AND (events.recurrence = rd.recurrence)) Total runtime: 13575.670 ms(7 rows)try=# EXPLAIN ANALYZE SELECT *  FROM recurring_events WHERE user_id = 2   AND starts_at BETWEEN '2007-11-04 07:00:00' AND '2007-11-10 07:59:59';                                                                                                                                                                                                                                                                                 QUERY PLAN                                                                                                                                                                                                                                                                                 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- Nested Loop  (cost=0.01..701867.56 rows=686202 width=712) (actual time=0.873..1653.552 rows=212 loops=1)   Join Filter: ((timezone(events.start_tz, ((((rd.next_date)::text || ' '::text) || ((timezone(events.start_tz, (events.starts_at)::timestamp with time zone))::time without time zone)::text))::timestamp without time zone) >= '2007-11-04 07:00:00+00'::timestamp with time zone) AND (timezone(events.start_tz, ((((rd.next_date)::text || ' '::text) || ((timezone(events.start_tz, (events.starts_at)::timestamp with time zone))::time without time zone)::text))::timestamp without time zone) <= '2007-11-10 07:59:59+00'::timestamp with time zone))   ->  Index Scan using index_events_on_user_id on events  (cost=0.00..7333.47 rows=4459 width=708) (actual time=0.261..152.600 rows=5461 loops=1)         Index Cond: (user_id = 2)   ->  Index Scan using recurrence_dates_pkey on recurrence_dates rd  (cost=0.01..42.65 rows=1385 width=10) (actual time=0.016..0.026 rows=5 loops=5461)         Index Cond: (((timezone(events.start_tz, (events.starts_at)::timestamp with time zone))::date = rd.date) AND (events.recurrence = rd.recurrence)) Total runtime: 1654.539 ms(7 rows)</pre></li><li><pre>try=# select version();                                                                   version                                                                    ---------------------------------------------------------------------------------------------------------------------------------------------- PostgreSQL 8.2.3 on powerpc-apple-darwin8.8.0, compiled by GCC powerpc-apple-darwin8-gcc-4.0.1 (GCC) 4.0.1 (Apple Computer, Inc. build 5250)(1 row)</pre></li></ol><p>Thanks!</p><p>—Theory</p¯>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Yet More Info
+comment: <p>And here is the <code>EXPLAIN ANALYZE<code> output for the same query, but without the date comparisons in the <code>WHERE</code>:</p><pre>try=# explain analyze SELECT *  FROM recurring_events WHERE user_id = 2;                                                                           QUERY PLAN                                                                            ----------------------------------------------------------------------------------------------------------------------------------------------------------------- Nested Loop Left Join  (cost=0.01..845975.05 rows=6175817 width=712) (actual time=0.207..2493.438 rows=30836 loops=1)   ->  Index Scan using index_events_on_user_id on events  (cost=0.00..7333.47 rows=4459 width=708) (actual time=0.148..45.016 rows=5461 loops=1)         Index Cond: (user_id = 2)   ->  Index Scan using recurrence_dates_pkey on recurrence_dates rd  (cost=0.01..42.65 rows=1385 width=10) (actual time=0.013..0.022 rows=5 loops=5461)         Index Cond: (((timezone(events.start_tz, (events.starts_at)::timestamp with time zone))::date = rd.date) AND (events.recurrence = rd.recurrence)) Total runtime: 2502.230 ms(6 rows)</pre><p>Doesn't tell you much, does it? I think it's because the cost is all in the calculation of the values for the <code>starts_at</code> column (and two other columns that make the same calculations).</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>hernan,</p><p>Yes, that's a good point. By creating a <code>local_starts_at</code> in the <code>events</code> table and putting in a trigger to keep it up-to-date, I could indeed eliminate about half the calculations per row. That would be a bonus, but I'm hoping that it can be even better than that. And more normalized.</p><p>That said, I will likely do it if I can't figure out anything better. Or else create a trigger to create all of the recurrences of any event in a table and then just join on that. Only trouble there is if we add more dates to the <code>recurrence_dates</code> table in the future, we'd need to re-run the trigger for every row in the table in order to add the new recurrences. With the view, however, they're just there. It's a trade-off, and frankly, I'm not perfectly happy with either solution.</p><p>Thanks for the suggestion!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: 
+url: http://frakkle.com/entry/106/in_response_to_need_help_reduc
+title: in response to: Need Help Reducing View Calculations
+comment: 
+excerpt: <p>I&#39;m posting this via trackback because of a&nbsp;strange posting problem:&nbsp; (layout is strange and missing the email field?&nbsp; Yes I am using a crud browser from here... that could be it)&nbsp;</p><p>I have to agree with Hernan.The simplest saving I can see is a&hellip;</p>
+blog_name: Frakkle
+-----
+name: depesz
+url: http://www.depesz.com/
+title: 
+comment: <p>i think i have a solution for your problem.</p><p>if i might suggest - simply skip the <code>recurrence_dates</code> table, and use <code>generate_series</code> function. it will work much better.</p><p>if you have doubts about how to do it, please contact me on jabber (depesz[at]depesz.com) as i have some more questions about the case, but from what i see, it should be trivial <strong>and</strong> very fast solution.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Hi depesz,</p><p>The reason we have a table of recurrence dates is that date math is complex. Daily events are simple, and weekly events not bad to calculate, but monthly and yearly events can be a PITA. For monthly events, if you make an event for Oct 31, there won't be one in November, because there is no November 31. For annual, if you make an event for February 29, 2008, there wont' be another one until 2012, because there wont' be another Feb 29 until then.</p><P>So I wrote a Perl script  that generates all the required dates for a length of time, and stores them in a table. Now if this could be replicated using <code>generate_series</code>, that would be great (our <code>recurrence_dates</code> table is huge). But I'm not at all clear on how it could be done. I'd more than welcome your suggestions; I've learned a lot from <a href="http://www.depesz.com/" title="&lt;/depesz&gt;">your blog</a> already, and am thrilled to learn more (PostgreSQL hacking being one of the things I really enjoy doing these days).</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Infernoz
+url: 
+title: 
+comment: <p>Theory:<p>My trick is, to get the end of month would be:</p><ol><li>set the day of month to 1</li><li>set the month number</li><li>increment the month number</li><li>decrement the day of month</li></ol><p>Easy!</p>
+excerpt: 
+blog_name: 
+-----
+name: Mage2k
+url: 
+title: 
+comment: <p>Theory, you'd be surprised at how well generate series can work with date math:</p><pre>test=# select '2007-10-31'::timestamp + (s.a || ''month')::interval from generate_series(0,6) as s(a);     ?column?       --------------------- 2007-10-31 00:00:00 2007-11-30 00:00:00 2007-12-31 00:00:00 2008-01-31 00:00:00 2008-02-29 00:00:00 2008-03-31 00:00:00 2008-04-30 00:00:00</pre>
+excerpt: 
+blog_name: 
+-----
+name: Mage2k
+url: 
+title: 
+comment: <p>Sorry, didn't realize I needed to handle my own formatting (you should probably offer the ability to preview comments if you're going to force that):</p><pre>test=# select '2007-10-31'::timestamp + (s.a || ' month')::interval from generate_series(0,6) as s(a);            ?column?       --------------------- 2007-10-31 00:00:00 2007-11-30 00:00:00 2007-12-31 00:00:00 2008-01-31 00:00:00 2008-02-29 00:00:00 2008-03-31 00:00:00 2008-04-30 00:00:00</pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Infernoz: Not sure what you're getting at. Nowhere here am I trying to find the first of the month.</p><p>Mage2K: Yep, that's exactly what I've come to thanks to off-site help from depesz. I'll post an update in a separate blog entry describing the solution I finally settled on. And yes, the site doesn't handle any comment formatting, but I always go back and clean up the comments. :-)</p><p>Thanks!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

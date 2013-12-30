@@ -1,0 +1,64 @@
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>For a compressed report on the state of hash functions see Schneier’s <a href="http://www.csrc.nist.gov/pki/HashWorkshop/index.html">NIST hash workshop</a> liveblogging: <a href="http://www.schneier.com/blog/archives/2005/10/nist_hash_works_1.html">[1]</a> <a href="http://www.schneier.com/blog/archives/2005/10/nist_hash_works_2.html">[2]</a> <a href="http://www.schneier.com/blog/archives/2005/10/nist_hash_works_3.html">[3]</a> <a href="http://www.schneier.com/blog/archives/2005/11/nist_hash_works.html">[4]</a> <a href="http://www.schneier.com/blog/archives/2005/11/nist_hash_works_4.html">[5]</a></p><p>Consensus seems to be that for now, SHA-256 is the weapon of choice.</p><p>I don’t know <a href="http://search.cpan.org/src/DIDO/SHA256-0.01b/t/test.t">how much good</a> <a href="http://search.cpan.org/perldoc?Digest::SHA256">Digest::SHA256</a> really is, though.</p>
+excerpt: 
+blog_name: 
+-----
+name: Ian
+url: 
+title: 
+comment: Rot 13?
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Aristotle,</p><p>Well, there <a href="http://search.cpan.org/src/DIDO/SHA256-0.01b/SHA256.pm" title="View the source of Digest::SHA256 on CPAN">doesn't seem to be much to it</a>, either. How bad can it be?</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+-----
+name: Not given
+url: 
+title: 
+comment: <p>Heh, I didn't realize my comment was HTML.  Feel free to delete my other attempt.<p>Collision-finding algorithms don't make MD5 useless for password hashing; they're mainly a problem for digital signature schemes.  Not that it gives me warm fuzzy feelings about MD5 security.<p>Bruce did mention that the cryptographers agreed that the current fuss wouldn't be so huge if SHA-1 had been specified with more rounds.  SHA-256 (and higher) use more rounds, so...<p>In practice it seems like the biggest thing hashing protects against is an attacker who already has the password database using a tool like John the Ripper to figure out users' passwords, then using the passwords elsewhere.  I don't know what Bric does in this area, and I'm no expert, but some good practices would be: <ol><li>definitely worth considering: general password security measures (some of which have nothing to do with John the Ripper)<ul>  <li> make random passwords available if people want them (Crypt::GeneratePassword), with a config option to make them mandatory  <li> when setting passwords, warn people if their password is bad according to the usual criteria (Data::Password?), with a config option to prohibit bad passwords  <li> optionally lock accounts after N auth failures (warn the user first, of course)  <li>encourage people to set admin passwords during installation</ul><li> maybe sometimes worth it: make it harder to get at the hashed passwords<ul>  <li>if realistic, create an "admin" Postgres account that can't read the password hashes, and a "bric" Postgres account that (a) can read the passwords and (b) has a random Postgres password and host-based authentication.  Minimize who has access to the file with bric's password  <li>alternatively, encrypt the hashes with a secret only accessible to bric</ul><li>probably not worth it: make brute-forcing more computationally expensive<ul>  <li>Make hashing slower.  For instance, AES-encrypt the password 1000 times with a fixed key before hashing.  Nobody will notice the delay in normal use, but it'll make cracking harder  <li>"salt" the passwords: instead of just hashing the password, hash the password plus a random nonce, and store concat(nonce, hash(concat(nonce, password))).  That keeps the cracker from precomputing a dictionary</ul></ol>
+excerpt: 
+blog_name: 
+-----
+name: Not given
+url: 
+title: 
+comment: Eh, fuzzy logic in the "In practice..." para above.  Obviously hashing doesn't protect against password crackers; it just means the attacker can't trivially read the passwords without using a cracker.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Not Given:</p><p>Thanks for the feedback. Bricolage does in fact already hash passwords with a secret string known only to it (and configured at install time):<p><pre>md5_hex($secret . md5_hex($pwd))</pre><p>I'll happily keep it that way or improve it. But if I were to use a <q>random nonce,</q> how would I recompute it to authenticate a user?</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Marshall
+url: 
+title: Strong passwords
+comment: <p>Re: Not given's suggestion on warning users about bad passwords:<p>Start typing a password at <a href="https://www.google.com/accounts/NewAccount">https://www.google.com/accounts/NewAccount</a></p><p>&#x2014;Marshall</p>
+excerpt: 
+blog_name: 
+-----
+name: Not given
+url: 
+title: 
+comment: <p>You would store the random number with the password.  But using a single secret per installation works fine too.</p><p>Hashing md5_hex($secret . $username . md5_hex($pwd)) would force a cracker to hash all the candidate passwords once per user rather than once per Bric installation -- not a huge win, but hey.</p><p>Apologies for saying "nonce" where it wasn't strictly necessary.  :)</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Not given:</p><p>Oh, I gotcha. My new app has a random <a href="http://en.wikipedia.org/wiki/UUID" title="Learn about UUIds on Wikipedia">UUID</a> associated with each user, so I could easily use it for the random secret. It would never change for the lifetime of the user, but every user would have his/her own. I also like your idea of incorporating the username. I think that this will make passwords much more secure:</p><pre>hd5_hex($uuid . $username . md5_hex($password));</pre><p>Now just to decide whether or not to dump MD5 in favor of something else! Maybe I'll just go with <a href="http://search.cpan.org/dist/Digest-SHA2/" title="Digest::SHA2 on CPAN">SHA2</a> for now, since it's currently the recommended hashing function.</p><p>Thanks!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

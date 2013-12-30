@@ -1,0 +1,14 @@
+name: john napiorkowski
+url: jjnapiorkowski.vox.com
+title: What would be even more cool
+comment: <p>Rather than just tweak the way Catalyst::View::TemplateDeclare works I think a lot of people would love to see more and better use of the View concept in Catalyst.  Right now by default most Catalyst Views (such as the TT and Mason View) are basically just lightweight handlers that delegate way too much work down to the template level.  There's way too little coherence between Controllers and Templates.  I think it would be awesome if the Catalyst View for TD would let you define a 'schema' for your UI model and map that to Catalyst Views, similarly to the way Catalyst Model DBIC maps a DBIC schema.  Then instead of all of us just defering template resolution to a secondary dispatching system (again like in TT or Mason) we could leverage what we already have in Cat.  Just random thoughts (on the way to my personal perfect Perl Catalyst development environment :) )</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: What would be even more cool
+comment: <p>Hey John,</p><p>Not sure I really follow. I don't use DBIx::Class and, frankly depend on the database to be my model (hence <a href="http://search.cpan.org/perldoc?DBIx::Connector" title="DBIx::Connector on CPAN">DBIx::Connector</a>). But I have written the new view to take advantage of the Template::Declare alias feature so that TD template classes and templates will map to paths in the same way that Catalyst controllers and actions map to URIs. I think it will be a nice parallel.</p><p>But I'll be curious to see what <em>you</em> come up with in terms of a UI schema. :-)</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

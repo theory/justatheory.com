@@ -1,0 +1,7 @@
+name: alex
+url: 
+title: 
+comment: <p>Trigger on logon can solve this problem once and for all</p><p>Concept:</p><pre>==postgresql.conf==local_preload_libraries = 'logon_trigger'</p><p>==logon_trigger.c== goes to $libdir/plugins</p>include "postgres.h"include "fmgr.h"include "executor/spi.h"include "access/xact.h"<p>PG_MODULE_MAGIC;</p><p>void <em>PG</em>init( void );void <em>PG</em>fini( void );</p><p>void <em>PG</em>init( void ){/* warning: no error checks */  StartTransactionCommand();  SPI_connect();  SPI_execute("SELECT logon_trigger()", false, 0);   SPI_finish();  CommitTransactionCommand();}</p><p>void <em>PG</em>fini( void ){}==logon_trigger.sql==create or replace function logon_trigger() returns void as... --any initialization you like</pre>
+excerpt: 
+blog_name: 
+-----

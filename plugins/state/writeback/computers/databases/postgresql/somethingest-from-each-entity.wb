@@ -1,0 +1,21 @@
+name: Bill Karwin
+url: http://karwin.blogspot.com/
+title: Greatest-N-Per-Group
+comment: <p>I've been answering this question so frequently on StackOverflow (44 so far) that I created a <a href="http://stackoverflow.com/questions/tagged/greatest-n-per-group">tag</a> for it. I realize sometimes the query calls for the least instead of the greatest, but it's the latter often enough that the pattern name seems fitting.</p><p>CTE and windowing functions aren't available in all databases.  PostgreSQL supports these features, so you may scoff, but even PostgreSQL is only the first open-source RDBMS to support them; Oracle, Microsoft, and DB2 have supported them for years.</p><p>Here's a solution that uses more plain, old-school syntax:</p><pre>SELECT m1.sender, m1.recipient, m1.sent_at, m1.body  FROM messages m1LEFT OUTER JOIN messages m2 ON m1.sender = m2.sender    AND m1.recipient = m2.recipient    AND m1.sent_at &lt; m2.sent_atWHERE m2.sender IS NULL;</pre><p>In other words, find the row m1 such that no row m2 exists with the same sender/recipient pair and a more recent date.</p><p>This solution may return multiple rows if there are ties, but so would have the GROUP BY solution you showed at the top.  To resolve this, add another tie-breaker term to the join expression:</p><pre>SELECT m1.sender, m1.recipient, m1.sent_at, m1.body  FROM messages m1LEFT OUTER JOIN messages m2 ON m1.sender = m2.sender    AND m1.recipient = m2.recipient    AND (m1.sent_at &lt; m2.sent_at    OR m1.sent_at = m2.sent_at AND m1.unique_key &lt; m2.unique_key)WHERE m2.sender IS NULL;</pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Greatest-N-Per-Group
+comment: <p>Thanks for the comment. I knew that this pattern must be pretty common, thanks for elegant <code>JOIN</code> solution. Believe me, I don't scoff about PostgreSQL supporting the feature; I'm very happy to have it in 8.4, and for the opportunity to learn more about it by using it to implement this pattern.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Chris Spotts
+url: 
+title: 
+comment: <p>I've loved Postgres' distinct on() and miss it greatly when having to code for other DB's.</p>
+excerpt: 
+blog_name: 
+-----

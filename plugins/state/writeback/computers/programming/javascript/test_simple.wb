@@ -1,0 +1,28 @@
+name: Beau Diddly
+url: 
+title: 
+comment: I think window.SetInterval() is the closest you can get to anything like threads. You pass it a function reference and a time in millisecond that says how long to wait between executions.
+excerpt: 
+blog_name: 
+-----
+name: Marshall Roch
+url: http://www.spastically.com
+title: 
+comment: The onerror event passes three arguments to the error handler, the message, the URL containing the error, and the line number.  You'd do something like:window.onerror = function(msg, url, line) { alert(msg + " (line "+line+")"); }See example 14-1 of the Rhino book. :) 
+excerpt: 
+blog_name: 
+-----
+name: Marshall Roch
+url: http://www.spastically.com
+title: 
+comment: See page 667 for even more detail on the onerror event.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Stack Trace
+comment: <p>Thanks, Marshall. Yes, I was aware that exceptions give me line numbers and URLs. However, they give them only for where the exception was thrown. This doesn't help me. For example, say a test failed in a script. There is no exception. I could throw one from inside TestBuilder, but that would only tell me the URL and file name of TestBuilder itself, not where the test actually failed. For that I would need a stack trace, and there seems to be no way to get one in JS.</p><p>But I will indeed be using exceptions and <code>window.onerror</code> to halt test execution...</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

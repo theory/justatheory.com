@@ -1,0 +1,28 @@
+name: hisso
+url: http://twitter.com/hissohathair
+title: 
+comment: <p>I think what our friend "hrwksxnxs" is trying to say is that pgTAP fails it's "installcheck" target when running under Cygwin.</p><p>That's because the <strong>OS</strong> macro returns the OS name "cygwin_nt-5.1" which doesn't match the regex in your test. You could change the regex to allow for "_" and "-" but maybe osname should just be returning "cygwin"?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>hisso,</p><p>Our friend "hrwksxnxs" has lost his comment, alas. :-)</p><p>Yes, "cygwin" would be better. I'll have to look at how to get it to be just that. Can you file a <a href="http://github.com/theory/pgtap/issues">bug report</a>?</p><p>Thanks for taking it for a test drive!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: hisso
+url: http://twitter.com/hissohathair
+title: 
+comment: <p>Bug report filed!</p><p>Although I see you've already patched Makefile! Thanks.</p><p>Now to write some actual tests with it... :-)</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>hisso—</p><p>Yes, I patched the Makefile, but it occurred to me this morning that I could just rip off all the OS-detection code in Perl's <code>Configure</code> file to put a permanent end to this sort of problem. I'll likely do that in the next few days.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

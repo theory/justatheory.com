@@ -1,0 +1,49 @@
+name: Bob Ippolito
+url: http://bob.pythonmac.org/
+title: Excellent!
+comment: <p>I didn't even notice the Safari bugs in the previous release.. I got along just fine.. but perhaps I was just writing my test suite defensively enough that it didn't break anything.</p><p>Aside from changing the includes, this (diff) was all I had to do in order to upgrade, where bind(func, obj) does the obvious:</p><pre>-    plan('tests', 46);+    var test = new Test.Builder();+    test.plan({'tests': 46});+    var is = bind(test.isEq, test);+    var ok = bind(test.ok, test);</pre><p>BTW: I didn't see any documentation that "is" was removed/renamed, but perhaps I didn't look hard enough.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Excellent!
+comment: <p>Bob,</p><p><code>is()</code> was not removed. It's in Test.More, not Test.Builder. Try this:</p><pre>  &lt;script src=&quot;js/Test/Builder.js&quot;&gt;&lt;/script&gt;  &lt;script src=&quot;js/Test/More.js&quot;&gt;&lt;/script&gt;  &lt;script&gt;    plan({ tests: 46});    is(1, '1', 'Got one?');  &lt;/script&gt;</pre><p>HTH!</p><p>&#x2014Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Bob Ippolito
+url: http://bob.pythonmac.org/
+title: 
+comment: That's bizarre, because it didn't work until I made those bindings.  I am including Test/More.js , maybe it was some kind of stale cache sludge screwing things up.
+excerpt: 
+blog_name: 
+-----
+name: broquaint
+url: http://www.broquaint.com
+title: Why increment when you can iterate
+comment: Aristotle demonstrates a nice way to iterate through arrays without having to use the ubiquitous incrementation of the array index at <a href="http://plasmasturm.org/log/217/">Javascript instant iterators</a>.
+excerpt: 
+blog_name: 
+-----
+name: Bob Ippolito
+url: http://bob.pythonmac.org/
+title: 
+comment: Wow, I bet that that style of iterator makes for some really inefficient JavaScript code.  Unfortunately, that matters, because the implementations of JavaScript in today's browsers are pathetically slow already.  Adding a constant significant overhead to every iteration of every loop is not something I'd do..  It's generally better not to "fight the framework" so much because it fights back.  For example, if you start hacking the Object prototype (*cough*Prototype*cough*), then property iteration no longer works correctly; which is why David reverted to for(;;) loops.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Why increment when you can iterate
+comment: <p>broquaint,</p><p>Cool technique. I'll keep that in mind for when I create Iterator.js. ;-)</p><p>Bob,</p><p>Performance is something the browsers will have to fix at some point. So far, I have no complaints (these tests run really fast!). In general, I'll take style over performance, and will probably put Aristotle's iterator technique to use one day (it doesn't look that slow to me, and does not use <code>for (var in)</code>). But I will leave things as they are in my Test modules so as to keep things as simple and portable as possible.</p><p>Cheers!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Bob Ippolito
+url: http://bob.pythonmac.org/
+title: Re: Why increment when you can iterate
+comment: Performance is something browsers will have to fix, but are very, very, very far from fixing.Another assumption that the iterator makes is that a value that evaluates to false is the end of the iterationFunction invocation is slow in JS, especially when you have a closure, and this adds at least two function invocations per iteration.
+excerpt: 
+blog_name: 
+-----

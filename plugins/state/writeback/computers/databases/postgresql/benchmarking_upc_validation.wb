@@ -1,0 +1,28 @@
+name: StuckMojo
+url: 
+title: 
+comment: <p>Well, here's the results of it as a C function:</p><pre>test=# select validate_upc('0083514870406') from generate_series (1, 10000);Time: 138.571 mstest=# select ean_byte('0083514870406') from generate_series (1, 10000);Time: 151.628 mstest=# select ean_c('0083514870406') from generate_series (1, 10000);Time: 12.612 ms</pre><p>Pretty god damn impressive!!</p><pre>#include &lt;string.h&gt;#include "postgres.h"#include "fmgr.h"PG_FUNCTION_INFO_V1(ean_c);Datum ean_c(PG_FUNCTION_ARGS) {    char *ean;    text *arg = PG_GETARG_TEXT_P(0);    int  arglen = VARSIZE(arg) - VARHDRSZ;    bool ret = false;    /* Validate the easy stuff: 12 or 13 digits. */    if ((arglen != 12 && arglen != 13) ||        strspn(VARDATA(arg), "0123456789") != arglen) {        PG_RETURN_BOOL(ret);    }    /* Support UPCs. */    if (arglen == 12) {        ean = (char *) palloc(13);        ean[0] = '0';        memcpy(&ean[1], VARDATA(arg), arglen);    } else {        ean = (char *) palloc(arglen);        memcpy(ean, VARDATA(arg), arglen);    }    ret = 10 - (            /* Sum even numerals and multiply total by 3. */            (ean[1] - '0' + ean[3] - '0' + ean[5] - '0'             + ean[7] - '0' + ean[9] - '0' + ean[11] - '0') * 3            /* Add odd numerals except for checksum (12). */            + ean[2] - '0' + ean[4] - '0' + ean[6] - '0'            + ean[8] - '0' + ean[10] - '0'        /* Compare to the checksum. */        ) % 10 == ean[12] - '0';   PG_RETURN_BOOL(ret);}</pre>
+excerpt: 
+blog_name: 
+-----
+name: StuckMojo
+url: 
+title: 
+comment: <p>I packaged this up as a contrib module for easy use:<br /><br /><a href="http://www.thewickedtribe.net/~jon/postgres/ean_c.tgz">http://www.thewickedtribe.net/~jon/postgres/ean_c.tgz</a></p>
+excerpt: 
+blog_name: 
+-----
+name: Alvaro Herrera
+url: 
+title: Performance comparisons
+comment: <p>pgbench is a contrib module you can use for performance comparison.  Starting with PostgreSQL 8.1 you can give it arbitrary SQL scripts to run using the -f option.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Reflecting on Performance
+comment: <p>Just thinking about the performance of these functions, I realized that, on my system, all but the looping version can execute 10,000 times in less than half a second. As compelling as I find StuckMojo's C version, I think I'll stick to the pure PL/pgSQL for the time being, since that's how all my other functions are written. Because, when you come down to it and are talking about this kind of performance for functions, figuring out which is fastest is just a kind of splitting hairs.</p.<p>If I later find that I need C functions for other stuff, I might use StuckMojo's version, because then I'll have to deal with the issues of distribution, anyway, so it won't hurt to then make everything that I can be in C, and this version would require no extra tuits. :-)</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

@@ -1,0 +1,91 @@
+name: Marshall
+url: 
+title: 
+comment: <p>Looks like a job for inject. And a mixin. Woo!</p><pre>module Enumerable  def to_hash    self.inject({}) { |h, i| h[i] = i; h }  endend</pre><pre>>> [1, 2, 3, 4].to_hash=> {1=>1, 2=>2, 3=>3, 4=>4}>> { :foo => :bar, :baz => :bliffl }.to_hash=> {:foo=>:bar, :baz=>:bliffl}</pre>
+excerpt: 
+blog_name: 
+-----
+name: Marshall
+url: 
+title: 
+comment: <p>To be honest, I have no idea why that works for hashes.  Specifically, I was surprised to find that the <code>h[i] = i</code> bit worked on them... what is <code>i</code>?  In an array, it's the element.  In a hash, it's somehow both the key and the value.  Anyone know what's up?</p>
+excerpt: 
+blog_name: 
+-----
+name: brian d foy
+url: 
+title: 
+comment: <p>Well, in Perl it's even easier: @hash{@a} = @a</code></p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Marshall: <code>Hash</code> defines its own <code>to_hash</code> method, so the mixin is never accessed.</p><p><tt>brian</tt>: I'm obviously out of practice. :-(</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>brian: that's not an inlinable into the declaration.</p><p>Marshall: monkeypatching is something to ashamed of, not something to show off proudly. It is a strategy of last resort. <em>Last</em> resort.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Aristotle: For better or for worse, such monkey patching is <em>de rigueur</em> in the Ruby community. It has taken quite a while for me as Perl hacker to get used to it (whether I really like it or not is quite another question).</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: darth
+url: 
+title: 
+comment: <p>if you only care to test for the existence of the key, do</p><pre>@hash{@a} = (undef) x @a;</pre><p>and then test using the "exists" function. can save memory if the array is large and exists is slightly faster</p>
+excerpt: 
+blog_name: 
+-----
+name: rjbs
+url: http://rjbs.manxome.org/
+title: monkeypatching
+comment: <p>What I've often wanted from Ruby is some form of lexical constant class redefinition.  Example:</p><pre>HashClass = RJBSHashdict = { ... } # I just made an RJBSHash</pre><p>Fat chance.</p>
+excerpt: 
+blog_name: 
+-----
+name: Piers Cawley
+url: http://www.bofh.org.uk/
+title: 
+comment: <p>Personally, I'd use a set:</p><pre>require 'set'set = some_array.to_set</pre><p>It covers most cases where you'd want to be converting to a hash. Otherwise, either an <code>inject</code> or, if you're going to be using the same conversion block lots of times, roll a new class whose initialize method does the right thing.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Piers: I always forget about <code>inject</code>:</p><pre>h = a.inject({}) {|h, v| h.merge! v => v }</pre><p>I like it! Shorter and probably a bit more efficient than my original solution. Although I suspect that, like in Perl, hashes in Ruby are more expensive than arrays. In that case, I'd do:</p><pre>h = a.inject({}) {|h, v| h[v] = v; h }</pre><p>Shorter, too.</p><p><p>Oh, and while I agree with you on sets, I specifically needed to create a lookup table mapping <code>ActiveRecord</code> IDs to objects. I just put a general example here. But I should keep sets in mind, too. And yeah, I was just using a hash as a data structure, I'd find myself looking at using real objects in a hurry.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>David:</p><p>I know the Rubyists consider monkeypatching chic. However much they like it doesn’t legitimise it, though. One day they’ll wake up and notice that their piles of “clever” Ruby are just as nasty to maintain as they always claim that Perl code is. In both cases the problem is the same: the coder, not the language.</p><p>(In fact, I’ve only recently realised that the Perl community is just as pubescent in dragging out the “Perl has no infatuation with enforced privacy” chestnut. Ever since, I started writing private methods in my classes as anonymous functions stored in lexicals. Thankfully it is possible to avoid the language deficiency using another language feature.)</p>
+excerpt: 
+blog_name: 
+-----
+name: Piers Cawley
+url: http://www.bofh.org.uk/
+title: 
+comment: <p>One of the many fine things about Smalltalk is that it's possible to monkeypatch with abandon (ferinstance, as soon as you add an <code>isWhatever</code> method to replace an <code>isKindOf: Whatever</code> call, you're going to have to add an <code>isWhatever</code> definition to Object too (returning false, obviously). If that's wrong, then I don't want to be right.</p><p>The thing that's great about Smalltalk monkeypatching is that you can also run code in a workstation that walks the tree of subclasses of Whatever, programmatically adding 'isSubclassName' methods to those subclasses (and to Object). But, when you've finished, you can browse the classes you monkeypatched, and find editable method definitions for each new method, just as if you'd added them to the classes by hand. Which means you get to throw away the (potentially) tricky to understand workspace script.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Aristotle,</p><p>I think that there is already some concern about the amount of monkey patching that Rails does. It really is quite insane. What's happening is that a lot of developers are becoming very dependent on programming Rails, rather than Ruby. For myself, as a grouchy old Perl hacker, I tend to write subclasses (<em><q>say what?</q></em> say Rails folks), and monkey patches to fix bugs that haven't yet been fixed in Rails itself.</p><p>Great discussion, people—thanks!</p>
+excerpt: 
+blog_name: 
+-----

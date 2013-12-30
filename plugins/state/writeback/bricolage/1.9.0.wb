@@ -1,0 +1,63 @@
+name: 
+url: http://www.chaddickerson.com/blog/2005/08/23/phpperl-programming-language-mashup/
+title: PHP/Perl programming language mashup!
+comment: 
+excerpt: 	(Via O&#8217;Reilly Radar) My friend and former Salon.com colleague David Wheeler announced on Saturday that the new version of open source CMS Bricolage supports PHP templating via a new Perl module developed by George Schlossnagle.  From the README:...
+blog_name: Chad Dickerson's blog
+-----
+name: 
+url: http://joseph.randomnetworks.com/?p=463
+title: PHP::Interpreter
+comment: 
+excerpt: 	Bricolage announced a new release today which adds support for PHP5 templating.  They are able to do this via a new a CPAN module: PHP::Interpreter.  This module allows you to embed a PHP5 interpreter into Perl.  On top of that you can reach back into...
+blog_name: Joseph Scott's Blog
+-----
+name: Gothic
+url: http://Kmos.BlogSpot.com
+title: Nice work!
+comment: It's good to see that companies like SAPO.pt are contributing to the open-source world.
+excerpt: 
+blog_name: 
+-----
+name: Daniel Schildt
+url: http://del.icio.us/d2s
+title: 
+comment: Interesting to see this kind of improvements. PHP::Interpreger can be good for many people that work with both Perl and PHP because there is useful software in both worlds.
+excerpt: 
+blog_name: 
+-----
+name: 
+url: http://loadaveragezero.com/app/s9y/index.php?/archives/28-Bricolage-Adds-PHP-Support.html
+title: Bricolage Adds PHP Support
+comment: 
+excerpt:  Version 1.9.0 of David Wheeler's excellent Bricolage Perl CMS adds the ability to call PHP from inside the system. It also sports a new UI, built with standards compliant XHMTL 1.0 Strict and CSS.But the really exciting news is the new PHP 5 Templating
+blog_name: blogZero
+-----
+name: 
+url: http://radio.weblogs.com/0133680/2005/08/25.html#a195
+title: PHP 5 Now Runs in Perl 5
+comment: 
+excerpt: This is why Perl is cool.
+blog_name: Developing Software
+-----
+name: Jonathan Lambert
+url: http://www.FireBright.com/
+title: 
+comment: <p>I don't quite <q>get it</q>, so forgive me for these comments.  I'm throwing them down for discussion, not hate.</p><p>Might it be a much better use of talented (obviously) developer's time and effort to decouple the layers of Bricolage and simply use a <a href="http://en.wikipedia.org/wiki/Web_services">web services</a> architecture?  Doing so eliminates the need to have embedded interpreters at all, and you could have native components in a myriad of different languages, not just Perl or Embedded PHP.  Not only that, but it would facilitate Bricolage in becoming more of a platform for building service oriented architectures (which is where the web is going, web 2.0, etc).</p><p>I'd really like to become a fan of Bircolage, and having access to CPAN is nice, but I don't see how the php5 interpreter really helps Bricolage to become a more capable CMS, though is it an impressive technological achievement.</p><p>Someone looking for a php CMS isn't going to run off an run Bricolage because of it's new abilities, as they're still going to have to use Perl in virtually everything they do that has anything to do with data access, application logic, etc.  Especially not with so many php CMS solutions in the market, some of which are starting not to suck.</p><p>And no Perl programmer in their right mind (they're are a few that aren't) is going to invest their time in using PHP as a frontend language when they can use Perl, so I guess the second question is, who is this written for?</p><p>Forgive the pointedness of my comments.  These are <em>real</em> questions, not flames, and I would really like to hear the answers.</p><p>Jonathan</p>
+excerpt: 
+blog_name: 
+-----
+name: Ani
+url: 
+title: Perl embedded in php
+comment: <p>can anybody tell me how to make perl work in php.For e.g.</p><pre>$perl=new Perl();I got Fatal error: Class 'Perl' not found in for this.</pre><p>can anybody tell me how exactly this can be resolved?</p><p>Thanks in advance</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Perl embedded in php
+comment: <p>Ani,</p><p>Did you <code>use PHP::Interpreter</code>?</p> Other than that, I got nothin'. Try posting to the mail list. Send a message to <a href="mailto:php-sandwich-dev-subscribe@perl.org">php-sandwich-dev-subscribe@perl.org</a> to subscribe.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

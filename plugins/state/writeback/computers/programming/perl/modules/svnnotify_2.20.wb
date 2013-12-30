@@ -1,0 +1,14 @@
+name: Wolf Wiegand
+url: http://www.univention.de
+title: Nice!
+comment: <p>Hey, cool stuff. Thanks a lot! I've only tested it for a couple minutes now, is there a way to only put the names of the affected files, but not the commit message, into the subject?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Nice!
+comment: <p>Wolf</p><p>Use the <code>--subject_cx</code> option. And be sure to use <a href="http://search.cpan.org/dist/SVN-Notify/" title="SVN::Notify on CPAN">latest release</a>!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

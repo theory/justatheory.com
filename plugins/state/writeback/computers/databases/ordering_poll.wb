@@ -1,0 +1,63 @@
+name: Josh Berkus
+url: http://blogs.ittoolbox.com/database/soup/
+title: 
+comment: <p>Per our IM discussion I would use tag_order.  It seems the most unambiguous.</p>
+excerpt: 
+blog_name: 
+-----
+name: Cory
+url: http://www.onemogin.com/blog/
+title: 
+comment: <p>I use idx, for index.</p>
+excerpt: 
+blog_name: 
+-----
+name: Adrian Howard
+url: 
+title: 
+comment: <p>Another vote for tag_order. <q>order</q> because typing two extra characters to make it a word isn't too much effort. prefix to make it explicit what's being ordered.</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>I use <code>rank</code>. Using a variation of <code>order</code> doesn&#8217;t sit right with me, because the <q>order</q> is a property of <em>a collection</em> of items, not of one individual item.</p>
+excerpt: 
+blog_name: 
+-----
+name: peter keane
+url: 
+title: 
+comment: sort_order
+excerpt: 
+blog_name: 
+-----
+name: Peter Stuifzand
+url: http://www.peterstuifzand.nl
+title: 
+comment: <p>I sometimes use prio(rity) or something like it.</p>
+excerpt: 
+blog_name: 
+-----
+name: Ian Holsman
+url: http://feh.holsman.net
+title: 
+comment: <p>I just checked what I used.. and it was 'order'.my ORM software just quotes it for me.</p><p>The best thing is when you don't even have to think about SQL reserved words ;-)</p>
+excerpt: 
+blog_name: 
+-----
+name: Pat
+url: 
+title: 
+comment: <p>I always use seq.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Thank for the feedback, folks. I've decided to follow Josh's and Adrian's advice and go with <code>tag_order</code> for the reason's they've cited. I considered using <code>_seq</code> instead of <code>_order</code>, but decided against it because: a) I'm not using sequences there; and b) because queries will <code>ORDER BY</code> that column. I wouldn't use <code>idx</code> because it's not an index, not even into an array (because the values in the column may actually be discontinuous. We were using <code>rank</code> for a while, but it's actually not a hierarchical relationship I'm after, it's just about ordering, although your point is well taken, Aristotle.</p><p>Thanks!</p>
+excerpt: 
+blog_name: 
+-----

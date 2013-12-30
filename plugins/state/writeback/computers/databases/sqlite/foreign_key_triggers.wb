@@ -1,0 +1,223 @@
+name: Witold Czarnecki
+url: http://www.programmers.pl?lang=en
+title: Another way
+comment: <p>Little shorter syntax:</p><pre>CREATE TRIGGER fki_bar_foo_idBEFORE INSERT ON barFOR EACH ROW BEGIN   SELECT RAISE(ABORT, 'Blah-blah')   WHERE  (SELECT id FROM foo WHERE id = NEW.foo_id) IS NULL;END;</pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Another way
+comment: Ah, nice, thanks Witold!
+excerpt: 
+blog_name: 
+name: James
+url: 
+title: foreign keys with SQLite
+comment: <p>Hi there</p></p>I tried your code but get this error on the command line:</p><p>SQL error: near "on": syntax error</p><p>I suspect it is something to do with this SQL command</p><pre>CREATE TRIGGER fki_bar_foo_id	BEFORE INSERT ON PCT_details	FOR EACH ROW BEGIN 		SELECT RAISE(ABORT, ‘insert on table "PCT_details" violates foreign key’)		WHERE (SELECT Client_id FROM Client_details WHERE Client_id = NEW.Client_id) IS NULL;	END;</pre><p>any ideaS? please.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: foreign keys with SQLite
+comment: <p>James</p><p>Change those curly single quotation marks around the error to the straight single quotation mark and you'll be in business.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: sql monkey
+url: 
+title: 
+comment: Does not work for me.  Does it work for you, or are you just assuming it works?I have working triggers that create timestamps and even check for duplicate entries in tables, but my foreign key triggers won't work.  I've been banging my head agaist a wall for 2 weeks on this...  any help appreciated.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Doesn't Work
+comment: <p>sql monkey</p><p>Yes, they  work for me. Do you have a link to your SQL? And what version of SQLite are you using?</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: sql monkey
+url: 
+title: 
+comment: <p>sqlite version I am using is 2.8.16I don't have a link but:</p><pre>CREATE TABLE picture (        pictureid INTEGER PRIMARY KEY,        filename TEXT NOT NULL ON CONFLICT ROLLBACK,	parentdirid INTEGER NOT NULL ON CONFLICT ROLLBACK,	parentdirprefixid INTEGER NOT NULL ON CONFLICT ROLLBACK,	md5sum TEXT NOT NULL ON CONFLICT ROLLBACK,        countryid INTEGER,	regionid INTEGER,        stateid INTEGER,        cityid INTEGER,        captionid INTEGER,        descriptionid INTEGER,        matesid INTEGER,        expodateid INTEGER,        photographerid INTEGER,        imagingdeviceid INTEGER,        rotateid INTEGER,        gammaid INTEGER,        timestamp TEXT);CREATE TABLE description (        descriptionid INTEGER PRIMARY KEY,	description TEXT NOT NULL UNIQUE);CREATE TABLE SlideshowPicture (        slideshowid INTEGER NOT NULL,	pictureid INTEGER NOT NULL,	ordernumber INTEGER,        timestamp TEXT);CREATE TRIGGER SlideshowPictureContraint BEFORE INSERT ON SlideshowPicture  BEGIN   SELECT CASE WHEN foo.a > 0 THEN RAISE(ROLLBACK, 'Any given picture can only be in a slideshow once')    ELSE 1 END FROM (SELECT COUNT(*) AS a FROM SlideshowPicture where new.slideshowid = SlideshowPicture.slideshowid AND new.pictureid = SlideshowPictureid) AS foo;END;-- the above trigger works-- various attempts at foreign key triggers (only difference is these involve more than one table) do not work, eg. (these two fail for every insert on picture, whether the foreign key is valid or not):--FOR EACH ROW WHEN new.descriptionid IS NOT NULL--BEGIN--SELECT CASE--WHEN ((SELECT description.descriptionid FROM description, picture WHERE description.descriptionid = NEW.descriptionid) IS NULL)--  THEN RAISE(ROLLBACK, 'insert on table picture references a descriptionid that does not exist')--END;--END;        -- BORKED: also stops valid inserts--CREATE TRIGGER insert_description AFTER INSERT on picture--FOR EACH ROW BEGIN--SELECT CASE-- WHEN ((new.descriptionid IS NOT NULL)--     AND ((SELECT descriptionid FROM description WHERE descriptionid = NEW.descriptionid) IS NULL))-- THEN RAISE(ROLLBACK, 'insert on table picture references a descriptionid that does not exist')--END;--END;</pre>
+excerpt: 
+blog_name: 
+-----
+name: sql monkey
+url: 
+title: 
+comment: whoa, no formatting?...
+excerpt: 
+blog_name: 
+-----
+name: sql monkey
+url: 
+title: 
+comment: FYI, I had the same errors trying sqlite 3.latest_greatestThe key difference between triggers that work and those that don't is the failing ones involve more than one table.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Doesn't Work
+comment: <p>I added a bit of formatting for you. I should add a note to the comment box so that people know that they can use some HTML.</p><p>Anyway, it may be that it doesn't work in SQLite 2. I dunno, I never tried. I've only been using SQLite 3.0 and later.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Doesn't Work
+comment: <p>I think you need a <code>JOIN</code> clause or a <code>WHERE</code> clause in your <code>SELECT</code> statement. This works for me:</p><pre>CREATE TRIGGER insert_description AFTER INSERT on pictureFOR EACH ROW BEGINSELECT RAISE(ROLLBACK, 'whoops')WHERE  NEW.descriptionid IS NOT NULL       AND ((SELECT descriptionid             FROM   description	     WHERE  descriptionid = NEW.descriptionid)	    IS NULL);END;</pre><p>Dunno about the other one, but you might want to consider ugins a <code>UNIQUE</code> index instead of that nasty hack to catch duplicate entries.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: sql monkey
+url: 
+title: 
+comment: Holy smokes!  It works!  (Your code above).<br><br>SQL monkey loves you.<br><br>Well, now I'll have to figure out what exactly I was doing wrong... (why it works) I had tried 100s of permutations, believe me.  Ridiculous.<br><br>Re nasty hack, the reason for the trigger is that I can NOT use UNIQUE (this is a table that stands between a many to many- "junction table"- is that the term?  Anyways.
+excerpt: 
+blog_name: 
+-----
+name: sql monkey
+url: 
+title: 
+comment: hmmm... wait a sec.  Are you suggesting that if one can not make a column unique, there is a way to constrain two columns (i.e. pairs) to be unique via an index?
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Multicolumn Unique Index
+comment: <pre>CREATE INDEX idx_foo ON foo(bar_id, bid_id);</pre><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: sql monkey
+url: 
+title: 
+comment: Can an insert affect an existing row, or does it only add rows (if so, UPDATE is the only choice to modify an existing row- assuming you don't delete and somehow readd)?
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: INSERT
+comment: <p>An <code>INSERT</code> can only add a new row. It cannot affect an existing row unless a <code>RULE</code> changes the <code>INSERT</code> statement to something else or unless it sets off a <code>TRIGGER</code> that affects another row.</p><p>But I think you might want to start posting to <a href="http://archives.postgresql.org/pgsql-general/" title="Subscribe to pgsql-general or browse its archives">pgsql-general</a> for these kinds of questions. My blog isn't really a support forum.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: sql monkey
+url: 
+title: 
+comment: Thanks.  You can delete the (off topic or all) entries I made... I won't get offended.
+excerpt: 
+blog_name: 
+-----
+name: Lloyd
+url: 
+title: and what about?
+comment: what if I want the trigger to create the related line for me?I'm new to SQLite and trying to do this....
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: and what about?
+comment: <p>Lloyd,</p><p>I don't know what you mean. Can you explain it to me in more detail? Also, you can ask on the <a href="http://www.sqlite.org/support.html" title="Subscribe to the SQLite mail list">SQLite mail list</a>.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Chris Smith
+url: 
+title: Brilliant
+comment: Thanks for this post.You should consider adding it to the SQLite wiki.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Brilliant
+comment: <p>Chris,</p><p>Good call. <a href="http://www.sqlite.org/cvstrac/wiki?p=ForeignKeyTriggers" title="SQLite Wiki: Foreign Key Triggers">Done</a>.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Randy Syring
+url: 
+title: CASCADE UPDATE OF PK
+comment: <p>I am trying to get a cascade update trigger to work.  IE, if your parent table's primary key gets update (naughty, naughty) it cascades that update to the foreign key so that referential integrity is not lost.</p><p>Here is my code:</p><pre>CREATE TRIGGER fkuc_smvcModClient_id_smvcModClientSearchProjects_clientIdBEFORE UPDATE OF id ON smvcModClientFOR EACH ROW BEGIN     UPDATE smvcModClientSearchProjects SET clientId = NEW.id     WHERE smvcModClientSearchProjects.clientId = OLD.id;END;</pre><p>The problem is that when this fires, my previous update constraint gives me an error:</p><pre>CREATE TRIGGER fku_smvcModClientSearchProjects_clientId_smvcModClient_idBEFORE UPDATE ON [smvcModClientSearchProjects] FOR EACH ROW   BEGIN   SELECT CASE     WHEN ((SELECT id              FROM smvcModClient              WHERE id = NEW.clientId)          IS NULL)     THEN RAISE(ABORT, 'update on table "smvcModClientSearchProjects" violates foreign key constraint "fku_smvcModClientSearchProjects_clientId_smvcModClient_id"')     END;END;</pre><p>So, it would seem that the first query I posted is trying to update clientId with value that is not a valid ID in the smvcModClient table.  However, I can't seem to figure out why and I am not sure how to debug triggers.<p><p>Any Ideas?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: CASCADE UPDATE OF PK
+comment: <p>Randy</p><p>Uh, don't change primary keys! If you have an application that is likely to do that, use a <a href="http://en.wikipedia.org/wiki/Surrogate_key" title="Surrogate keys explained on Wikipedia">surrogate key</a>, instead.</p><p>The problem is that your foreign key constraint on <code> smvcModClientSearchProjects</code> is enforcing the constraint, of course. If you <em>must</em> cascade updates to primary keys, change <code> fkuc_smvcModClient_id_smvcModClientSearchProjects_clientId</code> to <code>AFTER UPDATE OF id</code>.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: chethana
+url: 
+title: about commit
+comment: <p>i created a table but after creating i had to log out for some reason.  giving commit doesn't work. i heard about sqlite using autocommit mode & thought it'll save automatically. but later when i gave .tables it showed nothing,it was empty. how do i save my tables (or commit) insqlite?</p><p>          pls do reply soon, awaiting reply.</p> <p>thank u theory.</p> 
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: about commit
+comment: <p>chethana</p><p>I don't know. Try making your first statement <code>BEGIN</code>, create your table, and then <code>COMMIT</code>. That will be faster, too.</p><p>Other than that, I have no suggestions. But then this is not an SQLite support forum. I suggest that you post a query on the <a href="mailto:sqlite-users-subscribe@sqlite.org" title="Subscribe to the SQLite Users mail list">SQLite Users mail list</a>.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Randy Syring
+url: http://www.rcs-comp.com
+title: Trigger Generator
+comment: <p>I have created an <a href="http://www.rcs-comp.com/site/index.php/view/Utilities-SQLite_foreign_key_trigger_generator">onlinetool</a> to generate the triggers based on a CREATE TABLE with column definitioans that have a CONSTRAINT just like your example tables.  I use this method a lot and this saves me time and takes the guesswork out of getting the SQL right.</p><p>Also, FYI, concerning my previous comment on CASCADE UPDATE OF PK.  Turns out that this is supported in later versions of 3.x but not in 2.x.  The SQL is pretty simple, but the 2.x version just didn't support it.  However, I agree that you should not be updating your primary keys!</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Trigger Generator
+comment: <p>Randy,</p><p>Very cool! You might want to adopt the alternate sytnax suggested by Witold, however. I find it much more readable, and I think that I used it in the Wiki entry.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Randy Syring
+url: http://www.rcs-comp.com
+title: Re: Trigger Generator
+comment: <p>Theory,<p><p>Thanks for the suggestion, I hadn't caught the updated syntax.  The online generator now uses the syntax suggested by Witold.</p>
+excerpt: 
+blog_name: 
+-----
+name: Russell
+url: 
+title: 
+comment: <p>Code looked a little wrong to me:<p><p>Here is the correct version :)<p><p>FK example:</p><pre>CREATE TABLE dept (  dept_id INTEGER NOT NULL PRIMARY KEY);CREATE TABLE emp (  emp_id INTEGER NOT NULL PRIMARY KEY,  dept_id INTEGER NOT NULL         CONSTRAINT fk_dept_id REFERENCES dept(dept_id) ON DELETE CASCADE);</pre><p>Table emp has a foreign key reference to the primary key column in the dept table. Although SQLite supports this syntax (as well as named foreign key constraints), it ignores them. So if you want the references enforced, you need to create triggers to do the job. Triggers were added to SQLite version 2.5, so most users can take advantage of this feature. Each constraint must have three triggers: one for INSERTs, one for UPDATESs, and one for DELETESs. The INSERT trigger looks like this:<p><pre>CREATE TRIGGER emp_biBEFORE INSERT ON empFOR EACH ROW BEGIN   SELECT CASE     WHEN ((SELECT dept_id               FROM dept              WHERE dept_id = NEW.dept_id           ) IS NULL          )     THEN RAISE(ABORT, ‘insert on table "emp" violates foreign key constraint "fk_dept_id"’)  END;END;CREATE TRIGGER emp_buBEFORE UPDATE ON empFOR EACH ROW BEGIN    SELECT CASE     WHEN ((SELECT dept_id               FROM dept              WHERE dept_id = new.dept_id           ) IS NULL          )     THEN RAISE(ABORT, ‘update on table "emp" violates foreign key constraint "fk_dept_id"’)  END;END;</pre><p>This trigger will prevent DELETEs on the dept table when there are existing foreign key references in the emp table.</p><pre>CREATE TRIGGER dept_bdBEFORE DELETE ON deptFOR EACH ROW BEGIN   SELECT CASE    WHEN ((SELECT dept_id              FROM emp             WHERE dept_id = OLD.dept_id           ) IS NOT NULL         )    THEN RAISE(ABORT, ‘delete on table "dept" violates foreign key constraint "fk_dept_id"’)  END;END;CREATE TRIGGER emp_adAFTER DELETE ON empFOR EACH ROW BEGIN     DELETE from dept WHERE dept_id = OLD.dept_id;END;</pre><p>Tests<p><pre>Insert into dept values(1);Insert into dept values(2);Insert into dept values(3);insert into emp values(1,1);sqlite> insert into emp values(1,5);SQL error: insert on table "emp" violates foreign key constraint "fk_dept_id"UPDATE emp    SET dept_id = 6  WHERE emp_id = 1;SQL error: update on table "emp" violates foreign key constraint "fk_dept_id"sqlite>DELETE   FROM dept WHERE dept_id = 1;SQL error: delete on table "dept" violates foreign key constraint "fk_dept_id"sqlite>DELETE   FROM emp WHERE dept_id = 1;select * from dept;  --Row 1 deleted</pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Russell</p><p>Your code looks the same as my original example; am I missing something?</p><p>Also, you might be interested in Witold Czarnecki's shorter syntax, above, and as documented in the 
+excerpt: 
+blog_name: 
+-----
+name: Perry Valdez
+url: perryv@gmail.com
+title: Simpler trigger code for foreign key constraints
+comment: <p>I've created a set of trigger code that is <strong>simpler</strong> IMHO than most of the code posted herebut <strong>fully implements</strong> a foreign key constraint. I tested my code in SQLite version 3.3.13.</p><p>Here's my code plus some descriptions:</p><p><strong>Scenario:</strong> A department has many employees. An employee belongs to only one department.</p><p><strong>Database constraint:</strong> When an SQL insert, delete or update command violates a foreign key constraint, the command is cancelled.</p><p><strong>Tables:</strong></p><pre>create table departments (    dept_id   integer  not null primary key autoincrement,    dept_name text not null unique);create table employees (    emp_id   integer  not null primary key autoincrement,    emp_name text     not null unique,    dept_id  integer  not null,    constraint fkey_dept_id foreign key (dept_id) references departments (dept_id));</pre><p>The <code>employees</code> table has the foreign key constraint <code>fkey_dept_id</code>. Here's the trigger code for implementing the constraint:</p><pre>create trigger fkey_dept_id_ins before insert on employees  for each row     when ((select dept_id from departments where dept_id = new.dept_id) is null)       begin          select raise(abort, 'insert on table "employees" violates foreign key constraint "fkey_dept_id"');       end;create trigger fkey_dept_id_upd before update on employees  for each row     when ((select dept_id from departments where dept_id = new.dept_id) is null)       begin          select raise(abort, 'update on table "employees" violates foreign key constraint "fkey_dept_id"');       end;create trigger fkey_dept_id_del before delete on departments  for each row     when ((select dept_id from employees where dept_id = old.dept_id) is not null)       begin          select raise(abort, 'delete on table "departments" violates foreign key constraint "fkey_dept_id" on "employees"');       end;</pre><p>And here are the tests I made inside the <code>sqlite3</code> environment:</p><pre><strong>sqlite&gt;</strong> insert into departments (dept_name) values ('Marketing');<strong>sqlite&gt;</strong> insert into departments (dept_name) values ('MIS');<strong>sqlite&gt;</strong> insert into departments (dept_name) values ('Accounting');<strong>sqlite&gt;</strong> select * from departments;<strong>1|Marketing</strong><strong>2|MIS</strong><strong>3|Accounting</strong><strong>sqlite&gt;</strong> insert into employees (emp_name, dept_id) values ('John', 1);<strong>sqlite&gt;</strong> insert into employees (emp_name, dept_id) values ('Tim', 2);<strong>sqlite&gt;</strong> insert into employees (emp_name, dept_id) values ('Gene', 5);<strong>SQL error: insert on table "employees" violates foreign key constraint "fkey_dept_id"</strong><strong>sqlite&gt;</strong> select emp_id, emp_name, dept_id from employees;<strong>1|John|1</strong><strong>2|Tim|2</strong><strong>sqlite&gt;</strong> update employees set dept_id = 3 where emp_id = 1;<strong>sqlite&gt;</strong> update employees set dept_id = 5 where emp_id = 2;<strong>SQL error: update on table "employees" violates foreign key constraint "fkey_dept_id"</strong><strong>sqlite&gt;</strong> select emp_id, emp_name, dept_id from employees;<strong>1|John|3</strong><strong>2|Tim|2</strong><strong>sqlite&gt;</strong> delete from departments where dept_id = 1;<strong>sqlite&gt;</strong> delete from departments where dept_id = 2;<strong>SQL error: delete on table "departments" violates foreign key constraint "fkey_dept_id" on "employees"</strong><strong>sqlite&gt;</strong> select * from departments;<strong>2|MIS</strong><strong>3|Accounting</strong><strong>sqlite&gt;</strong></pre>
+excerpt: 
+blog_name: 
+-----
+name: Perry Valdez
+url: perryv@gmail.com
+title: A much simpler trigger code for foreign key constraints
+comment: <p>Here's another set of code plus a repeat of the descriptions from my previous post, but this time using Witold Czarnecki's syntax:</p><p><strong>Scenario:</strong> A department has many employees. An employee belongs to only one department.</p><p><strong>Database constraint:</strong> When an SQL insert, delete or update command violates a foreign key constraint, the command is cancelled.</p><p><strong>Tables:</strong></p><pre>create table departments (    dept_id   integer  not null primary key autoincrement,    dept_name text not null unique);create table employees (    emp_id   integer  not null primary key autoincrement,    emp_name text     not null unique,    dept_id  integer  not null,    constraint fkey_dept_id foreign key (dept_id) references departments (dept_id));</pre><p>Again, the <code>employees</code> table has the foreign key constraint <code>fkey_dept_id</code>. Here's the trigger code usingWitold Czarnecki's syntax:</p><pre>create trigger fkey_dept_id_ins before insert on employees  for each row    begin      select        raise(abort,              'insert on table "employees" violates foreign key constraint "fkey_dept_id"')          where (select dept_id from departments                    where dept_id = new.dept_id) is null;    end;create trigger fkey_dept_id_upd before update on employees  for each row    begin      select        raise(abort,              'update on table "employees" violates foreign key constraint "fkey_dept_id"')          where (select dept_id from departments                    where dept_id = new.dept_id) is null;    end;create trigger fkey_dept_id_del before delete on departments  for each row    begin      select        raise(abort,             'delete on table "departments" violates foreign key constraint "fkey_dept_id" on "employees"')          where (select dept_id from employees                    where dept_id = old.dept_id) is not null;    end;</pre><p>And again, here are the tests I made inside the <code>sqlite3</code> environment:</p><pre><strong>sqlite&gt;</strong> insert into departments (dept_name) values ('Marketing');<strong>sqlite&gt;</strong> insert into departments (dept_name) values ('MIS');<strong>sqlite&gt;</strong> insert into departments (dept_name) values ('Accounting');<strong>sqlite&gt;</strong> select * from departments;<strong>1|Marketing</strong><strong>2|MIS</strong><strong>3|Accounting</strong><strong>sqlite&gt;</strong> insert into employees (emp_name, dept_id) values ('John', 1);<strong>sqlite&gt;</strong> insert into employees (emp_name, dept_id) values ('Tim', 2);<strong>sqlite&gt;</strong> insert into employees (emp_name, dept_id) values ('Gene', 5);<strong>SQL error: insert on table "employees" violates foreign key constraint "fkey_dept_id"</strong><strong>sqlite&gt;</strong> select emp_id, emp_name, dept_id from employees;<strong>1|John|1</strong><strong>2|Tim|2</strong><strong>sqlite&gt;</strong> update employees set dept_id = 3 where emp_id = 1;<strong>sqlite&gt;</strong> update employees set dept_id = 5 where emp_id = 2;<strong>SQL error: update on table "employees" violates foreign key constraint "fkey_dept_id"</strong><strong>sqlite&gt;</strong> select emp_id, emp_name, dept_id from employees;<strong>1|John|3</strong><strong>2|Tim|2</strong><strong>sqlite&gt;</strong> delete from departments where dept_id = 1;<strong>sqlite&gt;</strong> delete from departments where dept_id = 2;<strong>SQL error: delete on table "departments" violates foreign key constraint "fkey_dept_id" on "employees"</strong><strong>sqlite&gt;</strong> select * from departments;<strong>2|MIS</strong><strong>3|Accounting</strong><strong>sqlite&gt;</strong></pre>
+excerpt: 
+blog_name: 
+-----

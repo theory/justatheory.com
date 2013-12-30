@@ -1,0 +1,63 @@
+name: Chris Winters
+url: http://cwinters.com/
+title: 
+comment: <p>I like the addition of the file timestamp a lot, will have to look into integrating that into our internal tool. Also appreciate blogging about this stuff -- IME too many people think writing about maintenance is boring.</p><p>BTW, the way we organize updates to the schema or data (or configuration) is by feature. One of the things I think are missing from a lot of migration schemes is how they work in teams. Multiple people working on multiple features can develop each migration independently. This seems really useful to me, not sure if I'm missing something in existing tools that provides this.</p><p>I really need to write up this tool :-)</p>
+excerpt: 
+blog_name: 
+-----
+name: hdp
+url: 
+title: 
+comment: <p>This doesn't directly address the function problem, but I agree about writing migrations in SQL -- I think the reason Rails doesn't is because ActiveRecord really wants to hide the database from you.</p><p>I've been looking at http://search.cpan.org/perldoc?DBIx::Migration::Directories for my own use, but haven't made the plunge yet.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Chris—</p><p>Thanks! Not sure what you mean by organizing stuff by feature or working in teams, though. When I wrote Rails migrations, I would put the SQL for a new feature in a single migration; someone working on another feature would put database changes into a separate migration. But I expect you're talking about something a bit different, in that your migration tool somehow supports this more directly. I look forward to hearing more about it.</p><p>@hdp—</p><p>Rails puts stuff in Ruby so that you don't have to think about the database, yes, but this is because they hate databases (and they hate them because they don't (yet) understand them). As for <a href="http://search.cpan.org/perldoc?DBIx::Migration::Directories">DBIx::Migration::Directories</a>, maybe I'm missing something, but it seems, at its core, to still be about numbered migrations. <em>Am</em> I missing something?</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: elein  
+url: 
+title: 
+comment: <p>The problem with database upgrade scripts is that they are dependent and you cannot back out arbitrary changes.  You can't back out a create table xxx without removing any other later changes referencing xxx.  Things get complicated with function updates depending on views that have changed.  You've got a good start, but the schema upgrade solution is not complete.  This is a hard problem but solvable.  Fallible human eyeballing is sometimes the best solution for resolving dependencies.  Grouping changes can be interesting, but there is complexity when groups depend on groups.  The best solution is to never backout changes and only write new updates which address dependencies, moving always forward.</p>
+excerpt: 
+blog_name: 
+-----
+name: John
+url: 
+title: 
+comment: <p>I always cringe when I see migration-style "up/down" database scripts because they imply a symmetry that may not actually exist.  Most data modifications, for example, cannot be rolled back (UPDATE, DELETE, etc.)  Now maybe you'd say those are not "<em>schema</em> migrations," but in my experience, data modifications are extremely common--much more common than schema changes, especially for long-lived products--and I usually see up/down-style systems used to carry them out.</p><p>Anyway, at work we have a similar hybrid system with all stored procedures in their own files in version control, providing a comprehensible change history.  But we also have separate patch files that contain the superset of all changes, plus the usual "full schema" files and an automated way to verify that the application of any series of patches results in the a database that is exactly equivalent to the full schema file of the equivalent version.</p><p>The patch files are all pure SQL with a few specially-formatted comments that our patch automation system understands.  We do nothing based on dates (in version control or otherwise).  Even with NTP, and with servers across many time zones, it's just too much of a hassle.  All patch automation uses (db-resident) version numbering, plus a few simple patch file naming conventions to know what needs to be applied to bring a database up to any arbitrary version.  We also have automated db creation from scratch, which includes the full schema and SPLs plus the "boilerplate" real production data, plus some optional generated "fake" data.</p><p>In the end, the realities of dealing "big" databases in a 24/7 environment mean that our patch automation is used only in development and QA (and also to verify the integrity of the patches sent to production).  But when it comes time to apply them to production, this is all done by dedicated DBAs and release engineers and the steps are often very different, involving manual work to shuffle dbspaces and bring services down and then back up in the proper sequence to cause minimal downtime depending on which parts of the db are being modified, etc. etc.  (Not having reliable transactional schema alterations really makes this much more painful.  Oh PostgreSQL, how I miss you! :)</p>
+excerpt: 
+blog_name: 
+-----
+name: Josh Jore
+url: 
+title: 
+comment: <p>We had to solve many of these problems at work recently. No blog post about it yet. Roughly we implemented much of what you outlined. Our additional complications are many concurrent teams doing branched development on the databases and slony.</p><p>Did it all in Ruby with something roughly built on top of activerecord.</p>
+excerpt: 
+blog_name: 
+-----
+name: Piet Hadermann
+url: http://www.hadermann.be/blog
+title: 
+comment: <p>I once wrote a migration tool like this for ms sqlserver (sorry for swearing) which was used to update the db at several 100 customer when the installed a new version of our software.</p><p>Big help was a commercial tool called sqlcompare to generate a base migration script between 2 schema versions. In the beginning we didn't store changes in a versioning system. And even after we started doing so sqlcompare was still very handy to generate migration scripts at the click of a button.</p><p>These scripts were stored together with a version number in a table within the database itself. Why ? Because  besides the 'main' database there were also archive databases that could be attached dynamically from eg a network share or cd-rom (after copying to a local hd). After bringing such an archive online it also had to be updated to the latest version by cycling through all the necessary migration scripts. </p><p>After each succesful execution of a migration script a version number in the database itself was updated to reflect this. Much like Rails migrations. (I LOVE Rails btw, and not only for the migrations)</p><p>Reversing/undo of a migration wasn't something I ever considered. When something went wrong it was fixed instead of reversing to a previous version (which would have also meant installing all previous binaries on both server and clients - too much hassle). By the time the majority of the customers installed an update though (usually from cdrom) we had tested the update at several installations and hopefully (not always) weeded most of the bugs out.</p><p>All of this worked using mainly sqlserver stored procedures. And when it didn't, it caused me and several others major headaches.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@elein—</p><p>I have to admit that I always found the downward migrations in Rails pretty useless. As long as a migration was well tested before it was deployed, we had no problems. With over 100 migrations for iwantsandy, we never migrated down. Ever.</p><p>What we <em>did</em> do, though, was discover new problems, (mostly related to performance, as with <a href="/computers/databases/postgresql/recurring_events.html">recurring events</a>), at which point we spent some time to figure out the problem and then wrote a new migration.</p><p>So I agree that you can't back them out, or at least that backing them out is pretty useless. So maybe I won't bother with downward migrations the next time I write something like this. It'll save me a lot of work, frankly.</p><p>I'm not sure what you mean by “the schema upgrade solution is not complete,” though. I'm sure that I'm missing something, but adding date-based migrations (basically checking <code>mtime</code> on files) for functions and views and such goes a long way towards solving my biggest complaints. And as for dependencies, well, no migration should ever be deployed to production without adequate <a href="/computers/databases/postgresql/why-test-databases.html">testing</a>.</p><p>@John—</p><p>Yeah, the “down” migrations are right out. I wasn't thinking specifically of data migrations, though I have written downward data migrations in the past. More often than not, though, for data migrations, there was no downward migration, because it just wasn't possible. And yeah, data migrations are really common.</p><p>Keeping files for each procedure in the VCS is exactly the aim of my recommendations here. I'm envious that you have them already! I would use UTC to compare all times, so no comparison problems there. I agree about NTP, though one must sync one's computer clocks. But by the time I generally see a migration go to production, it has usually been quite a while since it was written (because significant testing has to verify the migration, first).</p><p>I'm curious about your patch file naming conventions, though, if they're not version numbers.</p><p>@Josh—</p><p>I look forward to hearing more about your solution. <em>Will</em> there be a blog post?</p><p>@Piet—</p><p>A tool like SQLCompare is nice if you can get it, and if you know that it has actually generated an appropriate migration (lots of testing and QA required as usual), but I'd rather do without it.</p><p>Thanks for all the great comments, folks!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: John
+url: 
+title: 
+comment: <blockquote><p>I'm curious about your patch file naming conventions, though, if they're not version numbers.</p></blockquote><p>They are.  That's all I meant by, &quot;All patch automation uses (db-resident) version numbering, plus a few simple patch file naming conventions.&quot;  The patch files have version numbers (plus a &quot;part&quot; number for multi-part patches).  To upgrade from db version N to version N + M, just sort the patch files by version (and, secondarily, by part number) where version > N and version &lt;= N + M.  (The db-resident schema version is automatically updated after the successful application of each file (or files) for each new version, and patches will refuse to apply to anything except a database whose version matches the expected earlier version.)</p>
+excerpt: 
+blog_name: 
+-----

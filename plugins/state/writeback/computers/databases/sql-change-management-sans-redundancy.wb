@@ -1,0 +1,14 @@
+name: Rod Taylor
+url: 
+title: 
+comment: <p>This looks remarkably like a system I made in 2001 though with a little more SQL thanks to new pg features and a little less perl.</p><p>I gave it up once we have one test environment for each developer (12), several regression test environments in varying states on different branches, and of course production.</p><p>Hundreds, and quickly approaching thousands, of change files now in CVS (this was pre SVN let alone git) and things started getting really tricky.</p><p>Full history was required primarily because I didn't have a snapshot functionality for the oldest state. In fact, since developers ran their own stuff I could never be certain what the oldest state was (normally within 2 years of current; but reviving older branches than that happened).</p><p>While it worked, it was really slow because it had to replay the full rebuilding, including data migration, of the DB from start to finish when a new system was being created.</p><p>If I was doing it over again I think I would try to write a schema-diff tool instead and roll production data migration changes by hand on an as needed basis. Get developers used to blowing away their system entirely and starting from empty (plus lookup tables); this is more useful for regression tests anyway.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Rod—I knew someone else must have thought of this at <em>some</em> point. Glad to hear I'm not completely insane.</p><p>I think the reality of a large development team with many change scripts is a real issue. I ran into this with Rails migrations on a project a few years ago, when we were getting close to 200 migrations, and there were only three of us working on it. The solution, after a release, was to get rid of them all, and to dump the production database schema to a new 001 migration script, and start with that as the base for all future migrations. Then the version table just needed to be updated. It was a bit annoying, but not too bad.</p><p>I think it would be possible to add tools to my app to help manage stuff like that. For one thing, when you use it to generate a configuration file from Git history, it might list change scripts under branch tags, rather than for every commit. Or perhaps it would list them only for particular <em>release</em> tags. Further more, one could also have it concatenate migration scripts so that there are fewer to run, or start from some known state and ignore all previous scripts (or use some sort of new "known state" script). I haven't thought it through much, but I think that there are ways to deal with these sorts of issues through development and merge policies in a project, as well as change history rewriting, let's say.</p><p>Thanks for reading!</p>
+excerpt: 
+blog_name: 
+-----

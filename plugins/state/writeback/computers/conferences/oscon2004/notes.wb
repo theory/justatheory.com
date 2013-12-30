@@ -1,0 +1,7 @@
+name: Perrin Harkins
+url: perrin@elem.com
+title: 
+comment: <p>It was nice to finally meet you at OSCON, David.  One quick comment on this post -- SQLite has not been that fast in my experience.  MySQL is typically two or three times faster than it.  Maybe it does better on certain types of queries.  My use was for simple primary key lookups, where I didn't need transactions and could use MyISAM tables.  Even with transactions though, MySQL was a lot faster than SQLite.</p>
+excerpt: 
+blog_name: 
+-----

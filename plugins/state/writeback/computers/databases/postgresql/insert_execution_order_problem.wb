@@ -1,0 +1,77 @@
+name: Jorge Chandra
+url: 
+title: UUID
+comment: <p>Sorry for the off-topic, but can you share with the rest of us where did you get the UUID datatype?<?p><p>Regards,<br />Jorge Chandra</p>
+excerpt: 
+blog_name: 
+-----
+name: Tzvetan Tzankov
+url: 
+title: you cannot assign trigger to View
+comment: <p>as far as I understand you will end up with</p> <pre>ERROR:  "extended" is not a table</pre><p>or I-m wrong?</p>
+excerpt: 
+blog_name: 
+-----
+name: Robert Treat
+url: http://people.planetpostgresql.org/xzilla/
+title: 
+comment: <p>I think the simplistic answer is to stop using surrogate primary keys which require the use of sequences, and instead use primary keys that have meaning. Course that might make your application code a little trickier...</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Jorge:</p><p><a href="http://granicus.if.org/~nw/uuid/" title="OSSP UUID type for PostgreSQL">A UUID type for PostgreSQL</a>. It works great with the <a href="http://www.ossp.org/pkg/lib/uuid/" title="OSSP UUID Library">OSSP UUID</a> library, which has a nice license.</p><p>Tzvetan:</p><p>Yeah, I realized that last night after I posted this entry. I'm thinking that I might be able to assign one if there is an INSERT rule, though. If not, then I'll just go with the RULE + function solution.</p><p>Robert:</p><p>Now why on earth would I want to do that? I say a bit about my choice to use surrogate keys <a href="/bricolage/why_uuids.html" title="Why Bricolage documents have UUIDs">here</a>.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Josh Berkus
+url: 
+title: 
+comment: <p>David,</p><p>If you use separate sequences for the 2 tables, your RULES issue should go away.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Josh,</p><p>Yeah, and now I'm weighing the pros and cons of having a separate sequence for each objct, as I do in Bricolage. I had thought that it was kind of a PITA to have different objects with the same IDs, but maybe it really doesn't matter too much. After all, they're just meant to be primary keys, not really identifiers…that's what the UUIDs are for.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>It seems you’re repeating yourself?</p><pre><code>CREATE FUNCTION insert_extend() RETURNS trigger AS '  DECLARE     _simple_id integer;     _extend_id integer;  BEGIN    IF NEW.simple__id IS NULL THEN      INSERT INTO _simple (id, uuid, state, name, description)      VALUES (_simple_id, UUID_V4(), NEW.simple__state, NEW.name, NEW.description);      _simple_id := NEXTVAL(''seq_kinetic'');    ELSE      UPDATE _simple      SET    state = COALESCE(NEW.simple__state, state),             name  = COALESCE(NEW.name, name),             description = COALESCE(NEW.description, description)      WHERE  id = NEW.simple__id;      _simple_id := NEW.simple__id;    END IF;    _extend_id := NEXTVAL(''seq_kinetic'');    INSERT INTO _extend (id, uuid, state, simple_id)    VALUES (_extend_id, COALESCE(NEW.uuid, UUID_V4()), NEW.state, _simple_id);  END;' LANGUAGE plpgsql;</code></pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Aritstotle,</p><p>Yeah, probably. I just typed up the sample function on the fly. OTOH, when updating, I wouldn't update the simple_id. But there's probably no harm in how you've rewritten it.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Stano Lacko
+url: 
+title: lastval
+comment: Hi. In PostgreSQL 8.1 is new function for equences lastval() which get last value from executed nextval in current session.Now the rule can we chanes from NEW.id to (SELECT lastval()).
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: lastval
+comment: <p>Stano,</p><p>Good to know about, thanks. It still would not have helped me with the original problem, though, as with a single sequence, <code>CURRVAL('seq_kinetic')</code> and <code>LASTVAL()</code> will always return the same value. So I might as well keep using <code>CURRVAL()</code> for the sake of backwards compatibility.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Stano Lacko
+url: 
+title: compatibility
+comment: <p>Yes currval is in 7.x lastval only from 8.1. But lastval have better syntax becouse you don't need remember name of sequence for serial column.But you need to use it in transaction.</p>
+excerpt: 
+blog_name: 
+-----

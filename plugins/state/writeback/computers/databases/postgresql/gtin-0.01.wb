@@ -1,0 +1,14 @@
+name: Korry Douglas
+url: 
+title: 
+comment: <p>Great code! Just a couple of minor comments:<p><p>in gtin_out(), you could call pstrdup() instead of strlen(), palloc(), and strcpy(); pstrdup() ensures that you never forget the extra byte required for the null terminator</p><p>in normalize_gtin(), you invoke strlen() each time through the loop; that's a bit expensive - it would be better to store the string length in a local variable</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Thanks Korry! Your suggestions are dead on, of course. I was not aware of <code>pstrdup()</code>; it certainly simplifies things. And it hadn't occurred to me that the function call in the <code>for</code> loop would be called each time, but on thinking about it, of course it has to be, since the loop might change what it returns. So I've put the string length into a local variable, as you suggested.</p><p>Many thanks for the feedback, and thanks again for the book that helped me to write this code in the first place!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

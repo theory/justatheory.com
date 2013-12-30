@@ -1,0 +1,14 @@
+name: weave
+url: http://blog.weaverling.org/
+title: ... or move your linux box outside of Comcast
+comment: <p>I just got nailed with this, but my server is "on the outside" hosted on Linode. My security webcam could not email my host and had no option to use port 587, so I had to use iptables to rewrite the port to something else and change my postfix on that server to listen in on that port.</p><p>http://blog.weaverling.org/2009/03/08/getting-around-comcast-port-25-block</p><p>Your way is def easier since it doesn't involved an outside server to relay the messages, of course. I'm just trying to avoid comcast handling any of my email. Just a wee bit paranoid -- especially since my webcam picks up some embarassing things once in a while (like me running around in my underwear -- gack!)</p><p>Anyway, I'm going to edit my blog post to point here for an alternative way of doing this. Thanks!</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: ... or move your linux box outside of Comcast
+comment: <p>weave—</p><p>Yeah, I just have system monitoring-type messages sent from that box, so I'm not concerned about them going through the Comcast mail server. My main mail server is hosted elsewhere. Good to know there are other hacks, though. Thanks!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

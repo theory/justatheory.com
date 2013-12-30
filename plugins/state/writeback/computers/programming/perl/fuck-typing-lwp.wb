@@ -1,0 +1,49 @@
+name: Nilson
+url: 
+title: 
+comment: <p>I guess this is the kind of thing that makes Perl a very nice tool. </p><p>The code is ugly as hell and you can be sure people not familiar with Perl will generally frown upon the snippets above. </p><p>But at least it's <em>possible</em> - try doing that in Java.</p>
+excerpt: 
+blog_name: 
+-----
+name: David Rolsky
+url: http://blog.urth.org/
+title: 
+comment: <p>Why "do"?</p><p>Take it away and you get the exact same behavior.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Dave—</p><p>The <code>do</code> limits the scope of <code>no strict 'refs';</code>. Yes, I could omit it, but I like to see a string in front of the braces. I could change it to a label, I suppose.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: David Rolsky
+url: http://blog.urth.org/
+title: 
+comment: <p>Actually, it's surrounding braces that limit the scope. The do is just noise.</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p><code>*{&#036;k} = *{&#036;v}{CODE} if *{&#036;v}{CODE} and not *{&#036;k}{CODE};</code></p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>Let me say, however:</p><p>I don’t understand why you go through all that trouble. You shouldn’t make WithCache inherit from RobotUA, you should just make RobotUA inherit from WithCache. Then you can have UA objects that have either WithCache behaviour or WithCache <em>plus</em> RobotUA behaviour.</p><p>Only if you needed all three possible combinations (only WithCache + only RobotUA + both WithCache <em>and</em> RobotUA) would you need to play any tricks like these.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Dave—I know that. I just like having some text in front of the braces.</p><p>@Arsitsotle—Yes, I could probably do that. I'd have to have a bit of duplicate code in the two classes, but it'd be better not to have the one inherit from the other. I'll fiddle with that this week.</p><p>Actually, I could probably go ahead had always use the combination of the two by having <code>host_wait()</code> always return false. Perhaps I'll send in a patch to make <code>delay =&gt; 0</code> acceptable as "no delay."</p><p>—Theory </p>
+excerpt: 
+blog_name: 
+-----

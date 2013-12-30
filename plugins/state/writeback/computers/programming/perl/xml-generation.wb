@@ -1,0 +1,161 @@
+name: Phillip Smith
+url: http://www.communitybandwidth.ca
+title: 
+comment: <p>Ewwww.... very nice. And great timing too.  :-)</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>After I’m done hacking on it and have pushed it to CPAN, you may want to take a look at XML::Builder, which is inspired by <a href="http://p3rl.org/HTML::Tiny">HTML::Tiny</a>. It’s not going to be as syntactically neat as Template::Declare, since there’s a lot of method call “noise” still in there, but the structure is very similar. And the namespace support in particular is a <em>lot</em> less syntactically magical.</p><p>Until I get it pushed out, you can <a href="http://github.com/ap/XML--Builder/tree">look at it on github</a> – check out the tests to get the idea, since it lacks any docs as yet.</p>
+excerpt: 
+blog_name: 
+-----
+name: Stefan Petrea
+url: http://code.google.com/p/perlhobby/
+title: XML::Writer::Nest
+comment: <p>You forgot XML::Writer::Nest , it makes use of destructors of objects which are called at the end of a scope.So you go deeper by embedding a new scope and creating a new tag in it and it will be destroyed at the end of that scope so you will also get your ending tag which is an awesome idea :)It saves you some keystrokes :)</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Replies
+comment: <p>@Aristotle—Yes, if I'd seen <a href="http://github.com/ap/XML--Builder/tree">XML::Builder</a> on CPAN, I  probably wouldn't have bothered with Template::Declare. This is quite nice, though I don't yet follow how the namespace is <em>supposed</em> to work:</p><pre><code>use XML::Builder;my &#036;x = XML::Builder-&gt;new;say &#036;x-&gt;tag(    'assets', { xmlns =&gt; 'http://bricolage.sourceforge.net/assets.xsd' },    &#036;x-&gt;tag(        'story', { id =&gt; 1234, type =&gt; 'story' },        &#036;x-&gt;tag( name =&gt; 'Catch as Catch Can' ),    ),);</code></pre><p>@Stefan—<a href="http://search.cpan.org/perldoc?XML::Writer::Nest">XML::Writer::Nest</a> looks awful, I'm sorry to say. The docs are lousy; the example in the synopsis doesn't even show how to get the XML out of the document, or how to set actual values for attributes. It took me a while to figure out that some methods are called on XML::Writer::Nest or its instances, while others are called on an XML::Writer object. I finally got it to work with this code:</p><pre><code>my &#036;output = '';use XML::Writer::Nest;my &#036;w = XML::Writer-&gt;new(    OUTPUT=&gt; \&#036;output,    ENCODING =&gt; 'utf8',);ASSETS: {    my &#036;assets = XML::Writer::Nest-&gt;new(        tag =&gt; 'assets',        attr =&gt; { xmlns =&gt; 'http://bricolage.sourceforge.net/assets.xsd' },        writer =&gt; &#036;w,    );    STORY: {        my &#036;story = &#036;assets-&gt;nest(            'story' =&gt; { id =&gt; 1234, type =&gt; 'story' },        );        &#036;w-&gt;dataElement(name =&gt; 'Catch as Catch Can' );    }}say &#036;output;</code></pre><p>I appreciate the nesting, but I find the interface unintuitive and verbose. Yech.</p><p>Interestingly, the XML::Writer::Nest documentation mentions <a href="http://search.cpan.org/perldoc?XML::Generator">XML::Generator</a>. This library seems pretty nice, too:</p><p>use XML::Generator ':pretty';</p><pre><code>say assets(    ['http://bricolage.sourceforge.net/assets.xsd'],    story(        { id =&gt; 1234, type =&gt; 'story' },        name( 'Catch as Catch Can' )    ));</code></pre><p>This adds an empty "xmlns" attribute to the <code>&lt;story&gt;</code> tag, but otherwise is just about right. I'm not even sure how it magically creates those functions for me, given that they're not declared anywhere. The OO interface for it is a bit clearer:</p><pre><code>require XML::Generator;my &#036;x = XML::Generator-&gt;new(':pretty', encoding =&gt; 'utf-8' );say &#036;x-&gt;xmldecl, &#036;x-&gt;assets(    ['http://bricolage.sourceforge.net/assets.xsd'],    &#036;x-&gt;story(        { id =&gt; 1234, type =&gt; 'story' },        name( 'Catch as Catch Can' )    ));</code></pre><p>Pretty clean, and not far from XML::Builder. If I had to choose, though, I think I'd prefer XML::Builder. I look forward to seeing its release!</p>
+excerpt: 
+blog_name: 
+-----
+name: Kevin Lenzo
+url: 
+title: 
+comment: <p>You could have built that just as easily on top of any of the options... your contribution was hiding any of them, not one of them.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Kevin—Not sure I follow what you're saying. I didn't build a solution on top of anything. I just used Template::Declare. All I had to do was create a class that lists the tags I want, and basically I was done. The rest was sugar.</p><p>Now I <em>could</em> have built an interface like Template::Declare::Bricolage on top of something like XML::LibXML or XML::Genx. But that would have been a lot more work: I would have had to <em>build</em> something. I'm way too lazy for that. :-)</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Dominic Mitchell
+url: http://happygiraffe.net/blog/
+title: 
+comment: <p>Thanks for trying XML::Genx.  Like I said, I'm well aware of the awful interface.  On the other hand, I've had so little occasion to actually <em>use</em> it recently, there hasn't been much incentive it improve it.  :(</p><p>@Aristotle: XML::Builder looks nice.  It reminds me of XML::Atom::SimpleFeed…</p>
+excerpt: 
+blog_name: 
+-----
+name: Dominic Mitchell
+url: http://happygiraffe.net/blog/
+title: 
+comment: <p>I forgot to mention one option: <a href="http://search.cpan.org/perldoc?XML::SAX::Builder">XML::SAX::Builder</a>.  It was always a bit of an experiment, but you may find it interesting. :)</p>
+excerpt: 
+blog_name: 
+-----
+name: Jesse Sheidlower
+url: http://www.jessesword.com
+title: 
+comment: <p>I know--or at least I think--that when someone suggested this on Fb or wherever, it was meant as a joke. But when I have structured data that I need to output as XML, I usually end up just falling back on some variety of print statement (or sometimes a templating system). There is effort that it takes to ensure that it'll be valid, sure, but that effort has always worked out to be far, far less than grokking stuff like what you show above.</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <blockquote>  <p>I don’t yet follow how the namespace is supposed to work</p></blockquote><p>What’s ultimately going on is that you pass namespaced element and attribute names in Clark notation. Ie. you ask for the tag <code>’{http://www.w3.org/1999/xhtml}html’</code> and XML::Builder will take care of managing the namespace prefixes for you, to the extent that you want. You can ask it to use a specific prefix for a given namespace attribute, and you can use the XML::Builder::NS helper class to reduce repetition, but both of these are optional – if you just need to use the namespace in one or two places, you don’t need to deal with any red tape, Builder will do all the bookkeeping for you.</p><p>You just have to make sure to eventually ask for a <code>root</code> instead of a <code>tag</code>, which is how XML::Builder knows on which element to declare the <code>xmlns</code> attributes.</p><p>I think this strikes roughly the right balance between giving the user all the options along with all the work, and doing all the work for the user while giving him little and inconvenient control.</p><p>I’m not sure yet how to handle the case where the user passes in an <code>xmlns</code> attribute explicitly. Currently Builder is oblivious to that, which is dangerous. Turning those things into implicit namespace declaration calls is not entirely the right thing to do, though, since by the time you get to the root element it’s too late for namespace declarations to affect the child element generation calls. But I don’t just want to treat them as an error either. Still pondering the details on this…</p>
+excerpt: 
+blog_name: 
+-----
+name: Charlie
+url: http://www.newint.org
+title: Another approach
+comment: <p>I like the look of XML::Builder.</p><p>I generally use XML::Simple for this sort of task. You just give it an appropriate hashref. Like this:</p><pre><code>#!/usr/bin/perluse strict;use warnings;use XML::Simple;my &#036;xs = new XML::Simple(RootName =&gt; undef);my &#036;hashref = {    xml =&gt; {      version  =&gt; "1.0",      encoding =&gt; "utf-8",      assets   =&gt; {        xmlns   =&gt; "http://bricolage.sourceforge.net/assets.xsd",        story   =&gt; {          id     =&gt; "1234",          type   =&gt; "story",          name   =&gt; [ "Catch as Catch Can" ],      },    },  },};print &#036;xs-&gt;XMLout(&#036;hashref);</code></pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: More Responses
+comment: <p>@Dominic—XML::SAX::Builder looks similar to XML::Generator:</p><pre><code>use XML::SAX::Builder;my &#036;x = XML::SAX::Builder-&gt;new;say &#036;x-&gt;xml(    &#036;x-&gt;xmlpi( 'xml' =&gt; 'whatever' ),    &#036;x-&gt;xmlns(        '', 'http://bricolage.sourceforge.net/assets.xsd',        &#036;x-&gt;assets(            &#036;x-&gt;story(                { id =&gt; 1234, type =&gt; 'story' },                &#036;x-&gt;name( 'Catch as Catch Can' )            )        )    ));</code></pre><p>That's not bad, although I couldn't figure out how to get the <code>&lt;?xml&gt;</code> declaration at the top. Also, it emitted an bogus "0" (zero) after the XML string, which is kind of weird. Bug?</p><p>@Jesse—Yeah, <code>print</code> statements can be useful. I've actually written quite a few Bricolage Mason templates to generate RSS without using any kind of generator. Sometimes it's just easier that way, no question.</p><p>@Aristotle—So I tried this:</p><pre><code>use XML::Builder;my &#036;x = XML::Builder-&gt;new;say &#036;x-&gt;tag(    '{http://bricolage.sourceforge.net/assets.xsd}assets',    &#036;x-&gt;tag(        'story', { id =&gt; 1234, type =&gt; 'story' },        &#036;x-&gt;tag( name =&gt; 'Catch as Catch Can' ),    ),);</code></pre><p>But what I ended up with was:</p><pre><code>&lt;a1:assets&gt;  &lt;story id="1234" type="story"&gt;    &lt;name&gt;Catch as Catch Can&lt;/name&gt;  &lt;/story&gt;&lt;/a1:assets&gt;</code></pre><p>I guess I can see why it would generate a prefix, although I'd like to tell it not to. But where is the URL?</p><p>To me, the clark notation seems a bit opaque. I think I prefer XML::Generator's approach of taking an array argument to handle namespaces. That keeps it Perlish.</p><p>@Charlie—Thanks for reminding me about XML::Simple. It's not an ideal interface for generating an XML document, but it's not bad. One downside to your code, however, is that the top-level tag should not be <code>&lt;xml&gt;</code>. The XML bit should actually be a declaration, in the form <code>&lt;?xml ?&gt;</code>. It looks like <a href="http://search.cpan.org/perldoc?XML::Simple">XML::Simple</a> can handle that, but unless you want the default XML declaration, you have to paste in the entire thing yourself, which is a little weird:</p><pre><code>use XML::Simple;my &#036;xs = new XML::Simple(    RootName =&gt; undef,    XMLDecl =&gt; '&lt;?xml version="1.0" "encoding=utf-8"?&gt;');my &#036;hashref = {    assets   =&gt; {        xmlns   =&gt; "http://bricolage.sourceforge.net/assets.xsd",        story   =&gt; {            id     =&gt; "1234",            type   =&gt; "story",            name   =&gt; [ "Catch as Catch Can" ],        },    },};say &#036;xs-&gt;XMLout(&#036;hashref);</code></pre><p>But that <em>does</em> work.</p>
+excerpt: 
+blog_name: 
+-----
+name: draegtun
+url: http:://transfixedbutnotdead.com
+title: 
+comment: <p>Let me add yet another XML generator to the increasing list! :   <a href="http://search.cpan.org/dist/Builder/">Builder</a></p><p>Here is your example using Builder:</p><pre><code>use Builder;my &#036;builder = Builder-&gt;new;my &#036;x = &#036;builder-&gt;block( 'Builder::XML', { indent =&gt; 2, newline =&gt; 1 } );&#036;x-&gt;assets( { xmlns =&gt; "http://bricolage.sourceforge.net/assets.xsd" },    &#036;x-&gt;story( { id =&gt; '1234', type =&gt; 'story' },        &#036;x-&gt;name('Catch as Catch Can')    ),);say &#036;builder-&gt;render;</code></pre><p>My non CPAN version of Builder does have XMLdecl, CSS &amp; HTML4 blocks and have used Builder as a XML::Writer replacement for nearly a year now.</p><p>/I3az/</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <blockquote>  <p>To me, the clark notation seems a bit opaque. I think I prefer XML::Generator's approach of taking an array argument to handle namespaces. That keeps it Perlish.</p></blockquote><p>Huh, I’ll be honest – that never occurred to me. I’m not sure why but it didn’t. I don’t know if I want to switch over completely – Clark notation is well-known over in the XML world, so whether one considers it obscure depends on one’s background. But I’ll think about the options there.</p><blockquote>  <p>use XML::Builder;</p>    <p>my $x = XML::Builder->new;    say $x->tag(        '{http://bricolage.sourceforge.net/assets.xsd}assets',        $x->tag(            'story', { id => 1234, type => 'story' },            $x->tag( name => 'Catch as Catch Can' ),        ),    );</p></blockquote><p>What you want is</p><pre><code>use XML::Builder;my &#036;x = XML::Builder-&gt;new;say &#036;x-&gt;root(    '{http://bricolage.sourceforge.net/assets.xsd}assets',    &#036;x-&gt;tag(        '{http://bricolage.sourceforge.net/assets.xsd}story', { id =&gt; 1234, type =&gt; 'story' },        &#036;x-&gt;tag( '{http://bricolage.sourceforge.net/assets.xsd}name' =&gt; 'Catch as Catch Can' ),    ),);</code></pre><p>Note the <code>root</code> vs <code>tag</code> call for the root element, and that you need to specify for <em>every</em> element which <em>namespace</em> it belongs to, independent of which prefix (the empty prefix in your case) it is tied to.</p><p>Obviously that’s annoying, so you shorten it like so:</p><pre><code>use XML::Builder;my &#036;x = XML::Builder-&gt;new;my &#036;an = XML::Builder::NS-&gt;new( 'http://bricolage.sourceforge.net/assets.xsd' );say &#036;x-&gt;root(    &#036;an-&gt;assets,    &#036;x-&gt;tag(        &#036;an-&gt;story, { id =&gt; 1234, type =&gt; 'story' },        &#036;x-&gt;tag( &#036;an-&gt;name =&gt; 'Catch as Catch Can' ),    ),);</code></pre><p>Note how the variable that stores the ::NS instance effectively becomes an element NS prefix <em>within the code</em> – which is entirely decoupled from the namespace prefix <em>in the resulting document</em>.</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>Oh, and if want to specify the prefix, you say, eg.:</p><pre><code>my &#036;an = XML::Builder::NS-&gt;new( 'http://bricolage.sourceforge.net/assets.xsd' );my &#036;x = XML::Builder-&gt;new-&gt;register_ns( '' =&gt; &#036;an );</code></pre><p>(The second argument to <code>register_ns</code> doesn’t expect an <code>::NS</code> object but a string – since an <code>::NS</code> object stringifies to the namespace URI, however, you can just pass that.)</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@draegtun—Builder looks pretty nice, too. Thanks for the link and example.</p><p>@Aristotle—Sure enough, this code gets me exactly the XML I want, modulo the <code>&lt;?xml&gt;</code> declaration:</p><pre><code>use XML::Builder;my &#036;an = XML::Builder::NS-&gt;new( 'http://bricolage.sourceforge.net/assets.xsd' );my &#036;x = XML::Builder-&gt;new-&gt;register_ns( '' =&gt; &#036;an );say &#036;x-&gt;root(    &#036;an-&gt;assets,    &#036;x-&gt;tag(        &#036;an-&gt;story, { id =&gt; 1234, type =&gt; 'story' },        &#036;x-&gt;tag( &#036;an-&gt;name =&gt; 'Catch as Catch Can' ),    ),);</code></pre><p>It might be useful to have a method in XML::Builder::NS to generate a tag without calling a method named for that tag. Maybe <code>named()</code>?</p><pre><code>sub named { '{' . &#036;{&#036;_[0]} . '}' . &#036;_[1] }</code></pre><p>I like the use of <code>AUTOLOAD</code> there, but sometimes I don't know the names of the methods.</p><p>Anyway, looking forward to seeing it released—I'll definitely make use of it!</p><p>Oh, and as for the namespace stuff—seems to me that it'd be useful to support both the Clark notation and an array ref. That way everyone is happy. ;-)</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Ovid
+url: http://publius-ovidius.livejournal.com/
+title: Fed up
+comment: <p>I got so fed up with with how we build XML on our BBC project that I rewrote all of it.  Instead of using XML::LibXML directly, we create a simple data structure.  So for this:</p><pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;assets xmlns="http://bricolage.sourceforge.net/assets.xsd"&gt;  &lt;story id="1234" type="story"&gt;    &lt;name&gt;Catch as Catch Can&lt;/name&gt;  &lt;/story&gt;&lt;/assets&gt;</code></pre><p>We just create this:</p><pre><code>[ assets =&gt; { xmlns =&gt; "http://bricolage.sourceforge.net/assets.xsd" },  [ story =&gt; { id =&gt; "1234", type =&gt; "story" },    [ name =&gt; {}, "Catch as Catch Can" ],  ]]</code></pre><p>And this also makes it trivial to serialize as YAML or JSON.  It's also very, very easy to understand and write.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Fed up
+comment: <p>@Ovid—I like it!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>Ovid: my quibble with that is that you do nothing to handle namespaces for the user; so they're going to have to provide the prefixes as parts of the elements name and it's just generally not a fun scene.</p><p>If all you ever do is declare a default namespace on the root element then of course you get to avoid all this; but merely by virtue of only caring about the simplest case and leaving out anything non-trivial.</p><p>You can do pretty much the same with XML::Builder btw (it inherits that from HTML::Tiny, with a minor alteration):</p><pre><code>&#036;x-&gt;render( \[ '{http://bricolage.sourceforge.net/assets.xsd}assets',  \[ '{http://bricolage.sourceforge.net/assets.xsd}story' =&gt; { id =&gt; "1234", type =&gt; "story" },    \[ '{http://bricolage.sourceforge.net/assets.xsd}name', "Catch as Catch Can" ],  ]] );</code></pre><p>(Untested... but that's basically the syntax.)</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Aristotle—What are the backslashes for? Must one pass references to array references? Seems a bit silly. And I assume that if you don't need a namespace that you can omit it, yes? Something like:</p><pre><code>&#036;x-&gt;render([    assets =&gt; [        story =&gt; { id =&gt; "1234", type =&gt; "story" }, [            name =&gt; "Catch as Catch Can"        ],    ]]);</code></pre><p>Looking forward to seeing this on CPAN, BTW. When will that happen? :-)</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>Except it’s not silly. Plain array references are an escape from distributivity, just like in HTML::Tiny. Eg. if you write</p><pre><code>&#036;x-&gt;tag( 'i', &#036;x-&gt;tag( 'b', 'foo', 'bar' ) );</code></pre><p>you’ll get</p><pre><code>&lt;i&gt;&lt;b&gt;foo&lt;/b&gt;&lt;/i&gt;&lt;i&gt;&lt;b&gt;bar&lt;/b&gt;&lt;/i&gt;</code></pre><p>whereas if you write</p><pre><code>&#036;x-&gt;tag( 'i', [ &#036;x-&gt;tag( 'b', 'foo', 'bar' ) ] );</code></pre><p>you’ll get only</p><pre><code>&lt;i&gt;&lt;b&gt;foo&lt;/b&gt;&lt;b&gt;bar&lt;/b&gt;&lt;/i&gt;</code></pre><p>or if you write</p><pre><code>&#036;x-&gt;tag( 'i', &#036;x-&gt;tag( 'b', [ 'foo', 'bar' ] ) );</code></pre><p>it will be</p><pre><code>&lt;i&gt;&lt;b&gt;foobar&lt;/b&gt;&lt;/i&gt;</code></pre><p>And the same escape applies when passing the same structure declaratively to <code>render</code>:</p><pre><code>&#036;x-&gt;render( \[ 'i', \[ 'b', [ 'foo', 'bar' ] ] ] );</code></pre><p>In HTML::Tiny this would instead be written like so:</p><pre><code>&#036;h-&gt;stringify( [ \'i', [ \'b', [ 'foo', 'bar' ] ] ] );</code></pre><p>There’s no real difference though… and the XML::Builder style simplifies the internals a tad, and I think it might also be slightly easier to <em>emit</em> such a structure.</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>Oh, and the point of all that? HTML::Tiny has a great example in the POD:</p><pre><code>$x->tag( table =>    [ $x->tag( tr =>      [ $x->tag( th => qw( X Y Z ) ) ],      [ $x->tag( td => qw( 1 2 3 ) ) ],      [ $x->tag( td => qw( 4 5 6 ) ) ],      [ $x->tag( td => qw( 7 8 9 ) ) ],    ) ],  );</code></pre><p>Notice how you need to ask for <code>td</code> tags only once per row, and for <code>tr</code> tags only once per entire table.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Aristotle—Ah, yes, I can see how that'd be useful. It even <em>looks</em> like a table. Nice!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

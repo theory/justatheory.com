@@ -1,0 +1,35 @@
+name: João Miguel Neves
+url: http://mestrejoao.silvaneves.org/
+title: Security Alerts
+comment: <p>It won't be automatic for NoScript users (not that that will be a big problem).</p><p>More serious is that happens when the domain stops working. You are presenting content from another site inside your site without distinction. If a domain changes owner, your site might start presenting something unexpected to your users.</p><p>In a link, the usual user understands that he was directed to a wrong site, in an integrated object the same does not apply.</p>
+excerpt: 
+blog_name: 
+-----
+name: Marcus Ramberg
+url: http://marcus.nordaaker.com/
+title: Doesn't work in feed readers.
+comment: <p>Or at least Google Reader. Flash embeds are supported tho. All in all, this thing is a big mess. I kind of liked vox' solution of sandboxing the javascript embeds into a separate iframe, so that it can't touch the rest of your page.</p>
+excerpt: 
+blog_name: 
+-----
+name: Cd-MaN
+url: http://hype-free.blogspot.com/
+title: +1 for Marcus
+comment: <p>While it is a neat technique, I have to concur with Marcus: it doesn't work in Google Reader. As I discovered ( http://hype-free.blogspot.com/2008/11/google-reader-javascript-and-flash.html ), Google Reader filters embed/object tags on a whitelist basis, and personal sites are very unlikely to make the cut, unless they become very popular.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Replies
+comment: <p><strong>João Miguel:</strong> What you say is true, but it's also true of the JavaScript embeds that people already use. See my right-hand column for examples.</p><p><strong>Marcus:</strong> I completely agree that it's a mess. Sandboxing is definitely a good idea.</p><p><strong>Cd-MaN:</strong> I'm not a Google Reader user, but I suspect that any old embedded JavaScript doesn't work, either. But there's no reason why a site like Twitter couldn't provide an URL that returns an embeddable HTML snippet, just as it now provides a URL that returns embeddeable JavaScript, and sites can choose to whitelist it or not (just as I'm sure they whitelist embeddable JavaScript).</p><p>The only downsides I see to this approach are:</p><ol><li><p>You can't style the returned HTML. You'd have to send parameters in your request and get back an HTML snippet with such styles included in it.</p></li><li><p>I don't see a way to style the height of the <code>&lt;object&gt;</code> so that it automatically resizes to the length of the content, aside from using some sort of JavaScript call to do it.</p></li></ol><p>Still, I think that there's promise here.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Ricardo Signes
+url: http://rjbs.manxome.org/
+title: Goodbye, IFRAME?
+comment: <p>I don't suppose there's a big benefit to OBJECT over IFRAME, but I still am pleased at learning that I can make a text/html object element.  We use IFRAME objects to display email messages on a page with styling intact, as it quarantines the CSS from bubbling up into the page.  An object element can do the same thing... I can't see any real reason to switch, but it's nice to think that in the future we can be free of frames, i- or otherwise.</p><p>(It's also useful to know that like an iframe the content-type of an object is ultimately determined by the server, not by the element's type attribute.)</p>
+excerpt: 
+blog_name: 
+-----

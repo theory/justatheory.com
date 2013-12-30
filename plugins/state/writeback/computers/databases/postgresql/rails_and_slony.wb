@@ -1,0 +1,105 @@
+name: sxpert
+url: 
+title: 
+comment: <p>easy... rails is pure cr@p :D</p>
+excerpt: 
+blog_name: 
+-----
+name: David Fetter
+url: http://fetter.org/
+title: Dump RoR :P
+comment: <p>...but until you can do that, send the SQL through Slony's EXECUTE SCRIPT.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Dump RoR :P
+comment: <p>But David, that's the point, there is no SQL to send through <code>EXECUTE SCRIPT</code>. Or am I missing something?</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: David Fetter
+url: http://fetter.org
+title: Re: Dump RoR :P
+comment: <p>Are you saying that you can't do any DDL other than through migrate?  If that's it, dump RoR right away.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Dump RoR :P
+comment: <p>David, Yes, that's what I'm saying. But I have no more choice to dump RoR than you did to dump MySQL on that consulting project you had a few years ago. The choice was made long ago, and now I need to make it work. And incidentally, this was not an issue with the MySQL replication we had for our last app, IIUC.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Andrew Hammond
+url: http://ahammond.blogspot.com/
+title: 
+comment: <p>I doubt it'll happen, but there's no reason that RoR couldn't learn to do the same stuff slonik EXECUTE SCRIPT does. There's no real magic there, and heck you don't even need to parse the DDL since you're gonna be generating it anyway.</p><p>As far as why slony can't replicated schema changes, I thought that was pretty well documented. The system tables in postgres don't (and can't) fire triggers. No trigger, no slony.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Thanks Andrew. I was thinking the same thing, and started hacking a Rails plugin to output and SQL file. I was in the middle of trying to figure out how to get it to the database server for running through <code>EXECUTE SCRIPT</code> when I realized that, a) migrations can sometimes contain Ruby code that uses the models, rather than SQL; and b) it was going to be hard to figure out what files needed to be sent to the database server for running, though I'm sure I could have worked through that.</p><p>But does <em>no one</em> use an alternative method, with slony and the app shut down until the migration is finished?</p><p>Thanks,</p><p>Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: 
+url: http://www.codeheadsystems.com/blog/archives/126-Rails-and-Slony.html
+title: Rails and Slony
+comment: 
+excerpt: <p>Looks like I'm not the only one trying to use Slony with Rails.  The problem is because Slony requires database schema changes to run though a special script so that new tables and changes will be replicated correctly (and triggers attached) as needed.  M</p>
+blog_name: Ned Wolpert
+-----
+name: Jonathan Ellis
+url: http://spyced.blogspot.com
+title: 
+comment: <p>Nothing in Rails forces you to use migrations.  Our Rails guys just suck it up and write DDL the old-fashioned way to use with Slony.</p>
+excerpt: 
+blog_name: 
+-----
+name: Ned Wolpert
+url: http://www.codeheadsystems.com/blog/
+title: Our Slony/Rails plan
+comment: <p>We're in the process of developing our solution, and I can just say what our plans are rather then answer your questions completely.  Some of this has been tested.</p><p>Basically, the 'create table' and 'alter table' requests we're going to farm out of the migrations during releases.  These aren't considered 'trigger-able' which are why Slony ignores them.  The 'goal' is to manually put them in a file to have slony process (execute script).  I believe that running the execute script on the master will propagate it to the slaves.  Checking out here: <a href="http://main.slony.info/documentation/ddlchanges.html">http://main.slony.info/documentation/ddlchanges.html</a> its necessary to do if you want to keep the databases up.</p><p>Since Slony is kinda specific about the execute script, we'll have our test environment run in the same format to verify the script works.  Once we know the script works, it will be stored in the ruby app (db/slony/001_blahblah) and we'll do a capistrano task just for it.  Haven't made the task yet.  We're getting more of our app completed first before bringing in Slony to complicate things.</p><p>(I'm going to post this on my blog too... I want to find out how many people using Ruby/PSQL/Slony.  I think the majority of Rails folks are MySQL anyways.)</p>
+excerpt: 
+blog_name: 
+-----
+name: Rich
+url: 
+title: 
+comment: <p>I'm not actually using slony but, I've needed to get at the ddl migrations put out in the past. This was a quick hack but, I'm sure it could be polished into something useful.</p><p>Basically it's a rake task that monkey patches rails' connection adapters to pass ddl to a command line script. It then calls the standard migration task.</p><pre>desc "Run migrations through a monkey patch"task :patched_migration => :environment do  ActiveRecord::Base.connection.class.class_eval do    # alias the adapter's execute for later use    alias :old_execute :execute        # define our own execute    def execute(sql, name = nil)      # check for some DDL statements      if /^(create|alter|drop)/i.match sql        # if it's DDL pass it off to the command line        system "mysql", "-D", "migration", "-e", "#{sql}"      else        # pass everything else to the aliased execute        old_execute sql, name      end    end  end    # invoke the normal migration procedure now  # that we've monkey patched the connection  Rake::Task["db:migrate"].invokeend</pre><p>Like I said, not pretty but, I think it can work for your uses too. Oh, and please forgive the mysql use, that's what we're using at work right now.</p>
+excerpt: 
+blog_name: 
+-----
+name: Josh Berkus
+url: www.powerpostgresql.com
+title: 
+comment: <p>Sounds like you actually want to use "continuous archving", or PITR.  Right now it only does "warm standby" which means the slave can't run any read queries, but we should have "Hot Standby" by PostgreSQL 8.4.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Rich,</p><p>Thanks for that. It's fairly similar to what I'd started, although it hadn't occurred to me to shell out for every query—and honestly, that's exactly the right thing to do to keep things executing in the proper order. That's just what I might do, if I can figure out how to get it to connect to the database server to execute the query.</p><p>Josh,</p><p>Thanks for pointing that out. I found the <a href="http://www.postgresql.org/docs/8.2/static/warm-standby.html" title="PostgreSQL Documentation: “Warm Standby Servers for High Availability”">warm standby documentation</a>, and had we not already set up Slony, that's <em>exactly</em> what we would do. If I don't get the migrations figured out, we still might. But in the meantime, I'm going to give Rich's recipe a try, first.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Jonathan Ellis
+url: http://spyced.blogspot.com
+title: 
+comment: <p>BTW, while <code>ALTER</code> can simply be run through slonik with execute script, <code>CREATE TABLE</code> is more complicated.  You have to add the table to a new set, subscribe the set, and (optionally) merge the new set into your old one.  See <a href="http://slony.info/documentation/addthings.html">http://slony.info/documentation/addthings.html</a> for details.</p>
+excerpt: 
+blog_name: 
+-----
+name: Darrin
+url: 
+title: PostgreSQL DBA
+comment: <p>I started using pgpool for replication/load balancing when I couldn't get rails and slony to play nicely.  The only problem with pgpool is that if one db server goes down, pgpool stops.  My plan is to have our nagios server watch for a db server to go down, if it does, it runs a script to change the database.yml file in rails to point from pgpool to the good server.  This mean later, when the downed db server is back, I have to shutdown everything, resync the db servers, then point rails back to the pgpool instance.  Not great, but better than nothing.</p>
+excerpt: 
+blog_name: 
+-----

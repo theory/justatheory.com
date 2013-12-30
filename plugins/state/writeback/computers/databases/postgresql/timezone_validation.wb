@@ -1,0 +1,14 @@
+name: Tom Lane
+url: 
+title: finding error codes
+comment: <p>It's not hard to identify error codes in psql.</p><pre>regression=# \set VERBOSITY verboseregression=# select now() at time zone 'Foo/Bar';ERROR:  22023: time zone "Foo/Bar" not recognizedLOCATION:  timestamptz_zone, timestamp.c:4653regression=# </pre><p>Then you look in the fine manual for 22023, and you'll see it's invalid_parameter_value.I'm not that thrilled with trapping OTHERS as a routine thing: it seems too likely to mask unexpected problems.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: finding error codes
+comment: <p>Tom++ # as usual — Thanks!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

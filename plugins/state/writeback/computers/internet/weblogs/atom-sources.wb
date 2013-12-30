@@ -1,0 +1,14 @@
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>No, there isn’t.</p><p>You could use XInclude, but pretty much no one besides maybe yourself will process such a feed correctly.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Aristotle—</p><p>That's what I was afraid of. I guess now I just have to decide how much I care that it be valid Atom, since it will be designed solely for consumption by an app I'm writing.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

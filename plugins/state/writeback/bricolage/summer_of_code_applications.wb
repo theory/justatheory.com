@@ -1,0 +1,28 @@
+name: Rod Taylor
+url: 
+title: 
+comment: "Modernize the Installer" should also include the ability to upgrade in place via an install (packagers don't like to differentiate between a deinstall + install, or just plain install).This entails:1) Having bricolage install bricolage.conf.sample2) Not installing any templates by default which may overwrite user templates (like autohandler). Have them pulled from the DB on first usage when required.3) Have bricolage upgrade the database structure and filesystem files automatically when Apache is restarted instead of making the user intervene.These are 3 issues I've run into with the FreeBSD package.
+excerpt: 
+blog_name: 
+-----
+name: Christopher Whitney
+url: 
+title: 
+comment: I'm suprised that the MySQL port was that popular.  As a plus though, I suppose that most of the work done to support MySQL would also greatly ease the amount of work required to add SQLite support.
+excerpt: 
+blog_name: 
+-----
+name: Marshall Roch
+url: 
+title: 
+comment: To follow up Rod's comment, I'd like to see the installer install no templates or elements by default.  Since it's all in SQL, it would be simple to split those INSERTs into a separate script that the user could run to set up a demo server.  Having those default templates and elements sometimes gets in the way of a production install if you want to use those names.  Also, we could provide multiple sample templates and elements, e.g. for a magazine and for a normal corporate website.
+excerpt: 
+blog_name: 
+-----
+name: Marshall Roch
+url: 
+title: 
+comment: In case people haven't <a href="http://developers.slashdot.org/article.pl?sid=05/06/17/2140249&tid=156&tid=217">heard</a> <a href="http://code.google.com/">yet</a>, Google has expanded the number of participants from 200 to 400.
+excerpt: 
+blog_name: 
+-----

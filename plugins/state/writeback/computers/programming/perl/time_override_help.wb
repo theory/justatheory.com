@@ -1,0 +1,42 @@
+name: Smylers
+url: 
+title: 
+comment: <p>The problem seems to be that the call to <code>time</code> is &lsquo;frozen&rsquo; in <code>DateTime</code> at compile time, before it's been overridden.</p><p>Removing <code>use DateTime</code> from the top and putting <code>require DateTime</code> between the <code>local</code> and <code>is</code> lines seems to make it work.</p><p>Smylers</p>
+excerpt: 
+blog_name: 
+-----
+name: Yuval Kogman
+url: 
+title: 
+comment: No need to go that far, just put the begin block that does the overriding before 'use DateTime' instead of after.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Thanks Smylers and Yuval, you are precisely correct. No idea how DateTime is locking in <code>Core::time</code>, but as long as I know it is, I can do something about it.</p><p>Now i just have to go through all my test classes and figure out where it's getting loaded so bloody early…</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: david delikat
+url: http://delikat.homeip.net/
+title: 
+comment: the reason the call is 'frozen' is becausethe 'use' is a special form of BEGIN blockand the whole module is compiled andfunction binding is complete before yourBEGIN block.  in order to get it to use your function you have to set the glob before the use so that it binds to your function.all you really need is to put the BEGIN as early as possible in your program.
+excerpt: 
+blog_name: 
+-----
+name: david delikat
+url: http://delikat.homeip.net/
+title: 
+comment: oh, you could also try an INIT blockbut some things don't work there.-dav
+excerpt: 
+blog_name: 
+-----
+name: david delikat
+url: http://delikat.homeip.net/
+title: 
+comment: scratch that... I have to remember not topost before my first cup of coffee...
+excerpt: 
+blog_name: 
+-----

@@ -1,0 +1,98 @@
+\name: Greg Sabino Mullane
+url: 
+title: 
+comment: <p>Seems like the "G" is holding us back. How about we just use a "P" for Postgres? That gives us things like "PAN" and "PCAN" (that last one should be easy to write a nutty logo for :)</p>
+excerpt: 
+blog_name: 
+-----
+name: Josh Berkus
+url: www.pgexperts.com
+title: 
+comment: <p>Hmmmm ...</p><p>PostgreSQL Extensions Community Archive Network</p><p>PECAN</p><p>Which means, of course, we need it to be hosted at Rackspace in San Antonio.  Unfortunately, pecan.org is not available.</p>
+excerpt: 
+blog_name: 
+-----
+name: Scott Peterson
+url: http://wheatlandcomp.wordpress.com
+title: Suggestion
+comment: <p>How bout PostEx?  </p>
+excerpt: 
+blog_name: 
+-----
+name: Michael Glaesemann
+url: 
+title: 
+comment: <p>Postgres EXtension Archive Network = PEXAN?</p>
+excerpt: 
+blog_name: 
+-----
+name: Jay
+url: 
+title: 
+comment: <p>I vote for PCAN, since it is what I always typo CPAN into anyway, at least it would go somewhere useful, heh.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Suggestions So Far
+comment: <ul><li><strong>PCAN:</strong> .org taken</li><li><strong>PECAN:</strong> .org taken</li><li><strong>PostEx:</strong> .org taken</li><li><strong>PEXAN:</strong> .org available</li><li><strong>PCAN:</strong> .or taken</li></ul><p>So only PEXAN is in the running of the new names so far. I'm not at all sure about it…</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Screwtape
+url: 
+title: 
+comment: <p>"PGAN" at least <em>rhymes</em> with "pecan".</p>
+excerpt: 
+blog_name: 
+-----
+name: Ross Reedstrom
+url: 
+title: 
+comment: <p>while pcan.org and pecan.org are both taken, they seem to be domain squatters. Might be worth seeing how little they're willing to take, then see if one of the PG friendly companies would arrange a donation.</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>FWIW, my first thought upon seeing PGAN is “pagan”.</p>
+excerpt: 
+blog_name: 
+-----
+name: Andy Lester
+url: http://perlbuzz.com
+title: 
+comment: <p>Don't spend so much time trying to make it mean something.  Does "Amazon" mean anything?  Or "Google"?  Make it pronouncable and memorable.</p>
+excerpt: 
+blog_name: 
+-----
+name: capn obvious
+url: 
+title: 
+comment: <p>Bikeshedding indeed. Maybe just extensions.postgresql.org ?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: A couple More
+comment: <p>Some others I've thought of:</p><ul><li><strong>PGDN:</strong> PostgreSQL Distribution Network. .org taken, alas, but I've contact the owner.</li><li><strong>PgExNet</strong>: PostgreSQL Extension Network. .org available, and so is pgex dot net, which is kind of cool.</li><li><strong>PgDex</strong>: PostgreSQL Distribution of Extensions. .org and .net available. Pronounceable, but the backcronym sucks.</li></ul><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Ricardo Signes
+url: http://rjbs.manxome.org
+title: pgxn
+comment: <p>PGXN.  Pronounced "pigskin" or possibly pixin.</p><p>I do like the "lol elephants love nuts" nature of pecan, though.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: pgxn
+comment: <p>I had settled on PgDEX last week and got everything set up, but I think, @Ricardo, that you might have a winner there. Thanks!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

@@ -1,0 +1,56 @@
+name: Simon Wilcox
+url: 
+title: 
+comment: How secure does it need to be - there was a talk about really secure online voting at YAPC::Europe way back in 2001. The <a href="http://www.yapceurope.org/2001/proceedings/1/index.html">slides ar online</a> but that's probably overkill :-)
+excerpt: 
+blog_name: 
+-----
+name: Adam Turoff
+url: 
+title: 
+comment: <p>Well, it all depends on how anonymous you need to make this ballot box.Of the top of my head, I don't see anything that would prevent someonefrom writing a WWW::Mechanize script in pretty short order to stuffballot boxes.  The only thing that would slow a ballot stuffer downwould be downloading and displaying the CAPTCHA images and typing themin for each vote.</p><p>If you keep more state with your records, you could associate how long a user is registered before voting.  If a user is registered within<i>n</i> minutes of voting <i>and</i> doesn't do anything else aftervoting, it's likely a fradulent vote.  If you limit votes to peoplewho have significant activity (FSDO "significant"), or users whohave registered well in advance of voting, that should limit votes toone vote per real member (modulo users with 2+ accounts).  But that alsomakes it more difficult to make balloting anonymous.  </p><p>Also, I wouldn't make bogus votes appear to be valid.  That sounds like security by obscurity, and only invites script kiddies to flood theballot with bogus votes.  Sure, the votes will be ignored, but it'llalso invite a DoS attack.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Simon:</p><p>Yeah, that seems a bit over the top for what I'm thinking of. Interesting reading, nonetheless. Thanks.</p><p>Adam:</p><p>Great comments, thanks. I really appreciate the thoughtful feedback. Yes, the whole point of the CAPTCHA is to slow people down. At least in a case like that, it'll take them a few seconds for each vote, rather than several per second. But requiring authentication should further slow them down, because then we can allow each user to vote only once. As you might gather by that requirement, anonymity isn't so important. It's not really an election we're dealing with here, after, all. I don't think I want to go near that one. ;-)</p><p>Your idea of requiring that users be registered for <em>n</em> minutes is a great one, and your suggestion <em>not</em> to simply drop bogus votes is well advised. I'll take both of these suggestions to heart in my proposal.</p><p>Thanks again!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Ask Bjørn Hansen
+url: http://askask.com/
+title: 
+comment: <p>It might make sense to explicitly "allow" the fraudulent votes to show up in the stats, at least for a little while.  That'll let the fraudsters think their votes went through ok even if they are flagged on the backend and will be discounted later in the day / the day after / at the end of the poll.</p> <p>- ask</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Ask</p><p>If we were going to make it look like the vote succeeded, I would (normally) agree with you. But I think that Ziggy's point about making it a failure so as to avoid DOS attackes is well-taken.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Frank Wiles
+url: http://www.revsys.com/blog/
+title: Some other ideas... 
+comment: <p>You guys have already come up with the major ones, but I've used a couple of other ideas in the past, typically in conjunction with the techniques already mentioned above.</p><ul>  <li>Match not only on the IP address, but the User Agent    string. This can let a few extra people vote when behind a proxy depending on which browser/OS combo they are using.</li>  <li>Fractionalize multiple votes from the same IP.  Initial vote is a "full vote" and subsequent ones are say 0.001 of a vote. </li>   <li>Limit the number of votes from a single IP to a certain number ( say 10 ) in a time period ( 30 minutes ).</li>  <li>Instead of using a cumbersome CAPTCHA, consider using a more user friendly version.  Such as having a few hundred images of easily identifiable things ( dogs, food, buildings, etc ) with a select box of possible answers.  If you randomize things like the image file name this will keep out all but the most dedicated script kiddies.</li> </ul> <p>Anyway... just some ideas think about.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Some other ideas…
+comment: <p>Frank</p><p>Thanks for the suggestions. I especially like the last suggestion! As you can see, I use something even simpler for my blog (everyone must know a little addition). But the identifiable things idea is really nice. I'll have to look into using that sometime.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: anon
+url: 
+title: 
+comment: <p>Of course, it's hard to really nail this -- until you can link votes to people or computers or something, it can only work halfway.</p><p>One, give out a long-lived cookie, and don't allow votes from multiple users who have the same cookie.</p><p>Two, look for skeevy User-Agents.</p><p>Three, look for suspicious patterns of e-mail addresses -- e.g., username+aaa@gmail.com through username+zzz@gmail.com, lots of votes from mailinator.com or an obscure domain.</p><p>Four, and this is totally infeasible, make the form hard to fill in automatically.  Instead of answer=1, 2, 3, or 4, answer would be one of four random-ish strings tied to the session (or some sort of strings you couldn't reuse).  And you could obfuscate the HTML for the form so that it has to be "decrypted" and document.write()'d/innerHTML'd out with JavaScript.</p></p>Five -- absolutely critical -- don't have Diebold write your poll code. :)</p><p>Also, the standard disclaimer that this isn't a scientific/ironclad poll seems like a good practice.</p>
+excerpt: 
+blog_name: 
+-----

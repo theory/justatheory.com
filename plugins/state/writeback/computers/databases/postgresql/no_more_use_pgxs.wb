@@ -1,0 +1,49 @@
+name: dim
+url: http://tapoueh.org
+title: 
+comment: <p>In the prefix and preprepare extensions I'm only including the PGXS bits, not the contrib/ one, because, well, the extension's not part of contrib and I'll know about it when it gets there.</p><p>Oh and we plan to deprecate contrib in its current form, together, remember? :)</p>
+excerpt: 
+blog_name: 
+-----
+name: Tom Lane
+url: 
+title: 
+comment: <p>My own recommendation for third-party extensions is that they just not bother with support for being built under contrib, ie just do</p><pre>PG_CONFIG = pg_configPGXS := $(shell $(PG_CONFIG) --pgxs)include $(PGXS)</pre><p>The file existence test proposed above seems pretty fragile.</p>
+excerpt: 
+blog_name: 
+-----
+name: Aidan Van Dyk
+url: 
+title: 
+comment: <p>Make it simple:</p><pre>   PG_CONFIG = pg_config   [.....]   PGXS := $(shell $(PG_CONFIG) --pgxs)   include $(PGXS)</pre><p>Then if they want a specific pg_config version:</p><pre>   make PG_CONFIG=../../../../pg-master/.../bin/pg_config</pre><p>a.</p>
+excerpt: 
+blog_name: 
+-----
+name: David Fetter
+url: http://www.pgexperts.com
+title: 
+comment: <p>Aiden,</p><p>Your construct is a thing of beauty.  It should be in the PostgreSQL docs. :)</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Tom, Aidan,</p><p>Thanks, that does indeed seem to be the correct approach. However, I've just <a href="http://github.com/theory/pgtap/commit/4687f84bb813187a51417745f12662dfb38c36de">made this change</a> to pgTAP and it works very nicely.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Peter Eisentraut
+url: http://petereisentraut.blogspot.com/
+title: 
+comment: <p>What Tom said.  The fact that people are copying build code from contrib without change is a bug that should be fixed, not enhanced.</p>
+excerpt: 
+blog_name: 
+-----
+name: alvherre
+url: 
+title: 
+comment: <p>I still do not get why we don't remove the no-pgxs build path from contrib as well.</p>
+excerpt: 
+blog_name: 
+-----

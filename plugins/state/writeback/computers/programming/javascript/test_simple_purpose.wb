@@ -1,0 +1,14 @@
+name: Gordon McCreight
+url: jat.to.gordon@mccreight.com
+title: 
+comment: TAP-compliant unit tests would also work well for other applications which use an ECMAScript interpreter.  Adobe's Flash (ActionScript) and Director (uses SpiderMonkey) are obvious candidates, but even applications like After Effects Professional could benefit from a robust standards-compliant (and FOSS to boot!) unit test framework.You guys (You, Andy, Ingy, chromatic, Autrijus) are my heros.  Scary, huh?
+excerpt: 
+blog_name: 
+-----
+name: Bill N1vux
+url: http://use.perl.org/~n1vux
+title: Thanks
+comment: <p>Thanks, that fills in the blanks.   Sounds like it'll be useful, maybe even to those of us who don't write JavaScript.</p><p>Bill</p><p>Manifesto - Far too many of the POD2HTML docs on CPAN ... and Unix man(1) pages ... assume the readers know why they would use the program/module and just need a detail, not trying to decide if it is even close to the right screw-driver to pound this nail. You always start a project with a purpose, so the documentation should too.</p>
+excerpt: 
+blog_name: 
+-----

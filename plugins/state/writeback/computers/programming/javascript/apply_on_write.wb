@@ -1,0 +1,14 @@
+name: mat
+url: 
+title: 
+comment: Hum, does something.prototype even work at all in IE, for predefined objects ? I'm not so sure...
+excerpt: 
+blog_name: 
+-----
+name: Marshall
+url: http://www.spastically.com
+title: 
+comment: I just ran into this problem or at least a similar problem, and found <a href="http://www.ditchnet.org/wp/?p=2">this</a> regarding IE:<blockquote>it seems that the DOM interfaces like Element don’t extend the base Object class like every other class in JavaScript according to the ECMA spec. Therefore, they don’t inherit methods from Object’s prototype object.</blockquote>
+excerpt: 
+blog_name: 
+-----

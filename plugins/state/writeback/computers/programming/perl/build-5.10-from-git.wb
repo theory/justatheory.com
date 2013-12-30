@@ -1,0 +1,7 @@
+name: dagolden
+url: http://www.dagolden.com/
+title: thanks but a note on patching modules in core
+comment: <p>Your patch was appreciated and it's a good example of how easy it is with git to send patches to p5p.  </p><p>However, you didn't mention that one should look at Porting/Maintainers.pl before patching a dual-life module and see where bugs/fixes should get reported.  ExtUtils::CBuilder has UPSTREAM => 'cpan' -- meaning that it should be patched in CPAN and then merged into core.  Otherwise, it can create a synchronization headache for maintainers.</p><p>In this case, I saw your patch on p5p, applied it to the EU::CB repository and then posted a new patch for bleadperl, but as a general rule, for module patches, please encourage people to check Maintainers.pl.</p><p>-- David</p>
+excerpt: 
+blog_name: 
+-----

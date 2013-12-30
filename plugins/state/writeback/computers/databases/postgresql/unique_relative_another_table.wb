@@ -1,0 +1,21 @@
+name: Ian Joyce
+url: http://ianjoyce.org/
+title: Missing from
+comment: <p>Your missing the from clause in your usr view.</p><p>And why not name it 'user'? The naming scheme isn't consistent. I guess it could be a reserved word.</p>
+excerpt: 
+blog_name: 
+-----
+name: Ron
+url: http://www.roncohen.dk
+title: 
+comment:<blockquote><code>   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,</code></blockquote><p>Isn't <code>AUTOINCREMENT</code> a mysql thing?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Ian: Thanks, I've added the missing <code>FROM</code> clause. I guess that'll teach me to just type things in without really checking. And yes, <q>user</q> is a reserved word in PostgreSQL. You can use quotation marks to get around it, though. I choose not to.</p><p>Ron: Quite right. I actually pasted in stuff from some SQLite examples I have. I've changed it to <code>SERIAL</code>. Thanks!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

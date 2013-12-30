@@ -1,0 +1,14 @@
+name: Obligatory
+url: 
+title: 
+comment: <p>Email addresses aren't case insensitive!</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Obligatory</p><p>Technically, <a href="http://email.about.com/od/emailbehindthescenes/f/email_case_sens.htm" title="About.com: “Are Email Addresses Case Sensitive?”">you're right</a>, but from a practical point of view, they might as well be. I know that if I have a Web site that requires users to login using an email address, the users will be confused if the site fails to lot the user in because the email address is stored in lowercase and the user uses capital letters when logging in. Me, I'd likely have a trigger to lowercase an email address before inserting or updating it, but would always query email addresses case-insensitively.</p><p>Beyond that, I think you might have missed the point of my post.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

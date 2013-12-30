@@ -1,0 +1,55 @@
+{
+   "_class" : "KinoSearch::Plan::Schema",
+   "analyzers" : [
+      null,
+      {
+         "_class" : "KinoSearch::Analysis::PolyAnalyzer",
+         "analyzers" : [
+            {
+               "_class" : "KinoSearch::Analysis::CaseFolder"
+            },
+            {
+               "_class" : "KinoSearch::Analysis::Tokenizer",
+               "pattern" : "\\w+(?:['\\x{2019}]\\w+)*"
+            },
+            {
+               "_class" : "KinoSearch::Analysis::Stemmer",
+               "language" : "en"
+            }
+         ]
+      },
+      {
+         "_class" : "KinoSearch::Analysis::Tokenizer",
+         "pattern" : "\\w+(?:['\\x{2019}]\\w+)*"
+      }
+   ],
+   "fields" : {
+      "body" : {
+         "analyzer" : "1",
+         "highlightable" : "1",
+         "type" : "fulltext"
+      },
+      "category" : {
+         "analyzer" : "2",
+         "type" : "fulltext"
+      },
+      "tags" : {
+         "analyzer" : "1",
+         "boost" : "3",
+         "type" : "fulltext"
+      },
+      "timestamp" : {
+         "indexed" : "0",
+         "type" : "string"
+      },
+      "title" : {
+         "analyzer" : "1",
+         "boost" : "3",
+         "type" : "fulltext"
+      },
+      "url" : {
+         "indexed" : "0",
+         "type" : "string"
+      }
+   }
+}

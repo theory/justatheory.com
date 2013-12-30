@@ -1,0 +1,84 @@
+name: Quinn Weaver
+url: http://pgexperts.com/
+title: 
+comment: <p>Spot-on.  This is one of the two Perl areas where There's More Than Too Many Ways to Do It.  (The other, of course, if object-orientation.)</p>
+excerpt: 
+blog_name: 
+-----
+name: Jakub Narębski
+url: 
+title: There is also perl5i
+comment: <p>In addition to Modern::Perl there is similar perl5i (imaginary Perl 5, IIRC).</p>
+excerpt: 
+blog_name: 
+-----
+name: Steffen Mueller
+url: http://steffen-mueller.net
+title: 
+comment: <p>What you want is:</p><p>package Name '0.01';use 5.012;use utf8;use warnings;</p><p>"use 5.012" will automatically do two things other than checking the version:a) use strict; (this cost me a lot of hair and quite a bit of discussion to get in)b) use feature ':5.12'.</p><p>It can't 'use warnings', too. We were going to include it bit even disregarding the vehement opposition of people who fear their logs would fill their disks, it was a language design decision from Rafael because it may, in some cases, have produce strange action at a distance. I don't remember the details, but I do remember I came around to his line of thought eventually.</p><p>--Steffen</p>
+excerpt: 
+blog_name: 
+-----
+name: Sylvain Côte
+url: 
+title: 
+comment: <p>Wouldn't something like this:</p><pre><code>use 5.012 ; use 5.012 qw(utf8 warnings) ;</code></pre><p>be cool?</p>
+excerpt: 
+blog_name: 
+-----
+name: 
+url: http://identi.ca/notice/16880198
+title: chromatic's status on Thursday, 17-Dec-09 00:45:03 UTC
+comment: 
+excerpt: Make the Pragmas Stop!  http://www.justatheory.com/computers/programming/perl/make-the-pragmas-stop.html !perl
+blog_name: chromatic
+-----
+name: Sean Burke
+url: http://interglacial.com
+title: 
+comment: <p>I hesitate to suggest this, but: how about leaving "package" behind as a still-accessible internalism (what was the last time you said "I'm working on a Perl package"... and where "package" didn't mean a package like an apt package?), and instead have:</p><p>module Whatever 0.01;</p><p>and maybe</p><p>class Whatever 0.01;</p><p>(Whether there's any difference between the two, I have no idea.)</p><p>I'm tempted to allow a flourish of possibilities before the ";" there, but every clever possibility that I think of, is very spazzy for some reason or other.</p><p>Wait, hey, I know!  Since everyone loves/wuvs "~~" now, how about this?</p><p>module Whatever 0.01 ~~ 5.10.3;</p><p>Bam!</p><p>I WOULD LIKE TO THANK THE ACADEMY...</p>
+excerpt: 
+blog_name: 
+-----
+name: chromatic
+url: http://www.modernperlbooks.com/
+title: You Can't Add Keywords to Perl 5
+comment: <p>I like the idea, Sean, but it'll never work as long as it's impossible to add keywords to Perl 5's default set. </p><p>"Impossible?"</p><p>Someone, somewhere, at some point, maybe possibly defined a function named <code>module</code> or <code>class</code> with the exact prototype to make parsing that code ambiguous if that code ever runs unmodified on Perl 5.12 by accident and no one ever notices until it breaks, and it's more important that that one program we don't know exists remain working into the far future than to make life easier for every other Perl 5 programmer that we do know exists, because we are they.</p><p>I wish I were making this up.</p>
+excerpt: 
+blog_name: 
+-----
+name: 
+url: http://identi.ca/notice/16885327
+title: chromatic's status on Thursday, 17-Dec-09 02:52:41 UTC
+comment: 
+excerpt: Why yes, that *would* be a good idea, but it might break imaginary code: http://ur1.ca/i0hp
+blog_name: chromatic
+-----
+name: Abigail
+url: 
+title: 
+comment: <p>My incantation has been ^AP for a long time. After all, I'm a programmer, and hence it's fairly trivial to make an editor macro that pastes in whatever <em>I</em> think is the best way to start a Perl program or module. And guess what, <em>my</em> best way doesn't match <em>your</em> best way. If "use 5.12;" called the pragmas <em>you</em> want, <em>I</em> still would have to invoke pragmas. And if "use 5.12;" invoked the pragmas <em>I</em> want, <em>you</em> still have work to do.</p><p>I'm very satisfied the way Perl currently works.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Replies
+comment: <p>@Jakub—perl5i does not help with lexical scoping or shipped modules.</p><p>@Steffen—Does that incantation make utf8 the default for all IO in my module, too? And what pragmas are going to be added in the future that I'll have to consider using? How will they conflict with the existing ones. I want the madness to stop!</p><p>@Sylvain—That would be an improvement, yes, as long as there were some reasonable defaults. If there was a default I didn't want, it'd be good to remove it with a leading <code>-</code> or something.</p><p>@Sean—what chromatic said.</p><p>@Abigail—Then you can keep using Perl 5.10. I want things to improve, not stay the same, and I want Perl to become a better language for experienced Perl developers like you and me, not just stay static for language n00bs. And those n00bs need some help with reasonable defaults anyway. I'm glad <code>strict</code> will be on by default when  you <code>use 5.012;</code>, it's a start, but even more reasonable defaults can be added to the language.</p><p>Please, let's have some convention over configuration without eliminating configuration. The conventions have changed; Perl needs to keep up.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: name
+url: url
+title: huh?
+comment: <p>"I want things to improve, not stay the same,..."  No, you want things to change in some ways, not stay the same in those ways.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: huh?
+comment: <p>No “name,” you misread me. Please try again.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

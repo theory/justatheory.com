@@ -1,0 +1,35 @@
+name: Who, me?
+url: 
+title: 
+comment: <p>Why do you even bother with Matt Trout?  He's just another arrogant, immature little brat who's just a little too proud of his celebrity and uses it as an excuse to bully other people.  Please don't give him any higher visibility.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Hrm…I get along very well with mst, and have always had a mutually-respectful relationship. Granted, the respectfulness can sometimes be expressed in very mst-ways, but I'm more than game for that.</p><p>Anyway, this is not about high visibility for mst, it's about me having the tools I need to solve issues I work with every day. I'll keep doing that no matter what other people think of the folks I work with.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Matt S Trout
+url: http://www.shadowcat.co.uk/blog/matt-s-trout/
+title: If it's any consolation ...
+comment: <p>I really didn't write most of the code involved here, except for the very very first version which was mostly a ripoff of Ima::DBI anyway.</p><p>My primary involvement here was finding the right people for theory to talk to and then making sure they turned up and reviewed the code to make sure DBIx::Connection would work well for DBIx::Class when we have a chance to port across.</p><p>And most importantly, if you don't leave your name and address on your comment, how am I supposed to send you your fan club membership pack? ...</p><p>-- mst, out</p>
+excerpt: 
+blog_name: 
+-----
+name: fxs
+url: 
+title: 
+comment: <p>anonymous:</p><p>mst is good to work with, as long as you're capable of handling a joke and aren't a fifth-grade girl. </p><p>Just man up and put a band aid on those hurt feelings. </p>
+excerpt: 
+blog_name: 
+-----
+name: ribasushi
+url: 
+title: 
+comment: <p>I just remembered a long-forgotten problem: https://rt.cpan.org/Ticket/Display.html?id=47005</p><p>Tim has a very good point - there are times when you want the benefits of nesting without the automatic retries. IIRC no agreement was reached on how exactly to allow this in the API, and then tuits ran out. </p>
+excerpt: 
+blog_name: 
+-----

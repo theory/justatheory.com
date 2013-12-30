@@ -1,0 +1,28 @@
+name: Thorsten Biel
+url: tb@itadmin.com
+title: 
+comment: Yes, you should be getting something like:# ntpq -p     remote           refid      st t when poll reach   delay   offset  jitter==============================================================================*ntp1.NL.net     .GPS.            1 u  212  512  377   85.379  -49.419   7.220+sombrero.cs.tu- .PPS.            1 u  756  512  376   73.458  -35.760   8.022 62.119.40.99    0.0.0.0         16 u    -  512    0    0.000    0.000 4000.00Could it be that port 123/udp is blocked on your host? Have you allowed requests from 127.0.0.1 (and your external time servers) in ntp.conf?-Thorsten
+excerpt: 
+blog_name: 
+-----
+name: David Wheeler
+url: http://www.justatheory.com/
+title: Yep
+comment: <p>Here's what my ntpd.conf looks like:</p><pre>restrict default ignore# syncronize with GS time serversserver pool.ntp.orgserver bigben.cac.washington.eduserver time-nw.nist.govrestrict 128.95.231.7 nomodify nopeer noquery notraprestrict 128.208.109.7 nomodify nopeer noquery notrap# local fudge if network servers not availableserver  127.127.1.0     # local clockfudge   127.127.1.0 stratum 10restrict 127.0.0.0 mask 255.0.0.0 nomodify nopeer noquery notrap# track wander (leading directories will need to exist!)driftfile /etc/ntp/ntp.drift</pre><p>Does that allow requests from 127.0.0.1? port 123 is open.</p><p>Thanks,</p><p>David</p>
+excerpt: 
+blog_name: 
+-----
+name: Thorsten Biel
+url: tb@ITadmin.com
+title: 
+comment: Ah, the "noquery" flag is biting you, remove that from the localhost line, so:<pre>restrict 127.0.0.0 mask 255.0.0.0 nomodify nopeer notrap</pre>You'll also need to add "restrict" lines for each time server you're connecting to (for pool.ntp.org that's quite a few...) BTW, nice blog. :)-Thorsten
+excerpt: 
+blog_name: 
+-----
+name: David Wheeler
+url: http://www.justatheory.com/
+title: That was it
+comment: <p>Thanks Thorsten, that did the trick. Removing the <code>noquery</code> from the localhost line, I now get:</p><pre>$ ntpq -p     remote           refid      st t when poll reach   delay   offset  jitter============================================================================== LOCAL(0)        LOCAL(0)        10 l    -   64    1    0.000    0.000   0.008</pre><p>Which, I guess, means that it's working.</p><p>Hrm, so I guess that the need for restrict lines for all servers is a reason not to use <code>pool.ntp.org</code>?</p><p>Cheers,</p><p>David</p>
+excerpt: 
+blog_name: 
+-----

@@ -1,0 +1,21 @@
+name: studdugie
+url: http://designdecisions.blogspot.com/
+title: 
+comment: <p>I feel your pain. I've also inherited a cluster fuck of really fucked up php code where shit is just being reinvented from file to file. There is this one file that is ground zero for the admin interface, it's 12,696 lines long.</p>
+excerpt: 
+blog_name: 
+-----
+name: NonProfit
+url: 
+title: 
+comment: <p>Drupal has a complete templating system, (The .tpl.php files). Image submit buttons are no more difficult than implementing any other .css sprite. Assign your class to the .tpl file, load as a background image via .css. Search for the Drupal Theming Guide for more details. </p>
+excerpt: 
+blog_name: 
+-----
+name: Andrew Berry
+url: http://www.abdevelopment.ca/
+title: Try theming your form instead
+comment: <p>I think you've missed that you can theme the output of your form's HTML quite easily. For example, on one site we wanted the search submit button to be an image button which was specific for the theme. In your template.php for your theme, you can override the theme function for the button. You'll have more maintainable code (since the button will still work if you change themes), and it will be easier to understand.</p><p>On the flip side, if you're doing theming which is part of a module and not tied to your current design, you can implement the theme code there by using the #theme property of the form, or by just implementing the default theme_myformname() function.</p><p>Take a look at this:</p><pre><code>/** * Override the default search form theming. */function phptemplate_search_theme_form(&#036;form) {  unset(&#036;form['search_theme_form']['#title']);  // This is just to make it a little cleaner, it doesn't have to be  // it's own function.  &#036;submit = mytheme_search_button(&#036;form['submit']);  &#036;form['submit']['#printed'] = TRUE;  return drupal_render(&#036;form) . &#036;submit;}/** * Print the search form element as an image button. * Most of this is copied from theme_search_button(). */function mytheme_search_button(&#036;element) {  global &#036;base_path;  // Make sure not to overwrite classes.  if (isset(&#036;element['#attributes']['class'])) {    &#036;element['#attributes']['class'] = 'form-'. &#036;element['#button_type'] .' '. &#036;element['#attributes']['class'];  }  else {    &#036;element['#attributes']['class'] = 'form-'. &#036;element['#button_type'];  }  return '&lt;input type="image" src="' . &#036;base_path . path_to_theme('mytheme') . '/images/en/buttons/go.gif" ' . (empty(&#036;element['#name']) ? '' : 'name="'. &#036;element['#name'] .'" ') .'id="'. &#036;element['#id'] .'" value="'. check_plain(&#036;element['#value']) .'" '. drupal_attributes(&#036;element['#attributes']) ." /&gt;\n";}</code></pre><p>Hope that helps (and renders right - I don't see a preview button).</p>
+excerpt: 
+blog_name: 
+-----

@@ -1,0 +1,70 @@
+name: Dave Rolsky
+url: http://blog.urth.org/
+title: 
+comment: <p>I don't <em>like</em> SQL, but I know it pretty well. My latest ORM does reflect that, I think.</p>
+excerpt: 
+blog_name: 
+-----
+name: eggyknap
+url: http://eggyknap.blogspot.com
+title: 
+comment: <p><shameless plug>I gave a presentation a few weeks ago on precisely this topic: <a href="http://eggyknap.blogspot.com/2009/03/fun-with-sql.html">http://eggyknap.blogspot.com/2009/03/fun-with-sql.html</a></p>
+excerpt: 
+blog_name: 
+-----
+name: Leandro DUTRA
+url: http://thedutras.blogspot.com/
+title: Data Adminiſtrator
+comment: <p>Celko is dangerous.  He doesn’t really underſtand ðe relational model, and ðus goes around ‘ſelling’ his bafflin’ neſted ſets hierarchical meß.  Steer clear of him…</p>
+excerpt: 
+blog_name: 
+-----
+name: gregj
+url: 
+title: video celko
+comment: <p>I hope someone records his lecture. I can't be in states atm, so...</p>
+excerpt: 
+blog_name: 
+-----
+name: Manni Wood
+url: 
+title: 
+comment: <p>Love the comparison of avoiding Ruby blocks in case you port to Perl. Search also "ORM: the Vietnam of Computer Science". Observation: programmers who don't want to learn SQL are, more directly, programamers who don't want to learn a new programming language. I think we can all see the problem there. Finally, after you've learned SQL, you'll end up using a SQL mapper like iBATIS, and not an ORM.</p>
+excerpt: 
+blog_name: 
+-----
+name: Garth Gilmour
+url: www.ggilmour.com
+title: Mixed Metaphors
+comment: <p>It seems to me that you're mixing your metaphors here:</p><blockquote>  <p>If you’re writing an application in Perl, it pays to  learn idiomatic Perl. If you’re writing it in Ruby, it  pays to use idiomatic Ruby. So why would you settle for  anything less when using an RDBMS?</p></blockquote><p>Because idiomatic Perl/Ruby/Java/C++ works the same way in all  implementations. Idiomatic means making the best use of the standard features whilst avoiding historical baggage, not taking advantage of ones that only exist in your compiler/platform/interpreter/virtual machine. </p><p>One of the main reasons why C++ fell and Java took over is that in Java file access, networking, crypotgraphy etc... all work the same way regardless of where your code is running. Developers learned the hard way in the 1990's that one-way-for-UNIX-and-one-for-Windows quickly degenerates into one-way-for-Solaris-and-one-for-HPUX and after that its just chaos.</p><blockquote>  <p>SQL is, after all, just another programming language, and  the various dialects have their advantages and   disadvantages</p></blockquote><p>As I understand it SQL is a declarative query language (or started out as one anyway). Its against the entire concept of a query language to have different versions. Look at regular expressions where every programming language supports Perl 5 regex's or XML where every modern programming language supports XPath. Both of these have the same complexity (or higher) than SQL and the same need for optimization. Yet I dont have to relearn regular expressions when I move engine or XPath which I switch parser - so why should I have to adjust my SQL when I move database?</p>
+excerpt: 
+blog_name: 
+-----
+name: alex pilosov
+url: 
+title: Damn right
+comment: <p>Yes, people who don't understand SQL are doomed to reinvent it. Badly.</p><p>The proliferation of DBIx:: modules on CPAN is a testament to it. One of worst offenders is Request Tracker - bogosity that results in a dozen requests sent to the server for a simple request.</p>
+excerpt: 
+blog_name: 
+-----
+name: Ali
+url: 
+title: T-SQL vs PL/SQL
+comment: <p>The difference between T-SQL and PL/SQL only server to be a barrier of exist or of switching from one RDBMS to another.</p><p>Both language are almost equally powerful.</p><p>The difference between Ruby and Perl is intrinsic and subtle. </p><p>T-SQL to PL/SQL should be more akin to what JRuby is to Ruby, they should be identical, any extra should be in the platform no in the language semantic, like how that Java libraries are available for JRuby, which for some tasks makes JRuby more suitable</p><p>There are many good reasons to make your application DBMS portable, but there is even more and better reasons to use MVC, separation of concerns and insulate Data Access logic from your business logic!</p>
+excerpt: 
+blog_name: 
+-----
+name: Laurence Rowe
+url: http://objectvibe.net/blog
+title: Just get a better ORM!
+comment: <p>Try <a href="http://www.sqlalchemy.org">SQLAlchemy</a>. It really works well as underneath the ORM there is a sql abstraction layer with a proper understanding of the underlying relational algebra. This means I don't have to use full ORM mapping when it is not appropriate, but I'm still able to use the sql abstraction layer to write my queries in a portable manner. This means I can develop (and have my tests run with) sqlite, which is a whole lot quicker and easier than starting up oracle in a VM.</p><p>ORMs can be a useful abstraction layer. It means I don't have to write my own code for working out which records have changed and need to be flushed to the database.</p><p>Of course a good understanding of relational databases is important for application programmers who use them, but learning the intricacies of each sql dialect seems a waste of time to me.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Responses
+comment: <p>@Dave—I agree that you know SQL pretty well, but my question is this (not having really looked at <a href="http://search.cpan.org/dist/Fey-ORM/">Fey</a>: How much of SQL have you had to re-implement in Perl? And, relatedly, <em>which</em> SQL?</p><p>@Leandro—That's subject to debate, I suppose. But Celko certainly knows more about SQL and databases than any application hacker I know. So I would suggest, to app hackers, that they attend the talk, learn more, and don't check your brain at the door.</p><p>@gregj—Yeah, me too!</p><p>@Manni—I'm happy just writing SQL, frankly. These days I write stored procedures and functions in SQL, then let the app front-end use those. App developers seem pretty comfortable with a functional interface. :-)</p><p>@Garth—I agree that “Idiomatic means making the best use of the standard features whilst avoiding historical baggage,”but the enforcement of a least-common-denominator standard on app developers has been to the detriment of usability, maintainability, and performance. Put another way, many application developers hang on to the historical baggage! As the standard evolves, it will become easier to write standard-compliant SQL, but ANSI 92 ain't it. Hell, I could just rename this post “No, Really, Learn SQL,”because application developers know only a tiny sliver of the standard (never mind that not all app vendors implement the standard equally). So you can look at it both ways. When I encourage using taking advantage of implementation-specific features, many of those features are in fact standards-compliant. I think it's okay to use stuff that's <em>not</em> directly in the standard, too, but hell, if people just want to use the standards-compliant stuff, there's so much more than what they use!</p><p>Oh, and I will be using named captures in Perl 5.10 regular expressions, depsite the fact that they're not supported in Ruby regular expressions (yet).</p><p>@alex—Hallelujah brother, preach! (To be fair to <a href="http://bestpractical.com/rt/">RT</a>, it is symptomatic of its time and the knowledge of its creator at that time—as is <a href="http://www.bricolagecms.org/">Bricolage</a>.</p><p>@Ali—I believe that SQL <strong>is</strong> the data access logic. It should also encapsulate your business rules. That's what it excels at.</p><p>@Laurence—The touble with an ORM like SQLAlchemy—and I laud its appreciation of SQL—is that, except for relatively simple things, you're going to have to write the SQL yourself anyway. So why not just learn it? Let me put it this way: I don't want an abstraction layer so that I can write Ruby libraries in Perl—I can just write them in Ruby! But the idea of needing to learn each SQL dialect is a red herring. Almost no one ever ports their applications from one database to another. So just take advantage of the dialect you're using, especially if there are standards-compliant constructs that you're not using (and even if some other database you might theortically someday use doesn't support such contrcts—but then why would you ever use such a database?)</p><p>Thanks for the great comments, everybody, much appreciated!</p>
+excerpt:
+blog_name:
+-----

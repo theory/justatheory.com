@@ -1,0 +1,83 @@
+name: 
+url: http://blogs.acceleration.net/ryan/archive/0001/01/01/1065.aspx
+title: js namespaces
+comment: 
+excerpt: 
+blog_name: :-$
+-----
+name: 
+url: http://blogs.acceleration.net/birdman/archive/2005/05/05/1067.aspx
+title: JS Namespaces redux
+comment: 
+excerpt: 
+blog_name: Birdman's land
+-----
+name: Bob Ippolito
+url: http://bob.pythonmac.org/
+title: example broken?
+comment: In the example, you have the following:<br /><samp>// Inherit from CD.Music.<br />CD.Music.Classical.prototype = CD.Music.prototype; // Inheritance.<br /><br />// Add to the class and/or override as necessary.<br />CD.Music.Classical.prototype.composer  = null;<br /></samp><br /><br />Last I checked, JavaScript isn't going to copy <code>CD.Music.prototype</code> here, so you're going to be adding things to both classes, no?  Shouldn't there be a "new" somewhere?
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: example broken?
+comment: <p>Bob</p><p>You are quite right. Fixed&#x2014;thanks!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: 
+url: https://www.acst2.rutgers.edu/confluence/display/EAG/Javascript
+title: Javascript
+comment: 
+excerpt:  Philosophy/PrincipalsJS Usage should be: it must be nongratuitous (i.e. provide real value, that could not be easily achieved another way) it must degrade well (i.e....
+blog_name: Confluence: Enterprise Architecture
+-----
+name: Kevin Bowker
+url: 
+title: 
+comment: <p>Is there a way to construct a class so that the following code would be legitimate?</p><pre>var disc=new CD();disc.Music.Classical.composer='Mozart';orvar disc=new CD();var comp=disc.Music.Classical.composer;comp = 'Mozart';</pre><p>kevin@kbware.com</p>
+excerpt: 
+blog_name: 
+-----
+name: Ben Davies
+url: 
+title: 
+comment: <p>You could put the inheritance code in the constructor, especially as you know the namespace chain anyway (your defining it at this point anyway!):</p><pre>// CD.Music must be loaded already. Create the constructor.CD.Music.Classical = function () {    // Inherit from CD.Music.    CD.Music.Classical.prototype =  CD.Music.prototype; // sets up the prototype inheritance chain    CD.Music.Classical.prototype.constructor =  CD.Music; // constructor property is used in scripts to determine an object's type    CD.Music.Classical.superclass =  CD.Music.prototype; // Sets up reference to superclass    CD.Music.Classical.superclass.constructor.apply(this, arguments); // Call superclass constructor    // Add to the class and/or override as necessary.    this.composer  = null;    this.orchestra = null;    this.conductor = null;    this.soloist   = null;}</pre>
+excerpt: 
+blog_name: 
+-----
+name: i.Skitz
+url: http://ajile.sourceforge.net/
+title: JavaScript Namespace Module Exists
+comment: See http://ajile.sourceforge.net/ for a module that does JavaScript namespaces and more. The Wikipedia gives a good overview: http://en.wikipedia.org/wiki/Javascript_Namespaces.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: JavaScript Namespace Module Exists
+comment: <p>Why would I want horrible Java-style namespces? See <a href="http://www.openjsan.org/" title="JSAN">JSAN</a> for my namespaces vision realized.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: cd music
+url: http://music-db.org/
+title: 
+comment:  <pre>// CD.Music must be loaded already. Create the constructor.CD.Music.Classical = function () {    // Inherit from CD.Music.    CD.Music.Classical.prototype =  CD.Music.prototype; // sets up the prototype inheritance chain    CD.Music.Classical.prototype.constructor =  CD.Music; // constructor property is used in scripts to determine an object's type    CD.Music.Classical.superclass =  CD.Music.prototype; // Sets up reference to superclass    CD.Music.Classical.superclass.constructor.apply(this, arguments); // Call superclass constructor    // Add to the class and/or override as necessary.    this.composer  = null;    this.orchestra = null;    this.conductor = null;    this.soloist   = null;}</pre> Thanks
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>cd music,</p><p>The only problem with that apporoach to implementing the subclass is that you're redefining the inheritance hierarchy every time you instantiage a CD.Music.Classical object. Not very efficient.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Tom Metro
+url: 
+title: 
+comment: <blockquote><p>The only downside to this proposal...we don’t get the block syntax...</p></blockquote><p>You could probably sweeten the syntax with something like:</p><pre>JSAN.subclass('CD::Music','CD::Music::Classical', {  composer:  null;  orchestra: null;  conductor: null;  soloist:   null;});</pre><p>Simply a JSAN variation on the instanceof(), inheritsfrom(), etc. helper functions that people have written.</p><p>Of course subclass() will have some challenges in sifting the newly supplied properties out of the passed object from properties inherited from Object.</p><p> -Tom</p>
+blog_name: 
+-----

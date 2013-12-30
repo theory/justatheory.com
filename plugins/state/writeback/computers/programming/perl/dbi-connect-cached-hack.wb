@@ -1,0 +1,14 @@
+name: Quinn Weaver
+url: 
+title: So why connect_cached instead of Apache::DBI?
+comment: <p>Just curious.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p><a href="http://www.mail-archive.com/dbi-dev@perl.org/msg02352.html">This post</a> from Matt Sergeant firmed it up for me. Bricolage started out doing its own thing, before I'd heard of Apache::DBI. See <a href="http://www.mail-archive.com/dbi-dev@perl.org/msg02341.html">this post</a> in the same thread for when I was able to solve whatever problem I had using <code>connect_cached()</code>.</p><p>In short: <code>connect_cached()</code> is a better per-process caching algorithm than Apache::DBI.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

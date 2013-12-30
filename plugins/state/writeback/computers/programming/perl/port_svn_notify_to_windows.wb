@@ -1,0 +1,14 @@
+name: David Holroyd
+url: http://www.badgers-in-foil.co.uk/
+title: SVN bindings for Perl?
+comment: <p>Maybe using the Perl bindings would grant the same degree of interoperability that Subversion itself has?  (Might even be microscopically more efficient -- just think of the extra fork() you'd save ;)</p><p>I've been thinking of using the Ruby-Svn bindings for the same reason, though it would obviously be nice to avoid the extra dependancy and just use what's already provided by the platform.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: SVN bindings for Perl?
+comment: <p>David,</p><p>Yes, switching to the SVN bindings is on my list—or at least optionally doing it when they're available. But they are so poorly documented and I've had so few tuits that it hasn't been worth it, yet.</p><p>In the meantime, there must be some simple way to do this in Windows. I need to find the win32-porters list and ask there, I guess.</p><p>—Theory</p><p>PS: CVSspam rocks!</p>
+excerpt: 
+blog_name: 
+-----

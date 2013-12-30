@@ -1,0 +1,14 @@
+name: John
+url: 
+title: C++ refugees
+comment: <p>Some people are just so happy to be able to jam new code and symbols into other namespaces that they joy overwhelms any desire to dwell on the wisdom of doing so.  I call it the My First Dynamic Language syndrome.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: C++ Refugees
+comment: <p>@John—</p><p>Not a bad name for it. I have to admit that I‘ve actually found fuck typing very useful at times, for example to address the shortcomings of <a href="http://dev.rubyonrails.org/ticket/9471">certain</a> <a href="http://dev.rubyonrails.org/ticket/8038">recalcitrant</a> <a href="http://rubyforge.org/tracker/?func=detail&amp;aid=6368&amp;group_id=426&amp;atid=1698">libraries</a>. In that case, I think it makes sense to sort of rough them up a bit to get the proper behavior.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

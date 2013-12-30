@@ -1,0 +1,14 @@
+name: Fred Moyer
+url: fred@redhotpenguin.com
+title: Penguin Herder
+comment: <p>I just started using emacs ( after a 10 year hiatus ), and this is a lifesaver.  One comment though, I ran into <a href="http://lists.gnu.org/archive/html/bug-gnu-emacs/2006-01/msg00044.html">this issue</a> when I mistakenly thought that the command you had specified was ctrl-t, not ctrl-t followed by c.  That part was a bit confusing, but this does indeed work.</p> <p>Thanks David!</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Penguin Herder
+comment: <p>Fred</p><p>It's probably because I'm running Emacs from cvs (22.0.50.1). Joshua Ben Jore changed the recipe for the forthcoming Perl Hacks book, and that change might fix your problem, too. The revised version looks like this:</p><pre>  (defun perltidy ()    "Run perltidy on the current region or buffer."    (interactive)    ; Inexplicably, save-excursion doesn't work here.    (let ((orig-point (point)))      (unless mark-active (mark-defun))      (shell-command-on-region (point) (mark) "perltidy -q" nil t)      (goto-char orig-point)))</pre><p>And yes, good call about the way I've typed in the keyboard shortcut. I've made it <code>C-c t</code> so that it's more familiar to Emacs folk.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

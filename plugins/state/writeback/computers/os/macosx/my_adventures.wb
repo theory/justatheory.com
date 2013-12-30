@@ -1,0 +1,14 @@
+name: Paul Battley
+url: 
+title: 
+comment: The PostgreSQL startup bundle link is broken.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: PostgreSQL Startup Bundle Link Fixed
+comment: <p>Fixed, thanks. Note that the essential parts of the bundle  come with PostgreSQL 7.4 and later, so you probably don't even need this bundle.</p>
+excerpt: 
+blog_name: 
+-----

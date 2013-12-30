@@ -1,0 +1,14 @@
+name: Chris Dolan
+url: http://www.chrisdolan.net/
+title: Annopod
+comment: <p>If you like the annocpan.org comments, then I recommend that you check out my AnnoCPAN::Perldoc::Sync module.  That one lets you periodically download the current comments database from annocpan.org and insert them into "perldoc" output at runtime.  It's like having annocpan.org on your commandline.On Mac OS X, I recommend:</p><pre>  fink install annocpan-perldoc-sync-pm586-cron  fink install annocpan-perldoc-pm586-bin  alias perldoc /sw/bin/annopod</pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Annopod
+comment: <p>Chris,</p><p>Thanks! Unfortunately, AnnoCPAN::Perldoc::Sync does not appear to be on CPAN, and I don't do fink. I'll try it once it's on CPAN, though!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

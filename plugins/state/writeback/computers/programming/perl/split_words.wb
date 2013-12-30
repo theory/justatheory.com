@@ -1,0 +1,14 @@
+name: Andy
+url: http://daerr.livejournal.com/
+title: East Asian Languages
+comment: It seems to me that it'll work fine with any language that uses non-word characters to delimit words.  (Okay, that's kind of just a restatement of your regexp.)  This does mean that it'll fail with Chinese, Japanese and Korean as they don't put non-word characters between words.  While punctuation (commas, periods, etc) have become popular (though not universal), word-delimiting spaces have not.  Determining word boundaries for these is extremely non-trivial and sometime impossible.  Lingua::ZH::Toke seems to take a stab at it for Chinese.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: East Asian Languages
+comment: <p>Thanks for your comments, Andy. It is rather as I thought. I wonder if there's some way that I can detect single-character words in such languages, and split on characters, instead?</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

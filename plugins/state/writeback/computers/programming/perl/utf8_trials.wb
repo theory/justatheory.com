@@ -1,0 +1,28 @@
+name: Mark Fowler
+url: mark@twoshortplanks.com
+title: 
+comment: Okay.<p>First up, I'm really really nervous about setting the utf8 flag on anything that comes from the browser.  If you accidentally mark non-utf8 data (i.e. you don't get utf8 from a badly behaved browser) then Perl won't treat that data at all right - you can actually core dump Perl if you're not careful.  Maybe you should actually decode things properly with the decode routine.  It's a lot safer.<p>Secondly if you want me to take a look at the TT stuff if you blast me a url to what's changed and I'll have a look and see what if you're doing The Right Thing, though from what I've read it sounds like it.  TT does the right thing with templates it reads from disk (if it's got a BOM it treats it as utf8/utf16, it sticks "use utf8;" at the top of the intermediate perl code it creates from the templates if there's utf8 values in the templates) now those patches I wrote have gone in.   But strings you pass from your code it expects you to flag correctly for everything to work.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: http://www.justatheory.com/
+title: 
+comment: <p>So far it hasn't been a problem to just set the flag on data sent from the browser. Modern browsers are pretty good about doing the right thing. But I have comments in the code for how to change it, if there are bug reports because of stupid browsers. But Bricolage is in daily production at <a href="http//www.rfa.org/" title="Radio Free Asia">RFA</a> now, publishing in 10 different language with a variety of browsers, and so far there have been no complaints.</p><p>My original change is <a href="http://svn.bricolage.cc/viewcvs/bricolage/branches/rev_1_8/lib/Bric/Util/Burner/TemplateToolkit.pm?r1=5885&r2=5892" title="I add utf8 support to the Bricolage TT Burner">here</a>, and an additional change to take advantage of TT 2.14 is <a href="http://svn.bricolage.cc/viewcvs/bricolage/branches/rev_1_8/lib/Bric/Util/Burner/TemplateToolkit.pm?r1=5897&r2=5984" title="I take advantage of the binmode setting in TT 2.14">here</a>. You can see the full source code <a href="http://svn.bricolage.cc/bricolage/branches/rev_1_8/lib/Bric/Util/Burner/TemplateToolkit.pm" "The TT Burner in Subversion">here</a>. The BOM solution wasn't really an option, since it would require Bricoalge templators to always put it in their templates.</p>
+excerpt: 
+blog_name: 
+-----
+name: Eric Mowrer
+url: 
+title: 
+comment: Another trick that will get you around some of the perl 5.6 Unicode bugs:my $fixed_utf8_string = pack('U*', unpack('C*', $broken_utf8_string));I have had to result to this on a few occasions when 'use utf8' didn't fix the problem.
+excerpt: 
+blog_name: 
+-----
+name: Justin Mason
+url: jm-34859435@jmason.org
+title: http://taint.org/
+comment: <p>Hey -- I wound up returning to this page today while working on a UTF-8 bug in spamassassin.  lots of good advice in general, and thanks.</p><p>However, I'm a bit worried by the danger of causing the interpreter to dump core based on input from remote HTTP clients.  That's a very big deal -- (a) there's no guarantee they really are browsers and not some l33t_bricolage_exploit.pl script hitting port 80 directly; and (b) core dumps in the interpreter, if reliably reproducable, can mean exploits -- even a single byte overflow can be exploited.  So I'm with Mark Fowler on that point ;)</p>
+excerpt: 
+blog_name: 
+-----

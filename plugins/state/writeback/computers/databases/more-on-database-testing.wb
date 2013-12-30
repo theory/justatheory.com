@@ -1,0 +1,7 @@
+name: Simon
+url: 
+title: 
+comment: <p>I this about myself that I'm a quite good programmer. This means only that I know a lot of things, I know where the documentation is and I can read it. That doesn't mean that I don't make any mistakes. What's more I work with maybe not so big but very important (for clients) databases and I must be sure that all sql files that I prepare won't destroy something. Today I had to change a little bit an sql function used by many other functions and pgTap really helped me finding two little errors. Errors were little but there will be a big problem on the production databases.btw: thanks for pgTap. </p>
+excerpt: 
+blog_name: 
+-----

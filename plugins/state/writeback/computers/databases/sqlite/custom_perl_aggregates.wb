@@ -1,0 +1,35 @@
+name: 
+url: http://chris.prather.org/archives/000633.html
+title: links for 2005-11-12
+comment: 
+excerpt:  Corpus Linguistics: table of contents Pages to supplment the Book (tags: linguistics) Producing Open Source Software (tags: articles book...
+blog_name: The Room
+-----
+name: David Fetter
+url: david@fetter.org
+title: 
+comment: <p>I don't know about how you'd do this in SQLite, but in PostgreSQL, you can have a general aggregate <code><a href="http://www.postgresql.org/docs/current/static/xaggr.html">array_accum()</a></code>, then use PostgreSQL's <code>array_to_string()</code> or Perl's <code>join()</code>:<pre>SELECT    foo,    bar,    array_to_string(array_accum(baz), ' ')GROUP BY foo, bar;</pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Mr. Fetter,</p><p>Dude! No, I didn't know about <code>array_to_string()</code>. That's great! I'll rip that custom aggregate out of Bricolage now. Thanks!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Bah! No array functions in 7.3. I'll have to switch it out later when we start to require PostgreSQL 7.4 or later, probably next year (though development will start sooner).</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: David Fetter
+url: david@fetter.org
+title: 
+comment: It hadn't occurred to me to look back that far.  Sorry about that.
+excerpt: 
+blog_name: 
+-----

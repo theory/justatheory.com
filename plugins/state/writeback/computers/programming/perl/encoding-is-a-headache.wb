@@ -1,0 +1,35 @@
+name: Michael Peters
+url: 
+title: Reasonable defaults, configurable overrides
+comment: <p>Whenever I'm faced with a similar api problem I just just make the default something that most people will want, and then allow them to override it somehow.</p><p>In this case, I think the default that most people these days want from an HTML fragment is UTF8. But if they need something else, just let them pass an extra encoding parameter.</p>
+excerpt: 
+blog_name: 
+-----
+name: dagolden
+url: http://www.dagolden.com
+title: tried CPAN?
+comment: <p>Any time I hit a problem that I think must have been solved before, I search CPAN.  Have you tried any of the detectors for things that don't declare their encoding explicitly?  E.g. <a href="http://p3rl.org/Encode::Guess">Encode::Guess</a> or <a href="http://p3rl.org/Encode::Detect">Encode::Detect</a>?</p>
+excerpt: 
+blog_name: 
+-----
+name: Jerome Eteve
+url: http://sigstp.blogspot.com/
+title: Encoding is not your concern
+comment: <p>Encoding and decoding is a dangerous ground where trying to be clever can cause more damage than good.</p><p>Imho, the sanest way to deal with encoding/decoding is 'as close as the output/input as possible'.</p><p>In the Perl space, text strings <em>must</em> be Perl character strings.</p><p>Your module is in Perl and it creates HTML? Fine, let it just do that. You should return some html as a Perl string.</p><p>Now if your modules users want to output it as UTF-64, let them do so. </p><p>You may object that a lot of people don't know about encoding. Don't attempt to implement some magic to make their life easy, it never works.</p><p>If your module is capable of outputting entire HTML pages, provide a mechanism that allow users to inject their own fragment.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Responses
+comment: <p>@Michael—Yep, that's what I'm doing. <a href="https://github.com/theory/text-markup/blob/master/lib/Text/Markup/Markdown.pm">Mostly</a>. I'm using <a href="http://search.cpan.org/perldoc?File::BOM">File::BOM</a> to open files, and if there is no BOM, falling back on UTF-8. I'm not sure I want to add a parameter, though, because some files should be read as raw bytes (like HTML).</p><p>@dagolden—I think those are kind of error-prone. I've used them in the past, along with <a href="http://search.cpan.org/perldoc?Encode::Detect::Detector">Encode::Detect::Detector</a>. They can get things wrong, and disagree with one another. I'm more comfortable insisting on UTF-8 or being unambiguous (by using a BOM or HTML header or something).</p><p>@Jerome—Yep, wanting to avoid cleverness. But different parsers expect different things. And my module doesn't generate HTML. It uses a bunch of HTML-generating parsers that have different expectations for their inputs. HTML, for example, should <em>not</em> be decoded to Perl's internal form. It should have an encoding declaration (header or meta element), and the parser will decode it for you. So, no magic, with you there, but gotta do my best to give the various parsers the values they'll work best with.</p>
+excerpt: 
+blog_name: 
+-----
+name: david nicol
+url: davidnico@cpan.org
+title: the tipjar way
+comment: <p>I have long held that a future Perl should abandon the string-is-a-sequence-of-octets paradigm for a more rope-like abstraction in which fragments each get their own encodings. Not only would such a refactoring change the entire unicode headache from a matter of conditional code paths depending on flags to a matter of parallel methods, but it also solves heeadaches such as the ones you are kvetching about in this post. So the document declares that the middle 321 octets are encoded as Big5 Chinese? Store those octets as a Big5 string, within the larger rope.</p><p>I don't have the thousand spare tuits to make this happen, but it's my considered recommendation.</p>
+excerpt: 
+blog_name: 
+-----

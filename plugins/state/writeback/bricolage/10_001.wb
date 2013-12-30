@@ -1,0 +1,21 @@
+name: Jesse Vincent
+url: 
+title: I'm Jealous
+comment: How's that Devel::Cover output look?
+excerpt: 
+blog_name: 
+-----
+name: Ovid
+url: http://users.easystreet.com/ovid/
+title: Test Coverage
+comment: <P>I guess Jesse beat me to the obvious question.  I was going to proudly post the coverage summary for the Bric 2, but I discovered it's only 67.7%.  Whoops :(</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: I'm Jealous
+comment: <p>Jesse,</p><p>I'm sure the coverage is for shit, but what do you expect, given that there were <em>zero</em> tests in Bricolage prior to 1.4.x.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

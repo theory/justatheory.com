@@ -1,0 +1,35 @@
+name: Robert Brewer
+url: http://www.aminus.org/blogs/index.php?blog=2
+title: Using cursors
+comment: <p>Great writeup David.</p><p>Epic uses cursors in its assert_column function to do pretty much what you're asking for. It uses plpgsql's OPEN instead of SQL's DECLARE CURSOR, which is probably what prevented you from grepping for it. ;) Epic still uses a temp table because we're passing in strings, though.</p><p>assert_rows uses EXCEPT because I had several functions to test at Etsy which had no ORDER BY on their output, so I needed a comparator that was order-agnostic. Generally, I rely on assert_column for ordered comparisons. Maybe someday I'll expand it to multiple columns.</p>
+excerpt: 
+blog_name: 
+-----
+name: David Fetter
+url: http://www.pgexperts.com/
+title: Symmetric Difference
+comment: <p>SQL has long needed a SYMMETRIC DIFFERENCE operator, that being a shortcut for A UNION B EXCEPT (A INTERSECT B).  Maybe we can get that into the next PostgreSQL...</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Responses
+comment: <p>@Robert—</p><p>Thanks for the comment. I had indeed missed <code>asesrt_column()</code>, but only because I wasn't paying attention. Your note about the need to have set comparisons (that is, unordered) as well as result set comparisons (ordered) is well-taken, however. I'll have to look at supporting both in as natural a way as possible.</p><p>@David—</p><p>Yeah, that would be nice. What I want to do is come up with a way to use the <code>A UNION B EXCEPT (A INTERSECT B)</code> approach without executing A and B twice—and preferably supportable on 8.0, too. I'm hoping that I can find some time to do some experimentation on that this week.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Joshua M Berkus
+url: www.pgexperts.com
+title: 
+comment: <p>David,</p><p>There's another potential benefit to using cursors: you could have the checking function <em>stop</em> as soon as it gets to a mismatched row.   Then you don't have to iterate over the whole set.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Joshua—Right, for ordered comparisons. But when comparing unordered sets, it has to be the whole cigar..</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

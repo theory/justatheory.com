@@ -1,0 +1,42 @@
+name: Adrian Klaver
+url: 
+title: 
+comment: <p>Try again with formatting. Here is how I calculated forUPCA. Don't know if it any easier.</p><pre>CREATE OR REPLACE FUNCTION public.upc_check_digit(bpchar)  RETURNS int4 AS'	DECLARE	odd_number      INTEGER;	odd_sum		INTEGER :=0;	even_number	INTEGER;	even_sum	INTEGER :=0;	total		INTEGER;	total_plus	INTEGER;	check_sum 	INTEGER;	BEGIN	FOR i IN 1..11 LOOP	odd_number:=substring($1,i,1)::INTEGER;	odd_sum:=odd_sum + odd_number;	i=i + 1;	END LOOP;	FOR i IN 2..10 LOOP	even_number:=substring($1,i,1)::INTEGER;	even_sum:=even_sum + even_number;	i=i + 1;	END LOOP;	total:=(odd_sum*3) + even_sum;	IF substring(total,length(total),1)::INTEGER=0 THEN		check_sum:=0;	ELSE	total_plus:=total-substring(total,length(total),1)::INTEGER + 10;	check_sum:=mod(total_plus,total);	END IF;	RETURN check_sum;	END;	'  LANGUAGE 'plpgsql' VOLATILE;</pre>
+excerpt: 
+blog_name: 
+-----
+name: Josh Berkus
+url: www.powerpostgresql.com
+title: Use PL/perl?
+comment: <p>David,</p><p>Why not just use PL/Perl?   PL/pgSQL is possibly the worst language in the universe (save Visual Basic) for string manipulation.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Use PL/Perl
+comment: <p>Josh</p><p>Since I can't load List::Util in PL/Perl, it's not a whole lot better:</p><pre>CREATE OR REPLACE FUNCTION validate_upc_perl (upc text) RETURNS boolean AS $_$    my @nums = split '', shift;    shift @nums if @nums == 13; # Support EAN codes.    10 - (        ((  $nums[0] + $nums[2] + $nums[4] + $nums[6]          + $nums[8] + $nums[10]) * 3)        + $nums[1] + $nums[3] + $nums[5] + $nums[7] + $nums[9]    ) % 10 == $nums[11] ? 'true' : 'false';$_$ LANGUAGE plperl;</pre><p>It does seem to be just about as fast, though.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Ovid
+url: http://users.easystreet.com/ovid/
+title: The Perl is Fine
+comment: <p>Frankly, I much prefer the Perl version.  If it's just as fast, I think it's much clearer.  No problem with leveraging one's existing knowledge.  I do find it disappointing that one can't load libraries in PL/Perl, but it's a small price to pay.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: The Perl is Fine
+comment: <p>Ovid</p><p>In fact, you can load modules if you install plperlu, which is how you install an untrusted Perl. But as for this example, I'll stick with the PL/pgSQL for as long as I can, since it's just as fast and <em>much</em> easier for someone to install.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Andreas Kretschmer
+url: a-kretschmer.de
+title: a simple str2array
+comment: <pre>---- this works like the perl's string_to_array()--create or replace function str2array(text) returns text[] as $$declare i int;        r text[];begin        for i in 1 .. length($1) loop                r[i]=substring($1,i,1);        end loop;        return r;end;$$ language plpgsql immutable;</pre>
+excerpt: 
+blog_name: 
+-----

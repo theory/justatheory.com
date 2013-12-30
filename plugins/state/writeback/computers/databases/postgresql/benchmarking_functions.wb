@@ -1,0 +1,14 @@
+name: Aidan
+url: 
+title: Putting back the drop
+comment: <p><code>CREATE OR REPLACE</code> replaces the <q>cached</q> function <code>_bench(..)</code>.  But if you drop it, it is removed and a new one made.</p><p>Just make it all dynamic so it doesn't keep the cached version of <code>_bench</code> compiled:</p><pre>    -- Now execute the function.    FOR a IN EXECUTE 'SELECT * FROM _bench(' || n ||')' LOOP        RETURN NEXT a;    END LOOP;</pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Putting back the drop
+comment: <p>Aidan</p><p>Right you are, thanks!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

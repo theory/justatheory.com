@@ -1,0 +1,21 @@
+name: Adam Sjøgren
+url: http://koldfront.dk/
+title: origin
+comment: <p>The only thing I found slightly confusing while reading your nice write-ups (as a beginning-to-intermediate git-user) is that you consistently include "origin" (as in "git pull origin") until you reach the "Starting a Project Branch"-page, where you suddenly go "git pull" without the "origin".</p><p>I think it would good to either explain what "git pull" does the first time (defaulting to what you cloned from, I guess), or using "git pull origin" everywhere.</p><p>Just a very small nit, the pages explains the workflows very nicely, I think.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: origin
+comment: <p>Thanks for your comments, Adam. As a newbie Git user, I'm not always clear on these things myself. I <em>think</em> that <code>git pull</code> pulls in the changes for origin, by default, and for the current branch by default, but I'm not sure. The <a href="http://www.kernel.org/pub/software/scm/git/docs/git-pull.html">documentation</a> doesn't really say, either, that I can see in a quick scan. But it does seem like a plain old <code>git pull</code> does what I want whenever I use it.</p><p>So much to learn still…</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Adam Sjøgren
+url: http://koldfront.dk/
+title: Re: origin
+comment: <p>It says something under "<a href="http://www.kernel.org/pub/software/scm/git/docs/git-pull.html#_default_behaviour" title="git pull documentation">Default Behaviour</a>" in the documentation, but quite far down the page.</p><p>Default is origin, unless on a branch where branch.<em>branchname</em>.remote is present in the configuration, then that is used.</p><p>When you clone a repository, you automatically get branch.master.remote set to "origin" in .git/config, which is consistent with the default.</p><p>I'm just learning how to use github to interact with another project, and your guide came in quite handy, so thanks!</p>
+excerpt: 
+blog_name: 
+-----

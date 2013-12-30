@@ -1,0 +1,149 @@
+name: dave0
+url: 
+title: 
+comment: <p>My immediate thought was that something similar to the bag() or set() functions used by Perl's Test::Deep would be useful here.  If that's not feasable in pgTAP, perhaps you could just name the comparison methods using _set and _bag suffixes?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@dave0œôòôWell, no, because theyœôòùre all bags. A set is an unordered collection of things with no duplicates. A bag can have duplicates. SQL always allowed duplicates unless you use <code>DISTINCT</code>. The test functions don't really care about that, though; they just need to know whether or not the order of the results is important.</p><p>œôòôTheory</p>
+excerpt: 
+blog_name: 
+-----
+name: Alex Clay
+url: 
+title: 
+comment: <p>What about using the existing "matches" vernacular? If you wanted to built an assertion that handles either queries or cursors, how about:</p><p>results_match</p><p>Otherwise, maybe:</p><p>query_results_matchcursor_results_match</p><p>A couple other ideas are "points_to" or maybe "finds".</p>
+excerpt: 
+blog_name: 
+-----
+name: studdugie
+url: http://designdecisions.blogspot.com/
+title: 
+comment: <p>Don't go with shorter yet ambiguous naming. Stick to longer but unambiguous names. Typing a couple more characters never killed any programmer (but if it does none of us where in the room and therefore cannot be held accountable).</p><p>I like Alex's *match suggestion.</p>
+excerpt: 
+blog_name: 
+-----
+name: gabrielle
+url: 
+title: 
+comment: <p>+1 for results_match</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Hrmœôó¦I don't think that <code>match</code> is  a good choice, as there is already a <code>matches()</code> function that compares a scalar value to a regular expression. But <code>_finds()</code> is pretty nice.</p><p>So I'm thinking:</p><ul><li><code>query_finds()</code></li><li><code>cursor_finds()</code></li><li><code>sorted_query_finds()</code></li><li><code>sorted_cursor_finds()</code></li></ul><p>I like <code>results_*</code>, but then there's no distinction between functions for queries and those for cursors. Maybe I should just choose one or the other and not offer both? If so, then, if I can't use "match", well maybe just "are"?</p><ul><li><code>results_are()</code></li><li><code>sorted_results_are()</code></li></ul><p>Thoughts?</p><p>Thanks for the feedback, everyone!</p>
+excerpt: 
+blog_name: 
+-----
+name:  Matthew
+url: matthewapeters@comcast.net
+title: 
+comment: <p>I like what you are doing here!</p>
+
+<p>The naming problem seems to stem from an ambiguity of what you are trying to assert. <code>*_gets</code> suggests an object will be returned, because  you are using language typical to OO <code>set_</code> and <code>get_*</code> methodology.  But now we are in the realm of structured data, and the types of assertions are perhaps more varried:</p>
+
+<ol>
+<li><p>I like <code>*_yields</code> as a means to identify the returned data STRUCTURE, as opposed to the actual data.  It smacks of "factory" language and seems appropriately abstract.</p>
+
+<pre>SELECT results_yield( $SUBJECT$
+                        SELECT * 
+                        FROM get_my_type(x,y,'z')
+                        LIMIT 1
+                      $SUBJECT$
+                    ,
+                      "my_type"
+                    )</pre>
+</li>
+
+<li><p><code>*_intersect</code> might be used to assert that the result set provides data that partially matches a control set.  This match would have to be field-to-field for 1+ record from both sets. Order is meaningless here, but the term is unambiguous.</p>
+
+<pre>SELECT results_intersect( $SUBJECT$
+                            SELECT * 
+                            FROM get_my_stuff(x,y,'z')
+                            LIMIT 5
+                          $SUBJECT$
+                        ,
+                        ["control_class" 
+                          |
+                         $CONTROL$ 
+                            SELECT * 
+                            FROM my_control_class
+                         $CONTROL$ 
+                        ]
+                    );</pre>
+</li>
+
+<li><p><code>*_union</code> speaks loudly of a full match between the test subject and a control set.  Order is not even suggested, but the term is unambiguous.</p>
+
+<pre>SELECT results_union( $SUBJECT$
+                            SELECT * 
+                            FROM get_my_stuff(x,y,'z')
+                            LIMIT 5
+                      $SUBJECT$
+                      ,
+                      [ "control_class" 
+                         |
+                        $$ executable statement $$ 
+                      ]
+                    );</pre>
+</li>
+
+<li><p><code>*_maps_to</code> is a bit verbose, but also unambiguous; <code>*_are</code> / <code>*_is</code> are a pretty bold assertions (but that might be called for!) for asserting that there is a record by record, field by field match between the test subject and the control. </p></li>
+</ol>
+
+<p>Curious how you could handle passing the control as a parameter: would you allow an executable statement, or simply a table/view name? A third parameter might be used to identify which fields from control to sort on, where a positive value means ASC and a negative means DESC:</p>
+
+<pre>SELECT results_map_to( $SUBJECT$ 
+                         SELECT * 
+                         FROM my_func('a','b','c')
+                         ORDER BY 1, 3 DESC, 2
+                       $SUBJECT$
+                      , my_control_class
+                      , ARRAY[1,-3,2]
+                     );</pre>
+
+<p>VS</p>
+
+<pre>SELECT results_map_to( $SUBJECT$ 
+                          SELECT * 
+                          FROM my_func('a','b','c')
+                          ORDER BY 1, 3 DESC, 2
+                        $SUBJECT$
+                      , $CONTROL$
+                         SELECT * 
+                         FROM my_control_class
+                         ORDER BY 1, 3 DESC, 2 
+                        $CONTROL$
+                     );</pre>
+
+<p>Parting thought (as I am just getting into pgTAP):
+Have you implemented or planned to implement an assertion for a function's input parameters (IE, to go along with <code>*_yields</code>)?  Might be something like:</p>
+
+<pre>SELECT input_takes( "my_function"
+                  , "my_type"
+                  );</pre>
+
+<p>and/or</p>
+
+<pre>SELECT input_takes( "my_function"
+                  , ARRAY[ "overloaded_function_type1"
+                         , "overloaded_function_type_2"
+                         , "overloaded_function_type_n"
+                         ]
+                  );</pre>
+
+<p>Which implies that you need:</p>
+
+<pre>SELECT is_overloaded("my_function");</pre>
+
+<p>Thanks!</p>
+
+comment: <p>I like what you are doing here!</p><p>The naming problem seems to stem from an ambiguity of what you are trying to assert.  <em><em>gets suggests an object will be returned, because  you are using language typical to OO set</em></em> and get_* methodology.  But now we are in the realm of structured data, and the types of assertions are perhaps more varried:</p><p>1) I like *_yields as a means to identify the returned data STRUCTURE, as opposed to the actual data.  It smacks of "factory" language and seems appropriately abstract.</p><p>SELECT results_yield( $SUBJECT$                        SELECT *                         FROM get_my_type(x,y,'z')                        LIMIT 1                      $SUBJECT$                    ,                      "my_type"                    )</p><p>2) *_intersect might be used to assert that the result set provides data that partially matches a control set.  This match would have to be field-to-field for 1+ record from both sets. Order is meaningless here, but the term is unambiguous.</p><p>SELECT results_intersect( $SUBJECT$                            SELECT *                             FROM get_my_stuff(x,y,'z')                            LIMIT 5                          $SUBJECT$                        ,                        ["control_class"                           |                         $CONTROL$                             SELECT *                             FROM my_control_class                         $CONTROL$                         ]                    );</p><p>3) *_union speaks loudly of a full match between the test subject and a control set.  Order is not even suggested, but the term is unambiguous.</p><p>SELECT results_union( $SUBJECT$                            SELECT *                             FROM get_my_stuff(x,y,'z')                            LIMIT 5                      $SUBJECT$                      ,                      [ "control_class"                          |                        $$ executable statement $$                       ]                    );</p><p>4) *<em>maps</em>to is a bit verbose, but also unambiguous; *<em>are / *</em>is are a pretty bold assertions (but that might be called for!) for asserting that there is a record by record, field by field match between the test subject and the control. </p><p>Curious how you could handle passing the control as a parameter: would you allow an executable statement, or simply a table/view name? A third parameter might be used to identify which fields from control to sort on, where a positive value means ASC and a negative means DESC:</p><p>SELECT results_map_to( $SUBJECT$                          SELECT *                          FROM my_func('a','b','c')                         ORDER BY 1, 3 DESC, 2                       $SUBJECT$                      , my_control_class                      , ARRAY[1,-3,2]                     );VS</p><p>SELECT results_map_to( $SUBJECT$                           SELECT *                           FROM my_func('a','b','c')                          ORDER BY 1, 3 DESC, 2                        $SUBJECT$                      , $CONTROL$                         SELECT *                          FROM my_control_class                         ORDER BY 1, 3 DESC, 2                         $CONTROL$                     );</p><p>Parting thought (as I am just getting into pgTAP):Have you implemented or planned to implement an assertion for a function's input parameters (IE, to go along with *_yields)?  Might be something like:</p><p>SELECT input_takes( "my_function"                  , "my_type"                  );</p><p>and/or</p><p>SELECT input_takes( "my_function"                  , ARRAY[ "overloaded_function_type1"                         , "overloaded_function_type_2"                         , "overloaded_function_type_n"                         ]                  );</p><p>Which implies that you need:</p><p>SELECT is_overloaded("my_function");</p><p>Thanks!</p>
+excerpt: 
+blog_name: 
+-----

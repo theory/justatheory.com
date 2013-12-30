@@ -1,0 +1,7 @@
+name: Mark Fowler
+url: mark@twoshortplanks.com
+title: 
+comment: It's very hard to tell what's going on from what is printed out with utf8.  This is because it's hard to tell if a perl scalar printed contained the right thing, or it's just printed a stream of bytes that happen to cause your terminal to render the correct thing.  I have two bits of advice:1. Use Devel::Peek.  Devel::Peek is the only thing I've found that'll print the internals of perl, to show you exactly what bytes and flags are set in the scalar.2. Make use of my module Test::utf8 to check things are encoded correctly.  I wrote it because I got too confused without it ;-)
+excerpt: 
+blog_name: 
+-----

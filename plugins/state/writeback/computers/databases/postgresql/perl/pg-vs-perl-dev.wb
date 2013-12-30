@@ -1,0 +1,49 @@
+name: 
+url: http://identi.ca/notice/6417165
+title: chromatic's status on Monday, 13-Jul-09 21:30:02 UTC
+comment: 
+excerpt: RD @theory: PostgreSQL Development: Lessons for !perl: http://justatheory.com/computers/databases/postgresql/perl/pg-vs-perl-dev.html
+blog_name: chromatic
+-----
+name: Steve Scaffidi
+url: http://hercynium.myopenid.com
+title: 
+comment: <p>This is one of the most constructive, well thought-out plans for the future of Perl 5 that I have read thus far. I am in full agreement with each point.</p><p>I'd like to add a comment on something I've heard about in discussion with others involved with p5p, but not yet seen written out explicitly: Release vs. Distribution.</p><p>What you describe as PostgreSQL's release policy is <em>very</em> distribution-friendly. What I mean is this: given a major release version, no new features shall be added and no regressions in functionality will be tolerated... but security and bugfixes shall be backported and released.</p><p>This is done in a way that distribution maintainers have <em>confidence</em> that packaging and distributing a point release is safe and worthwhile... and hopefully adds incentive to watch for new major releases with an eye on distributing those eventually.</p><p>I can not state enough how important I think this is. Perl is relied upon by <em>core components</em> of <em>many</em> different operating systems. The distribution maintainers know this, and their concerns are, I believe, reflected in their decisions to bundle old, outdated, and sometimes highly-patched versions of perl that cause no end of trouble to folks like myself (biggest offender: RHEL/CentOS)</p><p>Not only is the stability and consistency of perl itself critical, but so are its core modules, and it's interaction with countless CPAN modules.</p><p>I believe Perl 5 already handles this very well through an <em>impressive</em> test suite, but more can certainly be done... First off, there are the custom BackPAN repositories hosted here: http://cp5.6.2an.barnyard.co.uk/</p><p>I do not know of any mirrors of the CP5.xAN sites, nor do I know of any other public efforts to provide this for other point releases of perl 5. </p><p>The bottom line is, a build and regression testing farm that takes into account snapshots of the CPAN seems to me like an excellent addition to Perl 5's release policy.</p>
+excerpt: 
+blog_name: 
+-----
+name: Jonathan Gardner
+url: http://tech.jonathangardner.net/
+title: Well done!
+comment: <p>A great article with great information. I have long admired PostgreSQL for its consistency and productivity. I am looking for ways to apply these principles to my own software development practices.</p>
+excerpt: 
+blog_name: 
+-----
+name: vincent
+url: http://profvince.com
+title: 
+comment: <p>Nicholas officially said that he won't make more 5.8.x releases unless a CVE is uncovered (http://use.perl.org/article.pl?sid=08/12/16/1129216). But if someone shows interest in taking the pumpking hat for those old versions, I don't think anyone will stop him. At any rate, you should not see the maintenance of the old brances as a burden for the current development.</p><p>Smoking is done with Test::Smoke. I guess it could be more adapted to the variety of workflows you can exert with git, but on the overall it's doing the main important part of the job quite well.</p>
+excerpt: 
+blog_name: 
+-----
+name: renormalist
+url: http://renormalist.net
+title: 
+comment: <p>Indeed a great article.</p><p>Very well thought, full of background material and constructive.</p><p>Thanks!</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Replies
+comment: <p>@chromatic — Thanks for the link love.</p><p>@Steve — Thanks for filling in the gaps with regard to distributions. I figured they'd be more likely to stick to official releases just because they're more regular, but your point about the overall conservatism of packagers is well made, and fits right in with my overall point. Thank you.</p><p>@Jonathan &amp; @renomalist — Thanks!</p><p>@Vincent — I'd missed Nicholas's journal entry (gotta re-subscribe), thanks for the link. So I think the upshot is that Perl 5.8 is still officially supported, but a new release is unlikely unless there is a security vulnerability That seems pretty reasonable to me.</p><p>I plan t find some tuits in the next month or so to look at Test::Smoke and friends…</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Alex Beamish
+url: 
+title: Great idea!
+comment: <p>Outstanding.</p><p>I've used Perl for ten years and haven't really taken part in any Perl hacking (or maybe that should be perl hacking), but the development process you describe for PostgreSQL makes tons of sense.</p><p>Maybe this will get me more involved in helping build Perl.</p><p>Alexaka talexb</p>
+excerpt: 
+blog_name: 
+-----

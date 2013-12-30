@@ -1,0 +1,42 @@
+name: Marcus Ramberg
+url: http://thefeed.no/
+title: docs in templates?
+comment: I've been considering serving javascript as Template Toolkit Templates,and putting the POD directly into the javascript as TT [%# #%]blocks. That way, I can keep the documentation in the template file and not worry about the bandwidth issues. This works welll with mason templates as well, with <%doc></%doc> blocks.I suppose this would work with KWID as well, but as it doesn't have any documentation yet, I'm not sure.
+excerpt: 
+blog_name: 
+-----
+name: John Sequeira
+url: http://www.jsequeira.com/blog
+title: 
+comment: David,  You might want to check out LEO and it's implementation of literate programming sometime.  It solves the problem of embedded documentation in a general way and solves a number of other source code issues as well (It really helps tame tt2/xslt/etc files that don't have inherent structure).It has a learning curve,  but it's worth it.
+excerpt: 
+blog_name: 
+-----
+name: John 
+url: 
+title: 
+comment: Oh -- I should give you the URL: http://leo.sf.net
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: re: docs in templates?
+comment: <p>Marcus,</p><p>The only problem with using TT or Mason or HTML::Template or Embperl, or JSP or whatever to serve JavaScript is that you're adding the overhead of the templating architecture to every request for what should essentially be a static document. Seems silly to me when one can just use separate files.<p><p>But its worth doing if it needs to go into a template, anyway. Thanks for the suggestion.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Marcus Ramberg
+url: http://thefeed.no/marcus/
+title: re: docs in templates?
+comment: Theory, that's true, but you can easily set up a build process with TT that processes the javascript and strips the pod before installation. it can also generate .pod files first...
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: re: docs in templates?
+comment: <p>Marcus</p><p>Well then I might as well just use Pod::Simple, eh?</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

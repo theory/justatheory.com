@@ -1,0 +1,14 @@
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>One thing I noticed is your commit messages. You would get more from git in general if you adopt the style it encourages, which is to treat the first line of the commit message like a mail subject, summarising the commit, and leave more long-winded explanations to the “body” below that. Of course, this is most easily done when your commits are small and focussed.</p><p>That has many other rewards too, f.ex. it makes bisecting more helpful: if you bisect a codebase looking for a bug, and you pin it down to a commit that changed 17 different things at once, which of them is the culprit? If you had split it up into 17 commits, <code>git bisect</code> would likely have found the exact source of the problem and saved you the effort.</p><p>And the index and stash make it easy to pull out distinct changes from the working copy and make them into separate focussed commits, even across several branches. You can concentrate on the task at hand while coding and need only decide what it was that you did afterwards. In many ways I find that <a href="http://plasmasturm.org/log/536/" title="In defense of mutable history">git is humane</a>.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Thanks for your note, Aristotle. I've been (usually) following the convention I created for SVN::Notify for a long time now, where the first sentence of a message is a sort of subject. It'll be easy for me t switch to making it the first line.</p><p><code>git-bisect</code>, eh? I hadn't even noticed that one program. There are <em>so many</em> git programs to learn!</p><p>And the stash and focused commits…so much to learn!</p><p>Thanks,</p><p>Theory</p>
+excerpt: 
+blog_name: 
+-----

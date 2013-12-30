@@ -1,0 +1,35 @@
+name: Chris Dolan
+url: chris@clotho.com
+title: Fink
+comment: Readline has been ported to OSX via the Fink project (fink.sf.net).  You can apt-get their .deb binaries to simplify the proces of installing most of the popular open source unix-ish libraries that Apple doesn't provide.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Fink
+comment: Thanks, but I never use Fink. I don't like packaging systems because they break dependencies when you compile some things and install others from packages. So I tend to compile all my Unix apps from source.
+excerpt: 
+blog_name: 
+-----
+name: Ian Osgood
+url: 
+title: No longer works on Tiger
+comment: Thanks for this!I'm trying to build readline because the Haskell interpreter GHCi requires 5.0 to be installed (Tiger only has 2.0).  The above script no longer seems to work for either Tiger or VERSION=5.0; the only stuff installed in /usr/local/lib is "libreadline." and "libreadline.a", whereas I was expecting a dylib.Think you could up this for Tiger?
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: No longer works on Tiger
+comment: <p>Ian</p><p>I haven't been able to get it to compile shared libs on Tiger. I have no idea why. See <a href="http://www.justatheory.com/computers/databases/postgresql/howto_avoid_tigers_readline.html" title="How Do I Avoid Tiger's readline When Compiling PostgreSQL?">this discussion</a> for details.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Justin
+url: 
+title: 
+comment: <p>Thanks for the script, just the solution I was looking for!</p><p>Justin</p>
+excerpt: 
+blog_name: 
+-----

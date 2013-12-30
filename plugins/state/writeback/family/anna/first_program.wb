@@ -1,0 +1,28 @@
+name: Erik Hatcher
+url: 
+title: 
+comment: I'm pretty sure you meant to say *Perl*, not Python :)
+excerpt: 
+blog_name: 
+-----
+name: Bob Ippolito
+url: http://bob.pythonmac.org/
+title: 
+comment: Looks more like Forth to me, not enough colons to be Python :)
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: Erik,Not enough sigils to be Perl. ;-)&#x2014;Theory
+excerpt: 
+blog_name: 
+-----
+name: Chris Dolan
+url: http://www.chrisdolan.net/
+title: The real program
+comment: <p>You forgot to include the initial bit.  Her full program should have been:</p><pre>@l=split//,;s/.+/$&+20*$&{$&}++/e&&!/14/&&print$l[$_]formap{s/bbbbbb/bbbbbbb/;tr///c}split/ /,;__DATA__MaseuJ tinh,crowder stopage aPpLlIeD crower vikings! Oh no!  help!xxxxc xcxv cw ffnygzh vn6yJy b ]cve23ewr gd v gggggggbBB 4xcbbb nhyntbbbbbvBY%TGcv bbbbbbbbbbbbbbCCCBBBbccccb vvvvvvvvc b bv ttttttttttttttt6666666666665nnmb nbvvvvvvvvvvvvvvvvvvvvvvGbhggvvv s vcxffffffffffffffffffrfc vxzzzzzzzzzz fffgvb nbn sdexzzzzzzzzc vsbreeeddfb vgg4bh bvvvvvvvvvvvvv </pre>
+excerpt: 
+blog_name: 
+-----

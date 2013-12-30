@@ -1,0 +1,21 @@
+name: Olaf Alders
+url: http://www.wundercounter.com
+title: 
+comment: <p>Thanks very much for putting this together.  I had been thinking of including the TestFlightApp SDK with some of my test builds but wasn't sure how to go about it.  This makes it very clear.</p>
+excerpt: 
+blog_name: 
+-----
+name: stu
+url: 
+title: 
+comment: <p>do you still have to abide by the 100 person limit when distributing a beta this way? </p>
+excerpt: 
+blog_name: 
+-----
+name: theory
+url: /
+title: 
+comment: <p>@stu—Yes, you still have to add testers to a provisioning prfile in order for them to run the beta. TestFlight just makes it easier to get the device information from testers and to distribute the betas to them. </p>
+excerpt: 
+blog_name: 
+-----

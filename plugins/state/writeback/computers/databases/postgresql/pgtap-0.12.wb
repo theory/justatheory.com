@@ -1,0 +1,14 @@
+name: Ben Finney
+url: 
+title: 
+comment: <blockquote><ul><li>Added <code>hasnt_table()</code>, <code>hasnt_view()</code>, and <code>hasnt_column()</code>.</li><li>Added <code>hasnt_pk()</code>, <code>hasnt_fk()</code></li><li>[…]</li></ul></blockquote><p>Those are grammatically awful in English. It helps, when naming a function, to use good grammar. Otherwise, the function won't be connected well with what the person tries to do, and thus won't be remembered properly.</code><p>Possible improvements (instead of <code>hasnt_foo(bar)�</code>):</p><ul><li><code>has_no_foo(bar)</code></li><li><code>doesnt_have_foo(bar)</code></li><li><code>not_has_foo(bar)</code></li></ul><p>It's unfortunate that the English grammar of “has foo”/“doesn't have foo” isn't a nice fit to function names; but choosing poor names will just make your API harder to use.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: On Grammar
+comment: <p>Thanks for your comments, Ben. I actually gave this a bit of thought, being something of a grammar pedant myself, and decided that benefits of the semantic the balance between “has” and “hasnt” outweighed any possible grammatical confusion. After all, the <code>has_</code> forms are quite natural (“I'm testing to make sure that this database <em>has</em> a certain table”), and while it didn't occur to me until afterwards to add the negated versions, to me testing with “hasnt” is close enough (“I'm testing to make sure that this table <em>hasn't</em> a certain table). It's a bit archaic, perhaps, but it works.</p><p>That said, <code>has_no</code>isn't bad; I hadn't thought of it, though if I had, I might have rejected it anyway, as I do try to keep such things to the same numbers of words (i.e., the same number of underscores). <code>have</code>, on the other hand, doesn't really work. I <em>have,</em> but the database <em>has</em>. I'm testing the database, not myself.</p><p>That's my perspective, anyway. I wanted the negated functions to be easy to remember and nicely complementary, without being too long or too weird. I think that <code>has_</code> and <code>hasnt_</code> do the trick.</p><p>Thanks for the comments, though; I really appreciate it when other folks take the time to think about this stuff, too! It shows you care! :-)</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

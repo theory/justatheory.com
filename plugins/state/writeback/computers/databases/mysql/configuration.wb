@@ -1,0 +1,14 @@
+name: Conrad Taylor
+url: 
+title: Cannot locate socket file?
+comment: <p>Hi, I have tried to following the configuration for making everything secure but MySQL doesn't work and I'm getting the error message:</p><pre>ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/opt/local/var/run/mysql5/mysqld.sock' (2)</pre><p>-Conrad</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Cannot locate socket file?
+comment: <p>Hi Conrad</p><p>Unfortunately, this is not a MySQL support site. So I have two suggestions:</p><ul><li>Make sure your MySQL server is actually up and running</li><li>If it is and you still get this error, ask for help in a MySQL support forum. There are helpful folks on #mysql on irc.freenode.net.</li></ul><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

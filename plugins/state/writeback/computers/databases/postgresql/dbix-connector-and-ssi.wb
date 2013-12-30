@@ -1,0 +1,21 @@
+name: Richard Broersma Jr.
+url: planet.postgresql.org
+title: 
+comment: <p>I'm curious, is SSI behavior superior to the former SERIALIZABLE transaction isolation level?</p><p>Also IIRC, Pg versions of the 8.0 era only supported two isolation levels, SERIALIZABLE and READ COMMITTED - are other isolation levels now supported?</p>
+excerpt: 
+blog_name: 
+-----
+name: Andreas Karlsson
+url: 
+title: 
+comment: <p>I have not had the time to read up on SSI yet but the old SERIALIZABLE is now called REPEATABLE READ, which means PostgreSQL 9.1 has three isolation levels. I think the old serializable could suffer from phantom reads which means it actually was never really serializable.</p><p>The manual page concerned with the isolation levels is <a href="http://www.postgresql.org/docs/current/static/transaction-iso.html">http://www.postgresql.org/docs/current/static/transaction-iso.html</a>.</p>
+excerpt: 
+blog_name: 
+-----
+name: Richard Broersma Jr.
+url: planet.postgresql.org
+title: 
+comment: <p>"I have not had the time to read up on SSI yet but the old SERIALIZABLE is now called REPEATABLE READ,"</p><p>Interesting, I was under the impression that the only different from SERIALIZABLE versus REPEATABLE READ, what the SERIALIZABLE would throw serialization update failure.</p>
+excerpt: 
+blog_name: 
+-----

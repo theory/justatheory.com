@@ -1,0 +1,154 @@
+name: rc
+url: 
+title: 
+comment: <p>try prefixing the dir where you installed your readline lib like this:</p><pre>export DYLD_LIBRARY_PATH="/Users/[foo]/custom-readline/lib"</pre><p>then build postgresql.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>rc,</p><p>I installed GNU readline in <em>/usr/local</em>. And unfortunately, this didn't work:</p><pre>export DYLD_LIBRARY_PATH=/usr/local/lib./configuremakemake install</pre><p>With that, I still get the errors from Apple's readline, so that's obviously what it found. :-(</p>
+excerpt: 
+blog_name: 
+-----
+name: Tim
+url: http://www.wanderingstar.net/
+title: 
+comment: Perhaps ./configure --with-readline=/usr/local ?
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Tim:</p><p>Unfortunately not:</p><pre> ./configure --with-readline=/usr/local...configure: error: no argument expected for --with-readline option</pre><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Chris Dolan
+url: http://www.chrisdolan.net/
+title: 
+comment: Install Fink from fink.sf.net, then type "fink install postgresql"If nothing else, look at the following file that gets installed with Fink:/sw/fink/10.4-transitional/stable/main/finkinfo/database/postgresql80-unified.info
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Chris:</p><p>You couldn't <em>pay</em> me to use Fink. See <a href="http://nick.hates-software.com/2004/11/04/d3e0a3d3.html" title="nick hates software: fink">Jarkko has to say</a> on the matter. But I'd be happy to see what's in that info file online somewhere…</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Tim
+url: http://www.wanderingstar.net/
+title: 
+comment: <p>I just checked psql on my machine and readline seems to be functioning properly. I install a bunch of libraries using darwinports (including the most recent readline), then I usually manually compile the bigger programs like postgresql from source so I can get exactly the features I want.</p><p>I'm not sure that it would make a difference, but is /usr/local before /usr in your path?</p><p>What were your options for ./configure for readline?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Tim:</p><p>Yeah, you probably got GNU readline from darwinports, so it just worked. No, <em>/usr/local</em> is not before <em>/usr</em> in my path. I'll have to try that. I used no options to <code>./configure</code> when building readline.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Tim
+url: http://www.wanderingstar.net/
+title: 
+comment: <p>I take it all back. It looks like I am experiencing the bug you Tom Lane mentions. Nevertheless, I do have a .psql_history in my home directory and history in psql does work; the bug on exit of psql is just a minor annoyance as far as I can tell.</p><p>Normally the way you configure a program to override the default location for a particular library is to pass it to ./configure the way I mentioned ealier (./configure --desired-option=/path/to/libs). Maybe that's something the postgres devs should look into allowing in the future. At this point ./configure --help only indicates the ability to disable readline with --without-readline.</p><p>There also seems to be a --with-headers=DIRS and --with-libraries=DIRS. Maybe something like ./configure --with-headers=/usr/local --with-libraries=/usr/local to make it look in /usr/local in addition to the default location. And if that doesn't work, specify /usr/local:/usr to hopefully force it to look in /usr/local first.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Tim,</p><p>Yeah, it's just a nuisance, I agree. I'd just rather do without it. As I said, I reported the bug to Apple.</p><p>Unfortunately, changing the path so that <em>/usr/local/bin</em> comes before <em>/usr/bin</em> doesn't work&#x2014;not too surprising since there's no binary with readline. And as I said in my original post, specifying <code>--with-libraries</code> and <code>--with-includes</code> doesn't work, either. :-(</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: dcreemer
+url: 
+title: 
+comment: No problems here using DarwinPorts -- http://darwinports.opendarwin.org/
+excerpt: 
+blog_name: 
+-----
+name: Martin
+url: 
+title: 
+comment: You might check config.log, maybe there are some hints on what is going wrong.One think to look for is that libreadline might depend on other libs (termcap, curses). 
+excerpt: 
+blog_name: 
+-----
+name: mattm
+url: http://mattm.id.au/
+title: 
+comment: This seems to work for me (I have GNU readline in $HOME/dev-local/readline)<pre>./configure --prefix=$HOME/dev-local/postgresql-8.1.0 CPPFLAGS=-I$HOME/dev-local/readline/include LDFLAGS=-L$HOME/dev-local/readline/lib</pre>(CPPFLAGS is for pre-processor flags)<pre>iBook:~/dev-local/postgresql-8.1.0/bin mattm$ otool -L ./psql ./psql:        /Users/mattm/dev-local/postgresql-8.1.0/lib/libpq.4.dylib (compatibility version 4.0.0, current version 4.1.0)        /usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.3)        /Users/mattm/dev-local/readline/lib/libreadline.5.1.dylib (compatibility version 5.0.0, current version 5.1.0)        /usr/lib/libresolv.9.dylib (compatibility version 1.0.0, current version 369.1.5)        /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 88.1.2)</pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>mattm</p><p>Bah! That doesn't work for me, either. I tried both:</p><pre>./configure CPPFLAGS=-I/usr/local/include LDFLAGS=-L/usr/local/lib</pre><p>And:</p><pre>./configure CPPFLAGS=-I/usr/local/include/realine LDFLAGS=-L/usr/local/lib</pre><p>Neither worked. :-(</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Here's the output from <code>otool</code>:</p><pre>% otool -L src/bin/psql/psqlsrc/bin/psql/psql:        /usr/local/pgsql/lib/libpq.4.dylib (compatibility version 4.0.0, current version 4.1.0)        /usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.3)        /usr/lib/libedit.2.dylib (compatibility version 2.0.0, current version 2.0.0)        /usr/lib/libresolv.9.dylib (compatibility version 1.0.0, current version 369.1.5)        /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 88.1.2)        /usr/lib/libmx.A.dylib (compatibility version 1.0.0, current version 92.0.0)</pre><p><code>realine</code> isn't even listed there, which makes me think that it's embedded in <code>libSystem</code>. This version was compiled with <code>CPPFLAGS=-I/usr/local/include/realine LDFLAGS=-L/usr/local/lib</code></p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: mattm
+url: http://mattm.id.au/
+title: 
+comment: <p>I think Apple's readline implementation is in libedit (read Tom Lane's email).</p><p>It might be best to start from scratch, and try doing a 'make distclean' before running configure again. CPPFLAGS=-I/usr/local/include should do it - no need to put 'readline' or 'realine' (I take it 'realine' is a typo? :))</p><p>Maybe you could post the output of 'find /usr/local' ?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>mattm</p><p>I have been deleting the sources every time and unpacking the tarball afresh, so no problems there. And yes, <q>realine</q> was a typo. :-)</p><p>I have a lot of stuff in <em>/usr/local</em>, so I won't post it all.  But readline is there&#x2014;that's how I got it to work by moving Apple's readline out of the way in the original blog post above.</p><p>But this should show you what I have:</p><pre>% find /usr/local/include/readline /usr/local/include/readline/usr/local/include/readline/chardefs.h/usr/local/include/readline/history.h/usr/local/include/readline/keymaps.h/usr/local/include/readline/readline.h/usr/local/include/readline/rlconf.h/usr/local/include/readline/rlstdc.h/usr/local/include/readline/rltypedefs.h/usr/local/include/readline/tilde.h% find /usr/local/lib/libreadline* /usr/local/lib/libreadline./usr/local/lib/libreadline.a</pre><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: mattm
+url: http://mattm.id.au/
+title: 
+comment: <p>I'd perhaps try a fresh compile of GNU readline version 5.1, I have:</p><pre>./lib/libhistory.5.1.dylib./lib/libhistory.5.dylib./lib/libhistory.a./lib/libhistory.dylib./lib/libreadline.5.1.dylib./lib/libreadline.5.dylib./lib/libreadline.a./lib/libreadline.dylib</pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>mattm</p><p>Hrm. It isn't building the shared libraries for me. I used this incantation:</p><pre>perl -i.bak -p -e \    "s/SHLIB_LIBS=.*/SHLIB_LIBS='-lSystem -lncurses -lcc_dynamic'/g" \    support/shobj-conf./configure --enable-sharedmakemake install</pre><p>How did you build readline?</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: mattm
+url: http://mattm.id.au/
+title: 
+comment: Just a simple './configure --prefix=$HOME/dev-local/readline'Version 5.0 didn't work for me, but 5.1 did.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>mattm,</p><p>Hrm. Then I don't know what the deal is. You're building on Tiger, of course...I don't understand at all why it isn't creating dylibs. :-(</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: mattm
+url: http://mattm.id.au/
+title: 
+comment: Yeah, building on Tiger. With Xcode 2.2
+excerpt: 
+blog_name: 
+-----

@@ -1,0 +1,9 @@
+name: Emanuele Zeppieri
+-----
+name: Emanuele zeppieri
+url: 
+title: 
+comment: <p>What a horrible formatting! My fault, sorry (though a preview button would be very appreciated ;-)</p><p>I meant:<p><code># perltidy -boc your_file.pl</code></p><p>will produce this:</p><pre>my $process = Background->new(    $^X, "-I$lib",    "-MMyLong:Namespace::Bar::Bat",    "-e 1", "other", "arguments", "here");</pre><p>Ciao,<br />Emanuele.</p>
+excerpt: 
+blog_name: 
+-----

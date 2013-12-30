@@ -1,0 +1,14 @@
+name: Larry Brigman
+url: 
+title: 
+comment: <p>svnnotify doesn't seem to be correctly handling subject-cx,at least how I think it should be handled.</p><p>Is there a way that the subject be set to only the first line/sentence of the log message?</p><p>larry dot brigman at gmail dot com</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Larry,</p><p>That's what svnnotify does by default. Don't use subject-cx at all.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

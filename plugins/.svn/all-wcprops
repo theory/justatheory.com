@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/4466/cap/config/blog/plugins
+END
+find
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/!svn/ver/4466/cap/config/blog/plugins/find
+END
+atomfeed
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/!svn/ver/4466/cap/config/blog/plugins/atomfeed
+END
+writebacknotify
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/!svn/ver/4466/cap/config/blog/plugins/writebacknotify
+END
+config
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/!svn/ver/4466/cap/config/blog/plugins/config
+END
+interpolate_fancy
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/!svn/ver/4466/cap/config/blog/plugins/interpolate_fancy
+END
+meta
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/!svn/ver/4466/cap/config/blog/plugins/meta
+END
+beautify
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/!svn/ver/4466/cap/config/blog/plugins/beautify
+END
+rss10
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/!svn/ver/4466/cap/config/blog/plugins/rss10
+END
+breadcrumbs
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/!svn/ver/4466/cap/config/blog/plugins/breadcrumbs
+END
+writeback
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/!svn/ver/4466/cap/config/blog/plugins/writeback
+END
+atomsummary
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/!svn/ver/4466/cap/config/blog/plugins/atomsummary
+END
+file_
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/!svn/ver/4466/cap/config/blog/plugins/file_
+END
+tags
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/!svn/ver/4466/cap/config/blog/plugins/tags
+END

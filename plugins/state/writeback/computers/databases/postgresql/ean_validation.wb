@@ -1,0 +1,14 @@
+name: Pavel Stehule
+url: 
+title: I found very interesting article by Joe Celko
+comment: <p>Hello,</p><p>I found other solution described Joe Celko on <a href="http://www.dbazine.com/ofinterest/oi-articles/celko36">http://www.dbazine.com/ofinterest/oi-articles/celko36</a> .I rewrote his solution to PostgreSQL:</p><pre>select (select mod(sum(cast(substring('2837232811227' from s.seq for 1) as integer) * case mod(s.seq,2) when 0 then 1 else -1 end),10) from generate_series(1,12) as s(seq)) = cast(substring('2837232811227' from 13 for 1) as integer);</pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: I found very interesting article by Joe Celko
+comment: <p>Paul,</p><p>Thanks for that! It's <em>almost</em> right. After I figured out how yourversion works, I wrote up this function:</p><pre>CREATE OR REPLACE FUNCTION ean_sql (    TEXT) RETURNS boolean AS $$select (    select 10           - abs(mod(sum(cast(substring($1 from s.seq for 1) as integer)           * case mod(s.seq, 2) when 0 then 3 else 1 end),10))    from   generate_series(1,12) as s(seq)) =  cast(substring($1 from 13 for 1) as integer);$$ language sql;</pre><p>And it works beautifully, but unfortunately, it's pretty slow. Here are newbenchmarks featuring this new function:</p><pre>            code             |  runtime  |     rate      | corrected | corrected_rate -----------------------------+-----------+---------------+-----------+---------------- [Control]                   | 0.0019238 | 51980468.46/s | 0.0019238 | 51980468.46/s ean_substr('4007630000116') |   3.42336 | 29211.06/s    |   3.42144 | 29227.48/s ean_loop(  '4007630000116') |   6.94079 | 14407.57/s    |   6.93887 | 14411.57/s ean_byte(  '4007630000116') |   2.78705 | 35880.28/s    |   2.78512 | 35905.07/s ean_perl(  '4007630000116') |   5.46513 | 18297.84/s    |    5.4632 | 18304.28/s ean_c(     '4007630000116') |  0.192864 | 518500.24/s   |   0.19094 | 523724.34/s ean_sql(   '4007630000116') |   6.55891 | 15246.43/s    |   6.55699 | 15250.91/s</pre><p>But hey, I'm glad to be given reason to think about this in more relationalterms. All of my existing versions are procedural.<p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

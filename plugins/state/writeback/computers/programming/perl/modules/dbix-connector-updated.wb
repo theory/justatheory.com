@@ -1,0 +1,14 @@
+name: Eric
+url: http://ericgar.com
+title: Thanks for DBIx::Connector
+comment: <p>David, </p><p>Thanks for this module. I was planning on starting to write  exactly this today, but my implementation would have been poorer. I did extend it to allow for automatic retry on connection failure to other replicas of a replicated database, which was quite easy given the code layout.</p><p>Next up: integrating it with DBIx::Class, which may be difficult.</p><p>Also, Sybase ASE nicely implements the savepoint functionality. Sadly, I'm not yet sure if I'll be able to contribute the trivial code to implement it for DBIx::Connector due to employer legal issues :'-(...</p><p>Anyway, thanks again.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Thanks for DBIx::Connector
+comment: <p>Hey Eric,</p><p>Thanks for your note. The API for DBIx::Connector is only as good as it is because of the pain I went through to get it there. It's a simple module, based on existing code, and was still among the most difficult things I've ever written. Not that the implementation was hard, but getting the interface right was a bitch!</p><p>@ribasushi has told me that he plans to integrate it into DBIx::Class unless someone beats it to him, and @mst wants to use it for DBIx::Class 2, so the future looks good on that front. Lots of interest from the DBIx::Class community, which I appreciate. I should see what Jifty does for its database connection persistence. Anyway, enjoy the race to work DBIx::Connector into DBIx::Class.</p><p>I think that there is code in DBIx::Class to support Sybase ASE, so it may not be a problem to integrate it into DBIx::Connector. It'll just take someone else to do it and write the tests, I think.</p><p>Thanks!</p><p>David</p>
+excerpt: 
+blog_name: 
+-----

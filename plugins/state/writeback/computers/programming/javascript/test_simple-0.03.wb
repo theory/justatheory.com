@@ -1,0 +1,42 @@
+name: Bill N1VUX
+url: http://use.perl.org/~n1vux
+title: Purpose?
+comment: <p>Since you didn't reply to comments on use.perl.org posting ... I'll repost my comment here.</p>This looks potentially useful, but I'm unsure for what.</p> <p>Since <strong>Perl</strong> Test::Simple/Test::Builder is generally considered a Unit Testing framework (<em>although it can be (ab)used as a Integration-Regression engine as well</em>), and <strong>JavaScript</strong> (or ECMA Script) runs in a <strong>Browser</strong> that is usually deeply connected, I'm missing a contextual leap here.</p> <p>I could really use a link to a web page describing the purpose and scope of the TestSimple JavaScript port. All the posts on <a href="/computers/programming/javascript/">Just A Theory</a> and <a href="http://use.perl.org/~Theory/">use Perl</a> are <q>Implementor's Doc</q>, change-lists of what's implemented/fixed from your point of view. If there's a <q>Project Homepage</q>, it's not linked.</p> <ul><li>Is the point to integration test the whole distributed front-ends of applications from the (EcmaScript compliant) browser?</li> <li>Or to unit test the client-side java-script as an entity, mocking the server??</li> <li>Or is the point to Unit test JavaScript functions in the browser <em>in vitro</em>, mocking everything outside the current function?</li> <li>Or is this for Unit Testing of the Presentation Layer on the server from the Brtowser? (If so, how can a JavaScript arrange to Mock the Model layer?)</li> <li>Or is it more likely for driving Integration Testing from the browser with the scripting simplicity we've come to love, without resorting to OLE-stuffing the browser from Perl?</li></ul> <p>Digging into the TAR file (<em>which I normally wouldn't do before peaking at the web copy of the POD2HTML's</em>) I think I understand it's for <strong>unit-testing JavaScript classes</strong>, which I hadn't even considered. (<em>JavaScript has classes that fancy? *shudder* no wonder pages don't work between browser versions.</em>) I hope I don't need to do that.</p> <p><strong>How much of the other items above could I do with it, if any?</strong></p><p>-- Bill</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Purpose?
+comment: <p>Bill,</p><p>I thought that your questions were important enough that I wrote a <a href="/computers/programming/javascript/test_simple_purpose.html" title="The Purposee of TestSimple">separate post</a> to address them.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Bob Ippolito
+url: http://bob.pythonmac.org/
+title: bugs...
+comment: This is pretty cool, but<ul><li>counting the number of tests is really annoying.. you really think that's a good idea?</li><li><code>for (var i in someArray)</code> is not correct because if you extend the array prototype then you'll start seeing non-integer things...  You should use the traditional <code>for (var i = 0; i < someArray.length; i++)</code></li></ul>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: bugs...
+comment: <p>Thanks for your comments, Bob. Although I will not be changing the <code>Array</code> class prototype, consumers of these modules might, so I'll take a look at the code to ensure that I always use <code>for</code> to iterate over an array. I just liked the <code>for (var i in someArray)</code> approach because it's easier to read (I am, afterall, JAPH).</p><p>As for the number of tests, this is actually a frequently asked question about <a href="http://search.cpan.org/dist/Test-Harness/lib/Test/Harness/TAP.pod" title="Read the TAP spec on CPAN">TAP</a>. <a href="http://use.perl.org/~petdance/journal/" title="Andy's use Perl Journal">Andy</a> gets this question all the time. So I asked him for the standard answer, and here it is:</p><blockquote><p>The correct number of tests is a test in itself. The number of tests also makes sure that nothing happened in the middle.</p><p>It's just funny to me that people complain that they have to be careful about how many tests they have. <q>You mean I have to tell the machine how many tests so that it can watch my back?</q> You <strong>WANT</strong> the machine to watch your back.</p></blockquote><p>Anyway, this question comes up often enough that I'm going to recommend to <a href="http://www.perl.com/" title="Perl.com: The Source for Perl">Perl.com</a> that they have Andy write an article about this.</p><p>And if none of this convinces you, then just use <code>plan(&quot;no_plan&quot;);</code> and be done with it.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Bob Ippolito
+url: http://bob.pythonmac.org/
+title: Re: bugs...
+comment: <p>Yeah, I prefer the nicer syntax also, but it's not valid syntax for what you mean for it to do :)</p><p>My biggest problem with counting the number of tests is that the test count is all the way at the top of the script, and usually I'm working at the bottom of the script, so it's not very convenient.  If you were able to do "test groups" instead, where you can say:</p><pre>plan('tests.domFunctions', 4);// 4 tests hereplan('tests.arrayFunctions', 8);// 8 tests here...</pre><p>it would also make sense to wrap the tests in a function like this:</p><pre>function test_runner(tests) {    try {        tests();     } catch (err) {        // pretty print the keys in the exception     }}test_runner(function () {    // my tests here});</pre><p>This would really mitigate the need for counting the number of tests, because if your tests don't run until completion due to an exception, then you'll know about it.</p><p>Also, you could simply have a test terminator at the bottom, which signals that you've finished the tests:  i.e. <code>allOk();</code></p><p>Alternatively you could simply say that the test_runner function needs to return true at the end to signal that the tests are complete.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: bugs...
+comment: <p>Yeah, I hear you about the top-of-the-script thing. I know developers who, for this reason, use <code>plan(&quot;no_plan&quot;);</code> while writing a test script, and then change it to <code>plan(&quot;tests&quot;, num);</code> when they're done.</p><p>For larger projects, I agree that grouping things by functions (or even classes!) would be useful. <a href="http://use.perl.org/~Adrian/journal" title="Adrian's use Perl Journal">Adrian</a> has <a href="http://www.nntp.perl.org/group/perl.qa/4033" title="Adrian's post to the perl-qa list">hinted</a> that something like this might be do-able, but it's not on my personal to do list. I need to get a harness written next.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

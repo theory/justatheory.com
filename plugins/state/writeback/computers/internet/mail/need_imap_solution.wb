@@ -1,0 +1,98 @@
+name: Ask Bjørn Hansen
+url: http://www.yellowbot.com/user/ask
+title: 
+comment: <p>It sounds like the Fusemail IMAP server doesn't play nicely with Mail.app.</p><p>If you want a hosted solution the Fastmail.fm people should be more competent.</p><p>For the spam stuff: A few DNSBLs and SpamAssassin are pretty effective. Add SpamBayes or similar and you'll be ~spamfree.</p><p>I only use SpamBayes for accounts that get spam after the DNSBL and SpamAssassin filtering.</p><p>I have SpamBayes setup to put main into <q>inbox</q>, <q>unsure</q> or <q>spam</q> as appropriate and then I have a <q>train-spam</q> and a <q>train-ham</q> folder for each user that a script makes spambayes train on and clear out once an hour.</p><p> - ask</p>
+excerpt: 
+blog_name: 
+-----
+name: Ricardo Signes
+url: http://rjbs.manxome.org/
+title: Pobox FTW
+comment: <p>Okay, I'm biased.  I work at Pobox.  That said, I think it's a really good service and a really unbeatable value.  Pobox does extremely effective and highly-customizable spam protection, and you won't lose mail because we can send you reports of messages that were rejected or trapped.  I get hourly reports of trapped spam (and ignore bounced spam, because I use the default settings: only the very reliable filters bounce) and it's almost all about wangs and wristwatches.  When I do see that I've subscribed to a list that runs on someone's home server with no PTR, I just release the first few messages and whitelist.</p><p>Pobox lets you use your own domain, so you don't get locked into us.  Who'd want to leave?  Well, nobody, but that said, I never sign up for a service that establishes my identity or hosts my data unless I have an exit strategy.</p><p>Pobox also offers IMAP (and POP) and webmail (both SquirrelMail and RoundCube) if you don't want to just have your mail forwarded.  Currently, we're using Courier, although it would be foolish to believe that that could never change.</p><p>I use MyPobox (Pobox hosts my domain's MXes), and I've invited a few people to have addresses there, which is nice an easy.  All my mail is forwarded to my own VPS running its own mailtools, but also to a Pobox-stored Mailstore, which Pobox sorts into folders by date.  That way, if my experimenting with mail code accidentally blows up all my own mail, Pobox has kept a backup for me.</p><p>You can get a 30 day trial with Pobox, so it might be worth your time to just check it out.  You can also find a few of Us on #pobox on MAGnet, if you wanted to harass me with questions.</p>
+excerpt: 
+blog_name: 
+-----
+name: Ask Bjørn Hansen
+url: http://askask.com
+title: 
+comment: <p>Oh - for size: I have ~3-4GB across 7 accounts in such a setup (2GB and hundreds of thousands of mails in the largest).  When I start Mail.app after not syncing for a few days it's pretty busy for a while loading a bazillion mailboxes but when it's done it's, uh, done.</p><p>Doing a <q>sync all accounts/folders</q> does take a couple of minutes.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Pobox FTW
+comment: <p>Hey rjbs,</p><p>Thanks (as usual) for the comment. I didn't know you worked for Pobox. A couple of questions:</p><ul><li>If Pobox hosted my mail, would I be able to use rsync or something to back it up?</li><li>Is there any way to get more than 2GB of storage?</li><li>Is there some way to migrate an existing IMAP directory structure to the Pobox IMAP server?</li></ul><p>Those questions aside, the forwarding service does indeed sound nice. I'd still need somewhere to forward it to, though.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: James Duncan Davidson
+url: http://duncandavidson.com
+title: 
+comment: <p>Fusemail seemed pretty cool and then, well, not so cool. I'm playing with Pobox right now on a trial and so far it seems pretty cool. In my testing so far, it's a nice sane IMAP environment without any bogosities. I like the idea of getting the spam reports via email as well. Syncing around mail in a spam folder has gotten out of hand for me.</p><p>I've got a few more questions to work through, such as setting up a group alias with more than 5 people on it, but so far I'm liking it.</p>
+excerpt: 
+blog_name: 
+-----
+name: Pedro Melo
+url: http://www.simplicidade.org/
+title: Still using Dovecot
+comment: <p>Hi,</p><p>between me and my wife and her business, we have about 20Gb of email on IMAP, using Dovecot on a small server.For spam, we use two things: postini service (which is great) and if you use Macs, SpamSieve.</p><p>I love SpamSieve, and I could not recommend any other solution if you are using Mail.app. The biggest advantage is the integration with Mail.app recent recipients and Address Book. False positives, which are my biggest concern are virtually non-existing.<p><p>Best regards,</p>
+excerpt: 
+blog_name: 
+-----
+name: Ricardo Signes
+url: http://rjbs.manxome.org
+title: Pobox IMAP Answers
+comment: <p>As I said, I store my mail for primary consumption on a machine that isn't Pobox -- so I used to rsync it regularly for backup.  Now, I don't: I use OfflineIMAP, a python script that it seemed you know about.  It's not a filesystem-level backup, but it syncs to basically equivalent Maildirs.  (I have a <a href='http://rjbs.manxome.org/rubric/entry/1177'>journal entry</a> about the joy of OfflineIMAP, but it's mostly fluff: the point is that you can point mutt against your local replica, do stuff, then resync in both directions without losing mail.)</p><p>So, the answer to your question about rsync is no: you can't rsync your mail, because (among other things) we don't want to guarantee an unchanging storage format -- but you won't need to, because OfflineIMAP does it pretty well, with loads of extra features.</p><p>You can get extra storage.  It comes up so rarely, and is such a non-technical issue, that I don't know the details.  It's maybe $5/gb/year?  Anyway, it's available.</p><p>Finally, migration is easy: OfflineIMAP will sync from one IMAP store to another!  I haven't actually *done* this, but I've seen it mentioned as a use case, and it's obvious from the configuration that it should be simple.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Ricardo,</p><p>Thanks for your reply. The only issue I have with OfflineIMAP (other than that it seems to fail without finishing the sync every time I run it, but maybe it's my DSL that's the problem) is that I can only back up accounts for which I have the username and password. It doesn't work if I have accounts for other users. IOW, there is no comprehensive backup solution for a company that wants to host its mail on FuseMail or Pobox. The same issue applies to migration.</p><p>Good to know about the extra disk space, though. I had assumed that that was the case, I just didn't see it on the Pobox site anywhere.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Ask,</p><p>Yes, the performance you get sounds like about what I was getting with my old server. So yeah, FuseMail must not be Mail.app-friendly.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: 
+url: http://www.blogbookmarker.com/tags/blameless
+title: Need Suggestions for IMAP Solution and Migration
+comment: 
+excerpt: <p>Bookmarked your post over at Blog Bookmarker.com!</p>
+blog_name: blameless
+-----
+name: Ask Bjørn Hansen
+url: http://askask.com/
+title: 
+comment: <p>I didn't realize that pobox does IMAP now.  They're clearly in the "clueful" category, too.  :-)</p><p> -ask</p>
+excerpt: 
+blog_name: 
+-----
+name: Dan Langille
+url: http://www.langille.org/
+title: DoveCot + imapcopy
+comment: <p>David:</p><p>I recently moved to IMAP from POP.  I used a tool called imapcopy.  In short, it connects to both IMAP servers and copies everything from point A to point B.  It worked well.</p><p>I have a 1.3GB of mail in ~/Maildir.</p><p>I primarily use Mail.app and Thunderbird.  Sometimes I use Squirrel Mail (web interface).</p><p>For spam stuff, I'm using greylisting (via pf and spamd, tools from OpenBSD used on FreeBSD) and amavisd to interface to spamassasin.</p><p>Cost: my time.  I run the above on my own servers.</p>
+excerpt: 
+blog_name: 
+-----
+name: Antonio
+url: www.bluetie.com
+title: Here's a Solution
+comment: <p>Have you heard of BlueTie?  BlueTie offers a web-based suite of email and collaboration (allowing you to share calendars, contacts, and files).</p><p>BlueTie utilizes SpamAssassin and ClamAV for it's virus and spam protection and is closely rated to the level of Postini.</p> <p>BlueTie offers 10GB email boxes per user, supports POP, IMAP, and SMTP, and also mobile WAP 2.0.  You should check them out.</p><p>Cost: $5 per month for everythingPhone: 1-800-BLUETIE (ext. 1024)</p>
+excerpt: 
+blog_name: 
+-----
+name: Dan Langille
+url: http://www.langille.org/
+title: 
+comment: <p>Antonio: lemme guess.. you work for Bluetie?  :)</p>
+excerpt: 
+blog_name: 
+-----

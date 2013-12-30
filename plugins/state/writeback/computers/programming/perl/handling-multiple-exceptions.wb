@@ -1,0 +1,14 @@
+name: Darren Duncan
+url: http://www.muldis.com
+title: 
+comment: <p>I would take the second option or a variation.  Throw a new exception object, <em>or</em> a Perl array reference, which contains the original exceptions.  Using a global variable is always a bad idea if you have a choice, so I'd rule out the third option.  And you've already pointed out the problem of the first option.</p><p>Perhaps the ideal solution is to throw an object as per the second option, and have that object overload stringify to the first option, so one can introspect the problem, but also users can see at a glance what they have if it was simply printed out such as from the program dying.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>@Darren—</p><p>Yes, that's what I decided to do. It was pretty clear that it was the best approach by the time I finished writing this post. Sometimes writing the thing up makes the solution obvious. And now it's <a href="http://github.com/theory/dbix-connector/commit/5363a6cef018dbece8191df31a81166860051577">committed</a>.</p>
+excerpt: 
+blog_name: 
+-----

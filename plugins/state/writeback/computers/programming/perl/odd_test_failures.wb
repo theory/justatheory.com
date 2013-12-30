@@ -1,0 +1,14 @@
+name: Alexandr Ciornii
+url: http://chorny.net
+title: 
+comment: <p>In report #249132 user simply did not installed Text::Diff. CPANPLUS allows this. It simply should not send report then, but, as you can see, it is old version of CPANPLUS.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Alexandr,</p><p>Actually, it says, <q>Error:  Can't locate Algorithm/Diff.pm in […] /home/cpan/plus/5.8.3/build/Text-Diff-0.35/blib/lib/Text/Diff.pm line 56.</q> So it looks like a failure when building <code>Text::Diff</code>, even though that module does properly require <code>Algorithm::Diff</code>. But I think you're right; I'll just blame the old version of <code>CPANPLUS</code>.<p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

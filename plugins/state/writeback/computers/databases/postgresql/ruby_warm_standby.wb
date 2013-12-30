@@ -1,0 +1,14 @@
+name: Ned Wolpert
+url: http://www.codeheadsystems.com/blog
+title: 
+comment: <p>When we read the comment by Josh Berkus in your other article and saw that hot backups are coming in 8.4 (in theory, of course) we decided that it may make sense not to do Slony as an out-of-the-box solution will be better.  And considering that transactions against the secondary server are not instant, so pgpool against multiple databases doesn't help us yet either.</p> <p>We're still deciding what path to take... I'll post our decisions when we do.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Ned</p><p>Yes, it's not ideal that there is up to a minute's lag with the warm standby, but it's good enough for now, and we can always decrease it later if we need to. But administration-wise, it's a *whole* hell of a lot easier, especially since we're not too worried about selecting from multiple databases just yet.</p><p>But if you <em>really</em> need that kind of replication, there's always <a href="http://www.commandprompt.com/products/mammothreplicator">Mammoth Replicator</a>, though you do of course have to pay for it.</p><p>I look forward to hearing what you decide.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

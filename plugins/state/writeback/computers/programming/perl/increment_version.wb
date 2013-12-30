@@ -1,0 +1,42 @@
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: Ouch
+comment: Nasty! :-) Perl escaped for sh, escaped for Perl. Brrrr. I'm not sure entirely I de-escaped that sticky blob properly, but try this:#!/usr/bin/perl -wpiBEGIN {     die "Usage: $0 version\n\n" unless @ARGV;    $old = shift;    $new = $old + .01;    $dir = shift || '.';    @ARGV =        grep !( /\.svn/ or /Changes/ or /META\.yml/ ),        map { chomp; $_ }        system qq( grep -lr '\Q$old\E' $dir );}print STDERR $ARGV[0], $/ unless $seen{ $ARGV[0] }++;s/($VERSION\s*=?\s*'?)\Q$old\E('?)/${1}$new$2/g;__END__Functionally identical -- but isn't it much easier on the eyes? Should be easier to tweak too.Though looking at this, I'd probably do it like so, instead:#!/usr/bin/perl -wpiBEGIN {     die "Usage: echo filename[s] | $0 version\n\n" unless @ARGV;    $old = shift;    $new = $old + .01;    $dir = shift || '.';    @ARGV = <>;    chomp @ARGV;}print STDERR $ARGV[0], $/ unless $seen{ $ARGV[0] }++;s/($VERSION\s*=?\s*'?)\Q$old\E('?)/${1}$new$2/g;__END__and then call it from the shell as something likefind ! -name *.svn ! -name Changes ! -name META.yml -print | revision 0.42
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: Ouch
+comment: <p>(Ugh. Once more with tags?)</p><p>Nasty! :-) Perl escaped for sh, escaped for Perl. Brrrr. I'm not sure entirely I de-escaped that sticky blob properly, but try this:</p><pre>#!/usr/bin/perl -wpiBEGIN {     die "Usage: $0 version\n\n" unless @ARGV;    $old = shift;    $new = $old + .01;    $dir = shift || '.';    @ARGV =        grep !( /\.svn/ or /Changes/ or /META\.yml/ ),        map { chomp; $_ }        system qq( grep -lr '\Q$old\E' $dir );}print STDERR $ARGV[0], $/ unless $seen{ $ARGV[0] }++;s/($VERSION\s*=?\s*'?)\Q$old\E('?)/${1}$new$2/g;__END__</pre><p>Functionally identical -- but isn't it much easier on the eyes? Should be easier to tweak too.</p><p>Though looking at this, I'd probably do it like so, instead:</p><pre>#!/usr/bin/perl -wpiBEGIN {     die "Usage: echo filename[s] | $0 version\n\n" unless @ARGV;    $old = shift;    $new = $old + .01;    $dir = shift || '.';    @ARGV = <>;    chomp @ARGV;}print STDERR $ARGV[0], $/ unless $seen{ $ARGV[0] }++;s/($VERSION\s*=?\s*'?)\Q$old\E('?)/${1}$new$2/g;__END__</pre><p>and then call it from the shell as something like <code>find ! -name *.svn ! -name Changes ! -name META.yml -print | revision 0.42</code></p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: A humble suggestion&mdash; you may want to tell commenters that they should use HTML, and give them a preview button&mdash; :-)
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Ouch
+comment: <p>Thanks Aristotle. Yes, this is much nicer. I couldn't quite get the first example to work, though, because <code>system()</code> doesn't return output. I changed it to use <code>``</code> and now I'm in good shape! I also moved the print statement, since it wasn't printing anything for me, and removed the <code>-w</code> to avoid <q>Use of uninitialized value in concatenation (.) or string</q> errors. Here's the result:</p><pre>#!/usr/bin/perl -piBEGIN {    die "Usage: $0 version\n\n" unless @ARGV;    $old = shift;    $new = $old + .01;    $dir = shift || '.';    @ARGV =      map { print; chomp; $_ }      grep !( /\.svn/ or /Changes/ or /META\.yml/ or /Makefile\.PL/),      ` grep -lr '\Q$old\E' $dir`;}s/($VERSION\s*=?\s*'?)\Q$old\E('?)/${1}$new$2/g;__END__</pre>
+excerpt: 
+blog_name: 
+-----
+name: Ovid
+url: 
+title: 
+comment: <p>Just a side note, I've extended this slightly for my own needs and discovered a bug in this line:</p><p><tt>s/($VERSION\s*=?\s*'?)\Q$old\E('?)/${1}$new$2/g;</tt></p><p>The "$" in "$VERSION" needs to be escaped or else it will be interpreted as a variable, converted to an undefined value and thus an empty string in the regular expression.</p><p>Of course, strict and/or warnings would have let me know before I had to break out the 'svn revert' command :)</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Thanks, Ovid, good spot. Just as an FYI, my current implementation looks like this:</p><pre>#!/usr/bin/perl -piBEGIN {    die "Usage: $0 version[, new_version]\n\n" unless @ARGV;    $old = shift;    $new = shift || sprintf('%.2f', $old + .01);    $dir = shift || '.';    @ARGV =      map { print; chomp; $_ }      grep !( /\.svn/ or /Changes/ or /META\.yml/ or /Makefile\.PL/),      `grep -lr '\Q$old\E' $dir`;}s/(\$VERSION\s*=?\s*'?)\Q$old\E('?)/${1}$new$2/g;__END__</pre><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

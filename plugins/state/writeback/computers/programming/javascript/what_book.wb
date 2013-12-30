@@ -1,0 +1,70 @@
+name: James Duncan Davidson
+url: http://blog.x180.net
+title: Danny G
+comment: <p>Danny Goodman always seems to be a good guy to look at for this kind of stuff.</p><ul><li><a href="http://www.amazon.com/exec/obidos/ASIN/0764531883/">http://www.amazon.com/exec/obidos/ASIN/0764531883/</a></li><li><a href="http://www.amazon.com/exec/obidos/ASIN/0596003161/">http://www.amazon.com/exec/obidos/ASIN/0596003161/</a></li></ul>
+excerpt: 
+blog_name: 
+-----
+name: Geoff Moller
+url: www.geoffreymoller.com
+title: 
+comment: <p>outstanding:<a href="http://www.amazon.com/exec/obidos/ASIN/0596000480/">http://www.amazon.com/exec/obidos/ASIN/0596000480/</a></p>
+excerpt: 
+blog_name: 
+-----
+name: Chris Winters
+url: http://www.cwinters.com/
+title: 
+comment: <p>I like David Flannagan's ORA book. Since you already know programming you can skip a lot of the recipe books and others aimed at people for whom HTML is coding. It not only talks about the web stuff but also some really useful features of JavaScript the language.</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle
+url: http://plasmasturm.org/
+title: 
+comment: <p>Yes, what Geoff and Chris said. Get the Rhino book. It covers the language and class libraries in detail, not just in the context of doing DHTML, but in its own right.</p>
+excerpt: 
+blog_name: 
+-----
+name: Smylers
+url: 
+title: 
+comment: <p>The Rhino book sits on my desk, and is probably the book (not the JavaScript book, but the book) I refer to most.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Rhino Book
+comment: <p>Wow, the <a href="http://www.amazon.com/exec/obidos/ASIN/0596000480/justatheory-20/">Rhino Book</a> is over 3 years old! Has much changed in that time?</p><p>Thanks,</p><p>Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Dominic Mitchell
+url: http://happygiraffe.net/
+title: 
+comment: <p>The rhino book is still a good bet.  Not much has changed <em>in terms of the core language</em>, for which it's an excellent reference.  Likewise for the DOM reference inside, it's still very useful.  And the browser integration chapter is still very relevant, despite browser progress.</p><p>The only thing that the book doesn't cover is the use of XmlHttpRequest.  But there's a <a href="http://www.xml.com/pub/a/2005/02/09/xml-http-request.html">lot</a> of <a href="http://developer.apple.com/internet/webcontent/xmlhttpreq.html">good </a> <a href="http://www.mozilla.org/xmlextras/">info</a> around on that these days.  Knowing the core language is the most important thing, and building on that is easy.</p><p>-Dom</p>
+excerpt: 
+blog_name: 
+-----
+name: Brian Davis
+url: 
+title: 
+comment: <p>I highly recommend the <a href="http://www.amazon.com/exec/obidos/ASIN/0596004672/">Monkey book</a>. It is both up-to-date (2 years old) and the format is the excellent cookbook style.  It is a great plug and play code library with well written explanations.  I do not have the Rhino book so I can not compare them directly.</p>
+excerpt: 
+blog_name: 
+-----
+name: Chris Winters
+url: http://www.cwinters.com/
+title: 
+comment: <p>Ditto what Dom said regarding the Rhino book -- I never picked up the 4th ed and still use the 3rd (almost *7* years old).</p><p>BTW, if you ever need to use Java the pure-Java JavaScript interpreter <a href="http://www.mozilla.org/rhino/">Rhino</a> is pretty darned useful. (Guess what it was named for?)</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Got It
+comment: <p>I picked up the <a href="http://www.amazon.com/exec/obidos/ASIN/0596000480/justatheory-20/">Rhino Book</a> today and will start reading it post haste. Thanks, all for the great advice!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

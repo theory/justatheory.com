@@ -1,0 +1,42 @@
+name: Stefan Kaltenbrunner
+url: 
+title: couple of comments
+comment: <ol><li><p>I'm not sure why the actual URL is so important but well</p></li><li><p>as said on the list the code is not actually modified heavily - but there are other problems with gforge (now fusionforge) that are not actually helping with upgrades.</p></li><li><p>why can't you point www.pgtap.org to pgtab.projects.postgresql.org?</p></li></ol>
+excerpt: 
+blog_name: 
+-----
+name: Greg Sabino Mullane
+url: 
+title: 
+comment: <blockquote>  <p>Is there any other central repository of or   searchable list of third-party PostgreSQL offerings?</p></blockquote><p>http://www.postgresql.org/download/product-categories</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: couple of comments
+comment: <p>@Stefan—</p><p>Thanks for your comments. My replies:</p><ol><li><p>Because then there is a predicable URL to use for downloads and direct links. All one need know is the version number. It also makes it impossible for me to provide an accurate <code>pgtap.spec</code> file in the release.</p></li><li><p>Understood, thanks.</p></li><li><p>I could point pgtap.org at pgtap.projects.postgresql.org, but unless the Web server set up projects.postgresql.org knows about it, it will simply say that nothing was found. At least, my experience has always been that you had to tell the Web server to respond to a given host name. For example, GitHub has you check in a file with CNAMEs in it so that they can parse it and tell their Web server about them.</p></li></ol><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Christopher Browne
+url: http://linuxdatabases.info
+title: 
+comment: <p>With all the struggles that have been involved with GBorg and pgFoundry, I'm not sure but that maybe this represents infrastructure that isn't overly useful to try to totally integrate together.</p><p>The "big hairy part" has always been that of having a robustly managed SCM, at least when we're talking about centralized systems like CVS/SVN.  In the "new world" of Git/Mercurial/Darcs/..., the central server for SCM becomes <em>way</em> less important because everyone has a fully legitimate peer, and there may be many trustable copies.</p><p>There has always been some "brand pride" in operating PostgreSQL services under postgresql.org; no doubt a shift away from that would trample on some toes.  Whether or not that is <em>truly</em> important, or a perception issue, is a good question.</p><p>It's probably worth thinking about whether it's maybe a good idea to use services like GitHub, Gitorious, Launchpad, BitBucket, or such, to help in hosting code, so we <em>aren't</em> continuously duplicating the exact same kind of infrastructure for each add-on project that comes along.</p><p>That being said, Distributed SCM possibly implies that if each developer has their own node, maybe it doesn't matter where SCM is hosted.</p><p>Perhaps that's the point; it seems to me that the <em>real</em> problem to be solved isn't any of this, and is really the matter of coming up with an organized way of organizing extensions.  CPAN, Ruby Gems, and such have been established as ways to organize extension modules, to the point that packaging systems (RPM/dpkg) can be used nearly automatically to create sets of extension packages.</p><p>The relevant interface there isn't the SCM (though that's probably involved, somewhat), but looks more like a way of organizing sets of extensions that all use PGXS.</p><p>In effect, hosting issues, CNAMES and such, are all the low level aspects of the problem.  What we actually need is an integrated representation of what is all the metadata needed to get an extension, whether pgTAP, pgTemporal, some GIS thing, or whatever, described in sufficient detail that an automated process could go, pull code, build it, regress it, and build [.rpm|.deb|.tgz] packages that users can regard in some linear/uniform fashion.</p><p>What repository, nay what <em>kind</em> of repository (git/svn/hg/...) can be part of that metadata, thus making it a "mere" parameter, instead of it being regarded as key.</p><p>That's my blather :-)</p>
+excerpt: 
+blog_name: 
+-----
+name: Peter Eisentraut
+url: http://petereisentraut.blogspot.com/
+title: 
+comment: <p>For large projects with large communities you probably want mailing lists, a web site, news, announcements, and all that.  However, for small projects, I find an issue tracking system as a point of contact much more important.  In fact, a mailing list is a bit of a turn-off, if you are already getting too much email anyway.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Replies
+comment: <p>@Christopher—</p><p>Thanks for the detailed comments. I can see that I'm not alone in my desire for something CPAN-like for PostgreSQL. I'm going to give that some thought next month.</p><p>@Peter—</p><p>I agree with you. For most of my Perl modules, GitHub is a perfect fit: VCS, support queue, and a Web page if I want one. For a bigger project, like <a href="http://www.bricolagecms.org/">Bricolage</a>, one needs the whole nine yards, as you say. I want something similar for pgTAP.</p><p>I think that GitHub is just about perfect for most needs, but we still need some central place for the PostgreSQL community for announcements to appear and whatnot. I'm thinking maybe some kind of Planet-like site that just picks up announcement feeds from relevant projects. Thoughts?</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

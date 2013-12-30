@@ -1,0 +1,70 @@
+name: Dave Rolsky
+url: http://blog.urth.org/
+title: 
+comment: <p>I think the decision between domain &amp; lookup table is based on more than just the frequency of change.</p><p>It also depends on who is changing it and why. If you want to allow privileged (but non-geek) users to change it <em>as they see fit</em>, you need a lookup table (and an admin table).</p><p>OTOH, if you only change it as part of changing the app itself, and it's okay to only change it as part of a standard deployment process (which can include DDL changes), then a domain will work well.</p><p>But I could imagine the lookup table still being necessary even if changes are very infrequent. This is <em>especially</em> true if you're building an app that other people will install and use. You want to encourage customization through configuration &amp; data changes, rather than code changes (effectively requiring a fork for each customization).</p>
+excerpt: 
+blog_name: 
+-----
+name: Dave Rolsky
+url: http://blog.urth.org/
+title: 
+comment: <p>Doh, wish I could edit my comments. I meant "an admin interface", not "an admin table".</p>
+excerpt: 
+blog_name: 
+-----
+name: Simon
+url: www.simononsoftware.com
+title: Some remarks
+comment: <p>First of all dropping and creating a constraint on a table should be made in a transaction (just to be sure that there won't be any wrong insert between the two queries).</p><p>Such changing a domain constraint is also not so efficient (even worse than altering the table constraint) as all tables, where the domain is used, have to be checked if there is a record that contains a wrong string in the domain column. I haven't checked that but this should lead to some heavy locks (including deadlocks) if the domain is used in many tables.</p><p>Using the domain could also lead to much greater table size as the strings can be quite long. Any enum type occupies just four bytes on disk. Of course that all depends on the database and data and this can be unnoticeable.</p>
+excerpt: 
+blog_name: 
+-----
+name: Jeff Davis
+url: http://thoughts.j-davis.com
+title: What does it mean to change an enum?
+comment: <p>When adding the eye color "hazel" to the existing set of options "blue, green, and brown", is it really safe to just add the new option?</p><p>For instance, prior records may have used "green" instead of hazel because the "hazel" option didn't exist. So changing the available options might affect the meaning of all previous records. </p>
+excerpt: 
+blog_name: 
+-----
+name: Andrew Hammond
+url: 
+title: 
+comment: <p>Lookup tables are also handy when you're trying to write a UI and need a list of acceptable options. I imagine you could generate such a list from a domain or enum, too, but it'd probably take a little more effort. I've generally gone with lookup tables because I often want to add extra meta-data to options, like say a default eye-color, and if you've already got a table, adding another column is pretty easy.</p>
+excerpt: 
+blog_name: 
+-----
+name: Bill Karwin
+url: karwin.blogspot.com
+title: Andrew beat me to it
+comment: <p>I was going to comment on additional drawbacks of using ENUM or DOMAIN or TYPE or CHECK constraints.  Andrew got two of the three:</p><ol><li><p>Querying the current list of allowed values is easy with a lookup table, but requires intricate queries against system views with the other solutions.</p></li><li><p>A lookup table makes it easy to define attributes for each value. This is not possible with the other solutions.</p></li></ol><p>And the third:</p><ol><li>Changing a list of permitted values requires knowing the previous state of the list.  Easy enough to eyeball it if you're making the change ad hoc, but if you need to do it programmatically, see the #1 weakness above.  In a lookup table, you can INSERT, DELETE, or UPDATE values individually without touching the rest of the list.</li></ol>
+excerpt: 
+blog_name: 
+-----
+name: Scott Bailey
+url: http://scottrbailey.wordpress.com/
+title: 
+comment: <p>I've never actually used enums in production. But it is not too difficult to add a value to an enum by adding an entry to the pg_enum table. Removing or reordering values is another story.  And it is easy enough to get the list of values for an enum by using enum_range().</p>
+excerpt: 
+blog_name: 
+-----
+name: Xaprb
+url: http://www.xaprb.com/
+title: 
+comment: <p>I don't get why a SELECT causes a foreign key error about INSERT or UPDATE violations.  Did I miss something?</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Replies
+comment: <p>@Dave—</p><p>Yeah, I was assuming that it was purely to constrain values, not that the values would be modified via an admin interface. For that the lookup table is clearly the best idea. I'd still probably want to put it into a separate schema, though.</p><p>@Simon—</p><p>Yeah, I should get in the habit of putting the transaction stuff in my blog examples. I certainly do that in real life! And of course I agree that changing a domain is less efficient if you have the same domain in multiple tables. But if you had a similar constraint in multiple tables, I expect you'd have to update it in them all anyway, so it's likely a wash. I'm with you on the space issue, which is why I wish we had something like ENUM but that used text collation for ordering and was painless to modify in-place.</p><p>@Jeff—Excellent questions, which boil down to the answer: “It's important to always know your data!” But I hope that doesn't detract from the implementation discussion.</p><p>@Andew—FYI, you can specify defaults for domains, too, like so:</p><pre><code>CREATE DOMAIN eye_color AS TEXTCONSTRAINT valid_eye_colors DEFAULT 'blue' CHECK (    VALUE IN ( 'blue', 'green', 'brown' , 'hazel'));</code></pre><p>@Bill—You and andrew are correct. If you need to query for the values in your app, then you're better off with a lookup table or an enum if you can get away with it.</p><p>@Scott—Quit right about adding values via the system tables, but direct updating of the system tables is generally frowned-upon. I'l have to keep <code>enum_range()</code> in mind, though, nice find.</p><p>@Xaprb—Nice catch! It was supposed to be an <code>INSERT</code>. Fixed, thanks!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Josh Berkus
+url: www.pgexperts.com
+title: 
+comment: <p>David,</p><p>I think you chose a bad example for Domains.  Something like eye color is clearly not tied to any programming changes, and as such should probably be a lookup list table editable by the admin user.</p><p>Where domains are a clearer win is for case where the values in the list are tied to programmed behavior, so a code deployment is required to change them anyway, BUT it's conceiveable that the values might be appended in the future.  For example, you could have an "invoice_frequency" value, which offers ( 'Monthly', 'Quarterly', 'Annual' ).  It's conceiveable that you might someday want to add 'Bimonthly' to that, so you don't want a ENUM, but you also don't want the admin user able to casually add to the list, since the application would break.</p><p>So the decision tree is:</p><p>List will never change, and ordering is preset or doesn't matter: use an ENUM</p><p>List might change but changes require programming, OR list will not change but needs to be alpha sorted: use a DOMAIN</p><p>List will change, and changes do not require other programming: use a lookup table.</p>
+excerpt: 
+blog_name: 
+-----

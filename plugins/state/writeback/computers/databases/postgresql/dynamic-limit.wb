@@ -1,0 +1,28 @@
+name: David
+url: 
+title: 
+comment: <p>Just played around with this.  Very cool!  In fact, the LIMIT can take the NULL directly, so no CASE needed.</p><p>Thanks for the post!</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Refinement
+comment: <p>Great find, David. Thanks to your insight about passing <code>NULL</code>, I was able to replace the <code>CASE</code> statement with a <code>COALESCE</code>:</p><pre>     LIMIT COALESCE( $3, NULL );</pre><p>That’s even better. Thanks!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: tabo
+url: http://gpicon.org/
+title: 
+comment: <p>This is great. Btw it isn't documented. The postgres docs only mention <code>LIMIT ALL is the same as omitting the LIMIT clause.</code>, but no mention of NULL. <code>COALESCE($3, ALL)</code> is invalid.</p><p>And <code>COALESCE($3, NULL)</code> errors, it needs something like <code>COALESCE($3, NULL)::INTEGER</code> (at least in postgres 8.2).</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Tabo</p><p><code>COALESCE($3, NULL)</code> doesn't error for me, it works perfectly. What <em>does</em> give me an error is when I try to do <code>COALESCE(NULL, NULL)</code> in <code>psql</code>, because it needs an integer data type. But there, at least, you can just cast one of the <code>NULLs</code> and it'll work; that is, <code>COALESCE(NULL::INT, NULL)</code>. Or you can cast the whole thing like you've done. But in PL/SQL, the data type of <code>$3</code> is known from the function declaration, so no casting is required.</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

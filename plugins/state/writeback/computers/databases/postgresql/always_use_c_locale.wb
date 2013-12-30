@@ -1,0 +1,14 @@
+name: Chris
+url: 
+title: Use pattern_ops
+comment: <p>Have you seen the <a href="http://www.postgresql.org/docs/8.1/interactive/indexes-opclass.html">text pattern_ops</a>?</p><p>Chris</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: Use pattern_ops
+comment: <p>Chris,</p><p>No, I wasn't aware of <code>text_pattern_ops</code>. Good to know about, thanks! However, seems rather a PITA compared to just making the whole database use C locale, as long as what you want is for everyting to use the C locale. Such was the case for me here. But I'll definitely remember <code>text_pattern_ops</code> for future reference!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

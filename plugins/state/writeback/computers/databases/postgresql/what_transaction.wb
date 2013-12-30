@@ -1,0 +1,14 @@
+name: Tim Bunce
+url: 
+title: 
+comment: No need to use four method calls when you can use one:$txid = $dbh->selectrow_array(...);print "Transaction: $txid\n";
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: D'oh!
+comment: Of course. I've become so used to the prepare, execute, bind columns, fetch drill that I forget about the shortcuts. Thanks, Tim!
+excerpt: 
+blog_name: 
+-----

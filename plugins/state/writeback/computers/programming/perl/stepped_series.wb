@@ -1,0 +1,35 @@
+name: Chris Dolan
+url: http://www.chrisdolan.net/
+title: map?
+comment: <p>Surely a map would suffice?  Untested code below</p><pre>sub isa_gtin {    my @nums = reverse split q{}, shift;    (        sum( @nums[ map { $_ * 2 + 1 } 0..$#nums/2 ] ) * 3      + sum( @nums[ map { $_ * 2     } 0..$#nums/2 ] )    ) % 10 == 0;}</pre>
+excerpt: 
+blog_name: 
+-----
+name: Adrian Howard
+url: 
+title: List::[More]Util[s]?
+comment: <pre>use List::MoreUtils qw( part );use List::Util qw( sum );my ( $even, $odd ) = part { $_ % 2 } 1 .. 10;print sum( @$odd ) * 3 + sum ( @$even );</pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: grep vs. map vs. part
+comment: <p>Chris and Adrian,</p><p>Thanks for your suggestions. I should have known that List::MoreUtils would have something of interest. And Chris, your version worked, too, once I added <code>no warnings 'unintialized';</code>. So just out of curiosity, I benchmarked all three approaches (N = 100_000):</p><pre>grep: 3.40 wallclock seconds (3.40 usr + 0.00 sys = 3.40 CPU) @ 29390.86/smap:  3.32 wallclock seconds (3.31 usr + 0.01 sys = 3.32 CPU) @ 30110.48/spart: 3.92 wallclock seconds (3.59 usr + 0.30 sys = 3.89 CPU) @ 25535.60/s</pre><p>So it looks like <code>map</code> wins by a nose, although they're all really fast. The figures, since it's also the most obscure. ;-)</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Benjamin Franz
+url: 
+title: One sum to rule them....
+comment: <p>I realize this thread is a couple of months old. But I just couldn't resist the challenge:<p><pre>use List::Util qw( sum );sub isa_gtin {    use integer;    my @nums =  split //, reverse shift;    0 == sum(        map { $nums[$_ << 1] + $nums[1 + ($_ << 1)] * 3 } 0..$#nums >> 1    ) % 10;}</pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: Re: One sum to rule them…
+comment: <p>Jerry,</p><p>I had to add <code>no warnings 'uninitialized'</code>, but otherwise, not bad!:</p><pre> grep: 0.30 wallclock seconds (0.30 usr + 0.00 sys = 0.30 CPU) @ 33894.05/s  map: 0.28 wallclock seconds (0.28 usr + 0.00 sys = 0.28 CPU) @ 35583.90/s part: 0.32 wallclock seconds (0.31 usr + 0.01 sys = 0.32 CPU) @ 31325.57/sshift: 0.25 wallclock seconds (0.24 usr + 0.00 sys = 0.24 CPU) @ 40695.90/s</pre><p>The fastest by a nose! I really should learn about the bit operators and how they actually work!</p><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----

@@ -1,0 +1,14 @@
+name: Marshall
+url: 
+title: 
+comment: Discrete permissions are definitely better.  A UI could enforce cumulative permissions on top of discrete permissions if one so chose.
+excerpt: 
+blog_name: 
+-----
+name: cameron
+url: 
+title: 
+comment: About the UNIX perms only worrying about files.  The design of UNIX is such that every object is a file.  All access to devices etc. is through files, thus the "file" permissions are applied to just about everything in the UNIX system.Where it gets interesting is applying the permissions to different types of objects, "x" for a directory is not the same as "x" for a text file.Also in UNIX there are more permission bits than just the "rwx", applying differently to different types of objects, sticky bit, suid, device type indicators, etc..  The system is minimalistic, but can be baroque.
+excerpt: 
+blog_name: 
+-----

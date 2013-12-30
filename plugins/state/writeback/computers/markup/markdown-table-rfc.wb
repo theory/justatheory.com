@@ -1,0 +1,14 @@
+name: PJMODOS
+url: 
+title: Looks quite nice
+comment: <p>Probably best table syntax proposition I've seen, looks bit more readable (I agree that markdown should be natural to read as plain text) <em>and</em> has more features that both existing implementations (MutliMarkdown and Markdown Extra). Also I like the ability to directly paste output from psql :)</p>
+excerpt: 
+blog_name: 
+-----
+name: hdp
+url: 
+title: <3
+comment: <p>Taking cues from database CLI output is a good idea, and I like the unobtrusiveness of the text alignment within cells.</p>
+excerpt: 
+blog_name: 
+-----

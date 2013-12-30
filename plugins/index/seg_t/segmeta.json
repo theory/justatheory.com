@@ -1,0 +1,40 @@
+{
+   "documents" : {
+      "format" : "2"
+   },
+   "highlight" : {
+      "format" : "1"
+   },
+   "lexicon" : {
+      "counts" : {
+         "body" : "7474",
+         "category" : "80",
+         "tags" : "1023",
+         "title" : "675"
+      },
+      "format" : "3",
+      "index_counts" : {
+         "body" : "59",
+         "category" : "1",
+         "tags" : "8",
+         "title" : "6"
+      }
+   },
+   "postings" : {
+      "format" : "1"
+   },
+   "segmeta" : {
+      "count" : "281",
+      "field_names" : [
+         "",
+         "tags",
+         "title",
+         "body",
+         "category",
+         "timestamp",
+         "url"
+      ],
+      "format" : "1",
+      "name" : "seg_t"
+   }
+}

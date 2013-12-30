@@ -1,0 +1,7 @@
+name: Paul Seamons
+url: 
+title: 
+comment: <p>After a decade we have settled on a simple solution that works with pretty much any vcs.</p><p>We have a schema directory, sub directories for each database type, and within those database directories we house sql files and updates.  Updates are capable of running in both directions.  The way that an update file is found is either by revision or by md5 (sha1 can be used just as easy).</p><p>So for a database foo with a table bar we'd haveschema/foo/bar.sql</p><p>Should their be static values in these tables we'd have a correspondingschema/foo/bar.inserts</p><p>If bar had changes taking it from 1.5 to 1.6 (known cvs or svn revision numbers) then we would add a file namedschema/foo/updates/bar-1.5-1.6.sql.</p><p>If we where using git and we went from aba234 to revision bd3asd then we would have a file namedschema/foo/updates/bar-aba234-bd3asd.sql</p><p>If we had a version in the database that didn't match a known revision, we'd write a custom update file namedschema/foo/updates/bar-md5sumofunknownrevision-1.6.sql</p><p>If we had to revert a revision for whatever reason - we would useschema/foo/updates/bar-1.6-1.5.sql</p><p>We don't rely on being able to determine changes automatically - there is too much that can go wrong, and all of the simple cases are simple anyway.  But we can get from anywhere to anywhere via our update files.</p>
+excerpt: 
+blog_name: 
+-----

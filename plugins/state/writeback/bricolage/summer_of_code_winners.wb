@@ -1,0 +1,14 @@
+name: 
+url: 
+title: 
+comment: Oh :(. SQLite port was not choosen. I think that a port to SQLite would really bring something new - a flat file DBMS is something great.
+excerpt: 
+blog_name: 
+-----
+name: Theoy
+url: /
+title: Re: SQLite
+comment: <p>Yes, I'd like SQLite support, too. The truth is that it'll be easy to add once the MySQL support is in, and Tamas may just do it, if he has time.</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

@@ -1,0 +1,168 @@
+name: Andy Baird
+url: http://www.andybaird.com/travels/
+title: Steve Jobs nailed it
+comment: <p>Your last paragraph contains the key: print is dying, but there is so much opportunity on devices like the iPad. I'd just add "...and it's the <em>only</em> opportunity you're going to get, publishers, so don't blow it!"</p><p>By any reasonable definition, the current situation qualifies as blowing it. I subscribe to a dozen magazines. Am I going to do a dozen half-gigabyte downloads every month? Over my 1.5 mbps Verizon wireless connection, that tops out at 5 GB per month? Not a chance. Even if I had an LTE connection with unlimited bandwidth (like that's every gonna happen!), the usability issues you cited would kill the deal for me.</p><p>Adobe's "make everything into a big bitmap" approach is quite simply untenable. It's interesting to note that Steve Jobs anticipated this situation in his April 2010 "Thoughts on Flash":</p><p>"We know from painful experience that letting a third party layer of software come between the platform and the developer ultimately results in sub-standard apps... This becomes even worse if the third party is supplying a cross platform development tool... It is not Adobe’s goal to help developers write the best iPhone, iPod and iPad apps. It is their goal to help developers write cross platform apps."</p><p>Substitute "publications" for "apps," and you have the problem in a nutshell. Adobe's publishing tool is strictly for lowest-common-denominator work. It cannot, by definition, deliver high-quality results. As long as Condé Nast and other publishers cling to the delusion that they can take the lazy way out, the resulting tablet-based magazines will look and work poorly, and the huge downloads will severely limit their market.</p>
+excerpt: 
+blog_name: 
+-----
+name: Jack 
+url: 
+title: 
+comment: <p>I'm a current subscriber to wired and the new Yorker, as well as several other news stand mags not from Conde Nast though which very likely use adobes tools, and they all suffer from these same problems. I've found myself using them less and less to the point where today I'm going to cancel my subscriptions and buy per issue when I feel like it. That's probably not going to be very often as its such a grind, especially when apps like Reeder aggregate all my favourite blogs and can have me being entertained after a couple of seconds. </p><p>Prints problem is not that people no longer read... It's that people aren't paying to read. Making it a pain in the ass to boot is not helping their cause. </p>
+excerpt: 
+blog_name: 
+-----
+name: THGD
+url: 
+title: 
+comment: <p>Adobe makes some great software but for e-publishing they are blowing it.  Their current kludge approach that costs a fortune is not a viable solution. Every designer wants to create once and publish anywhere but that is a promise Adobe cannot keep. The current best solution for mere mortals is Apple's publishing tool "iBooks Author".  It only outputs for one device, but maybe that device is the only one that matters for the foreseeable future.</p>
+excerpt: 
+blog_name: 
+-----
+name: Keith Ahern
+url: OomphHQ.com
+title: 
+comment: <p>Full disclosure, we make a competing system to Adobe DPS called Oomph.  I don't normally comment publicly on other solutions but in this case I feel the entire iPad magazine industry is getting a bad rap over iPad 3.  There are alternatives to DPS out there ... and some of them look great on the iPad 3 - even with already published content.</p><p>I don't think making text content look great on the new iPad is hard to solve.  There are great resolution independent technologies out there to help like HTML, PDF and SVG.  We use all of the them and the result is smaller downloads, and incredibly crisp text.</p><p>As mentioned background downloads and caching greatly enhance the user experience - again, looking beyond DPS you will see this.</p><p>Keith AhernOomphHQ.com</p>
+excerpt: 
+blog_name: 
+-----
+name: Nicholas
+url: modoku.com
+title: CMS
+comment: <p>Very early on in 2009, I looked at building a CMS build process for apps that included dynamically generated views designed to be template driven. Unfortunately we were too early, although we would apparently still be too early.</p><p>My background is in book design, and we considered what would be necessary for catalog and magazine publishers to make their many products available to users in a time driven format. We succeeded in building the systems and published some music apps (another target market), but never really got anywhere.</p><p>The problem remains. Content must be married with apps and be fed to users systematically, whether that is monthly or otherwise. This content really needs to be tied to databases and templates enabling more automation and customization. Imagine a much more controlled, as well as varied, Flipbook. </p><p>The publishers don’t get it because they can’t. They are still tied to the print publishing mechanisms and can’t afford to make products that generate less revenue, even if they become profitable. It is a fascinating problem, and one that Adobe is equally ill equipped to conquer.</p>
+excerpt: 
+blog_name: 
+-----
+name: jcburns
+url: 
+title: Staggering filesizes.
+comment: <p>The huge file sizes make use out on the fringes of broadband, plain and simple. It's absurd that a PDF with high-quality images of the same magazine can clock in at, oh, 32 MB or so, when the Adobe Digital version is a staggering, iPad-filling 240 MB.</p><p>Folks, put yourselves on a budget. 40 MB max per issue. I'm serious. If it takes longer than 30 seconds to download, you've failed.</p>
+excerpt: 
+blog_name: 
+-----
+name: Brian Dewey
+url: http://www.bdewey.com
+title: 
+comment: <p>The magazine that's doing it right is The Economist. Downloads are fast, text looks crisp, navigation makes sense, and the page layout is still unmistakably that of their paper magazine. I can't wait until the rest of my paper periodicals have an iPad experience that matches it.</p>
+excerpt: 
+blog_name: 
+-----
+name: Robert
+url: 
+title: Almost two months and no fix...
+comment: <p>I read all the negative reviews at the iTunes Store for The New Yorker and Wired but bought subscriptions anyways. I thought "It can't possibly be that bad!" I was wrong. </p><p>Pray you have a fast connection with unlimited bandwidth. Pray you have a device with lots of free space. You'll need it.  I have to prep my device for downloading by disabling screen-lock and then leave the iPad unlocked but active on the download screen. Why can't they figure out a download method that doesn't require me to chaperone with the screen active but static?</p><p>Now for the past month I have been unable to access past issues on the device and the apps won't download new issues. My wifi connection to the iPad begins to have trouble when I try. All other apps are working fine. Wifi problems end as soon as I shut the apps down.</p><p>I've missed six issues now. I want to cancel but I'm dreading the call to their support. How can they be so bad?</p>
+excerpt: 
+blog_name: 
+-----
+name: Tony the tech
+url: 
+title: 
+comment: <p>Why are publishers expected to be app developers? Music and movie producers get the benefit of the built in apps to show their content, as do book publishers. Wouldn't magazine publishing be better if they could all be done in iBooks instead of requiring custom apps?</p>
+excerpt: 
+blog_name: 
+-----
+name: Ric Levy
+url: 
+title: 
+comment: <p>I don't understand the idea of using images to prevent stealing. Can't they just make the app text non-selectable?</p>
+excerpt: 
+blog_name: 
+-----
+name: Matthew Cooksey
+url: www.twitter.com/cooksey87
+title: 
+comment: <p>I would recommend trying the British magazine Attitude (http://itunes.apple.com/gb/app/attitude-europes-no.1-gay/id373975518?mt=8) for a look at how I think it should be done. It has a separate team who compile the content for the iPad, I believe issues are fairly small despite having a lot of images, the text is all text and they make good use of it being on an interactive touchscreen device. Not sure what software they use for it.</p>
+excerpt: 
+blog_name: 
+-----
+name: Steve Wright
+url: http://www.tapmag.co.uk
+title: 
+comment: <p>Great post. The Craig Gannell blog you link to discusses our magazine Tap!, which takes a different retina-proof approach. </p><p>Here's a bit more info on what we're doing, in case it's of interest. Tap! magazine is now eight digital issues old. </p><p>It's built using in-house software - which is an iPad app itself – and serves live text rather than unwieldy images. Essentially, it automatically optimises for the Retina display without prohibitively increasingly file size.</p><p>Even with full retina support, each issue comes in at around 150mb. Editor Chris Phin has blogged about the retina issue here: http://tapm.ag/retinamags</p><p>If you’d like to check out Tap!, you can download free samplers here: http://tapm.ag/appedition. </p>
+excerpt: 
+blog_name: 
+-----
+name: Bob
+url: 
+title: 
+comment: <p>I recently bought a new iPad (my first) and was excited to see the Wired app, as a couple of friends had bought me a subscription to the print magazine for my birthday.</p><p>I was pretty disappointed. Slow download (in the foreground) and the text looked horrific. OK, I thought, apparently the next issue (April) will be updated with retina display visuals: that's great! However, the April issue downloaded yesterday (at about 430Mb, this took ... a while) and the text <em>still</em> looks awful! Marginally less awful, but still awful.</p><p>My only guess is that they've decided to render as jpg or png, and they've also decided to impose a maximum 500Mb file size or something. And when they rendered the images/text at full "retina" resolution, it went over 500Mb.</p><p>However, what they've ended up with is a still very large file size, with text that makes me want to turn the app off immediately.</p><p>Part of the problem is that non-rasterized text on the new iPad looks fantastic; low res image renders of long-form text just don't cut it.</p><p>Luckily my iPad subscription came free with the print equivalent so I'm not angry as such, just somewhat disappointed. If I'd paid for digital issues that looked this crappy, I would be.</p>
+excerpt: 
+blog_name: 
+-----
+name: Rhys Thomas
+url: bingojackson.com
+title: 
+comment: <p>Wouldn't it be better for everyone, instead of just Apple users, for these magazine apps to be built in open web standards? Surely the publishers want to reach as many people as possible without having to create different version for different platforms?Though iBooks author may be fine for the iPad, it's no good for anything else and Conde Nast (insert other publisher here) won't want to lose the 40% that Apple charge AND spend more money creating the same product for other platforms too. There's just no money in it for them.Not everyone has an iPad but we do still like to read. Maybe one day someone will build a fully standards compliant browser that supports all of the features of HTML5 and CSS3 and we'll be able to do fully interactive magazines in the browser and we won't need an app for it. I'm not holding out much hope though.</p><p>Think I'll stick to paper.</p>
+excerpt: 
+blog_name: 
+-----
+name: m3kw
+url: 
+title: 
+comment: <p>For them to force you to wait on the download is the foremost unacceptable feature.  I have to leave the app OPEN for aorund 10-15 min while it is downloading. Maybe they are testing user download experience on a 20MB connection, but a lot of people have 6MB connections.</p><p>absurd.</p>
+excerpt: 
+blog_name: 
+-----
+name: m3kw
+url: 
+title: one more thing
+comment: <p>Their engineers should notice that it is possible to disable the copy text feature.  They don't have to do something as stupid as sending all text as images to prevent copying.</p>
+excerpt: 
+blog_name: 
+-----
+name: Joobu
+url: 
+title: 
+comment: <p>The New Yorker digital assets are a completely technically suboptimal solution. Obviously in life other non-technical issues can take precedence.</p><p>The New Yorker online edition (archives.newyorker.com) consists of a javascript interface that displays 760x556 jpegs for browsing. Now we get to the good part: if you click on a page to zoom, it brings up a 1228x900 png overlaid on a 1228x900 jpg. The png is the high frequency information (abrupt black and white transitions) and the jpg is the low frequency information (large swathes of colour). I’m confident the data is processed by DjVu to perform this image separation (if you dive the image urls ‘djvu’ is one of the directory names). The hilarious part is that they OCR their images and this text is in the html. Even more fun is that there is a separate 1613x1181 jpg when you print from the online edition but as we know jpg is totally inappropriate for black and white text.</p><p>So to summarize the data is already passed through a DjVu toolchain to generate a djvu file but they render all of these ridiculous image sizes in various formats to fit their terrible viewer.</p><p>I don’t have an iPad so I can’t confirm but I’m pretty sure the Kindle New Yorker app runs on the same Adobe AIR platform. For the Kindle, each issue clocks in at around 100 MB and consists of a 1024x600 png for each page (I assume the iPad images are 1024x768) and a whole bunch of other HTML/XML assets. I’m running this on an android phone and the issues are stored under “/mnt/sdcard/The New Yorker/.library/The New Yorker/” so the data structure is pretty transparent.</p><p>Harper’s is much more sane: they serve gifs or pdfs. From the pdf properties it’s obvious it’s direct output from QuarkExpress.</p>
+excerpt: 
+blog_name: 
+-----
+name: AP
+url: 
+title: 
+comment: <p>Adobe DPS actually supports PDF as an output format in addition to bitmaps. It would in theory totally solve this problem. I really would love to know why conde nast doesn't use it.</p>
+excerpt: 
+blog_name: 
+-----
+name: John Dowdell
+url: http://blogs.adobe.com/jd
+title: Info on tradeoffs
+comment: <p>Long article... wordsearch didn't reveal "CNN" or "zeke"... if you're interested in why publishers choose the options they do, here's context:http://www.cnn.com/2012/03/26/tech/gaming-gadgets/ipad-magazine-display/index.html?hpt=hp_c2</p><p>Next year will be interesting, as publishers figure how to handle requests for high-resolution images as well.</p><p>jd/adobe</p>
+excerpt: 
+blog_name: 
+-----
+name: Ryan
+url: 
+title: 
+comment: <p>I just got my first iPad this week. I was ready to get all of my subscriptions, including many Conde' Nast publications, through digital issues. The Economist is the only magazine I'll read on my tablet. Every other download is a waste of time.</p>
+excerpt: 
+blog_name: 
+-----
+name: AP
+url: 
+title: 
+comment: <p>JD- That article says publisher chose bitmaps over PDF "because the fidelity is perfect." That doesn't make sense. Isn't that the whole purpose of the PDF file format?</p>
+excerpt: 
+blog_name: 
+-----
+name: Pete
+url: 
+title: 
+comment: <p>Always felt the problem with Adobe Dig. Pub. Suite is that it's a software solution for Adobe to lock their corporate customers in to their tool chain - its not a solution designed for publishers or readers.</p>
+excerpt: 
+blog_name: 
+-----
+name: Tickle bunny
+url: 
+title: PDF
+comment: <p>I'm a TNY print subscriber, and I go get my own PDF digital edition by using the OSX PDF print driver, then cropping in Acrobat. Unfortunately the text are still images, but I can OCR them if I want selectable text. One-week issues are in the range of 70MB, and take a couple of minutes to download on DSL to a computer. I read on an iPhone, because it's one or the other for me. Wifey has an iPad, but it's not like I get to use it :-)</p>
+excerpt: 
+blog_name: 
+-----
+name: Joe
+url: 
+title: 
+comment: <p>I completely agree with every one of your criticisms, but at the same time, I also think the New Yorker is far better than most, and I frequently use it as an example of how news and magazines should be.  If you want to see a really bad example. check out the San Francisco Chronicle app -- it's positively INFURIATING.  The only reason I put up with it, is that it's the best (and really only) local paper.  Try spending just a few minutes navigating this piece of crap -- the New Yorker is a joy by comparison.   And btw,  I like the navigation.   </p>
+excerpt: 
+blog_name: 
+-----

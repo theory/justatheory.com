@@ -1,0 +1,7 @@
+name: Chris Dolan
+url: http://www.chrisdolan.net/
+title: 
+comment: <p>Not a solution, but here's a hint.  Actionscript, the programming language behind Flash, is an ECMAscript variant.  I use POD demarked like so:</p><pre>/*=head1 DocumentationThis is POD documentation=cut*/</pre><p>Then you can use standard Perl tools like pod2html or pod2txt.  It's important to have a blank line between the "/*" and the first "=" line.</p><p>Alternatively, the Actionscript community has largely latched onto Javadoc syntax, following the lead of the influential Colin Moock I believe.  Below are some resources for parsing Javadoc out of Actionscript.  I imagine that one of those could handle Javascript with very little change.<p><p>http://as2documentor.sourceforge.net/<br />http://www.asdocgen.org/blog/</p>
+excerpt: 
+blog_name: 
+-----

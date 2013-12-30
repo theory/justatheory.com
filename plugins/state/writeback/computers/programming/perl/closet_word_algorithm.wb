@@ -1,0 +1,49 @@
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <pre><code>sub _find_closest_word {    my $target = shift;    my $first_try = [ $_[0], distance( $target, $_[0] ) ];    reduce {        my $best_score = $a-&gt;[1];        my $word = $b;        my $score = distance( $target, $word );        $score &lt; $best_score ? [ $word, $score ] : $a;    } $first_try, @_[ 1 .. $#_ ];}</code></pre>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: Err, of course that returns an anonymous array and you have to unravel it.
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Aristotle,</p><p>Oh! Somehow I'd missed <code>reduce()</code>, and that was exactly what I needed. I've managed to simplify things by using <code>map</code>:</p><pre>use List::Util qw(reduce);use Text::LevenshteinXS qw(distance);sub _find_closest_word {    my $word  = shift;    my $found = reduce {  $a-&gt;[1] &lt; $b-&gt;[1] ? $a : $b  }                map    { [ $_ =&gt; distance($word, $_) ] }                @_;    return $found-&gt;[0];}</pre><p>Sweet, thanks!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>D&#8217;oh &#8211; nice! Much easier to read. I didn&#8217;t even think of that.</p><p>Of course, for really long candidate lists, it will waste much more breath to achieve the same result, but whether that is a drawback in practice depends.</p><p>In any case, yeah, <code>reduce</code> is the ultimate hammer. <tt>:-)</tt></p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Aristotle</p><p>Yeah, most times my lists are unlikely to be more than 10-12 items, though occaisionally they might be 50 or so. But I'm not too worried about it. :-)</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Aristotle Pagaltzis
+url: http://plasmasturm.org/
+title: 
+comment: <p>Yeah, that was a pointless remark in retrospect. The only breath it wastes is to construct anonymous arrays, as all Levenshtein checks are always executed, and those are going to completely dominate the runtime. Memory might be more of an issue for the unlikely case of lists with thousands of candidates&#8230;</p><p>I was going to say that means there&#8217;s no reason to trade clarity for speed, but then I remembered the way to clean up the Schwartzian transform, which applies here as well:</p><pre><code>use List::Util qw(reduce);use Text::LevenshteinXS qw(distance);sub _find_closest_word {    my $word  = shift;    my @score = map distance( $word, $_ ), @_;    my $best  = reduce { $score[ $a ] &lt; $score[ $b ] ? $a : $b } 0 .. $#_;    return $_[ $best ];}</code></pre>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Aristotle</p><p>Ah! That eliminates all those array references. Excellent&#x2014;Thanks!</p><p>&#x2014;Theory</p>
+excerpt: 
+blog_name: 
+-----

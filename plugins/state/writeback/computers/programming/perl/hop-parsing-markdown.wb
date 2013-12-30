@@ -1,0 +1,14 @@
+name: Dave Rolsky
+url: http://blog.urth.org/
+title: 
+comment: <p>I haven't looked at HOP::Parser, but I think you may be doing it wrong(ish).</p><p>I think the parser is simply responsible for reporting "here's a thing that could be an operator". This is reported to something that then tracks state. If you haven't seen an operator yet, it's a left-op, if you have, it's a right-op.</p><p>If you separate state handling from parsing, I think it makes things much simpler.</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title: 
+comment: <p>Dave,</p><p>What you describe sounds like the lexer, which of course doesn't keep state. The Parser is designed so that you can pass an extra object that tracks state, and then the callback code that gets executed when a parser finds tokens will get that state argument passed to it.</p><p>But I'm not doing that yet, no state tracking. I was trying to determine if this could be done <em>without</em> state, but I'm having trouble figuring out how…</p><p>Thanks,</p><p>Theory</p>
+excerpt: 
+blog_name: 
+-----

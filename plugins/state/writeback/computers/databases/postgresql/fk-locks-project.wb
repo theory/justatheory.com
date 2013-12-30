@@ -1,0 +1,21 @@
+name: vivek khera
+url: 
+title: 
+comment: <p>Wonder why you are not partnering with Simon if he proposed the original solution? Obviously he must have spent a lot of time thinking about it.</p>
+excerpt: 
+blog_name: 
+-----
+name: Marti Raudsepp
+url: 
+title: 
+comment: <p>The FOSSExperts page suggests that the new lock type will conflict with UPDATEs that touch <em>any</em> indexed columns.</p><p>But reading Simon Riggs's post, I got the impression that it should only conflict with changes to the primary key (which I guess means any FK-referenced unique keys too), but not columns in regular indexes.</p><p>Which is true?</p>
+excerpt: 
+blog_name: 
+-----
+name: Joshua D. Drake
+url: http://www.commandprompt.com/
+title: Following the development
+comment: <p>Alvaro has been good about getting various blogs and posts out about the work. You can see them here:</p><p>http://www.commandprompt.com/blogs/alvaro_herrera/2010/11/fixing_foreign_key_deadlocks/http://www.commandprompt.com/blogs/alvaro_herrera/2010/11/fixing_foreign_key_deadlocks_part_2/http://archives.postgresql.org/pgsql-hackers/2010-11/msg01754.php</p>
+excerpt: 
+blog_name: 
+-----

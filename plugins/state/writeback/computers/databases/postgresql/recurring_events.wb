@@ -1,0 +1,35 @@
+name: rjbs
+url: http://rjbs.manxome.org
+title: on recurring events
+comment: <p>This nowhere near as useful or complicated, but it's a little problem I hit when trying to implement recurring events for our work order system at an old job.  When checking whether it was time for an event to occur, I checked something like:</p><pre> if (today - last_run > interval)</pre><p>I did this in T-SQL, though using its <a href='http://technet.microsoft.com/en-us/library/aa258269(SQL.80).aspx'>DATEDIFF</a> function.  I didn't notice that it doesn't return the number of units between X and Y, but the number of unit boundaries crossed.  So, if you scheduled a job to run every year, and it first ran on Dec 30, it would run again on Jan 1.  At that point, there would have been one year boundary between last run and today.</p><p>Ugh!</p><p>PS, your commenter could use a preview button.</p>
+excerpt: 
+blog_name: 
+-----
+name: Simon
+url: 
+title: 
+comment: <p>Thank you, thank you; this is something I struggled with for a while - last time when I was writing payment management software. Don't know when I'm going to need it again, but next time I do I know where to look. :)</p>
+excerpt: 
+blog_name: 
+-----
+name: bangaru
+url: 
+title: 
+comment: <p>Hi,</p> <p>I wrote a simple function in pgsql,</p> <pre>CREATE OR REPLACE FUNCTION test(in ii integer, inout io integer )  RETURNS integer AS$BODY$declarei integer;begini := 0;io := ii * io;end;$BODY$ANGUAGE 'plpgsql'</pre><p>From pgAdmin, Query too1, how will i call this function? I want to be able to pass in parameters and return some the value in the inout param. I am a newbie, and any help would be great. thanks</p><p>send a mail to [email address elided]. thanks</p>
+excerpt: 
+blog_name: 
+-----
+name: Theory
+url: /
+title:
+comment: <p>bangaru,</p><p>This is not a support forum. I suggest you try one of the <a href="http://archives.postgresql.org/">mail lists</a> or <a href="http://www.postgresql.org/community/irc">IRC</a>. But to quickly answer your question: you need to execute a <code>SELECT</code> statement to execute the function. Here's your function with a bit of rewriting:</p><pre>postgres=# CREATE OR REPLACE FUNCTION test(in ii INT, inout io INT )postgres-#     RETURNS INTpostgres-#     AS $BODY$postgres$# BEGINpostgres$#     io := ii * io;postgres$# END;postgres$# $BODY$ LANGUAGE 'plpgsql'postgres-# ;CREATE FUNCTIONpostgres=# SELECT test(2, 4); test ------    8(1 row)</pre><p>—Theory</p>
+excerpt: 
+blog_name: 
+-----
+name: Dan Barry
+url: http://bakineggs.com/
+title:
+comment: <p>Thank you for writing this function. It helped me greatly. I had to expand it to support more types of recurrences, limits on how many times or how long an event can recur, and cancellations of recurrences. If anyone is interested in how I did this, I wrote about it <a href="http://bakineggs.com/recurring_events/">here</a>.</p>
+excerpt: 
+blog_name: 
+-----
