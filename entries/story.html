@@ -1,0 +1,37 @@
+      <div class="story">
+        <h2 id="f$fn"><a href="$path/$fn.$flavour">$title</a></h2>
+        <div class="body">
+        $body
+        </div>
+        <ul class="meta">
+          <li class="date">$dw $da $mo $yr</li>
+          <?$meta::via><li>Via $meta::via</li></?>
+          <li class="category"><a href="$path/">$path</a></li>
+          <li><a href="$path/$fn.$flavour#tb">backtalk</a></li>
+          <li><a href="$path/$fn.$flavour">§</a></li>
+        </ul>
+      </div>
+      <?$path_info unlike="(^[^\.]+/?$)|(^$)|(index\.\w+$)">
+
+      <div id="tb">
+        <div id="comments">
+          <h2>Backtalk</h2>
+          <div class="body">
+            $writeback::writebacks
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'justatheory'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<!-- Breaks layout; restore later. <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>-->
+          </div>
+        </div>
+      </div></?>
