@@ -10,7 +10,7 @@ h = {}
 a.each { |v| h[v] = v }
 </pre>
 
-<p>Of course, this is anything bug concise. In Perl, I can just do this:</p>
+<p>Of course, this is anything but concise. In Perl, I can just do this:</p>
 
 <pre>
 my @a = (1, 2, 3, 4, 5, 6);
