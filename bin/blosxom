@@ -208,7 +208,7 @@ sub load_template {
 
 sub time_for($) {
     my $file = shift;
-    if (my $time = `git log -1 --format='%at' --diff-filter=A $file`) {
+    if (my $time = `git -c log.showsignature=false log -1 --format='%at' --diff-filter=A $file`) {
         chomp $time;
         return $time;
     }
