@@ -20,7 +20,7 @@ brew install sqitch-oracle
 <pre><code>ppm install App-Sqitch DBD-Oracle
 </code></pre>
 
-<a class="left" href="http://www.pgcon.org/2013/"><img src="http://www.pgcon.org/2013/images/pgcon-220x250.png" alt="PGCon 2013" /></a>
+<a href="http://www.pgcon.org/2013/"><img class="left" src="http://www.pgcon.org/2013/images/pgcon-220x250.png" alt="PGCon 2013" /></a>
 
 <p>There are a few other minor tweaks and fixed in this release; check the <a href="https://metacpan.org/source/DWHEELER/App-Sqitch-0.970/Changes">release notes</a> for details.</p>
 

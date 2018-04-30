@@ -7,7 +7,7 @@ tags: postgresql plpgsql plperl upc ean
 title="Validating UPCs with PL/pgSQL">validating UPC codes in PL/pgSQL</a>,
 Klint Gore sent me a private email demonstrating that treating the UPC code as
 a binary string performed better than my substringing approach. I modified his
-version to work like the others, but it looked to me like the performace was
+version to work like the others, but it looked to me like the performance was
 about the same. They were just too close for me to really be able to tell.</p>
 
 <p>What I needed was a way to run the queries a whole bunch of times to see

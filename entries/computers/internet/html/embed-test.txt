@@ -42,7 +42,7 @@ But what you <em>can</em> do is embed HTML with it. Here's a quick example:</p>
 <p>Hopefully you can see the embedded HTML above. I've styled it with a light
 blue background and dark blue dotted border, so it stands out. That styling is
 in the <code>&lt;object&gt;</code> tag, BTW, not in the HTML loaded from the
-snippit. I'm sure I could figure out how to add <code>&lt;param&gt;</code>
+snippet. I'm sure I could figure out how to add <code>&lt;param&gt;</code>
 tags that would tell it to include various styles, too, since it appears that
 CSS I have in this page has no effect on the content of the object (I have
 some CSS to make the <code>&lt;code&gt;</code> tag have a green background,

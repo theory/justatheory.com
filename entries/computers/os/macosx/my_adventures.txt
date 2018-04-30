@@ -53,7 +53,7 @@ meta-keywords: david wheeler, Mac OS X, perl, mod_perl Apache, apache web server
     ports</a> that do this), so I was really pleased to discover the <a
     href="http://mac-emacs.sourceforge.net/">Mac-Emacs project</a>. All I had to
     do was patch the GNU Emacs 21.1 sources and compile them, and I was ready to
-    go! GNU Emacs works beautfully with the OS X Aqua interface.</p>
+    go! GNU Emacs works beautifully with the OS X Aqua interface.</p>
 
     <p>There were a few configuration issues for me to work out, however. I have
     become addicted to the green background that an old RedHat .XConfig file had
@@ -81,7 +81,7 @@ meta-keywords: david wheeler, Mac OS X, perl, mod_perl Apache, apache web server
 ; Use option for the meta key.
 (setq mac-command-key-is-meta nil)</pre>
 
-    <p>Intalling Emacs is not required for installing any of the other packages
+    <p>Installing Emacs is not required for installing any of the other packages
     described below -- it just happens to be my favorite text editor and IDE. So
     I don't provide the instructions here; the <a
     href="http://mac-emacs.sourceforge.net/">Mac-Emacs project</a> does a plenty
@@ -219,7 +219,7 @@ make test</pre>
     <p>Configuring and installing mod_ssl was, fortunately, a relatively
     straight-forward process. Getting Apache compiled with mod_perl and mod_ssl,
     however, was quite tricky, as you'll see below. A number of braver folks
-    than I have preceeded me in installing mod_perl, so I was able to rely on
+    than I have preceded me in installing mod_perl, so I was able to rely on
     their hard-earned knowledge to get the job done. For example, Randal
     Schwartz
     <a
@@ -312,7 +312,7 @@ make install</pre>
     of the same concepts apply to PostgreSQL.</p>
 
     <p>The first thing I had to do was to create the &quot;postgres&quot; user.
-    This is the sytem user that PostgreSQL typically runs as. I followed Apple's
+    This is the system user that PostgreSQL typically runs as. I followed Apple's
     instructions, using NetInfo Manager to duplicate the default &quot;www&quot;
     group and &quot;www&quot; user and give the copies the name
     &quot;postgres&quot; and a new gid and uid, respectively.</p>
@@ -340,7 +340,7 @@ make install</pre>
 
     <p>If you follow the above steps and find yourself at a psql prompt, you're
     in business! Because I tend to use PostgreSQL over TCP, I also enabled TCP
-    conntectivity by enabling the &quot;tcpip_socket&quot; option in the
+    connectivity by enabling the &quot;tcpip_socket&quot; option in the
     postgresql.conf file in the data directory created by initdb:</p>
 
     <pre>tcpip_socket = true</pre>
@@ -405,7 +405,7 @@ make install
     <p>Although the <a href="http://search.cpan.org/search?dist=DBI">DBI</a>
     installed via the CPAN module without problem, <a
     href="http://search.cpan.org/search?dist=DBD-Pg">DBD::Pg</a> wanted to play
-    a little less nice. Of course I specified the proper environment varibles to
+    a little less nice. Of course I specified the proper environment variables to
     install it (anyone know why DBD::Pg's Makefil.PL script can't try to figure
     those out on its own?), but still I got this error during <code>make</code>:</p>
 
@@ -431,7 +431,7 @@ make install</pre>
     installing, back up /usr/bin/head. The reason for this is that LWP will
     install /usr/bin/HEAD, and because HFS Plus is a case-insensitive file system,
     it'll overwrite /usr/bin/head! This is a pretty significant issue, since
-    many configure scripts use /usr/bin/head. So afert installing LWP, move
+    many configure scripts use /usr/bin/head. So after installing LWP, move
     /usr/bin/HEAD, GET, &amp; POST to /usr/local/bin. Also move /usr/bin/lwp* to
     /usr/local/bin. Then move your backed-up copy of head back to /usr/bin.</p>
 
@@ -439,7 +439,7 @@ make install</pre>
     late. I installed LWP with the CPAN module, and it wiped out /usr/bin/head.
     Fortunately, all was not lost (though it took me a while to figure out why
     my Apache compiles were failing!): I was able to restore head by copying it
-    from the Mac OS X installer CD. I Just poped it in an executed the
+    from the Mac OS X installer CD. I Just popped it in an executed the
     command:</p>
 
     <pre>cp "/Volumes/Mac OS X Install CD/usr/bin/head" \

@@ -40,7 +40,7 @@ ON usr(username)
 WHERE state &gt; -1;
 </pre>
 
-<p>This does the trick beautifully, and is nice and compact. However, my OO design has the User class inheriting from Person, so I have the <code>username</code> column in one table and the <code>state</code> column in another. At first, I thought that I could stil use a partial unique index, something like this:</p>
+<p>This does the trick beautifully, and is nice and compact. However, my OO design has the User class inheriting from Person, so I have the <code>username</code> column in one table and the <code>state</code> column in another. At first, I thought that I could still use a partial unique index, something like this:</p>
 
 <pre>
 CREATE UNIQUE INDEX udx_usr_unique

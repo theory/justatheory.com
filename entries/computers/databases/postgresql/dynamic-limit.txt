@@ -68,7 +68,7 @@ $$ LANGUAGE SQL;
 
 <p>Now isn't that a hell of a lot easier to read? Like I said, it's a little weird, but overall I think it's a pretty good hack. I've tested it with PostgreSQL 8.2 and 8.3. Not sure about other versions, but give it a try!</p>
 
-<p><strong>Update:</strong> Thanks for the comments! With the insight that <code>CASE</code> is ultimately passing a <code>NULL</code> to <code>LIMIT</code> when the value is <code>NULL</code>, I realised that I could switch from <code>CASE</code> to <code>COALESCE</code> for nice parity with the handling of the <code>OFFSET</code> clause. Check it out:</p>
+<p><strong>Update:</strong> Thanks for the comments! With the insight that <code>CASE</code> is ultimately passing a <code>NULL</code> to <code>LIMIT</code> when the value is <code>NULL</code>, I realized that I could switch from <code>CASE</code> to <code>COALESCE</code> for nice parity with the handling of the <code>OFFSET</code> clause. Check it out:</p>
 
 <pre>
 CREATE OR REPLACE FUNCTION get_widgets_for_user_id(

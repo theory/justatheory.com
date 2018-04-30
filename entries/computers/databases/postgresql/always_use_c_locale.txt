@@ -2,7 +2,7 @@ Always use the C Locale with PostgreSQL
 meta-keywords: PostgreSQL, character sets locales, unicode, UTF-8, Bricolage
 
 <p>I ran into the weirdest bug with Bricolage today. We use the <code>LIKE</code>
-operator to do string comparisions throughout Bricolage. In one usage, the
+operator to do string comparisons throughout Bricolage. In one usage, the
 code checks to see if there's a record in the <q>keyword</q> table before
 creating it. This is because keyword names are unique. So it looks for a keyword
 record like this:</p>

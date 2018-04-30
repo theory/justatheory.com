@@ -45,7 +45,7 @@ title="Unicode::Normalize on CPAN">Unicode::Normalize</a>, a C/XS module that
 uses Perl's internal unicode tables to convert things as appropriate. For
 general use the NFC normalization
 is <a href="http://unicode.org/faq/normalization.html#2" title="Unicode
-Normaliztion FAQ: “Which forms of normalization should I support?”">probably
+Normalization FAQ: “Which forms of normalization should I support?”">probably
 best</a>:</p>
 
 <pre>
@@ -141,7 +141,7 @@ psql:try.sql:45: ERROR:  error from Perl function &quot;normalize&quot;: Normali
 <p>Cool! So that's fairly close to the standard. The main difference is that
 the <code>form</code> argument must be a string instead of a constant literal. But
 PostgreSQL would likely support both. The length argument is also a literal,
-and can be <code>10 charcters</code> or <code>64 bytes</code>, but for our
+and can be <code>10 characters</code> or <code>64 bytes</code>, but for our
 purposes, this is fine. The only downside to it is that it's slow: PostgreSQL
 must convert its text value to a Perl string to pass to the function, and then
 Unicode::Normalize turns it into a C string again to do the conversion, then
@@ -152,9 +152,8 @@ anyway.</p>
 <h3>Update: 1 Hour Later</h3>
 
 <p>Note that this issue applies when
-using <a href="http://www.postgresql.org/docs/current/static/textsearch.html"
-title="PostgreSQL Documentation: Full Text Search">full text search</a>, too.
-Alas, it does not normalize unicode charaters for you:</p>
+using <a href="http://www.postgresql.org/docs/current/static/textsearch.html" title="PostgreSQL Documentation: Full Text Search">full text search</a>, too.
+Alas, it does not normalize unicode characters for you:</p>
 
 <pre>
 try=# select to_tsvector(U&amp;&#x0027;\00E9clair&#x0027;) @@ to_tsquery(U&amp;&#x0027;\0065\0301clair&#x0027;);

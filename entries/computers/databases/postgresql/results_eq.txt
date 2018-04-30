@@ -3,15 +3,11 @@ meta-keywords: pgtap, postgresql, sql, resultset, set, bag, testing
 tags: pgtap postgresql sql resultset set bag testing
 
 <p>Regular readers will know that I've been thinking a lot about
-<a href="/computers/databases/postgresql/comparing-relations.html"
-title="Thoughts on Testing SQL Result Sets">testing SQL result sets</a> and
-how to <a href="/computers/databases/postgresql/result-testing-function-names.html"
-title="Need Help Naming Result Set Testing Functions">how to name result testing functions</a>,
-and various <a href="/computers/databases/postgresql/set_testing_update.html"
-title="pgTAP Set-Testing Update">implementation issues</a>. I am very happy
+<a href="/computers/databases/postgresql/comparing-relations.html" title="Thoughts on Testing SQL Result Sets">testing SQL result sets</a> and
+how to <a href="/computers/databases/postgresql/result-testing-function-names.html" title="Need Help Naming Result Set Testing Functions">how to name result testing functions</a>,
+and various <a href="/computers/databases/postgresql/set_testing_update.html" title="pgTAP Set-Testing Update">implementation issues</a>. I am very happy
 to say that I've now committed the first three such test functions to the
-<a href="http://github.com/theory/pgtap/tree/master/"
-title="Get the pgTAP source on GitHub">Git repository</a>. They've been tested
+<a href="http://github.com/theory/pgtap/tree/master/" title="Get the pgTAP source on GitHub">Git repository</a>. They've been tested
 on 8.4 and 8.3. Here's what I came up with.</p>
 
 <p>I had a pretty good idea how to compare sets and how to compare ordered
@@ -25,8 +21,7 @@ between the two queries. <code>set_eq()</code> was easy because I just needed
 to create temporary tables of the two queries and then execute
 two <code>EXCEPT</code> queries against them to see where they differ, if at
 all. <code>bag_eq()</code> was getting kind of hairy, though, so I asked about
-it on the Freenode #postgresql channel, where <a href="http://www.depesz.com/"
-title="select * from depesz">depesz</a> looked at my example and pointed out
+it on the Freenode #postgresql channel, where <a href="http://www.depesz.com/" title="select * from depesz">depesz</a> looked at my example and pointed out
 that <code>EXCEPT ALL</code> would do just want I needed.</p>
 
 <p>Hot damn, all it took was the addition a single extra word to the same
@@ -71,8 +66,7 @@ select * from people order by name;
 <p>Because I ordered only on “name,” the database was free to sort records
 with the same name in an undefined way. Meaning that the rows could be in
 different orders. This is known, if I understand correctly, as a
-“<a href="http://en.wikipedia.org/wiki/Partially_ordered_set"
-title="Wikipedia: Partially ordered set">Partially ordered set</a>,” or
+“<a href="http://en.wikipedia.org/wiki/Partially_ordered_set" title="Wikipedia: Partially ordered set">Partially ordered set</a>,” or
 “poset.” Which is all well and good, but from my point of view makes it damn
 near impossible to be able to do a row-by-row comparison and ignore dupes,
 because they could be in different orders!</p>
@@ -96,8 +90,7 @@ names. To summarize, the functions are:</p>
 function names with the word “order” included or implicit in them. Plus, I
 have different names for functions that are similar, which is nicely
 in adherence to the
-<a href="http://www.perl.com/pub/a/2003/06/25/perl6essentials.html"
-title="Perl 6 Design Philosophy">principle of distinction</a>. They all
+<a href="http://www.perl.com/pub/a/2003/06/25/perl6essentials.html" title="Perl 6 Design Philosophy">principle of distinction</a>. They all
 provide nice diagnostics on failure, as well, like this
 from <code>results_eq()</code>:</p>
 
@@ -135,8 +128,7 @@ find some tuits (got any to give me?), I'll write a quick C function that can
 return an array of the data types in a <code>record</code> object.</p>
 
 <p>Now, as for the issue of arguments, what I settled on is,
-like <a href="http://epictest.org/" title="Epic, more full of fail than any
-other testing tool">Epic</a>, passing strings of SQL to these functions.
+like <a href="http://epictest.org/" title="Epic, more full of fail than any other testing tool">Epic</a>, passing strings of SQL to these functions.
 However, unlike Epic, if you pass in a simple string with no spaces, or a
 double-quoted string, pgTAP assumes that it's the name of a prepared
 statement. The documentation now recommends prepared statements, which you can
@@ -185,8 +177,7 @@ think that the implementation is pretty good, and that these functions
 will be really useful.</p>
 
 <p>So what do you think? Please clone
-the <a href="http://github.com/theory/pgtap/tree/master/" 
-title="Get the pgTAP source on GitHub">Git repository</a> and take the
+the <a href="http://github.com/theory/pgtap/tree/master/" title="Get the pgTAP source on GitHub">Git repository</a> and take the
 functions for a test drive on 8.3 or 8.4. Let me know what you think!</p>
 
 <p>In the meantime, before releasing a new version, I still plan to add:</p>

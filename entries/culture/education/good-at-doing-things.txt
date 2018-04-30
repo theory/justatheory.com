@@ -1,9 +1,9 @@
 Good at Doing Things
 meta-keywords: Montessori, education, neurology, brain development, neuropsychology
 tags: montessori neurology neuroscience neuropsychology education early+childhood+development executive+function
-meta-description: <p>Tonight, I atteneded a talk, <a href="http://www.montessori-nw.org/section.cfm?wSectionID=3747">Good at doing things: Montessori education and higher-order cognitive functions</a>, about the Montessori method of childhood education and its effects on neurological development. If I wasn&rsquo;t a convert to the Montessori method before, I am now. Julie and I went to back to school night at Anna&rsquo;s new school, <a href="http://childpeace.org/">Childpeace Montessori</a> the other night, and we were both jealous. How we wish we could have had this kind of education! This talk really sealed it in my mind. I can&rsquo;t imagine that I'd want Anna to have any other education.</p><p>Anyway, I might write a bit more on this later, but for now, here are my notes from the talk. Enjoy.</p> 
+meta-description: <p>Tonight, I attended a talk, <a href="http://www.montessori-nw.org/section.cfm?wSectionID=3747">Good at doing things: Montessori education and higher-order cognitive functions</a>, about the Montessori method of childhood education and its effects on neurological development. If I wasn&rsquo;t a convert to the Montessori method before, I am now. Julie and I went to back to school night at Anna&rsquo;s new school, <a href="http://childpeace.org/">Childpeace Montessori</a> the other night, and we were both jealous. How we wish we could have had this kind of education! This talk really sealed it in my mind. I can&rsquo;t imagine that I'd want Anna to have any other education.</p><p>Anyway, I might write a bit more on this later, but for now, here are my notes from the talk. Enjoy.</p> 
 
-<p>Tonight, I atteneded a
+<p>Tonight, I attended a
 talk, <a href="http://www.montessori-nw.org/section.cfm?wSectionID=3747">Good at doing things: Montessori education and higher-order cognitive functions</a>, about the
 Montessori method of childhood education and its effects on neurological
 development. If I wasn&rsquo;t a convert to the Montessori method before, I am now.
@@ -134,7 +134,7 @@ Montessori. You have to:</p>
 
 <h3> A Montessori Parent</h3>
 
-<p>Hughes daugher, Isabel was born. [His daughter, gets choked up.] Isabel went
+<p>Hughes daughter, Isabel was born. [His daughter, gets choked up.] Isabel went
 to Montessori, has been there since beginning. Almost 11. Couldn&rsquo;t be happier
 with her progress and experience of seeing a child discover herself.</p>
 
@@ -276,7 +276,7 @@ games, which he thinks of more as toys. Maria Montessori designed toys to
 allow children to discover things on their own, rather than just be taught
 them.</p>
 
-<blockquote><p>The games that I do I reall think of as modern Montessori toys, and I really
+<blockquote><p>The games that I do I really think of as modern Montessori toys, and I really
 want them to be presented to kids in a way where kids can explore and
 discover their own principals.</p></blockquote>
 
@@ -295,7 +295,7 @@ unique in providing extraordinary role of developing executive functions.</p>
 development environments. &ldquo;Possibly&rdquo; because these things are hard to measure
 in children. If you check off the things you need, they're all in the
 Montessori classroom, and Hughes believes that such an environment <em>does</em>
-promote exectutive functions, he just hasn&rsquo;t yet done the study to show such
+promote executive functions, he just hasn&rsquo;t yet done the study to show such
 conclusively.)</p>
 
 <p>Prefrontal cortex modify remote events (through time and space) through
@@ -456,7 +456,7 @@ were excepted.</li>
 <li>Since 1978, 97% of third-graders go on to graduate high school or get a GED.
 Of those, 88% go on to college.</li>
 <li>In comparison, only 50% of students from same community but different
-scheools graduate from high school.</li>
+schools graduate from high school.</li>
 </ul>
 
 
@@ -488,7 +488,7 @@ culture that&rsquo;s supportive of what we identify as civilization. Civilizatio
 optional.</p>
 
 <blockquote><p>Whoever touches the life of a child touches the most sensitive point of a
-whole which has roots inthe most distant pat and climbes toward the infinite
+whole which has roots in the most distant part and climbs toward the infinite
 future.</p>
 
 <p>&mdash;Maria Montessori</p></blockquote>

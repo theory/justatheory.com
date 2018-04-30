@@ -50,7 +50,7 @@ tags: sqitch sql deployment change+management localization internationalization 
 
 <p>One more change. With today&rsquo;s release of v0.931, there is now proper internationalization support in Sqitch. The code has been localized for a long time, but there was no infrastructure for internationalizing. Now there is, and I&rsquo;ve stubbed out files for translating Sqitch messages into <a href="https://github.com/theory/sqitch/blob/master/po/fr.po">French</a> and <a href="https://github.com/theory/sqitch/blob/master/po/de.po">German</a>. Adding others is easy.</p>
 
-<p>If you&rsquo;re interested in tranlating Sqitch&rsquo;s messages (only 163 of them, should be quick!), just <a href="https://github.com/theory/sqitch/">fork Sqitch</a>, juice up your favorite <a href="http://www.google.com/search?q=gettext+editor">gettext editor</a>, and start editing. Let me know if you need a language file generated; I&rsquo;ve built the tools to do it easily with <a href="http://dzil.org/">dzil</a>, but haven&rsquo;t released them yet. Look for a post about that later in the week.</p>
+<p>If you&rsquo;re interested in translating Sqitch&rsquo;s messages (only 163 of them, should be quick!), just <a href="https://github.com/theory/sqitch/">fork Sqitch</a>, juice up your favorite <a href="http://www.google.com/search?q=gettext+editor">gettext editor</a>, and start editing. Let me know if you need a language file generated; I&rsquo;ve built the tools to do it easily with <a href="http://dzil.org/">dzil</a>, but haven&rsquo;t released them yet. Look for a post about that later in the week.</p>
 
 <h3>Presentation</h3>
 

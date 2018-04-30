@@ -5,16 +5,16 @@ tags: TAP PostgreSQL plpgsql unit+testing Test+Anything+Protocol
 <p>So I started working on a new PostgreSQL data type this week. More on that
 soon; in the meantime, I wanted to create a test suite for it, and wasn't sure
 where to go. The only PostgreSQL tests I've seen are those distributed with
-Elein
-Mustain's <a href="http://www.varlena.com/varlena/GeneralBits/Tidbits/email_test.sql"
-title="Testing the email data type">tests</a> for the email data type she
-created in a <a href="http://www.varlena.com/GeneralBits/128.php" title="Base
-Type using Domains">PostgreSQL General Bits</a> posting from a couple of years
-ago. I used the same approach myself for
-my <a href="http://pgfoundry.org/projects/gtin/" title="GTIN data type project
-info">GTIN data type</a>, but it was rather hard to use: I had to pay very
-close attention to what was output in order to tell the description output
-from the test output. It was quite a PITA, actually.</p>
+Elein Mustain's
+<a href="http://www.varlena.com/varlena/GeneralBits/Tidbits/email_test.sql" title="Testing the email data type">tests</a>
+
+for the email data type she created in a
+<a href="http://www.varlena.com/GeneralBits/128.php" title="Base Type using Domains">PostgreSQL General Bits</a>
+posting from a couple of years ago. I used the same approach myself for my <a
+href="http://pgfoundry.org/projects/gtin/" title="GTIN data type project
+info">GTIN data type</a>, but it was rather hard to use: I had to pay very close
+attention to what was output in order to tell the description output from the
+test output. It was quite a PITA, actually.</p>
 
 <p>This time, I started down the same path, then then started thinking about
 Perl testing, where each unit test, or <q>assertion,</q> in the xUnit
@@ -46,11 +46,11 @@ t
 </pre>
 
 <p>Once I started down that path, and had written ten or so tests, It suddenly
-dawned on me that the Perl <a href="http://search.cpan.org/perldoc?Test::More"
-title="Test::More on CPAN">Test::More</a> module and its
-core <code>ok()</code> subroutine worked just like that. It essentially just
-depends on a boolean value and outputs text based on that value. A couple
-minutes of hacking and I had this:</p>
+dawned on me that the Perl
+<a href="http://search.cpan.org/perldoc?Test::More" title="Test::More on CPAN">Test::More</a>
+module and its core <code>ok()</code> subroutine worked just like that. It
+essentially just depends on a boolean value and outputs text based on that
+value. A couple minutes of hacking and I had this:</p>
 
 <pre>
 CREATE TEMP SEQUENCE __tc__;
@@ -81,8 +81,8 @@ ok 3 - foo(2) should return &quot;foo&quot;
 </pre>
 
 <p>And, <strong><em>BAM!</em></strong> I had the beginning of a test framework
-that emits pure <a href="http://testanything.org/" title="Test Anything
-Protocol">TAP</a> output.</p>
+that emits pure <a href="http://testanything.org/" title="Test Anything Protocol">TAP</a>
+output.</p>
 
 <p>Well, I was so excited about this that I put aside my data type for a few
 hours and banged out the rest of the framework. Why was this exciting to me?
@@ -112,7 +112,7 @@ Result: PASS
 </pre>
 
 <p>Pretty damn cool! And lest you wonder whether such a suite of TAP-emitting
-test functions is suitable for testing SQL, here are a few exmples of tests
+test functions is suitable for testing SQL, here are a few examples of tests
 I've written:</p>
 
 <pre>
@@ -154,14 +154,11 @@ SELECT * FROM finish();
 </pre>
 
 <p>As you can see, it's just SQL. And yes, I have ported most of the test
-functions from <a href="http://search.cpan.org/perldoc?Test::More"
-title="Test::More on CPAN">Test::More</a>, as well as a couple
-from <a href="http://search.cpan.org/perldoc?Test::Exception"
-title="Test::Exception on CPAN">Test::Exception</a>.</p>
+functions from <a href="http://search.cpan.org/perldoc?Test::More" title="Test::More on CPAN">Test::More</a>, as well as a couple
+from <a href="http://search.cpan.org/perldoc?Test::Exception" title="Test::Exception on CPAN">Test::Exception</a>.</p>
 
 <p>So, without further ado, I'd like to introduce
-<a href="https://svn.kineticode.com/pgtap/trunk" title="pgTAP Subversion
-repository">pgTAP</a>, a lightweight test framework for PostgreSQL implemented
+<a href="https://svn.kineticode.com/pgtap/trunk" title="pgTAP Subversion repository">pgTAP</a>, a lightweight test framework for PostgreSQL implemented
 in PL/pgSQL and PL/SQL. I'll be hacking on it more in the coming days, mostly
 to get a proper client for running tests hacked together. Then I think I'll
 see if pgFoundry is interested in it.</p>
@@ -171,7 +168,7 @@ myself, not only for testing a custom data type as I develop it, but also
 custom functions in PL/pgSQL or PL/Perl, and, heck, just regular schema stuff.
 I've had to write a lot of Perl tests to test my database schema (triggers,
 rules, functions, etc.), all using the DBI and being very verbose. Being able
-to do it all in a single psql script seems so much cleaner. And if I cand end
+to do it all in a single psql script seems so much cleaner. And if I can end
 up mixing the output of those scripts in with the rest of my unit tests,
 so much the better!</p>
 

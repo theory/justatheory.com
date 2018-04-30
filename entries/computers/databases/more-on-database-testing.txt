@@ -4,8 +4,7 @@ meta-description: <p>More thoughts on they whys and hows of database testing. I'
 tags: database SQL testing unit testing pgTAP pg_regress
 
 <p>I've been meaning for a while to come back to the topic of
-<a href="/computers/databases/postgresql/why-test-databases.html"
-title="Why Test Databases?">database testing</a>. After posting that entry, I
+<a href="/computers/databases/postgresql/why-test-databases.html" title="Why Test Databases?">database testing</a>. After posting that entry, I
 thought more about the quote from a PostgreSQL core hacker, which I think
 bears repeating:</p>
 
@@ -34,21 +33,17 @@ analyzed along with any other TAP-emitting test framework in any environment,
 including
 <a href="http://search.cpan.org/perldoc?Test::More" title="Test::More">Perl</a>,
 <a href="http://jc.ngo.org.uk/trac-bin/trac.cgi/wiki/LibTap" title="libtap">C</a>,
-<a href="http://openjsan.org/doc/t/th/theory/Test/Simple/"
-title="Test.Simple">JavaScript</a>, <a href="http://www.phpunit.de/"
-title="PHPUnit">PHP</a>, and even
-<a href="http://code.google.com/p/pluto-test-framework/wiki/PlutoWikiMain"
-title="PLUTO - PL/SQL Unit Testing for Oracle">Oracle</a>, among others.</p>
+<a href="http://openjsan.org/doc/t/th/theory/Test/Simple/" title="Test.Simple">JavaScript</a>,
+<a href="http://www.phpunit.de/" title="PHPUnit">PHP</a>, and even
+<a href="http://code.google.com/p/pluto-test-framework/wiki/PlutoWikiMain" title="PLUTO - PL/SQL Unit Testing for Oracle">Oracle</a>, among others.</p>
 
 <p>The other argument that might support writing one's own testing
 infrastructure is if it's too hard to apply one style of testing to a given
 application. For example, most of the existing
-<a href="http://testanything.org/wiki/index.php/TAP_Producers">TAP
-producers</a> provide a functional interface to writing tests. SQL, on the
+<a href="http://testanything.org/wiki/index.php/TAP_Producers">TAP producers</a> provide a functional interface to writing tests. SQL, on the
 other hand, is not a functional language. So--leaving aside for the moment
 that one can provide an effective
-<a href="http://pgtap.projects.postgresql.org/" title="pgTAP">functional
-interface</a> for writing database tests--even if one wanted to write a
+<a href="http://pgtap.projects.postgresql.org/" title="pgTAP">functional interface</a> for writing database tests--even if one wanted to write a
 relational-style testing framework, it could still emit TAP! TAP is, after
 all, just a stream of text. So as long as a SQL <code>SELECT</code> statement
 returns a stream of TAP, then you can take advantage of the myriad of test
@@ -155,5 +150,4 @@ rock-solid test suite can actually make your job easier and more enjoyable?
 Perhaps I never will, but I am still very interested in your reasons for
 doubting the utility of database testing. What other points should I be
 thinking about as I prepare for my
-<a href="http://www.pgcon.org/2009/schedule/events/165.en.html"
-title="PGCon: Unit Test Your Database!">PGCon presentation</a>?</p>
+<a href="http://www.pgcon.org/2009/schedule/events/165.en.html" title="PGCon: Unit Test Your Database!">PGCon presentation</a>?</p>

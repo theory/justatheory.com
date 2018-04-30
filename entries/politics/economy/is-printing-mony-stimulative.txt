@@ -1,8 +1,8 @@
 Is Printing Money Stimulative?
 meta-keywords: economy, stimulus, macroeconomics, microeconomics, UK, printing money, ovid, Krugman
-tags: economy stimulous macroeconomics printing+money ovid krugman
+tags: economy stimulus macroeconomics printing+money ovid krugman
 
-<p>Last week, my good friend Curtis “Ovid” Poe posted a <a href="http://publius-ovidius.livejournal.com/302311.html" title="Poetic License to Kill: “The UK Has Officially Gone Insane”">blog entry</a> in which he suggested that the UK’s recent decision to print more money as a way of stimulating the economy is a fundamentally bad idea. While I personaly don’t know whether or not it is actually a bad idea, Ovid’s post didn’t convince me that it wasn’t, because, as I said in a comment, <q>I’m quite certain that people spending more right now is a bloody good idea. So if printing more money gets people to spend more, then good, because that will encourage credit to start flowing again.</q></p>
+<p>Last week, my good friend Curtis “Ovid” Poe posted a <a href="http://publius-ovidius.livejournal.com/302311.html" title="Poetic License to Kill: “The UK Has Officially Gone Insane”">blog entry</a> in which he suggested that the UK’s recent decision to print more money as a way of stimulating the economy is a fundamentally bad idea. While I personally don’t know whether or not it is actually a bad idea, Ovid’s post didn’t convince me that it wasn’t, because, as I said in a comment, <q>I’m quite certain that people spending more right now is a bloody good idea. So if printing more money gets people to spend more, then good, because that will encourage credit to start flowing again.</q></p>
 
 <p>Ovid kindly took the time to leave me an extended reply, to which I wrote a rebuttal, which LiveJournal decided was too long and rejected. So I’m posting it here on my blog, instead. It’s an interesting discussion anyway, and so deservers higher visibility than a LiveJournal comment, I think.</p>
 
@@ -14,7 +14,7 @@ tags: economy stimulous macroeconomics printing+money ovid krugman
 
 <blockquote><p>First, if things get really bad the people know that this might be a one-time deal, so they may simply hoard the money and not spend it, meaning that the council has wasted resources.</p></blockquote>
 
-<p>Although your example is overly simplistic (necessarily so, given this medium), I agree that just giving money to people may not stimulate the economy very well. This is why Bush’s “stimulus” failed last year: A lot of middle- and uppper-class families got checks for $600 per adult, and since these people weren’t having much trouble paying their bills, they just saved it. The Obama administration is trying to do it a bit differently by giving more money to poor people, who will have little choice but to spend it to alleviate debts and put food on the table, which is obviously more stimulative. Conservatives hate it, because such people don’t pay income taxes, but as they <em>do</em> pay payrol taxes, it’s the smart thing to do to help out responsible people in need and to stimulate the economy a bit at the same time.</p>
+<p>Although your example is overly simplistic (necessarily so, given this medium), I agree that just giving money to people may not stimulate the economy very well. This is why Bush’s “stimulus” failed last year: A lot of middle- and upper-class families got checks for $600 per adult, and since these people weren’t having much trouble paying their bills, they just saved it. The Obama administration is trying to do it a bit differently by giving more money to poor people, who will have little choice but to spend it to alleviate debts and put food on the table, which is obviously more stimulative. Conservatives hate it, because such people don’t pay income taxes, but as they <em>do</em> pay payroll taxes, it’s the smart thing to do to help out responsible people in need and to stimulate the economy a bit at the same time.</p>
 
 <p>So while I agree that saving a stimulus check is not stimulative, if you give the money to people who spend it, it will be more likely to be stimulative. I’ve no idea how bad off the people are in your hypothetical small town of 100.</p>
 
@@ -32,7 +32,7 @@ tags: economy stimulous macroeconomics printing+money ovid krugman
 
 <blockquote><p>Even if they didn’t want to, the people who want clothes first or want to ensure that they get any clothes due to limited supply (since more people are now demanding clothes) might offer more money, thus driving up prices again.</p></blockquote>
 
-<p>You’re assuming that the stimulutive effect of the one-time distribution of money would create greater demand than there was before the recession started, which is unlikely. Given that you think that people are more likely to hoard anyway, this example of going to the other extreme (the extra money causes huge demand, more than there was before) seems gratuitously extreme. Honestly, the problem with the current stimulus plans is that they are insufficiently stimulative; no one thinks that they will be <em>too</em> stimulative. Indeed, as <a href="http://krugman.blogs.nytimes.com/2008/11/28/too-much-of-a-good-thing/" title="The Conscience of a Liberal: “Too much of a good thing …”">Krugman writes</a>, it is much more dangerous to understimulate than to overstimulate, given the current situation.</p>
+<p>You’re assuming that the stimulative effect of the one-time distribution of money would create greater demand than there was before the recession started, which is unlikely. Given that you think that people are more likely to hoard anyway, this example of going to the other extreme (the extra money causes huge demand, more than there was before) seems gratuitously extreme. Honestly, the problem with the current stimulus plans is that they are insufficiently stimulative; no one thinks that they will be <em>too</em> stimulative. Indeed, as <a href="http://krugman.blogs.nytimes.com/2008/11/28/too-much-of-a-good-thing/" title="The Conscience of a Liberal: “Too much of a good thing …”">Krugman writes</a>, it is much more dangerous to under-stimulate than to overstimulate, given the current situation.</p>
 
 <blockquote><p>You can’t provide unlimited amounts of cloth, so the tailors offer more money to ensure that they’re the ones who can sell or, at the very least, that they’re the ones who get the cloth first. This is a bad economy so they want to sell while they can. This knock-on effect pushes prices up throughout the economy.</p></blockquote>
 
@@ -40,9 +40,9 @@ tags: economy stimulous macroeconomics printing+money ovid krugman
 
 <blockquote><p>This is what printing money does.</p></blockquote>
 
-<p>You have not demonstrated that. You’ve shown an example where distributing money to poeple is either insufficiently stimulative, because they hoard it, or far too stimulative, becase people suddenly demand virtually unlimited supplies of things. While the hoarding is more likely — especially if you give the money to poeple who don’t need it — the latter is a straw man.</p>
+<p>You have not demonstrated that. You’ve shown an example where distributing money to people is either insufficiently stimulative, because they hoard it, or far too stimulative, because people suddenly demand virtually unlimited supplies of things. While the hoarding is more likely — especially if you give the money to people who don’t need it — the latter is a straw man.</p>
 
-<p>Besides which, “printing money” != “sending stimulous checks to people.”</p>
+<p>Besides which, “printing money” != “sending stimulus checks to people.”</p>
 
 <blockquote><p>What would have been better for the council is to start a jobs program.</p></blockquote>
 

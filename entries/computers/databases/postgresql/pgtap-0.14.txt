@@ -3,7 +3,7 @@ meta-keywords: pgTAP, PostgreSQL, testing, unit testing, TAP, Test Anything Prot
 tags: pgtap postgresql testing tap
 
 <p>I've just released <a href="http://pgfoundry.org/frs/?group_id=1000389"
-title="pgTAP Downloads">pgTAP 0.14</a>. This release focues on getting more
+title="pgTAP Downloads">pgTAP 0.14</a>. This release focuses on getting more
 schema functions into your hands, as well as fixing a few issues. Changes:</p>
 
 <ul>

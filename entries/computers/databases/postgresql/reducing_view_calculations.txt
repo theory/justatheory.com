@@ -5,7 +5,7 @@ tags: PostgreSQL SQL Time+Zones
 <p>I could use some advice and suggestions for how to solve a performance
 problem due to the highly redundant calculation of values in a view. Sorry for
 the longish explanation. I wanted to make sure that I omitted no details in
-desribing the problem.</p>
+describing the problem.</p>
 
 <p>In order to support recurring events in an application I'm working on, we
 have a lookup table that maps dates to their daily, weekly, monthly, and
@@ -117,7 +117,5 @@ little puzzle, eh?</p>
 
 <p><strong>Update 2008-01-30:</strong> <em>Thanks to help from depesz, I came
 figured out what the underling problem was and solved it much more elegantly
-using PL/pgSQL. I've now <a
-href="/computers/databases/postgresql/recurring_events.html" title="How to
-Generate Recurring Events in the Database">written up the basic recipe.
+using PL/pgSQL. I've now <a href="/computers/databases/postgresql/recurring_events.html" title="How to Generate Recurring Events in the Database">written up the basic recipe.
 Enjoy!</em></p>

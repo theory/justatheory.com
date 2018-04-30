@@ -23,7 +23,7 @@ SELECT *
 
 <p>So <a href="http://archives.postgresql.org/message-id/4013F1AE-FE1B-427B-8C23-1A5681DA297E@kineticode.com" title="PATCH: CITEXT 2.0">this patch</a> is the culmination of my work to make a locale-aware case-insensitive text type. It's locale-aware in that it uses the same locale-aware string comparison code as that used for the text type, and it uses the same C function as <code>LOWER()</code> uses. The nice thing is that it works just as if you had used <code>LOWER()</code> in all your SQL, but now you don't have to.</p>
 
-<p>So while this is not a <em>true</em> case-insensitive text type, in the sense that it doesn't do a case-insensitive comparison, but changes the cases and <em>then</em> compares, it is likely more efficient than the <code>LOWER()</code> workaround that we've all been using for years, and it neater, too. Using this type, it will now be much easier to create, e.g, an <a href="http://www.varlena.com/GeneralBits/128.php" title="PostgrSQL General Bits: “Base Type using Domains”">email domain</a>, like so:</p>
+<p>So while this is not a <em>true</em> case-insensitive text type, in the sense that it doesn't do a case-insensitive comparison, but changes the cases and <em>then</em> compares, it is likely more efficient than the <code>LOWER()</code> workaround that we've all been using for years, and it neater, too. Using this type, it will now be much easier to create, e.g, an <a href="http://www.varlena.com/GeneralBits/128.php" title="PostgreSQL General Bits: “Base Type using Domains”">email domain</a>, like so:</p>
 
 <pre>
 CREATE OR REPLACE FUNCTION is_email(text)

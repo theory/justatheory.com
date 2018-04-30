@@ -12,9 +12,9 @@ CREATE TYPE article_states AS ENUM (
 );
 </pre>
 
-<p>Nice: we now have a simple data type that&rsquo;s self-documenting. An an important feature of enums is that the ordering of values is the same as the declared labels. For a workflow such as this, it makes a lot of sense, because the workflow states are inherently ordered: &ldquo;draft&rdquo; comes before &ldquo;copy&rdquo; and so on.</p>
+<p>Nice: we now have a simple data type that’s self-documenting. An an important feature of enums is that the ordering of values is the same as the declared labels. For a workflow such as this, it makes a lot of sense, because the workflow states are inherently ordered: &ldquo;draft&rdquo; comes before &ldquo;copy&rdquo; and so on.</p>
 
-<p>Unfortunately, enums aren&rsquo;t a panacea. I would use them all over the place if I could, but, alas, the value-set data types I tend to need tend not to have inherently ordered values other than the collation order of the text. For example, say that we need a table describing people&rsquo;s faces. Using an enum to manage eye colors might look something like this:</p>
+<p>Unfortunately, enums aren’t a panacea. I would use them all over the place if I could, but, alas, the value-set data types I tend to need tend not to have inherently ordered values other than the collation order of the text. For example, say that we need a table describing people’s faces. Using an enum to manage eye colors might look something like this:</p>
 
 <pre>
 CREATE TYPE eye_color AS ENUM ( &#x27;blue&#x27;, &#x27;green&#x27;, &#x27;brown&#x27; );
@@ -26,7 +26,7 @@ CREATE TABLE faces (
 );
 </pre>
 
-<p>Nice, huh? So let&rsquo;s insert a few values and see what it looks like:</p>
+<p>Nice, huh? So let’s insert a few values and see what it looks like:</p>
 
 <pre>
 INSERT INTO faces (name, eye_color)
@@ -37,7 +37,7 @@ VALUES (&#x27;David&#x27;, &#x27;blue&#x27; ),
 ;
 </pre>
 
-<p>So let&rsquo;s look at the data ordered by the enum:</p>
+<p>So let’s look at the data ordered by the enum:</p>
 
 <pre>
 % SELECT name, eye_color FROM faces ORDER BY eye_color;
@@ -49,14 +49,14 @@ VALUES (&#x27;David&#x27;, &#x27;blue&#x27; ),
  Noriko | brown
 </pre>
 
-<p>Hrm. That&rsquo;s not good. I forgot to put &ldquo;green&rdquo; after &ldquo;brown&rdquo; when I created the enum. Oh, and I forgot the color &ldquo;hazel&rdquo;:</p>
+<p>Hrm. That’s not good. I forgot to put &ldquo;green&rdquo; after &ldquo;brown&rdquo; when I created the enum. Oh, and I forgot the color &ldquo;hazel&rdquo;:</p>
 
 <pre>
 % INSERT INTO faces (name, eye_color) VALUES (&#x27;Kat&#x27;, &#x27;hazel&#x27; );
 ERROR:  invalid input value for enum eye_color: &quot;hazel&quot;
 </pre>
 
-<p>Well, nice to know that it&rsquo;s enforced, and that message is really helpful. But the real problem is that we run into the inherent ordering of enum labels, and now we need to adjust the enum to meet our needs. Here&rsquo;s how to do it:</p>
+<p>Well, nice to know that it’s enforced, and that message is really helpful. But the real problem is that we run into the inherent ordering of enum labels, and now we need to adjust the enum to meet our needs. Here’s how to do it:</p>
 
 <pre>
 ALTER TABLE faces RENAME eye_color TO eye_color_tmp;
@@ -126,14 +126,14 @@ VALUES (&#x27;David&#x27;, &#x27;blue&#x27; ),
  Julie  | green
 </pre>
 
-<p>Cool! But there are a couple of downsides. One is that you're adding a bit of I/O overhead to every update. Most likely you won&rsquo;t have very many values in the <code>eye_colors</code> table, so given PostgreSQL&rsquo;s caching, this isn&rsquo;t a big deal. A bigger deal is error handling:</p>
+<p>Cool! But there are a couple of downsides. One is that you're adding a bit of I/O overhead to every update. Most likely you won’t have very many values in the <code>eye_colors</code> table, so given PostgreSQL’s caching, this isn’t a big deal. A bigger deal is error handling:</p>
 
 <pre>
 INSERT INTO eye_colors VALUES (&#x27;hazel&#x27;);
 ERROR:  insert or update on table &quot;faces&quot; violates foreign key constraint &quot;faces_eye_color_fkey&quot;
 </pre>
 
-<p>That&rsquo;s not an incredibly useful error message. One might ask, without knowing the schema, what has an eye color has to do with a foreign key constraint? At least looking at the tables can tell you a bit more:</p>
+<p>That’s not an incredibly useful error message. One might ask, without knowing the schema, what has an eye color has to do with a foreign key constraint? At least looking at the tables can tell you a bit more:</p>
 
 <pre>
 % \dt
@@ -144,14 +144,14 @@ ERROR:  insert or update on table &quot;faces&quot; violates foreign key constra
  public | faces      | table | david
 </pre>
 
-<p>A quick look at the <code>eye_colors</code> table will tell you what&rsquo;s going on, and you can figure out that you just need to add a new row:</p>
+<p>A quick look at the <code>eye_colors</code> table will tell you what’s going on, and you can figure out that you just need to add a new row:</p>
 
 <pre>
 INSERT INTO eye_colors VALUES (&#x27;hazel&#x27;);
 INSERT INTO faces (name, eye_color) VALUES (&#x27;Kat&#x27;, &#x27;hazel&#x27; );
 </pre>
 
-<p>So it <em>is</em> self-documenting, but unlike enums it doesn&rsquo;t do a great job of it. Plus if you have a bunch of set-constrained value types, you can end up with a whole slew of lookup tables. This can make it harder to sort the important tables that contain actual business data from those that are just lookup tables, because there is nothing inherent in them to tell the difference. You could put them into a separate schema, of course, but still, it&rsquo;s not exactly intuitive.</p>
+<p>So it <em>is</em> self-documenting, but unlike enums it doesn’t do a great job of it. Plus if you have a bunch of set-constrained value types, you can end up with a whole slew of lookup tables. This can make it harder to sort the important tables that contain actual business data from those that are just lookup tables, because there is nothing inherent in them to tell the difference. You could put them into a separate schema, of course, but still, it’s not exactly intuitive.</p>
 
 <p>Given these downsides, I'm not a big fan of using lookup tables for managing what is in fact a simple list of allowed values for a particular column unless those values change frequently. So what else can we do?</p>
 
@@ -189,7 +189,7 @@ CREATE TABLE faces (
 ERROR:  new row for relation &quot;faces&quot; violates check constraint &quot;valid_eye_colors&quot;
 </pre>
 
-<p>A check constraint violation on <code>eye_color</code> is much more informative than a foreign key constraint violation. The downside to a check constraint, however, is that it&rsquo;s not as self-documenting. You have to look at the entire table in order to find the constraint:</p>
+<p>A check constraint violation on <code>eye_color</code> is much more informative than a foreign key constraint violation. The downside to a check constraint, however, is that it’s not as self-documenting. You have to look at the entire table in order to find the constraint:</p>
 
 <pre>
 % \d faces
@@ -205,7 +205,7 @@ Check constraints:
     &quot;valid_eye_colors&quot; CHECK (eye_color = ANY (ARRAY[&#x27;blue&#x27;, &#x27;green&#x27;, &#x27;brown&#x27;]))
 </pre>
 
-<p>There it is at the bottom. Kind of tucked away there, eh? At least now we can change it. Here&rsquo;s how:</p>
+<p>There it is at the bottom. Kind of tucked away there, eh? At least now we can change it. Here’s how:</p>
 
 <pre>
 ALTER TABLE faces DROP CONSTRAINT valid_eye_colors;
@@ -214,7 +214,7 @@ ALTER TABLE faces ADD CONSTRAINT valid_eye_colors CHECK (
 );
 </pre>
 
-<p>Not as straight-forward as updating the lookup table, and much less efficient (because PostgreSQL must validate that existing rows don&rsquo;t violate the constraint before committing the constraint). But it&rsquo;s pretty simple and at least doesn&rsquo;t require the entire table be <code>UPDATE</code>d as with enums. For occasional changes to the value list, a table scan is not a bad tradeoff. And of course, once that&rsquo;s done, it just works:</p>
+<p>Not as straight-forward as updating the lookup table, and much less efficient (because PostgreSQL must validate that existing rows don’t violate the constraint before committing the constraint). But it’s pretty simple and at least doesn’t require the entire table be <code>UPDATE</code>d as with enums. For occasional changes to the value list, a table scan is not a bad tradeoff. And of course, once that’s done, it just works:</p>
 
 <pre>
 INSERT INTO eye_colors VALUES (&#x27;hazel&#x27;);
@@ -225,7 +225,7 @@ INSERT INTO faces (name, eye_color) VALUES (&#x27;Kat&#x27;, &#x27;hazel&#x27; )
 
 <h3>This is My Domain</h3>
 
-<p>To solve that problem, switch to domains. A <a href="http://www.postgresql.org/docs/current/static/sql-createdomain.html" title="PostgreSQL Documentation: CREATE DOMAIN">domain</a> is simply a custom data type that inherits behavior from another data type and to which one or more constraints can be added. It&rsquo;s pretty simple to switch from the table constraint to a domain:</p>
+<p>To solve that problem, switch to domains. A <a href="http://www.postgresql.org/docs/current/static/sql-createdomain.html" title="PostgreSQL Documentation: CREATE DOMAIN">domain</a> is simply a custom data type that inherits behavior from another data type and to which one or more constraints can be added. It’s pretty simple to switch from the table constraint to a domain:</p>
 
 <pre>
 CREATE DOMAIN eye_color AS TEXT
@@ -302,15 +302,15 @@ INSERT INTO faces (name, eye_color) VALUES (&#x27;Kat&#x27;, &#x27;hazel&#x27; )
 
 <h3>Color Me Happy</h3>
 
-<p>Someday I'd love to see support for a PostgreSQL feature like enums, but allowing an arbitrary list of strings that are ordered by the contents of the text rather than the order in which they were declared, and that&rsquo;s efficient to update. Maybe it could use integers for the underlying storage, too, and allow values to be modified without a table rewrite. Such would be the ideal for this use case. Hell, I'd find it much more useful than enums.</p>
+<p>Someday I'd love to see support for a PostgreSQL feature like enums, but allowing an arbitrary list of strings that are ordered by the contents of the text rather than the order in which they were declared, and that’s efficient to update. Maybe it could use integers for the underlying storage, too, and allow values to be modified without a table rewrite. Such would be the ideal for this use case. Hell, I'd find it much more useful than enums.</p>
 
-<p>But domains get us pretty close to that without too much effort, so maybe it&rsquo;s not that important. I've tried all of the above approaches and discussed it quite a lot with <a href="http://www.pgexperts.com/people.html" title="Meet the Experts">my colleagues</a> before settling on domains, and I'm quite pleased with it. The only caveat I'd have is that it&rsquo;s not to be used lightly. If the value set is likely to change fairly often (at least once a week, say), then you'd be better off with the lookup table.</p>
+<p>But domains get us pretty close to that without too much effort, so maybe it’s not that important. I've tried all of the above approaches and discussed it quite a lot with <a href="http://www.pgexperts.com/people.html" title="Meet the Experts">my colleagues</a> before settling on domains, and I'm quite pleased with it. The only caveat I'd have is that it’s not to be used lightly. If the value set is likely to change fairly often (at least once a week, say), then you'd be better off with the lookup table.</p>
 
 <p>In short, I recommend:</p>
 
 <ul>
-<li>For an inherently ordered set of values that&rsquo;s extremely unlikely to ever change, use an enum.</li>
-<li>For a set of values that won&rsquo;t often change and has no inherent ordering, use a domain.</li>
+<li>For an inherently ordered set of values that’s extremely unlikely to ever change, use an enum.</li>
+<li>For a set of values that won’t often change and has no inherent ordering, use a domain.</li>
 <li>For a set of values that changes often, use a lookup table.</li>
 </ul>
 

@@ -3,9 +3,7 @@ meta-keywords: SQLite, foreign keys, constraint, trigger, restrict, cascade, on 
 
 <p>After some some Googling and experimentation, I've figured out how to
 enforce foreign key constraints in SQLite. I got most of the code from Cody
-Pisto's <a href="http://www.sqlite.org/contrib" title="SQLite Contributed
-files, including sqlite_fk.tgz, a utility for generating FK triggers for
-SQLite">sqlite_fk</a> utility. I couldn't get it to work, but the essential
+Pisto's <a href="http://www.sqlite.org/contrib" title="SQLite Contributed files, including sqlite_fk.tgz, a utility for generating FK triggers for SQLite">sqlite_fk</a> utility. I couldn't get it to work, but the essential
 code for the triggers was in its <em>fk.c</em> file, so I just borrowed from
 that (public domain) code to figure it out.</p>
 

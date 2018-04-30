@@ -3,8 +3,7 @@ meta-keywords: upc, ean, plpgsql, postgresql
 tags: plpgsql postgresql upc ean
 
 <p>So I wanted to write a PL/pgSQL function to
-validate <a href="http://en.wikipedia.org/wiki/UPC_code" title="Wikipedia:
-UPC">UPC codes</a>. The rules for validation are:</p>
+validate <a href="http://en.wikipedia.org/wiki/UPC_code" title="Wikipedia: UPC">UPC codes</a>. The rules for validation are:</p>
 
 <ul>
   <li>The UPC must consist of 12 or 13 numerals</li>

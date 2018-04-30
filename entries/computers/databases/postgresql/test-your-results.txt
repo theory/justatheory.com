@@ -8,13 +8,10 @@ tags: PostgreSQL pgTAP unit+testing resultset relations
 <a href="/computers/databases/postgresql/set_testing_update.html" title="pgTAP Set-Testing Update">thinking</a>,
 <a href="/computers/databases/postgresql/results_eq.html" title="Committed: pgTAP Result Set Assertion Functions">committing</a>,
 and not an insignificant amount of
-<a href="/computers/databases/postgresql/neither-null-nor-not-null.html"
-title="Neither NULL nor NOT NULL: An SQL
+<a href="/computers/databases/postgresql/neither-null-nor-not-null.html" title="Neither NULL nor NOT NULL: An SQL
 WTF">hair-pulling</a>,
-<a href="http://pgtap.projects.postgresql.org/" title="pgTAP: Unit Testing for
-PostgreSQL">pgTAP</a> 0.22 has finally landed. Download it
-<a href="http://pgfoundry.org/frs/?group_id=1000389" title="Download
-pgTAP">here</a>. Many, <em>many</em> thanks to all who commented on my
+<a href="http://pgtap.projects.postgresql.org/" title="pgTAP: Unit Testing for PostgreSQL">pgTAP</a> 0.22 has finally landed. Download it
+<a href="http://pgfoundry.org/frs/?group_id=1000389" title="Download pgTAP">here</a>. Many, <em>many</em> thanks to all who commented on my
 previous posts, made suggestions, and helped me on IRC to figure out how to
 get all this stuff to work. The crazy thing is that it does, quite well, all
 the way back to PostgreSQL 8.0.</p>
@@ -157,7 +154,7 @@ SELECT results_eq(
 title="pgTAP Documentation: Pursing Your Query">documentation</a> for all the
 details on how to use these functions.</p>
 
-<p>I'm really happy with these functions. It wase definitely worth it to really
+<p>I'm really happy with these functions. It was definitely worth it to really
 <a href="/computers/databases/postgresql/set_testing_update.html" title="pgTAP
 Set-Testing Update">think things through</a>, look at
 <a href="/computers/databases/postgresql/comparing-relations.html"
@@ -185,7 +182,7 @@ significantly.</p>
 <p>Similarly, the results functions use cursors and fetch each row one-at-a-time.
 The nice thing is that, in the event of a failure for <code>results_eq()</code>
 or a pass for <code>results_ne()</code>, the functions can stop fetching
-results before reaching the end of the quries. But either way, a fair bit of
+results before reaching the end of the queries. But either way, a fair bit of
 processing goes on.</p>
 
 <p>I'm not sure which is slower, the set and bag functions or the results
@@ -200,11 +197,9 @@ pgTAP">download</a> the latest and let me know what you think.</p>
 <p>So what's next? Well, there are a few more schema-testing functions I'd
 like to add, but after that, I'd like to declare pgTAP stable and start using
 it in new projects. I'm thinking about writing a test suite for
-<a href="http://it.toolbox.com/blogs/database-soup/testing-for-normalization-33119"
-title="Database Soup: “Testing for Normalization”">database normalization</a>,
+<a href="http://it.toolbox.com/blogs/database-soup/testing-for-normalization-33119" title="Database Soup: “Testing for Normalization”">database normalization</a>,
 starting with testing that all tables
-<a href="http://petereisentraut.blogspot.com/2009/07/how-to-find-all-tables-without-primary.html"
-title="Peter Eisentraut's Brain Dump: “How to find all tables without primary
+<a href="http://petereisentraut.blogspot.com/2009/07/how-to-find-all-tables-without-primary.html" title="Peter Eisentraut's Brain Dump: “How to find all tables without primary
 key”">have primary keys</a>.</p>
 
 <p>But that's after my vacation. Back in two weeks.</p>

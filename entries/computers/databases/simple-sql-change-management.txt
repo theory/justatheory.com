@@ -42,7 +42,7 @@ whose UUID didn&rsquo;t yet appear in the table, and then added the UUIDs of the
 run scripts to the table.</p></blockquote>
 
 <p>I like this simplicity, but there are some more things I think could be done,
-including dependency reslolution and reversion. And it seems silly to have a
+including dependency resolution and reversion. And it seems silly to have a
 UUID stand for a script name; why not just list script names? Better yet, tag
 groups of changes for easy reference.</p>
 
@@ -75,7 +75,7 @@ comes <em>before</em> the <code>widgets_table</code> script. If we run the <code
 first, it will fail, because the <code>widgets</code> table does not yet exist.</p>
 
 <p>Of course we can re-order the lines in the configuration file. But given that
-one might have many changes for a particular tag, with many cross-referenceing
+one might have many changes for a particular tag, with many cross-referencing
 dependencies, I think it&rsquo;s better to overcome this problem in the scripts
 themselves. So I suggest that the <code>sql/deploy/add_widget.sql</code> file look
 something like this:</p>

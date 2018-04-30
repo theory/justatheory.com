@@ -2,9 +2,9 @@ Mocking Serialization Failures
 meta-keywords: SQL, PostgreSQL, transaction, isolation, serializable
 tags: SQL PostgreSQL transaction isolation serializable
 
-<p>I&rsquo;ve been hacking on the forthcoming
+<p>I’ve been hacking on the forthcoming
 <a href="http://bucardo.org/wiki/Bucardo">Bucardo</a> 5 code base the last couple weeks,
-as we&rsquo;re going to start using it pretty extensively at
+as we’re going to start using it pretty extensively at
 <a href="http://iovation.com/">work</a>, and it needed a little love to get it closer to
 release. The biggest issue I fixed was the handling of serialization failures.</p>
 
@@ -13,7 +13,7 @@ release. The biggest issue I fixed was the handling of serialization failures.</
 to &ldquo;Serializable&rdquo;. As of PostgreSQL 9.1, this is true serializable isolation.
 However, there were no tests for it in Bucardo. And since pervious versions of
 PostgreSQL had poorer isolation (retained in 9.1 as &ldquo;Repeatable Read&rdquo;), I
-don&rsquo;t think anyone really noticed it much. As I&rsquo;m doing all my testing against
+don’t think anyone really noticed it much. As I’m doing all my testing against
 9.2, I was getting the serialization failures about half the time I ran the
 test suite. It took me a good week to chase down the issue. Once I did, I
 posted to the Bucardo mail list pointing out that Bucardo was <em>not</em> attempting
@@ -58,9 +58,9 @@ fire when the replication role is &ldquo;origin&rdquo; (the default) or
 session is in &ldquo;replica&rdquo; mode, and triggers configured as ENABLE ALWAYS
 will fire regardless of the current replication mode.</p></blockquote>
 
-<p>Well how cool is that? So all I needed to do was plug in a replica trigger and have it throw an exception once but not twice. Via email, Kevin Grittner pointed out that a sequence might work, and indeed it does. Because sequence values are non-transactional, sequences return different values every time they&rsquo;re access.</p>
+<p>Well how cool is that? So all I needed to do was plug in a replica trigger and have it throw an exception once but not twice. Via email, Kevin Grittner pointed out that a sequence might work, and indeed it does. Because sequence values are non-transactional, sequences return different values every time they’re access.</p>
 
-<p>Here&rsquo;s what I came up with:</p>
+<p>Here’s what I came up with:</p>
 
 <pre><code>CREATE SEQUENCE serial_seq;
 
@@ -78,7 +78,7 @@ CREATE TRIGGER mock_serial_fail AFTER INSERT ON bucardo_test2
 ALTER TABLE bucardo_test2 ENABLE REPLICA TRIGGER mock_serial_fail;
 </code></pre>
 
-<p>The first <code>INSERT</code> (or, in Bucardo&rsquo;s case, <code>COPY</code>) to <code>bucardo_test2</code> will die
+<p>The first <code>INSERT</code> (or, in Bucardo’s case, <code>COPY</code>) to <code>bucardo_test2</code> will die
 with the serialization error. The second <code>INSERT</code> (or <code>COPY</code>) succeeds. This
 worked great, and I was able to write test in a few hours and
 <a href="https://github.com/bucardo/bucardo/commit/3931056f15f3f6df9b089fd439c14ec38b66d841">get them committed</a>.

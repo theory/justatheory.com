@@ -6,7 +6,7 @@ tags: pgTAP PostgreSQL testing unit testing TAP PL/pgSQL SQL
 href="http://pgtap.projects.postgresql.org/">pgTAP 0.20</a> has somehow made
 its way from my Subversion server and infiltrated the PostgreSQL community.
 Can nothing be done to stop this menace? Its use leads to cleaner, more
-stable, and more-safely refctored code. This insanity must be stopped! Please
+stable, and more-safely refactored code. This insanity must be stopped! Please
 review the following list of its added vileness since 0.19 to determine how
 you can stop the terrible, terrible influence on your PostgreSQL unit-testing
 practices that is pgTAP:</p>

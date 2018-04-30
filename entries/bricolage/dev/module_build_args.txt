@@ -52,7 +52,7 @@ patch">sent a patch</a> to the <code>Module::Build</code> mail list adding a new
 to <code>new()</code>:
 <code>get_options</code>. This is an array reference of options that will be
 passed to <code>Getopt::Long::GetOptions()</code> before <code>Module::Build</code> parses
-arguments. It stores the results in the same hash as Moculde::Build normally
+arguments. It stores the results in the same hash as Module::Build normally
 does, and options not specified in <code>get_options</code> will be processed
 by <code>Module::Build</code> just as before. But it gives a whole lot more control over
 what gets grabbed. For example, if I were to try to get that last example to

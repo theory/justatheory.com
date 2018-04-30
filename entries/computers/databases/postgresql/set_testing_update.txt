@@ -3,10 +3,8 @@ meta-keywords: relation, set, test, testing, unit test, compare, intersect, exce
 tags: pgTAP PostgreSQL unit+testing relational+algebra resultset
 
 <p>I've been thinking more
-about <a href="/computers/databases/postgresql/comparing-relations.html"
-title="Thoughts on Testing SQL Result Sets">testing SQL result sets</a> and
-how to <a href="/computers/databases/postgresql/result-testing-function-names.html"
-title="Need Help Naming Result Set Testing Functions">name functions</a> that
+about <a href="/computers/databases/postgresql/comparing-relations.html" title="Thoughts on Testing SQL Result Sets">testing SQL result sets</a> and
+how to <a href="/computers/databases/postgresql/result-testing-function-names.html" title="Need Help Naming Result Set Testing Functions">name functions</a> that
 do such testing, and I've started to come to some conclusions. Some of the
 constraints I'm looking at:</p>
 
@@ -20,8 +18,7 @@ constraints I'm looking at:</p>
       twice, as is required to calculate symmetric difference. By executing
       each once and storing the results in a temporary table, we get around
       this issue (and indeed, this one of the cases that
-      <a href="http://epictest.org/"
-      title="Epic: more full of fail than any other testing tool">Epic</a>'s
+      <a href="http://epictest.org/" title="Epic: more full of fail than any other testing  tool">Epic</a>'s
       <code>global()</code> function addresses).</p></li>
   <li><p>When order is not important, the most efficient way to compare result
       sets is with symmetric difference. However, said comparison is a set
@@ -38,8 +35,7 @@ difficult for <code>set_eq</code> to have a variation that tests ordered
 sets, as symmetric difference ignores relational ordering. And a simple
 <code>bag_eq()</code> function would require that the relations be ordered, as
 it would iterate over each row in each relation in turn and compare row to row.
-But as I <a href="/computers/databases/postgresql/result-testing-function-names.html"
-title="Need Help Naming Result Set Testing Functions">pointed out</a> to
+But as I <a href="/computers/databases/postgresql/result-testing-function-names.html" title="Need Help Naming Result Set Testing Functions">pointed out</a> to
 commenter “@dave0,” bags are not inherently ordered, so it would be imposing a
 requirement that's not necessarily appropriate.</p>
 

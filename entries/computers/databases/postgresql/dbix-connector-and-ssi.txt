@@ -5,12 +5,12 @@ tags: database SSI serializable+transactions Serializable+isolation+level DBI DB
 <p>I was at <a href="http://postgresopen.org/">Postgres Open</a> week before last. This was
 a great conference, very welcoming atmosphere and lots of great talks. One of
 the more significant, for me, was the <a href="http://postgresopen.org/2011/schedule/presentations/61/">session on serializable transactions</a>
-by Kevin Grittner, who developed <a href="http://wiki.postgresql.org/wiki/SSI">SSI</a> for PostgreSQL 9.1. I hadn&rsquo;t paid
+by Kevin Grittner, who developed <a href="http://wiki.postgresql.org/wiki/SSI">SSI</a> for PostgreSQL 9.1. I hadn’t paid
 much attention to this feature before now, but it became clear to me, during
-the talk, that it&rsquo;s time.</p>
+the talk, that it’s time.</p>
 
 <p>So what is SSI? Well, serializable transactions are almost certainly how you
-think of transactions already. Here&rsquo;s how Kevin describes them:</p>
+think of transactions already. Here’s how Kevin describes them:</p>
 
 <blockquote><p>True serializable transactions can simplify software development. Because
 any transaction which will do the right thing if it is the only transaction
@@ -19,8 +19,8 @@ transactions, the programmer need not understand and guard against all
 possible conflicts. If this feature is used consistently, there is no need
 to ever take an explicit lock or SELECT FOR UPDATE/SHARE.</p></blockquote>
 
-<p>This is, in fact, generally how I&rsquo;ve thought about transactions. But I&rsquo;ve
-certainly run into cases where it wasn&rsquo;t true. Back in 2006, I wrote an
+<p>This is, in fact, generally how I’ve thought about transactions. But I’ve
+certainly run into cases where it wasn’t true. Back in 2006, I wrote an
 article on <a href="http://onlamp.com/pub/a/onlamp/2006/06/29/many-to-many-with-plpgsql.html">managing many-to-many relationships with PL/pgSQL</a> which
 demonstrated a race condition one might commonly find when using an ORM. The
 solution I offered was to <a href="http://oreilly.com/pub/a/databases/2006/09/07/plpgsql-batch-updates.html?page=5" title="Batch Updates with PL/pgSQL (p.5)">always use</a> a PL/pgSQL function that does the
@@ -67,7 +67,7 @@ only on connection failure but also on serialization failure (SQLSTATE 40001)
 and deadlocks (SQLSTATE 40P01). I would also add a new attribute, <code>retries</code>,
 to specify the number of times to retry such execution, with a default of
 three (which likely will cover the vast majority of cases). This has actually
-been an oft-requested feature, and I&rsquo;m glad to have a new reason to add it.</p>
+been an oft-requested feature, and I’m glad to have a new reason to add it.</p>
 
 <p>There are a few design issues to overcome, however:</p>
 
@@ -80,7 +80,7 @@ implicitly transaction-scoped).</li>
 <li>Fixup mode is also supported by <code>svp()</code>, which scopes the execution of a
 code reference to a savepoint (a.k.a. a subtransaction). Should the rollback
 and retry be supported there, too, or would the whole transaction have to be
-retried? I&rsquo;m thinking the latter, since that&rsquo;s currently the behavior for
+retried? I’m thinking the latter, since that’s currently the behavior for
 connection failures.</li>
 <li>Given these issues, will it make more sense to perhaps create a new mode?
 Maybe it would be supported only by <code>txn()</code>.</li>
@@ -88,9 +88,9 @@ Maybe it would be supported only by <code>txn()</code>.</li>
 
 
 <p>This is do-able, will likely just take some experimentation to figure it out
-and settle on the appropriate API. I&rsquo;ll need to find the tuits for that soon.</p>
+and settle on the appropriate API. I’ll need to find the tuits for that soon.</p>
 
-<p>In the meantime, given currently <a href="/computers/programming/perl/modules/dbix-connector-catch.html">in-progress changes</a>, I&rsquo;ve just released a
+<p>In the meantime, given currently <a href="/computers/programming/perl/modules/dbix-connector-catch.html">in-progress changes</a>, I’ve just released a
 new version of DBIx::Connector with a single change: All uses of the
 deprecated <code>catch</code> syntax now throw warnings. The previous version threw
 warnings only the first time the syntax was used in a particular context, to
@@ -101,5 +101,5 @@ will be completely removed in the next release of DBIx::Connector, likely
 around the end of the year. Hopefully the new SSI-aware retry functionality
 will have been integrated by then, too.</p>
 
-<p>In a future post I&rsquo;ll likely chew over whether or not to add an API to set the
+<p>In a future post I’ll likely chew over whether or not to add an API to set the
 transaction isolation level within a call to <code>txn()</code> and friends.</p>
