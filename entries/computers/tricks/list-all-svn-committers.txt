@@ -12,4 +12,4 @@ svn log &#x002d;&#x002d;quiet http://svn.example.com/ \
 | grep &#x0027;^r&#x0027; | awk &#x0027;{print $3}&#x0027; | sort | uniq > committers.txt
 </pre>
 
-<p>Now I just have edit <code>commiters.txt</code> and I have my mapping file.</p>
+<p>Now I just have edit <code>committers.txt</code> and I have my mapping file.</p>

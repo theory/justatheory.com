@@ -3,11 +3,9 @@ meta-keywords: git, svn, Subversion, CVS, SCM, Bricolage, GitHub, migrate, VCS, 
 tags: Bricolage git svn subversion cvs github git-filter-branch git-fetch vcs migration
 
 <p>Now that I've successfully
-<a href="/computers/vcs/git/bricolage-cvs-to-git.html"
-title="Migrating Bricolage CVS to Git">migrated the old Bricolage SourceForge
+<a href="/computers/vcs/git/bricolage-cvs-to-git.html" title="Migrating Bricolage CVS to Git">migrated the old Bricolage SourceForge
 CVS</a> repository to Git, and
-also <a href="/computers/vcs/git/bricolage-svn-to-git.html"
-title="Migrating Bricolage Subversion to Git">migrated Subversion</a> to Git,
+also <a href="/computers/vcs/git/bricolage-svn-to-git.html" title="Migrating Bricolage Subversion to Git">migrated Subversion</a> to Git,
 it's time to stitch the two repositories together into one with all history
 intact. I'm glad to say that figuring out how to do so took substantially less
 time than the first two steps, thanks in large part to the great help from
@@ -15,16 +13,14 @@ time than the first two steps, thanks in large part to the great help from
 
 <p>Actually, they helped me with a bit more tweaking of my CVS and Subversion
 conversions. One thing I realized after writing
-<a href="/computers/vcs/git/bricolage-svn-to-git.html"
-title="Migrating Bricolage Subversion to Git">yesterday's post</a> was that, after running <code>git
+<a href="/computers/vcs/git/bricolage-svn-to-git.html" title="Migrating Bricolage Subversion to Git">yesterday's post</a> was that, after running <code>git
 filter-branch</code>, I had twice as many commits as I should have had. It
 turns out that <code>git filter-branch</code> rewrites all commits, but keeps
 the old ones around in case you mess something up. doener also pointed out
 that I wasn't having all grafts properly applied, because <code>git
 filter-branch</code> only applies to the currently checked-out branch. To get
 all of the branches, he suggested that I read the
-<a href="http://www.kernel.org/pub/software/scm/git/docs/git-filter-branch.html"
-title="git-filter-branch(1) Manual Page">git-filter-branch documentation</a>,
+<a href="http://www.kernel.org/pub/software/scm/git/docs/git-filter-branch.html" title="git-filter-branch(1) Manual Page">git-filter-branch documentation</a>,
 where I'll find that <code>git filter-branch &#x002d;&#x002d;tag-name-filter cat &#x002d;&#x002d;
 &#x002d;&#x002d;all</code> would hit all branches. Actually, such was not clear to me from
 the documentation, but I took his word for it. Once I did that, to get rid
@@ -59,20 +55,17 @@ all at the same time. Very nice.</p>
 <p><em>Now</em> it was time to combine these two repositories for a single
 unified history. I wasn't able to find a good tutorial for this on the web,
 other
-than <a href="http://www.ouaza.com/wp/2007/07/24/assembling-bits-of-history-with-git/"
-title="Buxy rêve tout haut: “Assembling bits of history with git”">one</a>
+than <a href="http://www.ouaza.com/wp/2007/07/24/assembling-bits-of-history-with-git/" title="Buxy rêve tout haut: “Assembling bits of history with git”">one</a>
 that used a third-party Debian utility and only hooked up the master branch,
 using a bogus intermediary commit to do it. On the other hand, simply copying
 the pack files, as mentioned in the
-<a href="http://git.or.cz/gitwiki/GraftPoint" title="GitWiki: “GraftPoint”">Git
-Wiki</a>--and demonstrated by the scripts linked from there--also appeared to
+<a href="http://git.or.cz/gitwiki/GraftPoint" title="GitWiki: “GraftPoint”">Git Wiki</a>--and demonstrated by the scripts linked from there--also appeared to
 be suboptimal: The new commits were not showing up in GitX! And besides, Ilari
 said, “just copying packs might not suffice. There can also be loose objects.”
 Well, we can't have that, can we?</p>
 
 <p>Ilari suggested <code>git-fetch</code>, the
-<a href="http://www.kernel.org/pub/software/scm/git/docs/git-fetch.html"
-title="git-fetch(1) Manual Page">documentation</a> for which says that it will
+<a href="http://www.kernel.org/pub/software/scm/git/docs/git-fetch.html" title="git-fetch(1) Manual Page">documentation</a> for which says that it will
 “download objects and refs from another repository.” Perfect! I wanted to copy
 the objects from my CVS migration to the Subversion migration.</p>
 
@@ -185,8 +178,7 @@ system qw(git repack -a -d -f &#x002d;&#x002d;depth 50 &#x002d;&#x002d;window 50
 </pre>
 
 <p>And that's it! My new Bricolage Git repository is complete, and I've now
-pushed it up to its <a href="http://github.com/bricoleurs/bricolage/"
-title="The Bricolage Git Tree on GitHub">new home on GitHub</a>. I pushed it
+pushed it up to its <a href="http://github.com/bricoleurs/bricolage/" title="The Bricolage Git Tree on GitHub">new home on GitHub</a>. I pushed it
 like this:</p>
 
 <pre>
@@ -197,5 +189,4 @@ git push origin &#x002d;&#x002d;tags
 <p>Damn I'm glad that's done! I'll be getting the Subversion repository set to
 read-only next, and then writing some documentation for my fellow Bricoleurs
 on how to work with Git. For those of you who already
-know, <a href="http://github.com/bricoleurs/bricolage/fork"
-title="Fork Bricolage Now!">fork</a> and enjoy!</p>
+know, <a href="http://github.com/bricoleurs/bricolage/fork" title="Fork Bricolage Now!">fork</a> and enjoy!</p>

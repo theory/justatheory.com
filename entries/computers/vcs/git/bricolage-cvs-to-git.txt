@@ -2,8 +2,7 @@ Migrating Bricolage CVS to Git
 meta-keywords: git, svn, Subversion, CVS, SCM, Bricolage
 tags: Bricolage git svn subversion cvs
 
-<p>Following a <a href="http://marc.info/?t=123886317200001" title="Bricolage
-Developer List Archive: “GitHub?”">discussion</a> on the Bricolage developers
+<p>Following a <a href="http://marc.info/?t=123886317200001" title="Bricolage Developer List Archive: “GitHub?”">discussion</a> on the Bricolage developers
 mail list, I started down the path last week of migrating the Bricolage
 Subversion repository to Git. This turned out to be much more work than I
 expected, but to the benefit of the project, I think. Since I had a lot of
@@ -32,8 +31,7 @@ tags/Release_1_2_1@577
 <p>Although many of those branches and tags hadn't been used since the
 beginning of time, and certainly not since Bricolage was moved to Subversion
 from its
-<a href="http://bricolage.cvs.sourceforge.net/viewvc/bricolage/bricolage/"
-title="Bricolage SourceForge CVS Browser">original home</a> in SourceForge
+<a href="http://bricolage.cvs.sourceforge.net/viewvc/bricolage/bricolage/" title="Bricolage SourceForge CVS Browser">original home</a> in SourceForge
 CVS, because Subversion has no real concept of branches or
 tags, <code>git-svn</code> was duly copying them <em>all</em>, including the
 separate histories for each. Yow.</p>
@@ -55,8 +53,7 @@ svn list -r5256 http://svn.bricolage.cc/bricolage/branches/rev_1_8/lib/Bric/App/
 ApacheConfig.pm
 </pre>
 
-<p>I <a href="http://marc.info/?l=git&amp;m=123964663024277"
-title="Git Mail List: “Again with git-svn: File was not found in commit”">posted</a>
+<p>I <a href="http://marc.info/?l=git&amp;m=123964663024277" title="Git Mail List: “Again with git-svn: File was not found in commit”">posted</a>
 to the Git mail list about this issue, but unfortunately got no reply. Given
 that it was taking around 30 hours(!) to get to that point (and about 18 hours
 once I started using a local copy of the Subversion repository, thank to a
@@ -66,12 +63,10 @@ started thinking about how to simplify things a bit.</p>
 <p>Since most of the moving stuff around happened immediately after the move
 to Subversion, and before we started committing working code to the
 repository, it occurred to me that I could probably go back to the original
-<a href="http://bricolage.cvs.sourceforge.net/viewvc/bricolage/bricolage/"
-title="Bricolage SourceForge CVS Browser">Bricolage CVS Repository</a> on
+<a href="http://bricolage.cvs.sourceforge.net/viewvc/bricolage/bricolage/" title="Bricolage SourceForge CVS Browser">Bricolage CVS Repository</a> on
 SourceForge, migrate <em>that</em> to Git, and then just migrate from
 Subversion starting from the first real commit there. Then I could just
-<a href="http://www.ouaza.com/wp/2007/07/24/assembling-bits-of-history-with-git/"
-title="Buxy rêve tout haut: “Assembling bits of history with git”">stitch the
+<a href="http://www.ouaza.com/wp/2007/07/24/assembling-bits-of-history-with-git/" title="Buxy rêve tout haut: “Assembling bits of history with git”">stitch the
 two repositories together</a>.</p>
 
 <h3>From CVS to Git</h3>
@@ -102,8 +97,7 @@ git gc
 git reset &#x002d;&#x002d;hard
 </pre>
 
-<p>I used <a href="http://github.com/schwern/svn2git/tree/"
-title="svn2git on GitHub">svn2git</a> to convert remote branches to local
+<p>I used <a href="http://github.com/schwern/svn2git/tree/" title="svn2git on GitHub">svn2git</a> to convert remote branches to local
 tags and branches The <code>&#x002d;&#x002d;no-clone</code> option is what keeps it from
 doing the Subversion stuff; everything else is the same for a new conversion
 from CVS. I also had to run <code>git reset &#x002d;&#x002d;hard</code> to throw out

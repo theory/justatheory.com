@@ -3,8 +3,7 @@ meta-keywords: git, svn, Subversion, CVS, SCM, Bricolage
 tags: Bricolage git svn subversion cvs
 
 <p>Following up on last
-week's <a href="/computers/vcs/git/bricolage-cvs-to-git.html" title="Migrating
-Bricolage CVS to Git">post</a> on migrating the old Bricolage SourceForge CVS
+week's <a href="/computers/vcs/git/bricolage-cvs-to-git.html" title="Migrating Bricolage CVS to Git">post</a> on migrating the old Bricolage SourceForge CVS
 repository to Git, here are my notes on migrating the
 current <a href="http://svn.bricolage.cc/">Bricolage Subversion repository</a> to Git.</p>
 
@@ -13,9 +12,9 @@ migrating from CVS. Why? Because CVS has real tags, while Subversion does not.
 So while <code>git-svn</code> tries to identify all of your tags and branches,
 it's really relying on your Subversion repository using standard directories
 for all of your branches and tags. And while we've used a standard
-for <a href="http://svn.bricolage.cc/bricolage/branches/">branches
-directory</a>, our <a href="http://svn.bricolage.cc/bricolage/tags/">tags
-setup</a> is a <em>bit</em> more complicated.</p>
+for <a href="http://svn.bricolage.cc/bricolage/branches/">branches directory</a>,
+our <a href="http://svn.bricolage.cc/bricolage/tags/">tags setup</a> is a
+<em>bit</em> more complicated.</p>
 
 <p>The problem was that we used tags every time we merged between branches.
 This meant that we ended up with a lot of tags with names like
@@ -68,12 +67,9 @@ git svn fetch &#x002d;&#x002d;no-follow-parent &#x002d;&#x002d;revision 5517:HEA
 
 <p>By starting with r5517, which was the first real commit to Subversion, I
 avoided the <code>git-svn</code> error
-I <a href="http://marc.info/?t=123964664700006"
-title="Git Mail List: “Again with git-svn: File was not found in commit”">reported
-last week</a>. In truth, though, I ended up running this clone many, <em>many</em>
+I <a href="http://marc.info/?t=123964664700006" title="Git Mail List: “Again with git-svn: File was not found in commit”">reported last week</a>. In truth, though, I ended up running this clone many, <em>many</em>
 times. The first few times, I ran it with <code>&#x002d;&#x002d;no-metadata</code>,
-as <a href="http://www.simplisticcomplexity.com/2008/03/05/cleanly-migrate-your-subversion-repository-to-a-git-repository/"
-title="Simplistic Complexity: “Cleanly Migrate Your Subversion Repository To a GIT Repository”">recommended</a>
+as <a href="http://www.simplisticcomplexity.com/2008/03/05/cleanly-migrate-your-subversion-repository-to-a-git-repository/" title="Simplistic Complexity: “Cleanly Migrate Your Subversion Repository To a GIT Repository”">recommended</a>
 in various HOWTOs. But then I kept getting errors such as:</p>
 
 <pre>
@@ -102,15 +98,13 @@ git svn fetch &#x002d;&#x002d;no-follow-parent &#x002d;&#x002d;revision 5517:HEA
 svn2git &#x002d;&#x002d;no-clone
 </pre>
 
-<p>The call to <a href="http://github.com/schwern/svn2git/tree/"
-title="svn2git on GitHub">svn2git</a> converts remote branches to local tags
+<p>The call to <a href="http://github.com/schwern/svn2git/tree/" title="svn2git on GitHub">svn2git</a> converts remote branches to local tags
 and branches. Now I had a reasonably clean copy of the repository (aside from
 the 120 or so commits from when Marshall did the tags reorganization) for me
 to work with. I opened it up with <a href="http://gitx.frim.nl/">GitX</a> and
 started scripting out merges.</p>
 
-<p>To assist in this, I took a hint from <a href="http://www.askask.com/">Ask
-Bjørn Hansen</a>, sent in email in response to a Tweet, and tagged every
+<p>To assist in this, I took a hint from <a href="http://www.askask.com/">Ask Bjørn Hansen</a>, sent in email in response to a Tweet, and tagged every
 single commit with its corresponding Subversion revision number, like so (in
 Perl):</p>
 
@@ -180,8 +174,7 @@ reason, <code>git-svn</code> failed to identify a parent commit
 for <em>any</em> branch. Maybe because I started with r5517? I have no idea.
 So I had to search through the commits to see when branches were started. I
 mainly did this by looking at the branches
-in <a href="http://viewsvn.bricolage.cc/bricolage/branches/" title="Bricolage
-Branches in ViewVC">ViewVC</a>. By clicking each one, I was able to see the
+in <a href="http://viewsvn.bricolage.cc/bricolage/branches/" title="Bricolage Branches in ViewVC">ViewVC</a>. By clicking each one, I was able to see the
 earliest commit, which usually had a name like “Created a branch for my SoC
 project.” I would then look up that commit in ViewVC, such
 as <a href="http://viewsvn.bricolage.cc/?view=revision&amp;revision=7423">r7423</a>,
@@ -280,6 +273,5 @@ sub finish {
 <p>And now I have a nicely organized Git repository based on the Bricolage
 Subversion repository, with all (or most) merges in their proper places,
 release tags, and branch tracking. Now all I have to do is stitch it together
-with the repository <a href="/computers/vcs/git/bricolage-cvs-to-git.html"
-title="Migrating Bricolage CVS to Git">based on CVS</a> and I'll be ready
+with the repository <a href="/computers/vcs/git/bricolage-cvs-to-git.html" title="Migrating Bricolage CVS to Git">based on CVS</a> and I'll be ready
 to put this sucker on GitHub! More on that in my next post.</p>

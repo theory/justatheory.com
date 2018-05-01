@@ -3,11 +3,9 @@ meta-keywords: Git, Subversion, SVN, Bricolage, VCS, SCM, migration, wiki, GitHu
 tags: Git Subversion SVN Bricolage VCS SCM migration wiki GitHub
 
 <p>Just a quick followup on the completion of
-the <a href="/computers/vcs/git/bricolage-to-git.html" title="Migrating
-Bricolage CVS and SVN to Git">Bricolage Git migration</a> last week, today I
+the <a href="/computers/vcs/git/bricolage-to-git.html" title="Migrating Bricolage CVS and SVN to Git">Bricolage Git migration</a> last week, today I
 completed writing up a set
-of <a href="http://wiki.github.com/bricoleurs/bricolage/development"
-title="Bricolage Wiki: Development">GitHub wiki documents</a> explaining to my
+of <a href="http://wiki.github.com/bricoleurs/bricolage/development" title="Bricolage Wiki: Development">GitHub wiki documents</a> explaining to my
 fellow Bricoleurs how to start hacking. The most important bits are:</p>
 
 <ul>
@@ -57,8 +55,7 @@ useful:</p>
 </ul>
 
 <p>It turned out that there were a
-few <a href="http://github.com/bricoleurs/bricolage/commit/95c2335634a64fc68745629d5242cad5b1c69d48">files
-lost</a> in the conversion, which I didn't notice until after all was said and
+few <a href="http://github.com/bricoleurs/bricolage/commit/95c2335634a64fc68745629d5242cad5b1c69d48">files lost</a> in the conversion, which I didn't notice until after all was said and
 done, but overall I'm very happy. My thanks again
 to <a href="http://www.askask.com/">Ask</a> and the denizens of #git for all
 the help.</p>
