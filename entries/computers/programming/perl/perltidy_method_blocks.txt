@@ -9,7 +9,7 @@ my $process = Background->new($^X, &quot;-I$lib&quot;,
                               &quot;-e 1&quot;, &quot;other&quot;, &quot;arguments&quot;, &quot;here&quot;);
 </pre>
 
-<p>Perltidy witll turn it into this:</p>
+<p>Perltidy will turn it into this:</p>
 
 <pre>
 my $process = Background->new( $^X, &quot;-I$lib&quot;, &quot;-MMyLong:Namespace::Bar::Bat&quot;,

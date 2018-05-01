@@ -9,7 +9,7 @@ day. It used two features I'd never seen before:</p>
   <li><code>(?{ })</code>, a zero-width, non-capturing assertion that executes
     arbitrary Perl code.</li>
   <li><code>$^N</code>, a variable for getting the contents of the most recent
-    capture in a regular expresion.</li>
+    capture in a regular expression.</li>
 </ul>
 
 <p>The cool thing is that, used in combination, these two features can be used
@@ -58,8 +58,7 @@ expressions.</p>
 
 <p>This is a cool feature, but there are a few caveats. First, according to
 the Perl regular expression
-<a href="http://search.cpan.org/perldoc/perlre#(?{_code_})" title="Read about
-(?{ }) on CPAN">documentation</a>, <code>(?{ })</code> is a highly
+<a href="http://search.cpan.org/perldoc/perlre#(?{_code_})" title="Read about (?{ }) on CPAN">documentation</a>, <code>(?{ })</code> is a highly
 experimental feature that could go away at any time. But more importantly, if
 you're relying on this feature you should be aware of the side effects. What I
 mean by that is that, if a regular expression match fails, but there are some
@@ -83,9 +82,9 @@ before relying on whatever the code inside the <code>(?{ })</code> assertions
 did.</p>
 
 <p>The problem becomes even more subtle if your regular expressions trigger
-backgracking. In that case, you might have an optional group match and its
+backtracking. In that case, you might have an optional group match and its
 value assigned to the hash, and then the next required group fail. Perl will
-then backtrack to throw out the successfull group match and then see if the
+then backtrack to throw out the successful group match and then see if the
 next required match succeeds. If so, you can have a successful match and
 potentially invalid data in your hash. Here's an example:</p>
 
@@ -122,6 +121,5 @@ or may not be what you want.</p>
 <p>Of course, all this seems cool, but since it's a truly evil hack, you have
 to be careful. If you can wait, though, perhaps we'll
 see <a
-href="http://www.nntp.perl.org/group/perl.perl5.porters/;msgid=9b18b3110610051158h43c58810ted1017129929a539[at]mail.gmail.com"
-title="Perl 5 Porters: &#x201c;[PATCH] Initial attempt at named captures for
+href="http://www.nntp.perl.org/group/perl.perl5.porters/;msgid=9b18b3110610051158h43c58810ted1017129929a539[at]mail.gmail.com" title="Perl 5 Porters: &#x201c;[PATCH] Initial attempt at named captures for
 perls regexp engine&#x201d;">named captures in Perl 5.10</a>.</p>

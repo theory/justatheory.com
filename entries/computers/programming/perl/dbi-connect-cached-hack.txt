@@ -3,26 +3,18 @@ meta-keywords: Perl, DBI, database, transaction, connect_cached, caching, attrib
 tags: Perl DBI database transactions connect_cached
 
 <p>I've been on a bit of a Perl hacking tear lately. In addition to knocking out
-<a href="http://search.cpan.org/perldoc?Test::XPath" title="Test::XPath on
-CPAN">Test::XPath</a> last week, I've been experimenting with
-<a href="http://search.cpan.org/perldoc?TAP::Harness"
-title="TAP::Harness on CPAN">TAP::Harness</a> sources,
-<a href="http://search.cpan.org/perldoc?Template::Declare"
-title="Template::Declare on CPAN">Template::Declare</a>, Catalyst views, a new
-Module::Build <a href="http://github.com/theory/module-build-db/"
-title="Module::Build::DB on GitHub">subclass</a> for building database-backed
+<a href="http://search.cpan.org/perldoc?Test::XPath" title="Test::XPath on CPAN">Test::XPath</a> last week, I've been experimenting with
+<a href="http://search.cpan.org/perldoc?TAP::Harness" title="TAP::Harness on CPAN">TAP::Harness</a> sources,
+<a href="http://search.cpan.org/perldoc?Template::Declare" title="Template::Declare on CPAN">Template::Declare</a>, Catalyst views, a new
+Module::Build <a href="http://github.com/theory/module-build-db/" title="Module::Build::DB on GitHub">subclass</a> for building database-backed
 applications, and, last but not least, an
-<a href="http://github.com/theory/circle/" title="Circle on GitHub">IRC
-logging bot</a>. Oh, and that application I'm working on
-for <a href="http://www.pgexperts.com/" title="PostgreSQL Experts,
-Inc.">PGX</a> with <a href="http://www.pgexperts.com/Quinn.Weaver.html">Quinn
-Weaver</a>. So much is crowding my mind these days that I'm having trouble
+<a href="http://github.com/theory/circle/" title="Circle on GitHub">IRC logging bot</a>. Oh, and that application I'm working on
+for <a href="http://www.pgexperts.com/" title="PostgreSQL Experts, Inc.">PGX</a> with <a href="http://www.pgexperts.com/Quinn.Weaver.html">Quinn Weaver</a>. So much is crowding my mind these days that I'm having trouble
 sleeping. Tonight I'm up late hacking to try to get some of this stuff out of
 my head.</p>
 
 <p>But before I crash, I wanted to share a useful DBI hack. I use
-<a href="http://search.cpan.org/perldoc?DBI#connect_cached" title="DBI:
-connect_cached">connect_cached</a> in a lot of my applications, because it's a
+<a href="http://search.cpan.org/perldoc?DBI#connect_cached" title="DBI: connect_cached">connect_cached</a> in a lot of my applications, because it's a
 nice way to reuse database handles without having to figure out my own caching
 algorithm. The code I have to use it looks like this:</p>
 
@@ -69,8 +61,7 @@ run the tests.</p>
 <p>As I was dealing with this today, my memory started poking at me, telling
 me that I've dealt with this before. And sure enough, a quick Google shows
 that <a href="http://blog.timbunce.org/" title="Not this…">Tim Bunce</a> and I
-had an <a href="http://markmail.org/thread/de3jzc2unm55egn7"
-title="DBI-Dev: “AutoCommit and connect_cached()”">extensive conversation</a>
+had an <a href="http://markmail.org/thread/de3jzc2unm55egn7" title="DBI-Dev: “AutoCommit and connect_cached()”">extensive conversation</a>
 on this very topic -- <em>over four years ago.</em> If you're patient enough
 to dig through that thread, you'll note that this issue is due to some
 architectural difficulties in the DBI, to be worked out in DBI 2.</p>
@@ -135,6 +126,5 @@ helpfully adds it for you.</p>
 I hope it helps you, too. Meanwhile, perhaps someone could take it upon
 themselves to document DBI's callbacks? At this point, the closest thing to
 documentation is in the
-<a href="http://cpansearch.perl.org/src/TIMB/DBI-1.609/t/70callbacks.t"
-title="DBI test 70callbacks.t">tests</a>. (Hrm. I think I might have had a hand in
+<a href="http://cpansearch.perl.org/src/TIMB/DBI-1.609/t/70callbacks.t"title="DBI test 70callbacks.t">tests</a>. (Hrm. I think I might have had a hand in
 writing them.) Check 'em out.</p>

@@ -24,8 +24,7 @@ creating Makefile
 </pre>
 
 <p>I have, too. I've known about the fix for a while, thanks
-to <a href="http://rubyforge.org/pipermail/ruby-pg-general/2007-December/000004.html"
-title="[Ruby-pg-general] osx leopard">a post from maintainer Jeff Davis</a>
+to <a href="http://rubyforge.org/pipermail/ruby-pg-general/2007-December/000004.html" title="[Ruby-pg-general] osx leopard">a post from maintainer Jeff Davis</a>
 from last month. But I was unable to get it to work. But then I found this gem
 of a comment (pun not intended) from <a href="http://glu.ttono.us/articles/2007/12/22/postgresql-gem-on-leopard-stock-gem-system" title="Gluttonous: postgresql gem on Leopard stock gem system">Gluttonous</a>:</p>
 

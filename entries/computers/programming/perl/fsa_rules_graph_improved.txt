@@ -4,8 +4,7 @@ tags: statemachine decisiongraph fsarules
 
 <img src="/computers/programming/perl/fsa_rules_sample.png" alt="FSA::Rules sample graph output" />
 
-<p>I just released <a href="http://search.cpan.org/dist/FSA-Rules/"
-title="FSA::Rules on CPAN">FSA::Rules</a> 0.25. This version came about as I
+<p>I just released <a href="http://search.cpan.org/dist/FSA-Rules/" title="FSA::Rules on CPAN">FSA::Rules</a> 0.25. This version came about as I
 returned to the module to handle setting up a PostgreSQL database and found
 the graphics that it churned out, well, wanting. I wanted a decision tree, but
 the graphics just had the names of the states for the nodes, and then long

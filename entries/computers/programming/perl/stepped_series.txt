@@ -3,9 +3,7 @@ meta-keywords: Perl, series, stepped, odd, even, alternate, modulo, grep
 tags: perl series slice
 
 <p>In working on a Perl validation function for GTINs
-(recipe <a
-href="http://www.gs1.org/productssolutions/idkeys/support/check_digit_calculator.html#how"
-title="GTIN/EAN/UPC validation tables">here</a>), I found a need to generate a
+(recipe <a href="http://www.gs1.org/productssolutions/idkeys/support/check_digit_calculator.html#how" title="GTIN/EAN/UPC validation tables">here</a>), I found a need to generate a
 series of numbers with a step of two. For example, I in the series 1-10, I
 first want 1, 3, 5, 7, and 9. And then later I want 2, 4, 6, 8, 10. Here's how
 I went about creating those series in my GTIN function to create hash

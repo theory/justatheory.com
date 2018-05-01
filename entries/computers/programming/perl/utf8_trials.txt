@@ -5,16 +5,13 @@ meta-keywords: Perl, Bricolage, Unicode, UTF-8, utf8, use utf8, encoding
 Unicode-aware. Bricolage has always managed Unicode content and stored it in a
 PostgreSQL Unicode-encoded database. And by <q>Unicode</q> I of course
 mean <q>UTF-8</q>. By far the biggest nightmare was figuring out 
-<a href="/computers/programming/perl/mod_perl/escape_html_utf8.html"
-title="Apache::Util::escape_html() Doesn't Like Perl UTF-8 Strings">the bug
+<a href="/computers/programming/perl/mod_perl/escape_html_utf8.html" title="Apache::Util::escape_html() Doesn't Like Perl UTF-8 Strings">the bug
 with <code>Apache::Util::escape_html()</code></a>, but ultimately it came down
 to an interesting lesson.</p>
 
 <p>Why was I making Bricolage Unicode-aware? Well, it all started with a
-<a href="http://bugs.bricolage.cc/show_bug.cgi?id=648" title="substr() either
-crap utf8 string or mis-count the length in bytes.">bug report</a> from
-Kang-min Liu <a href="http://gugod.org/blog/" title="Gugod's blog: The Mind Of
-Random">(a.k.a. <q>Gugod</q>)</a>. I had na&iuml;vely thought that if strings
+<a href="http://bugs.bricolage.cc/show_bug.cgi?id=648" title="substr() either crap utf8 string or mis-count the length in bytes.">bug report</a> from
+Kang-min Liu <a href="http://gugod.org/blog/" title="Gugod's blog: The Mind Of Random">(a.k.a. <q>Gugod</q>)</a>. I had na&iuml;vely thought that if strings
 were Unicode that Perl would know it and do the right thing. It turns out I
 was wrong. Perl assumes that everything is binary unless you tell it
 otherwise. This means that Perl operators such as <code>length</code>
@@ -32,8 +29,7 @@ are Unicode strings. The former wasn't really an option, of course, since
 users can specify that certain content fields be a certain length of
 characters. So with a lot of testing help from Gugod and his Bricolage install
 full of multibyte characters, I set about doing so. The result is in the
-recently released <a href="/bricolage/announce/1.8.2.html" title="Bricolage
-1.8.2 Released">Bricolage 1.8.2</a> and I'm blogging what I learned for both
+recently released <a href="/bricolage/announce/1.8.2.html" title="Bricolage 1.8.2 Released">Bricolage 1.8.2</a> and I'm blogging what I learned for both
 your reference and mine.</p>
 
 <p>Perl considers its internal representation of strings to be UTF-8 strings,
@@ -119,7 +115,7 @@ make the UI Mason components UTF-8 aware. I just added <code>preamble =&gt;
 &quot;use utf8\n;&quot;</code> to the creation of the Mason interpretor. This
 gets passed on to is compiler, and now that string is added to the beginning
 of every template. This made things behave better in the UI. I applied the
-same approach to the interpetor created for Mason templates with equal
+same approach to the interpreter created for Mason templates with equal
 success.</p>
 
 <p>I'm less confident that I pulled it off for the HTML::Template and Template
@@ -150,10 +146,8 @@ the dbi-dev mail list, but it looks like it might be a while before DBI has
 fast, integrated support for turning <code>utf8</code> on and off for various
 database handles and columns. I look forward to it, though, because it's
 likely to be very efficient. I greatly look forward to seeing the results
-of <a href="http://www.mail-archive.com/dbi-dev@perl.org/msg03452.html"
-title="Tim Bunce Responds">Tim's work</a> in the next release of DBI. I opened
-another <a href="http://bugs.bricolage.cc/show_bug.cgi?id=802" title="Set
-SvUTF8_on on Data Fetched from Database">bug report</a> to remind myself to take
+of <a href="http://www.mail-archive.com/dbi-dev@perl.org/msg03452.html" title="Tim Bunce Responds">Tim's work</a> in the next release of DBI. I opened
+another <a href="http://bugs.bricolage.cc/show_bug.cgi?id=802" title="Set SvUTF8_on on Data Fetched from Database">bug report</a> to remind myself to take
 advantage of the new feature when it's ready.</p>
 
 <p>So in the meantime, I needed to find another solution. Fortunately, my

@@ -8,7 +8,7 @@ stuff about Rails that drove me absolutely batshit
 (&lt;cough&gt;ActiveRecord&lt;/cough&gt;), but there were also a (very) few
 things that I really liked. One of those things was
 the <a href="http://api.rubyonrails.org/classes/ActionController/Assertions/SelectorAssertions.html#M000569"
-title="ActionController::Assertions::SlectorAssertions"><code>assert_select</code></a>
+title="ActionController::Assertions::SelectorAssertions"><code>assert_select</code></a>
 test method. There was a bunch of magic involved in sending a request to your
 Rails app and stuffing the body someplace hidden (hrm, that sounds kind of
 evil; intentional?), but then you could call <code>assert_select</code> to use
@@ -40,12 +40,10 @@ end
 <p>Slick, right? I've always wanted to have something like this in Perl, but
 until last week, I didn't really have an immediate need for it. But I've
 started on a Catalyst project with my partners
-at <a href="http://www.pgexperts.com/" title="PostgreSQL Experts,
-Inc.">PGX</a>, and of course I'm using a view to generate XHTML output. So I
+at <a href="http://www.pgexperts.com/" title="PostgreSQL Experts, Inc.">PGX</a>, and of course I'm using a view to generate XHTML output. So I
 started asking around for advice on proper unit testing for Catalyst views.
 The answer I got was,
-basically, <a href="http://search.cpan.org/perldoc?Test::WWW::Mechanize::Catalyst"
-title="Test::WWW::Mechanize::Catalyst on
+basically, <a href="http://search.cpan.org/perldoc?Test::WWW::Mechanize::Catalyst" title="Test::WWW::Mechanize::Catalyst on
 CPAN">Test::WWW::Mechanize::Catalyst</a>. But I found it insufficient:</p>
 
 <pre>
@@ -61,8 +59,7 @@ the content, there's just <code>content_contains()</code>, which concatenates
 all of the content without any tags! This is useful for certain very simple
 tests, but if you want to make sure that your document is properly structured,
 and the content is in all the right places,
-you're <a href="http://www.urbandictionary.com/define.php?term=S.O.L."
-title="Urban Dictionary: “S.O.L”">SOL</a>.</p>
+you're <a href="http://www.urbandictionary.com/define.php?term=S.O.L." title="Urban Dictionary: “S.O.L”">SOL</a>.</p>
 
 <p>Furthermore, the <code>html_link_ok()</code> method didn't like the Unicode
 characters output by my view:</p>
@@ -80,8 +77,7 @@ characters output by my view:</p>
 characters. In some worlds, I suppose, they should be wrong, but I actually
 want them in my document.</p>
 
-<p>So I switched to <a href="http://search.cpan.org/perldoc?Test::XML"
-title="Test::XML on CPAN">Test::XML</a>, which uses a proper XML parser to
+<p>So I switched to <a href="http://search.cpan.org/perldoc?Test::XML" title="Test::XML on CPAN">Test::XML</a>, which uses a proper XML parser to
 validate a document:</p>
 
 <pre>
@@ -95,8 +91,7 @@ is_well_formed_xml $res->content, &quot;The HTML should be well-formed&quot;;
 examining the content and structure in more detail. Thinking fondly on
 <code>assert_select</code>, I went looking for a test module that uses XPath
 to test an XML document, and
-found <a href="http://search.cpan.org/perldoc?Test::XML::XPath"
-title="Test::XML::XPath on CPAN">Test::XML::XPath</a> right in the Test::XML
+found <a href="http://search.cpan.org/perldoc?Test::XML::XPath" title="Test::XML::XPath on CPAN">Test::XML::XPath</a> right in the Test::XML
 distribution, which looked to be just what I wanted. So I added it to my test
 script and added this line to test the content of
 the <code>&lt;title&gt;</code> tag:</p>
@@ -128,10 +123,8 @@ pointed out that it was due to the namespace. That is, the <code>xmlns</code>
 attribute of the <code>&lt;html&gt;</code> element requires that one register
 a namespace prefix to use in the XPath expression. He pointed me to his fork
 of XML::XPath,
-called <a href="http://github.com/Ovid/Escape-/blob/master/t/lib/Test/XHTML/XPath.pm"
-title="Test::XHTML::XPath on GitHub">Test::XHTML::XPath</a>, in
-his <a href="http://github.com/Ovid/Escape-/tree" title="Escape on
-GitHub">Escape project</a>. It mostly duplicates Test::XML::XPath, but contains
+called <a href="http://github.com/Ovid/Escape-/blob/master/t/lib/Test/XHTML/XPath.pm" title="Test::XHTML::XPath on GitHub">Test::XHTML::XPath</a>, in
+his <a href="http://github.com/Ovid/Escape-/tree" title="Escape on GitHub">Escape project</a>. It mostly duplicates Test::XML::XPath, but contains
 this crucial line of code:</p>
 
 <pre>
@@ -146,16 +139,14 @@ is_xpath $res->content, &quot;/x:html/x:head/x:title&quot;, &quot;Welcome!&quot;
 </pre>
 
 <p>And that works. It seems that the XPath
-spec <a href="http://www.edankert.com/defaultnamespaces.html" title="edankert:
-“XPath and Default Namespace handling”">requires that one use prefixes</a>
+spec <a href="http://www.edankert.com/defaultnamespaces.html" title="edankert: “XPath and Default Namespace handling”">requires that one use prefixes</a>
 when referring to elements within a namespace. Test::XML::XPath, alas,
 provides no way to register a namespace prefix.</p>
 
 <p>Perhaps worse is the performance problem. I discovered that if I stripped
 out the DOCTYPE declaration from the XHTML before I passed it
 to <code>is_xpath</code>, the test was lightning fast. Here the issue is
-that <a href="search.cpan.org/perldoc?XML::LibXML" title="XML::LibXML on
-CPAN">XML::LibXML</a>, used by Test::XML::XPath, is fetching the DTD from the
+that <a href="search.cpan.org/perldoc?XML::LibXML" title="XML::LibXML on CPAN">XML::LibXML</a>, used by Test::XML::XPath, is fetching the DTD from the
 w3.org Web site as the test runs. I can disable this by setting
 the <code>no_network</code> and <code>recover_silently</code> XML::LibXML
 options, but, again, Test::XML::XPath provides no way to do so.</p>
@@ -164,8 +155,7 @@ options, but, again, Test::XML::XPath provides no way to do so.</p>
 testing like <code>assert_select</code> and I was ready to write my own
 module. One could perhaps update Test::XML::XPath to be more flexible, but for
 the fact that it falls back
-on <a href="http://search.cpan.org/perldoc?XML::XPath" title="XML::XPath on
-CPAN">XML::XPath</a> when it can't find XML::LibXML, and XML::XPath, alas,
+on <a href="http://search.cpan.org/perldoc?XML::XPath" title="XML::XPath on CPAN">XML::XPath</a> when it can't find XML::LibXML, and XML::XPath, alas,
 behaves differently than XML::LibXML (it didn't choke on my lack of a
 namespace prefix, for example). So if you ship an application that uses
 Test::XML::XPath, tests might fail on other systems where it would use a
@@ -173,8 +163,7 @@ different XPath module than you used.</p>
 
 <p>And so I have written a new test module.</p>
 
-<p>Introducing <a href="http://search.cpan.org/perldoc?Test::XPath"
-title="Test::XPath on CPAN">Test::XPath</a>, your Perl module for flexibly
+<p>Introducing <a href="http://search.cpan.org/perldoc?Test::XPath" title="Test::XPath on CPAN">Test::XPath</a>, your Perl module for flexibly
 running XPath-powered tests on the content and structure of your XML and HTML
 documents. With this new module, the test for my Catalyst application
 becomes:</p>
@@ -208,8 +197,7 @@ DTD, but fails (because, you know, it can't access the network). Not bad,
 eh?</p>
 
 <p>Of course, the module provides the usual array
-of <a href="http://search.cpan.org/perldoc?Test::More" title="Test::More on
-CPAN">Test::More</a>-like test methods, including <code>ok()</code>,
+of <a href="http://search.cpan.org/perldoc?Test::More" title="Test::More on CPAN">Test::More</a>-like test methods, including <code>ok()</code>,
 <code>is()</code>, <code>like()</code> and <code>cmp_ok()</code>. They all
 work just like in Test::More, except that the first argument must be an XPath
 expressions. Some examples borrowed from the documentation:</p>
@@ -281,13 +269,11 @@ $tx->is(&#x0027;count(/html/body)  1, &#x0027;Should have 1 body element&#x0027;
 documents from here on in. The only thing I'm missing
 from <code>assert_select</code> is that it supports CSS 2 selectors, rather
 than XPath expressions, and
-the <a href="http://api.rubyonrails.org/classes/HTML/Selector.html"
-title="Ruby HTML::Selector">implementation</a> offers quite a few other
+the <a href="http://api.rubyonrails.org/classes/HTML/Selector.html" title="Ruby HTML::Selector">implementation</a> offers quite a few other
 features including regular expression operators for matching attributes,
 pseudo-classes, and other fun stuff. Still, XPath gets me all that I need; the
 rest is just sugar, really. And with the ability to
-<a href="http://search.cpan.org/dist/Test-XPath/lib/Test/XPath.pm#xpc"
-title="Test::XPath: Define new XPath functions">define custom XPath functions
+<a href="http://search.cpan.org/dist/Test-XPath/lib/Test/XPath.pm#xpc" title="Test::XPath: Define new XPath functions">define custom XPath functions
 in Perl</a>, I can live without the extra sugar.</p>
 
 <p>Maybe you'll find it useful, too.</p>

@@ -42,7 +42,7 @@ Exiting eval via next at test.pl line 16.
 Exiting subroutine via next at test.pl line 16.
 </pre>
   
-  <p>This means that any code after the eval block is not executed.  And, in the case of DBIx::Connector, means the transaction is not commited or rolled back, and the next call to is <code>txn()</code> mysteriously combined with the previous <code>txn()</code> call.  A quick fix for this is to just add a curly brace in to the eval:</p>
+  <p>This means that any code after the eval block is not executed.  And, in the case of DBIx::Connector, means the transaction is not committed or rolled back, and the next call to is <code>txn()</code> mysteriously combined with the previous <code>txn()</code> call.  A quick fix for this is to just add a curly brace in to the eval:</p>
 
 <pre>
 eval{ { @ret = $code-&gt;() } };

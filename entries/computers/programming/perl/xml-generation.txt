@@ -2,25 +2,19 @@ Generating XML in Perl
 meta-keywords: XML, generation, Perl, XML::Writer, XML::Genx, XML::LibXML, Template::Declare, Template::Declare::Bricolage
 meta-keywords: XML generation Perl XML::Writer XML::Genx XML::LibXML Template::Declare Template::Declare::Bricolage
 
-<p>I've been working on a big <a href="http://www.bricolagecms.org/"
-title="Bricolage content management and publishing system">Bricolage</a>
+<p>I've been working on a big <a href="http://www.bricolagecms.org/" title="Bricolage content management and publishing system">Bricolage</a>
 project recently, and one of the requirements is to parse an incoming NewsML
 feed, turn individual stories into Bricolage SOAP XML, and import them into
 Bricolage. I'm using the amazing--if hideously
-documented--<a href="http://search.cpan.org/perldoc?XML::LibXML"
-title="XML::LibXML on CPAN">XML::LibXML</a> to do the parsing of the incoming
+documented--<a href="http://search.cpan.org/perldoc?XML::LibXML" title="XML::LibXML on CPAN">XML::LibXML</a> to do the parsing of the incoming
 NewsML, taking advantage of the power of XPath to pull out the bits I need.
-But then came the <a href="http://twitter.com/Theory/status/2085796847"
-title="My Twery">question</a>: what should I use to generate the XML for
+But then came the <a href="http://twitter.com/Theory/status/2085796847" title="My Twery">question</a>: what should I use to generate the XML for
 Bricolage?</p>
 
 <p>Based on feedback from various Tweeps, I tried a few different approaches:
-<a href="http://search.cpan.org/perldoc?XML::LibXML"
-title="XML::LibXML on CPAN">XML::LibXML</a>,
-<a href="http://search.cpan.org/perldoc?XML::Genx"
-title="XML::Genx on CPAN">XML::Genx</a>, and of course the
-venerable <a href="http://search.cpan.org/perldoc?XML::Writer"
-title="XML::Writer on CPAN">XML::Writer</a>. In truth, they all suck for one
+<a href="http://search.cpan.org/perldoc?XML::LibXML" title="XML::LibXML on CPAN">XML::LibXML</a>,
+<a href="http://search.cpan.org/perldoc?XML::Genx" title="XML::Genx on CPAN">XML::Genx</a>, and of course the
+venerable <a href="http://search.cpan.org/perldoc?XML::Writer" title="XML::Writer on CPAN">XML::Writer</a>. In truth, they all suck for one
 reason: interface. As a test, I wanted to generate this dead simple
 XML:</p>
 
@@ -114,8 +108,7 @@ itself. I'm outputting a tree-like document; why should the API be so
 hideously object-oriented and flat?</p>
 
 <p>With this insight, I remembered Jesse
-Vincent's <a href="http://search.cpan.org/perldoc?Template::Declare"
-title="Template::Declare on CPAN">Template::Declare</a>. It bills itself as a
+Vincent's <a href="http://search.cpan.org/perldoc?Template::Declare" title="Template::Declare on CPAN">Template::Declare</a>. It bills itself as a
 templating library, but really it provides an interface for declaratively and
 hierarchically generating XML. After a bit of hacking I came up with this:</p>
 
@@ -156,8 +149,7 @@ hierarchical nature of Template::Declare, the tree structure of the resulting
 XML is apparent in the code. And it's so concise!</p>
 
 <p>Armed with this information, I whipped up a new module for CPAN:
-<a href="http://search.cpan.org/perldoc?Template::Declare::Bricolage"
-title="Template::Declare::Bricolage on CPAN">Template::Declare::Bricolage</a>.
+<a href="http://search.cpan.org/perldoc?Template::Declare::Bricolage" title="Template::Declare::Bricolage on CPAN">Template::Declare::Bricolage</a>.
 This module subclasses Template::Declare to provide a dead-simple interface
 for generating XML for the Bricolage SOAP interface. Using this module to
 generate the same XML is quite simple:</p>
@@ -200,12 +192,10 @@ say bricolage {
 </pre>
 
 <p>Simple, huh? So the next time you need to generate XML, have a look at
-<a href="http://search.cpan.org/perldoc?Template::Declare"
-title="Template::Declare on CPAN">Template::Declare</a>. It may not be the
+<a href="http://search.cpan.org/perldoc?Template::Declare" title="Template::Declare on CPAN">Template::Declare</a>. It may not be the
 fastest XML generator around, but if you have a well-defined list of
 elements you need, it's certainly the nicest to use.</p>
 
 <p>Oh, and Bricolage users? Just make use of
-use <a href="http://search.cpan.org/perldoc?Template::Declare::Bricolage"
-title="Template::Declare::Bricolage on CPAN">Template::Declare::Bricolage</a>
+use <a href="http://search.cpan.org/perldoc?Template::Declare::Bricolage" title="Template::Declare::Bricolage on CPAN">Template::Declare::Bricolage</a>
 to deaden the pain.</p>
