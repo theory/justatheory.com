@@ -2,10 +2,8 @@ TestSimple 0.02 Released
 meta-keywords: Test::Builder, Test::Simple, Test::More, TestBuilder, TestSimple, TestMore, Perl, JavaScript, test, testing, test framework, JavaScript test framework, TAP
 
 <p>I'm pleased to announce the second alpha release of TestSimple, the port of
-<a href="http://search.cpan.org/dist/Test-Simple/" title="Test::Simple and
-friends on CPAN">Test::Builder, Test::Simple, and Test::More</a> to
-JavaScript. You can download it <a href="/downloads/TestSimple-0.02.tar.gz"
-title="Download TestSimple 0.02 now!">here</a>. This release has the following
+<a href="http://search.cpan.org/dist/Test-Simple/" title="Test::Simple and friends on CPAN">Test::Builder, Test::Simple, and Test::More</a> to
+JavaScript. You can download it <a href="/downloads/TestSimple-0.02.tar.gz" title="Download TestSimple 0.02 now!">here</a>. This release has the following
 changes:</p>
 
 <ul>

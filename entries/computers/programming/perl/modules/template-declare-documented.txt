@@ -13,7 +13,7 @@ occasional mentioning of “mixins” and “paths” and “roots,” and I jus
 getting it out of the
 <a href="http://search.cpan.org/~sartak/Template-Declare-0.40/lib/Template/Declare.pm" title="Template::Declare 0.40">existing documentation</a>.
 Much of my confusion stemmed from how
-<a href="http://search.cpan.org/perldoc?Catalyst::View::Template::Declare" title="Catslyst::View::Template::Declare on CPAN">Catalyst::View::Template::Declare</a>
+<a href="http://search.cpan.org/perldoc?Catalyst::View::Template::Declare" title="Catalyst::View::Template::Declare on CPAN">Catalyst::View::Template::Declare</a>
 used Template::Declare. So I started peppering
 <a href="http://blog.fsck.com" title="Massively Parallel Procrastination">Jesse</a> with
 questions and offering to fill in some gaps in the docs, and he was foolish
@@ -48,7 +48,7 @@ version&rsquo;s <code>alias</code> method creates build much better-performing a
 memory-intensive aliases.</p>
 
 <p>So why was I doing all this? Well,
-<a href="http://search.cpan.org/perldoc?Catalyst::View::Template::Declare" title="Catslyst::View::Template::Declare on CPAN">Catalyst::View::Template::Declare</a>
+<a href="http://search.cpan.org/perldoc?Catalyst::View::Template::Declare" title="Catalyst::View::Template::Declare on CPAN">Catalyst::View::Template::Declare</a>
 never seemed quite right to me. And in my discussions with the Jifty guys, it
 seemed clear that its use of Template::Declare was <a href="http://lists.jifty.org/pipermail/jifty-devel/2009-September/002162.html">trying to alias</a>
 kinda sorta, but not really. So as I tried to understand aliasing, I realized

@@ -103,7 +103,7 @@ global caching from DBIx::Connector, and suddenly it made much more sense not
 to ping by default -- just as you wouldn't ping if you created a DBI handle
 yourself.</p>
 
-<p>DBIx::Conector is no longer a caching layer over the DBI. It's now
+<p>DBIx::Connector is no longer a caching layer over the DBI. It's now
 a <em>proxy</em> for a connection. That's it. There is no magic, no implicit
 behavior, so it's easier to use. And because it ensures <code>fork</code>- and
 thread-safety, you can instantiate a connector and hold onto it for whenever

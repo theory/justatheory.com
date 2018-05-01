@@ -3,8 +3,7 @@ meta-keywords: iCal, invitation, ICS, iCalendar, VCS, file, cache, location
 tags: iCal, Invitation, File
 
 <p>I was fiddling with iCalendar invitations yesterday, trying to
-get <a href="http://www.iwantsandy.com/" title="Meet Sandy: Your Personal
-Email Assistant">Sandy</a>'s .ics files to import into Outlook. I got that
+get <a href="http://www.iwantsandy.com/" title="Meet Sandy: Your PersonalEmail Assistant">Sandy</a>'s .ics files to import into Outlook. I got that
 figured out (yes!), but in the meantime iCal started crashing on me. I was
 reasonable sure that it was due to a bogus invitation file, but could not for
 the life of me figure out where iCal was keeping such files. It just kept

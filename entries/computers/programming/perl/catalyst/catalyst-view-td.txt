@@ -7,7 +7,7 @@ tags: Perl Catalyst Template::Declare templates templating MVC view
 <a href="http://search.cpan.org/perldoc?Template::Declare" title="Template::Declare on CPAN">Template::Declare</a>
 0.41, this week I'm pleased to announce the release of a new
 <a href="http://www.catalystframework.org/">Catalyst</a> view class,
-<a href="http://search.cpan.org/perldoc?Catalyst::View::TD" title="Calyst::View::TD on CPAN">Catalyst::View::TD</a>.</p>
+<a href="http://search.cpan.org/perldoc?Catalyst::View::TD" title="Catalyst::View::TD on CPAN">Catalyst::View::TD</a>.</p>
 
 <p>Yes, I'm aware of
 <a href="http://search.cpan.org/perldoc?Catalyst::View::Template::Declare">Catalyst::View::Template::Declare</a>.
@@ -22,7 +22,7 @@ View that could take proper advantage of its features.</p>
 <a href="http://search.cpan.org/perldoc?Template" title="Template Toolkit on CPAN">Template Toolkit</a>
 or <a href="http://search.cpan.org/perldoc?HTML::Mason" title="Mason on CPAN">Mason</a>
 for your templating needs. So why should you consider
-<a href="http://search.cpan.org/perldoc?Catalyst::View::TD" title="Calyst::View::TD on CPAN">Catalyst::View::TD</a>
+<a href="http://search.cpan.org/perldoc?Catalyst::View::TD" title="Catalyst::View::TD on CPAN">Catalyst::View::TD</a>
 for your next project? How about:</p>
 
 <ul>
@@ -49,7 +49,6 @@ $ catalyst.pl MyApp
 cd MyApp
 </pre>
 
-
 <p>Then update the list of plugins in <code>MyApp.pm</code>:</p>
 
 <pre>
@@ -61,13 +60,11 @@ use Catalyst qw/
 /;
 </pre>
 
-
 <p>Now create a controller:</p>
 
 <pre>
 $ script/myapp_create.pl controller Books
 </pre>
-
 
 <p>Then edit it and add this controller (see
 <a href="http://search.cpan.org/perldoc?Catalyst::Manual::Tutorial::03_MoreCatalystBasics" title="Catalyst Tutorial - Chapter 3: More Catalyst Application Development Basics">chapter 3</a>
@@ -81,14 +78,12 @@ sub list : Local {
 }
 </pre>
 
-
 <p>And now, create a view and a new template class:</p>
 
 <pre>
 $ script/myapp_create.pl view HTML TD
 $ script/myapp_create.pl TDClass HTML::Books
 </pre>
-
 
 <p>Open <code>lib/MyApp/Templates/HTML/Books.pm</code> and add the <code>list</code> template:</p>
 
@@ -135,7 +130,6 @@ removed, just to be fair):</p>
 &lt;/table&gt;
 </pre>
 
-
 <p>I mean, which would <em>you</em> rather have to maintain? And this is an extremely
 simple example. The comparison only becomes more stark when the HTML becomes
 more complex.</p>
@@ -158,11 +152,10 @@ sub list : Local {
 }
 </pre>
 
-
 <p>This is the primary way in which
-<a href="http://search.cpan.org/perldoc?Catalyst::View::TD" title="Calyst::View::TD on CPAN">Catalyst::View::TD</a>
+<a href="http://search.cpan.org/perldoc?Catalyst::View::TD" title="Catalyst::View::TD on CPAN">Catalyst::View::TD</a>
 differs from its
-<a href="http://search.cpan.org/perldoc?Catalyst::View::Template::Declare">predeceossor</a>.
+<a href="http://search.cpan.org/perldoc?Catalyst::View::Template::Declare">predecessor</a>.
 Whereas the latter would load all of the modules under the view&rsquo;s namespace
 and shove all of their templates into root path, the former imports templates
 under paths that correspond to their class names. Hence the match with

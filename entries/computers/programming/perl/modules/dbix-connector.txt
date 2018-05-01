@@ -4,18 +4,14 @@ tags: Perl DBI DBix::Class connection DBIx::Connector transactions savepoints
 
 <p>As part of my ongoing effort to wrestle Catalyst into working the way
 that <em>I</em> think it should work, I've just
-uploaded <a href="http://search.cpan.org/perldoc?DBIx::Connector"
-title="DBIx::Connector on the CPAN">DBIx::Connector</a> to the CPAN. See, I
-was using <a href="http://search.cpan.org/perldoc?Catalyst::Model::DBI"
-title="Catalyst::Model::DBI the CPAN">Catalyst::Model::DBI</a>, but it turned
+uploaded <a href="http://search.cpan.org/perldoc?DBIx::Connector" title="DBIx::Connector on the CPAN">DBIx::Connector</a> to the CPAN. See, I
+was using <a href="http://search.cpan.org/perldoc?Catalyst::Model::DBI" title="Catalyst::Model::DBI the CPAN">Catalyst::Model::DBI</a>, but it turned
 out that I wanted to use the database handle in places other than the Catalyst
-parts of <a href="http://github.com/theory/circle/"
-title="Circle on GitHub">my app</a>. I was bitching about this to 
+parts of <a href="http://github.com/theory/circle/" title="Circle on GitHub">my app</a>. I was bitching about this to 
 <a href="http://www.trout.me.uk/" title="Matt S Trout">mst</a> on #catalyst,
 and he said that Catalyst::Model::DBI was actually a fork of DBIx::Class's
 handle caching, and quite out of date. I said, “But this already exists. It's
-called <a href="/computers/programming/perl/dbi-connect-cached-hack.html"
-title="Keep DBI's connect_cached From Horking
+called <a href="/computers/programming/perl/dbi-connect-cached-hack.html" title="Keep DBI's connect_cached From Horking
 Transactions"><code>connect_cached()</code></a>.” I believe his response was,
 “OH FUCK OFF!”</p>
 
@@ -26,8 +22,7 @@ terms of checking to see if the process had forked or a new thread had been
 spawned, and if so, deactivating the old handle and then returning a new one.
 Otherwise, things are just cached. This approach works well in Web
 environments, including under <a href="http://perl.apache.org/">mod_perl</a>;
-in forking applications, like <a href="http://search.cpan.org/perldoc?POE"
-title="POE on CPAN">POE</a> apps; and in plain Perl scripts. Matt said he'd
+in forking applications, like <a href="http://search.cpan.org/perldoc?POE" title="POE on CPAN">POE</a> apps; and in plain Perl scripts. Matt said he'd
 always wanted to pull that functionality out of DBIx::Class and then make
 DBIx::Class depend on the external implementation. That way everyone could
 take advantage of the functionality, including people like me who don't want
@@ -76,8 +71,7 @@ execution of the code reference.</p>
 
 <p>And finally, thanks to some pushback from mst,
 <a href="http://rabbit.us/">ribasushi</a>, and others, I added
-<a href="http://en.wikipedia.org/wiki/Savepoint" title="Wikipedia:
-“Savepoint”">savepoint</a> support. It's a little different than that provided
+<a href="http://en.wikipedia.org/wiki/Savepoint" title="Wikipedia: “Savepoint”">savepoint</a> support. It's a little different than that provided
 by DBIx::Class; instead of relying on a magical <code>auto_savepoint</code>
 attribute that subtly changes the behavior of <code>txn_do()</code>, you just
 use the <code>svp_do()</code> method from within <code>txn_do()</code>. The
@@ -117,16 +111,14 @@ $conn-&gt;svp_do(sub {
 savepoints as deeply as you like. All this is dependent on whether
 the database supports savepoints; so far, PostgreSQL, MySQL (InnoDB),
 Oracle, MSSQL, and SQLite do. If you know of others, fork the
-<a href="http://github.com/theory/dbix-connector/" title="DBIx::Connector on
-GitHub">repository</a>, commit changes to a branch, and send me a pull
+<a href="http://github.com/theory/dbix-connector/" title="DBIx::Connector on GitHub">repository</a>, commit changes to a branch, and send me a pull
 request!</p>
 
 <p>Overall I'm very happy with this module, and I'll probably use it in all my
 Perl database projects from here on in. Perhaps later I'll build a model class
 on it (something like Catalyst::Model::DBI, only better!), but next up, I plan
 to finish documenting
-<a href="http://search.cpan.org/perldoc?Template::Declare"
-title="Template::Declare on the CPAN">Template::Declare</a> and writing some
+<a href="http://search.cpan.org/perldoc?Template::Declare" title="Template::Declare on the CPAN">Template::Declare</a> and writing some
 views with it. More on that soon.</p>
 
 

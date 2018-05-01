@@ -204,7 +204,7 @@ like nearly everything about this syntax, except for two things:</p>
 
 <ol>
   <li>There is no support for multiline cell values.</li>
-  <li>The exlicit alignment queues are, to my eye, distracting.</li>
+  <li>The explicit alignment queues are, to my eye, distracting.</li>
 </ol>
 
 <p>The first issue can be solved rather nicely with PostgreSQL's use of the
@@ -259,7 +259,7 @@ cell-by-cell basis if the table Markdown follows these simple rules:</p>
     between the pipe character that precedes it, or the beginning of the
     line.</li>
   <li>For a right-aligned cell, the content should have no more than one space
-    between itself and the pipe charater that succeeds it, or the end of the
+    between itself and the pipe character that succeeds it, or the end of the
     line.</li>
   <li>For a centered cell, the content should have at least two characters
     between itself and both its left and right borders.</li>
@@ -373,7 +373,7 @@ you really need to do so. I think that the only other change I would make is
 to eliminate the requirement that the first row be made the table header row
 if now header line is present. But that's a gimme, really.</p>
 
-<p>Takin the original MultiMarkdown example and rework it with these changes
+<p>Taking the original MultiMarkdown example and rework it with these changes
 yields:</p>
 
 <pre>

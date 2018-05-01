@@ -2,24 +2,18 @@ The Future of SVN::Notify
 meta-keywords: SVN::Notify, Subversion, notification, Git, GitHub, SCM, VCS SCM::Notify CVS
 tags: SVN::Notify Subversion notification Git GitHub SCM VCS SCM::Notify
 
-<p>This week, I imported <a href="http://pgtap.projects.postgresql.org/"
-title="pgTAP: PostgreSQL Unit Testing">pgTAP</a>
-into <a href="http://github.com/theory/pgtap/tree/master" title="The pgTAP
-GitHub Repository">GitHub</a>. It took me a day or so to wrap my brain around
+<p>This week, I imported <a href="http://pgtap.projects.postgresql.org/" title="pgTAP: PostgreSQL Unit Testing">pgTAP</a>
+into <a href="http://github.com/theory/pgtap/tree/master" title="The pgTAP GitHub Repository">GitHub</a>. It took me a day or so to wrap my brain around
 how it's all supposed to work, with generous
-help <a href="http://support.github.com/discussions/repos/492-svn-import-hasnt-finished-after-24-hours"
-title="GitHub Support: SVN Import Hasn't Finished after 24 Hours">from
+help <a href="http://support.github.com/discussions/repos/492-svn-import-hasnt-finished-after-24-hours" title="GitHub Support: SVN Import Hasn't Finished after 24 Hours">from
 Tekkub</a>. But I'm starting to get the hang of it, and I like it. By the end
 of the day, I had sent push requests
-to <a href="http://github.com/schwern/test-more/tree/master" title="The
-Test::More GitHub Repository">Test::More</a>
-and <a href="http://github.com/hail2u/blosxom-plugins/tree/master"
-title="Blosxom Plugins GitHub Repository">Blosxom Plugins</a>. I'm well on my
+to <a href="http://github.com/schwern/test-more/tree/master" title="The Test::More GitHub Repository">Test::More</a>
+and <a href="http://github.com/hail2u/blosxom-plugins/tree/master" title="Blosxom Plugins GitHub Repository">Blosxom Plugins</a>. I'm well on my
 way to being hooked.</p>
 
 <p>One of the things I want, however,
-is <a href="http://search.cpan.org/perldoc?SVN::Notify" title="SVN::Notify on
-CPAN">SVN::Notify</a>-type commit emails. I know that there are feeds, but
+is <a href="http://search.cpan.org/perldoc?SVN::Notify" title="SVN::Notify on CPAN">SVN::Notify</a>-type commit emails. I know that there are feeds, but
 they don't have diffs, and for however much I like using NetNewsWire to feed
 by political news addiction, it never worked for me for commit activity. And
 besides, why download the whole damn thing again, diffs and all (assuming that
@@ -28,8 +22,7 @@ network activity—not to mention actual CPU cycles.</p>
 
 <p>So I would need a decent notification application. I happen to have one. I
 originally wrote SVN::Notify after I had already
-written <a href="search.cpan.org/perldoc?activitymail" title="activitymail on
-CPAN">activitymail</a>, which sends noticies for CVS commits. SVN::Notify has
+written <a href="search.cpan.org/perldoc?activitymail" title="activitymail on CPAN">activitymail</a>, which sends noticies for CVS commits. SVN::Notify has
 changed a lot over the years, and now it's looking a bit daunting to consider
 porting it to Git.</p>
 
@@ -51,8 +44,7 @@ by <a href="http://search.cpan.org/perldoc?SVN::Notify::Config">SVN::Notify::Con
 and
 <a href="http://search.cpan.org/perldoc?SVN::Notify::Mirror">SVN::Notify::Mirror</a>),
 and, later,
-by <a href="http://search.cpan.org/perldoc?SVN::Notify::Filter">output
-filters</a>, and that was about it.</p>
+by <a href="http://search.cpan.org/perldoc?SVN::Notify::Filter">output filters</a>, and that was about it.</p>
 
 <p>But as I think about moving stuff to Git, and consider the weaknesses of
 extensibility by subclassing (it's just not pretty), I'm naturally rethinking

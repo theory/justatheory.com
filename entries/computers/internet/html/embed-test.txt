@@ -11,11 +11,9 @@ three most recent Tweets and my three most recent Delicious bookmarks. These
 work reasonably well: I just embed <code>&lt;script&gt;</code> tags with the
 appropriate stuff, then style the HTML that they deliver.</p>
 
-<p>Tonight I was talking to <a href="http://infotrope.net/blog/"
-title="Infotropism Kirrily Robert’s blog">Skud</a> about embedding like this.
+<p>Tonight I was talking to <a href="http://infotrope.net/blog/" title="Infotropism Kirrily Robert’s blog">Skud</a> about embedding like this.
 It turns out that some folks were getting a big blank area when they viewed
-a <a href="http://infotrope.net/blog/2009/03/05/books-read-february-2009/"
-title="Infotropism: Books read, February 2009">blog entry</a> on her site in
+a <a href="http://infotrope.net/blog/2009/03/05/books-read-february-2009/" title="Infotropism: Books read, February 2009">blog entry</a> on her site in
 RSS readers and the like, they sometimes just saw a big blank area where there
 was supposed to be a list of books. She was looking for examples of sites that
 provided HTML snippets that people could cut-n-paste into their blog entries,
@@ -27,8 +25,7 @@ serves a snippet of HTML, rather than a bit of JavaScript that uses
 the <code>document</code> object to write HTML?</p>
 
 <p>A quick Googling and I found a page
-a <a title="http://joliclic.free.fr/html/object-tag/en/" href="What is the
-HTML object tag">great article</a> about the <code>&lt;object&gt;</code> element.
+a <a href="http://joliclic.free.fr/html/object-tag/en/" title="What is the HTML object tag">great article</a> about the <code>&lt;object&gt;</code> element.
 It was intended as a general replacement for the <code>&lt;img&gt;</code>
 and <code>&lt;applet&gt;</code> elements, although tht really hasn't happened.
 But what you <em>can</em> do is embed HTML with it. Here's a quick example:</p>

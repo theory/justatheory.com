@@ -91,8 +91,7 @@ the migration tool, but in the end all of our mail was moved and in tact.</p>
 and now I'm looking at moving it off again (once OfflineIMAP finishes a full
 sync). Grr. I'm considering finding a virtual host somewhere and setting up my
 own IMAP server again, but then I have the spam problem again. So then I could
-use a forwarding service like <a href="http://www.pobox.com/" title="Pobox
-Home">Pobox</a>, or I can set up my own spam filtering (something I had hoped
+use a forwarding service like <a href="http://www.pobox.com/" title="Pobox Home">Pobox</a>, or I can set up my own spam filtering (something I had hoped
 never to get into managing myself). My old IMAP server required very little
 maintenance, which was nice, but then the span filtering stuff always seemed
 daunting. Don't you have to update things all the time?a</p>

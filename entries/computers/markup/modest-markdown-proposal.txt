@@ -4,14 +4,11 @@ tags: markdown markup definition+list syntax
 
 <p>I realize that greater minds than mind have likely given a lot of thought
 to how best to implement a “natural” syntax for definition lists
-in <a href="http://daringfireball.net/projects/markdown/" title="Daring
-Fireball: Markdown">Markdown</a>. The best I’ve seen, however, is that
+in <a href="http://daringfireball.net/projects/markdown/" title="Daring Fireball: Markdown">Markdown</a>. The best I’ve seen, however, is that
 implemented
-by <a href="http://michelf.com/projects/php-markdown/extra/#def-list"
-title="PHP Markdown Extra: Definition Lists">PHP Markdown Extra</a>, which is
+by <a href="http://michelf.com/projects/php-markdown/extra/#def-list" title="PHP Markdown Extra: Definition Lists">PHP Markdown Extra</a>, which is
 also supported
-by <a href="http://fletcherpenney.net/multimarkdown/users_guide/multimarkdown_syntax_guide/#definitionlists"
-title="MultiMarkdown Syntax Guide: Definition Lists">MultiMarkdown</a>. Given
+by <a href="http://fletcherpenney.net/multimarkdown/users_guide/multimarkdown_syntax_guide/#definitionlists" title="MultiMarkdown Syntax Guide: Definition Lists">MultiMarkdown</a>. Given
 the prevalence of these two libraries, I’m assuming that the syntax become the
 de-facto standard for definition lists in Markdown. But, to my mind at least,
 it leaves something to be desired. Here’s an extended example, taken from the
@@ -170,10 +167,8 @@ not a “natural” way to write definitions because it’s not a natural choice
 a bullet. The tilde, however, is perfectly comfortable hanging out at the
 beginning of a line as a bullet, resembling as it does the dash, already used
 for unordered lists in Markdown. Furthermore, it’s already used in
-dictionaries. According to <a href="http://en.wikipedia.org/wiki/Tilde"
-title="Wikipedia:
-“Tilde”">Wikipedia</a>, <q cite="http://en.wikipedia.org/wiki/Tilde">The swung
-dash is often used in dictionaries to represent a word that was mentioned
+dictionaries. According to <a href="http://en.wikipedia.org/wiki/Tilde" title="Wikipedia:
+“Tilde”">Wikipedia</a>, <q cite="http://en.wikipedia.org/wiki/Tilde">The swung dash is often used in dictionaries to represent a word that was mentioned
 before and is understood, to save space.</q> Not an exact parallel, but at
 least the tilde’s cousin the swung dash has to do with definitions! Not only
 that, but in mathematics, according to Wikipedia again, the

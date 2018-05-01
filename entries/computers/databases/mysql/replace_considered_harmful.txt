@@ -6,15 +6,15 @@ are created in Bricolage, and when they're published, rather than writing data
 to files, the template writes data to the MySQL database. PHP code on the
 front-end server then uses the database records to manage the polls.</p>
 
-<p>On the recommendation of one of my colleagues, I was using the MySQL <a
-href="http://dev.mysql.com/doc/mysql/en/replace.html" title="Documentation for
-the MySQL REPLACE statement"><code>REPLACE</code></a> statement to insert and
-update poll answers in the database. At first, this seemed like a cool idea.
-All I had to do was create a unique index on the <code>story_id</code>
-and <code>ord</code> (for answer order) columns and I was set. Any time
-someone reordered the answers or changed their wording in Bricolage,
-the <code>REPLACE</code> statement would change the appropriate records and
-just do the right thing.</p>
+<p>On the recommendation of one of my colleagues, I was using the MySQL
+<a href="http://dev.mysql.com/doc/mysql/en/replace.html" title="Documentation
+for the MySQL REPLACE statement"><code>REPLACE</code></a> statement to insert
+and update poll answers in the database. At first, this seemed like a cool idea.
+All I had to do was create a unique index on the <code>story_id</code> and
+<code>ord</code> (for answer order) columns and I was set. Any time someone
+reordered the answers or changed their wording in Bricolage, the
+<code>REPLACE</code> statement would change the appropriate records and just do
+the right thing.</p>
 
 <p>Or so I thought.</p>
 

@@ -7,7 +7,7 @@ tags: doom reinvent recreate SQL LISP HTML Drupal PHP
 
 <p>I was thinking about this as I was hacking on a Drupal installation for a client. The design spec called for the comment form to be styled in a very specific way, with image submit buttons. Drupal has this <a href="http://api.drupal.org/api/file/developer/topics/forms_api.html/5" title="Forms API Quickstart Guide">baroque interface</a> for building forms: essentially an array of arrays. Each element of the array is a form element, unless it's markup. Or something. I can't really make heads or tails of it. What's important is that there are a limited number of form elements you can create, and as of Drupal 5, <strong><em>image</em> isn't fucking one of them!</strong>.</p>
 
-<p>Now, as a software developer, I can understand this. I sometimes overlook a feature when implementing some code. But the trouble is: why have some bizarre data structure to representa subset of HTML when you have something that already works: it's called <strong>HTML</strong>.  Drupal, it seems, is doomed to reinvent HTML.</p>
+<p>Now, as a software developer, I can understand this. I sometimes overlook a feature when implementing some code. But the trouble is: why have some bizarre data structure to represent a subset of HTML when you have something that already works: it's called <strong>HTML</strong>.  Drupal, it seems, is doomed to reinvent HTML.</p>
 
 <p>So just as I have often had to use <code>find_by_sql()</code> as the fallback to get ActiveRecord to fetch the data I want, as opposed to what it thinks I want, I had to fallback on the Drupal form data structure's ability to accept embedded HTML like so:</p>
 
@@ -25,7 +25,7 @@ $form[&#x0027;submit_stuff&#x0027;] = array(
 );
 </pre>
 
-<p>Dear god, <em>why?</em> I understand that you can create images using an array in Drupal 6, but I fail to understand why it was <em>ever</em> a problem. Just give me a templating environment where I can write the fucking HTML myself. Actually, Drupal already has one, it's called <em>PHP!</em>. Please don't make me deal with this weird hierarchy of arrrays, it's just a bad reimplementation of a subset of HTML.</p>
+<p>Dear god, <em>why?</em> I understand that you can create images using an array in Drupal 6, but I fail to understand why it was <em>ever</em> a problem. Just give me a templating environment where I can write the fucking HTML myself. Actually, Drupal already has one, it's called <em>PHP!</em>. Please don't make me deal with this weird hierarchy of arrays, it's just a bad reimplementation of a subset of HTML.</p>
 
 <p>I expect that there actually <em>is</em> some way to get what I want, even in Drupal 5, as I'm doing some templating for comments and pages and whatnot. But that should be the default IMHO. The weird combining of code and markup into this hydra-headed data structure (and don't even get me started on the need for the <code>#weight</code> key to get things where I want them) is just <em>so</em> unnecessary.</p>
 

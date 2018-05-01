@@ -2,11 +2,9 @@ TestSimple 0.03 Released
 meta-keywords: TestSimple, TestMore, TestBuilder, JavaScript, Test::Simple, Test::More, Test::Builder, Perl, port, testing, test framework, ecmaunit, jsunit
 
 <p>I'm pleased to announce the third alpha release of TestSimple, the port of
-<a href="http://search.cpan.org/dist/Test-Simple/" title="Test::Simple and
-friends on CPAN">Test::Builder, Test::Simple, and Test::More</a> to
+<a href="http://search.cpan.org/dist/Test-Simple/" title="Test::Simple and friends on CPAN">Test::Builder, Test::Simple, and Test::More</a> to
 JavaScript. You can download
-it <a href="http://www.justatheory.com/downloads/TestSimple-0.03.tar.gz"
-title="Download TestSimple 0.03 now!">here</a>. This release has the following
+it <a href="http://www.justatheory.com/downloads/TestSimple-0.03.tar.gz" title="Download TestSimple 0.03 now!">here</a>. This release has the following
 changes:</p>
 
 <ul>
@@ -56,8 +54,7 @@ changes:</p>
   be ported for the next release.</li>
 </ul>
 
-<p>Many thanks to <a href="http://www.spastically.com/"
-title="Spastically">Marshall Roch</a> for help debugging issues in IE.</p>
+<p>Many thanks to <a href="http://www.spastically.com/" title="Spastically">Marshall Roch</a> for help debugging issues in IE.</p>
 
 <p>Now, there is one outstanding issue I'd like to address before I would
 consider this production ready (aside from porting all the remaining tests
@@ -68,8 +65,8 @@ number of issues:</p>
 script that builds a single HTML file that includes all the other HTML files
 in iframes or some such. But then will each run in its own space without
 stomping on the others? And how would the harness pull in the results of each?
-It might be able to go into each of its children and grab the resultsfrom the
-TestBuilder objects...
+It might be able to go into each of its children and grab the results from the
+TestBuilder objects…
 </p>
 
 <p>More Feedback/advice/insults welcome!</p>

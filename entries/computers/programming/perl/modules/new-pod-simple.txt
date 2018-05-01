@@ -4,8 +4,7 @@ tags: Perl POD Pod::Simple Allison+Randal
 
 <p>I spent some time over the last few days helping Allison fix bugs and close
 tickets for a new version of
-<a href="http://search.cpan.org/perldoc?Pod::Simple" title="Pod::Simple on
-CPAN">Pod::Simple</a>. I'm not sure how I convinced Allison to suddenly
+<a href="http://search.cpan.org/perldoc?Pod::Simple" title="Pod::Simple on CPAN">Pod::Simple</a>. I'm not sure how I convinced Allison to suddenly
 dedicate her day to fixing Pod::Simple bugs and putting out a new release. She
 must've had some studies or Parrot spec work she wanted to get out of or
 something.</p>
@@ -22,8 +21,7 @@ something.</p>
     <code>strip_verbatim_indent</code> parameter/method. Because you have to
     indent verbatim blocks (code examples) with one or more spaces, you end up
     with those spaces remaining in output. Just have a look at
-    <a href="http://search.cpan.org/perldoc?DBIx::Connector"
-    title="DBix::Connector">an example</a> on search.cpan.org. See how the
+    <a href="http://search.cpan.org/perldoc?DBIx::Connector" title="DBix::Connector">an example</a> on search.cpan.org. See how the
     code in the Synopsis is indented? That's because it's indented in the POD.
     But maybe you don't want it to be indented in your final output. If not, you can 
     strip out leading spaces via <code>strip_verbatim_indent</code>. Pass in
@@ -67,8 +65,7 @@ $new-&gt;strip_verbatim_indent(sub {
 
 <p>This last item is the only change I think might lead to problems. I fixed
 it in response to
-a <a href="https://rt.cpan.org/Public/Bug/Display.html?id=12239"
-title="C&lt;&lt;&lt; C&lt;&lt;foo&gt;&gt; &gt;&gt;&gt; not rendered
+a <a href="https://rt.cpan.org/Public/Bug/Display.html?id=12239" title="C&lt;&lt;&lt; C&lt;&lt;foo&gt;&gt; &gt;&gt;&gt; not rendered
 properly.">bug report</a> from Schwern. The relevant bit from
 the <a href="http://search.cpan.org/perldoc?perlpod">perlpod</a> spec is:</p>
 

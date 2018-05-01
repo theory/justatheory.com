@@ -112,7 +112,6 @@ Result: FAIL
 Failed 1/5 test programs. 2/25 subtests failed.
 </pre>
 
-
 <p>Well that figures, doesn&rsquo;t it? We added the <code>list</code> action to  MyApp::Controller Books but never documented it. And for some reason, Catalyst creates the <code>default</code> action in MyApp::Controller::Root with no documentation. Such a shame. So let&rsquo;s document those methods. Add this to <code>t/lib/MyApp/Controller/Root.pm</code>:</p>
 
 <pre>
@@ -124,14 +123,12 @@ later with a template to format the error like the rest of our site.
 =cut
 </pre>
 
-
 <p>While there, I notice that the <code>index</code> action has a doc header, but nothing to actually describe what it does. Let&rsquo;s fix that, too:</p>
 
 <pre>
 The default Catalyst action, which just displays the welcome message. This is
 the &quot;Yay it worked!&quot; page. Consider changing to a real home page for our app.
 </pre>
-
 
 <p>Great. Now open <code>t/lib/MyApp/Controller/Books.pm</code> and document the <code>list</code> action:</p>
 
@@ -145,7 +142,6 @@ book
 =cut
 </pre>
 
-
 <p>Oh hey, look at that. There&rsquo;s an <code>index</code> method that doesn&rsquo;t do anything. And it has a POD header and no docs, too. So let&rsquo;s document it:</p>
 
 <pre>
@@ -153,7 +149,6 @@ The default method for the books controller. Currently just says that it
 matches the request; we&#x27;ll likely want to change it to something more
 reasonable down the line.
 </pre>
-
 
 <p>Okay, so how do the tests look now?</p>
 
@@ -167,7 +162,6 @@ All tests successful.
 Files=5, Tests=25,  3 wallclock secs ( 0.05 usr  0.02 sys +  2.82 cusr  0.31 csys =  3.20 CPU)
 Result: PASS
 </pre>
-
 
 <p>Excellent! Now, the truth is that we didn&rsquo;t document our templates, either. Test::Pod doesn&rsquo;t cotton on to that fact because they're not installed like normal subroutines in the test classes. So it&rsquo;s up to us to document them ourselves. (Note to self: Consider adding a module to test that all Template::Declare classes have docs for all of their templates.) I'll wait here while you do that.</p>
 

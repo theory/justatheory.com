@@ -77,7 +77,6 @@ create_wrapper wrapper => sub {
 };
 </pre>
 
-
 <p>This looks like more work than it is because of the copious use of whitespace I've used. Personally, I find the pure Perl syntax easier to read than the mix of HTML and TT syntax in the Template Toolkit wrapper. Anyway, this is a nearly direct port of the Template Toolkit wrapper from the tutorial. Template::Declare wrappers expect at least one argument: a code reference that will output the content of the main template. You can see it used here near the end of the code, with the line <code>$code-&gt;($args)</code>.</p>
 
 <p>Unfortunately, Template::Declare doesn&rsquo;t make such wrappers easily available to templates. So we have to add the <code>Sub::Exporter</code> line at the top to export the wrapper function it creates, named <code>wrapper</code>.</p>
@@ -127,13 +126,11 @@ sub list : Local {
 }
 </pre>
 
-
 <p>So, with the wrapper in place, let&rsquo;s create the stylesheet the wrapper uses:</p>
 
 <pre>
 $ mkdir root/static/css
 </pre>
-
 
 <p>Then open <code>root/static/css/main.css</code> and add the following content:</p>
 
@@ -176,7 +173,6 @@ $ mkdir root/static/css
   color: #f00;
 }
 </pre>
-
 
 <p>Now restart the app as usual and reload the books list at <code>http://localhost:3000/books/list</code>. You should now see a nicely formatted page with the navigation and header stuff, as well as the book list. You can  change the CSS and the wrapper to modify the overall look of your site, and then use the wrapper in all of your page request templates to get the same look and feel across your site.</p>
 

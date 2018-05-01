@@ -210,7 +210,7 @@ Result: PASS
 
 <p>Ah, much better! A lot more testing should go in there to make sure that the wrapper is doing things right. I've <a href="http://github.com/theory/catalyst-tutorial/commit/b171bfb0cb624b3a5ef840d116e121a355f5fe7d">committed</a> such testing, so check it out.</p>
 
-<p>Now we need to test the output specific to the <code>books/list</code> template. Below the call to <code>test_bascis()</code>, add this code:</p>
+<p>Now we need to test the output specific to the <code>books/list</code> template. Below the call to <code>test_basics()</code>, add this code:</p>
 
 <pre>
 $tx-&gt;ok(&#x27;/html/body/div[@id=&quot;bodyblock&quot;]/div[@id=&quot;content&quot;]/table&#x27;, sub {

@@ -23,7 +23,6 @@ VALUES (&#x27;Bastien&#x27;,      &#x27;Greg&#x27;),
 ;
 </pre>
 
-
 <p>This time, we're letting the sequence populate the <code>id</code> column. Fortunately, it starts from 1 just like we did, so we don&rsquo;t need to update the values in the <code>INSERT INTO book_author</code> statement. Now let&rsquo;s fix the database:</p>
 
 <pre><code>DELETE FROM book_author;
@@ -83,7 +82,6 @@ DELETE FROM authors;
  978&#x2d;1&#x2d;58720&#x2d;153&#x2d;0 | CCSP SNRS Exam Certification Guide |      5 | {Bastien,Nasseh,Degu}
  978&#x2d;0&#x2d;7357&#x2d;1201&#x2d;0 | Designing with Web Standards       |      5 | {Zeldman}
 </pre>
-
 
 <p>Much better. We now have a single row for each book, and the authors are all grouped into a single column. Cool. But we can go one step further. Although we could use Perl to turn the array of author surnames into a comma-delimited string, there&rsquo;s a PostgreSQL function for that, too: <code>array_to_string()</code>. Check it out:</p>
 
