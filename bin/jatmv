@@ -91,9 +91,10 @@ find +{
         if (my $links = $linkmap{$slug}) {
             $dir = "$dir/$slug";
             $fn = "$dir/index.md";
+            my ($y, $m, $d) = $data->{date} =~ /^(\d{4})-(\d\d)-(\d\d)/;
             for my $link (@{ $links }) {
                 my $bn = basename $link;
-                my $new = "$dir/$bn";
+                my $new = "$y/$m/$d/$slug/$bn";
                 $body =~ s/\Q$link/$new/g;
                 say "cp $link $dir";
             }
@@ -367,7 +368,7 @@ sub local_files { return qw(
 ) }
 
 sub linkmap { return (
-    'plpgsql-talk-slides' => ['computers/databases/postgresql/learning_plpgsql'],
+    'plpgsql-talk-slides' => ['computers/databases/postgresql/learning_plpgsql.pdf'],
     'pgtap-on-pgfoundry-at-yapc' => ['computers/databases/postgresql/pgtap-yapc.pdf'],
     'how-not-to-withstand-a-fireballing' => ['computers/blog/fireballed.png'],
     'teasers-atom-feed' => ['computers/internet/weblogs/feeds.png'],
