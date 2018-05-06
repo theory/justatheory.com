@@ -1,7 +1,7 @@
 A Quick Trip to Alamosa
 meta-keywords: Alamosa, CO, Colorado, Kineticode, trip, consulting, business, business trip Adams, Adams State College, Milagro's Coffeehouse, Great Lakes Airlines
 
-<img src="/travel/alamosa/milagros_coffeehouse.jpg" alt="Milagro's Coffeehouse" />
+<img src="/travel/alamosa/milagros_coffeehouse.jpg" alt="Milagro's Coffeehouse" class="right" />
 
 <p>Last week, I went on a brief business trip for <a
 href="http://www.kineticode.com/" title="Kineticode Web site">Kineticode</a>
