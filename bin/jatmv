@@ -23,6 +23,7 @@ my %convert = catconv();
 my %cats =  catmap();
 my %tagmap = tagmap();
 my %desc_for = descmap();
+my %linkmap = linkmap();
 
 my $src = 'entries';
 my $dst = shift || die "Usage: $0 [DEST DIR]\n";
@@ -85,9 +86,20 @@ find +{
         # Determine destination directory and file.
         my $dir = "$dst/past/$data->{dir}";
         my $fn = "$dir/$slug.md";
-        make_path $dir;
 
+        # Determine if there are non-HTML local links.
+        if (my $links = $linkmap{$slug}) {
+            $dir = "$dir/$slug";
+            $fn = "$dir/index.md";
+            for my $link (@{ $links }) {
+                my $bn = basename $link;
+                my $new = "$dir/$bn";
+                $body =~ s/\Q$link/$new/g;
+                say "cp $link $dir";
+            }
+        }
         # Write out new file.
+        make_path $dir;
         open my $fh, '>:encoding(UTF-8)', $fn or die "Cannot open $fn: $!\n";
         say {$fh} join "", (
             Dump({
@@ -312,6 +324,65 @@ sub catconv { return (
         dir => 'bricolage/vcs',
         topic => 'Bricolage',
     },
+) }
+
+sub local_files { return qw(
+    computers/databases/postgresql/pgtap-yapc.pdf
+    computers/databases/postgresql/pgtap_west2008_day.pdf
+    computers/databases/postgresql/learning_plpgsql.pdf
+    computers/blog/fireballed.png
+    computers/internet/twitter/5000_tweets.png
+    computers/internet/weblogs/feeds.png
+    computers/programming/perl/rt/User_Local.pm.ldap
+    computers/programming/perl/fsa_rules_sample.png
+    computers/programming/perl/modules/DFA-StateMachine-0.01.tar.gz
+    computers/os/ios/configs.png
+    computers/os/ios/edit_mode.png
+    computers/os/ios/excluded_source_file_names.png
+    computers/os/ios/phfish_tweet.png
+    computers/os/ios/configurations.png
+    computers/os/ios/config_config.png
+    computers/os/macosx/migrating_to_macosx.pdf
+    computers/os/macosx/mod_ssl_dylib.patch
+    computers/os/macosx/apache_dbm.patch
+    computers/conferences/oscon2004/nicholas_on_the_rag.jpg
+    computers/devices/ipad.jpg
+    computers/devices/kindle.jpg
+    autobiographical/iwantsandy_207x207.gif
+    autobiographical/iovation.jpg
+    autobiographical/pgx.png
+    autobiographical/kineticode.gif
+    travel/alamosa/lobby.jpg
+    travel/alamosa/crop_circles.jpg
+    travel/alamosa/road_wing.jpg
+    travel/alamosa/prop_engine.jpg
+    travel/alamosa/under_wing.jpg
+    travel/alamosa/milagros_coffeehouse.jpg
+    travel/alamosa/angry_clouds.jpg
+    travel/alamosa/over_engine.jpg
+    travel/alamosa/wing_clouds.jpg
+    travel/alamosa/stellar_clouds.jpg
+    culture/Steve-Jobs-RIP.jpg
+    culture/steve_jobs_1982.jpg
+) }
+
+sub linkmap { return (
+    'plpgsql-talk-slides' => ['computers/databases/postgresql/learning_plpgsql'],
+    'pgtap-on-pgfoundry-at-yapc' => ['computers/databases/postgresql/pgtap-yapc.pdf'],
+    'how-not-to-withstand-a-fireballing' => ['computers/blog/fireballed.png'],
+    'teasers-atom-feed' => ['computers/internet/weblogs/feeds.png'],
+    'wheeler.net-migration' => ['computers/os/macosx/migrating_to_macosx.pdf','computers/os/macosx/mod_ssl_dylib.patch','computers/os/macosx/apache_dbm.patch'],
+    'fsa-rules-graph-improved' => ['computers/programming/perl/fsa_rules_sample.png'],
+    'ldap-auth' => ['computers/programming/perl/rt/User_Local.pm.ldap'],
+    'byline-google-apple' => ['computers/os/ios/edit_mode.png', 'computers/os/ios/phfish_tweet.png'],
+    'integrate-testflight-sdk' => ['computers/os/ios/configs.png','computers/os/ios/excluded_source_file_names.png','computers/os/ios/configurations.png','computers/os/ios/config_config.png'],
+    'nicholas-clark' => ['computers/conferences/oscon2004/nicholas_on_the_rag.jpg'],
+    'disposable-computing' => ['computers/devices/kindle.jpg','computers/devices/ipad.jpg','culture/steve_jobs_1982.jpg'],
+    'im-back' => ['autobiographical/iwantsandy_207x207.gif'],
+    'iovationeering' => ['autobiographical/iovation.jpg', 'autobiographical/pgx.png', 'autobiographical/kineticode.gif'],
+    'japan-photos-status' => ['computers/internet/twitter/5000_tweets.png'],
+    'another-short-trip' => ['travel/alamosa/lobby.jpg','travel/alamosa/crop_circles.jpg','travel/alamosa/road_wing.jpg','travel/alamosa/under_wing.jpg','travel/alamosa/angry_clouds.jpg','travel/alamosa/over_engine.jpg','travel/alamosa/wing_clouds.jpg','travel/alamosa/stellar_clouds.jpg','travel/alamosa/prop_engine.jpg','travel/alamosa/milagros_coffeehouse.jpg'],
+    'thank-you-steve' => ['culture/Steve-Jobs-RIP.jpg'],
 ) }
 
 sub tagmap { return (
