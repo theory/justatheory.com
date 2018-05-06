@@ -66,10 +66,9 @@ Permissions for bric:
 PostgreSQL privileges.</p>
 
 <p>And now, I'm pleased to announce the release yesterday of
-<a href="http://search.cpan.org/perldoc?Pg::Priv"
-title="Pg::Priv on CPAN">Pg::Priv</a>. My thanks to Etsy for agreeing to the
-release, and particularly to <a href="http://chaddickerson.com/">Chad
-Dickerson</a> for championing it. This module is a little thing compared to
-some things I've seen open-sourced by major players, but even the simplest
-utilities can save folks mountains of time. I hope you find Pg::Priv
-useful.</p>
+<a href="http://search.cpan.org/perldoc?Pg::Priv" title="Pg::Priv on CPAN">Pg::Priv</a>.
+My thanks to Etsy for agreeing to the release, and particularly to
+<a href="http://chaddickerson.com/">Chad Dickerson</a> for championing it. This
+module is a little thing compared to some things I've seen open-sourced by major
+players, but even the simplest utilities can save folks mountains of time. I
+hope you find Pg::Priv useful.</p>

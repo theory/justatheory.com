@@ -14,21 +14,197 @@ use File::Copy qw(cp);
 
 $YAML::Syck::ImplicitUnicode = 1;
 
-my %convert = (
-    'computers/databases' => {
-        match => qr{sqitch},
-        dir => 'sqitch',
-        topic => 'Sqitch',
+# Other imports:
+# https://medium.com/@theory/the-watch-is-you-ef0e416ce0f9 (essays)
+# https://medium.com/on-culture/11cfd5b919f6 (essays)
+# https://theory.svbtle.com/the-xoxo-women-rocked-it (conferences)
+
+my %convert = catconv();
+my %cats =  catmap();
+my %tagmap = tagmap();
+my %desc_for = descmap();
+
+my $src = 'entries';
+my $dst = shift || die "Usage: $0 [DEST DIR]\n";
+
+for my $dir ($src, $dst) {
+    die "$dir does not exist\n" unless -e $dir;
+    die "$dir is not a directory\n" unless -d $dir;
+}
+
+find +{
+    no_chdir => 1,
+    wanted => sub {
+        return if -d;
+        my $bn = basename $_;
+        # Skip files in the root directory.
+        return if $File::Find::name eq "$src/$bn";
+        my ($data, $body) = parse($File::Find::name);
+
+        # Append via.
+        $body .= "\n<p>()Via $data->{via})</p>\n" if $data->{via};
+
+        # Append past link.
+        $body .= qq{\n<p class="past"><small>Missing something? Try the <a rel="nofollow" href="http://past.justatheory.com$data->{uri}">old layout</a>.</small></p>\n\n};
+
+        # Get the slug.
+        $data->{uri} =~ s/-mony-/-money-/;
+        my $slug = basename $data->{uri};
+        $slug =~ s/[.][^.]+$//;
+        $slug =~ s/_+/-/g;
+
+        # Fixups.
+        if ($data->{dir} eq 'bricolage') {
+            $slug = "bricolage-$slug" if $slug !~ /bricolage/;
+        } elsif ($slug eq 'projectors') {
+            $slug = 'conference-projectors';
+        } elsif ($data->{uri} =~ m{mysql/replace}) {
+            $slug = "mysql-$slug";
+        } elsif ($data->{uri} =~ m{database/change}) {
+            $slug = "database-$slug";
+        } elsif ($data->{uri} =~ m{database/ordering}) {
+            $slug = "sql-$slug";
+        } elsif ($data->{uri} =~ m{database/sqlite/}) {
+            $slug = "sqlite-$slug";
+        } elsif ($data->{dir} eq 'js') {
+            $slug = "js-$slug" if $slug !~ /^test|js/;
+        } elsif ($data->{uri} =~ m{/oscon/}) {
+            $slug = "oscon-$slug" if $slug !~ /oscon/;
+        } elsif ($slug eq 'arrival') {
+            $slug = 'arrived-in-france';
+        } elsif ($slug eq 'departure') {
+            $slug = 'departed-france';
+        } elsif ($slug eq 'more-sun') {
+            $slug= 'french-sun';
+        } elsif ($slug eq 'embed-test') {
+            $slug = "html-$slug";
+        } elsif ($slug eq 'introducing-mysql') {
+            $slug = "introducing-mytap";
+        }
+
+        # Determine destination directory and file.
+        my $dir = "$dst/past/$data->{dir}";
+        my $fn = "$dir/$slug.md";
+        make_path $dir;
+
+        # Write out new file.
+        open my $fh, '>:encoding(UTF-8)', $fn or die "Cannot open $fn: $!\n";
+        say {$fh} join "", (
+            Dump({
+                title => $data->{title},
+                date => $data->{date},
+                slug => $slug,
+                ($data->{desc} ? (description => $desc_for{$File::Find::name}) : ()),
+            }),
+            "aliases: [$data->{uri}]\n",
+            "tags: [" . join(', ', @{ $data->{tags} }) . "]\n",
+            "---\n\n",
+            $body,
+        );
     },
-    'computers/vcs/git' => {
-        match => qr{bricolage},
-        dir => 'bricolage/vcs',
-        topic => 'Bricolage',
-    },
-);
+}, $src;
+
+sub parse {
+    my $fn = shift;
+    open my $fh,  '<:encoding(UTF-8)', $fn or die "Cannot open $fn: $!\n";
+    my $title = <$fh>;
+    say $fn if !defined $title;
+    chomp $title;
+    $title =~ s{<q>([^<]+)</q>}{“$1”};
+    $title =~ s/<[^>]+>//g;
+    say $title if $title =~ /</;
 
 
-my %cats = (
+    my $data = { title => $title };
+    while (<$fh>) {
+        last if m/^\w*$/;
+        chomp;
+        my ($key, $line) = split /\s*:\s*/, $_, 2;
+        $data->{$key} = $line;
+    }
+    for my $bad (qw(names word wors)) {
+        $data->{'meta-keywords'} = delete $data->{"meta-key$bad"}
+            if exists $data->{"meta-key$bad"};
+    }
+    delete $data->{$_} for qw(meta-tags meta-readmore);
+    $data->{desc} = delete $data->{description};
+    for my $desc (qw(teaser description)) {
+        $data->{desc} = delete $data->{"meta-$desc"} if exists $data->{"meta-$desc"};
+    }
+    $data->{desc} =~ s/<[^>]+>//g if $data->{desc};
+    $data->{via} = delete $data->{'meta-via'} if exists $data->{'meta-via'};
+
+    $data->{date} = time_for($fn);
+    $data->{uri} = $fn =~ s/\Q$src//r;
+    $data->{uri} =~ s/[.]txt$/.html/;
+
+    my ($dir, @tags) = cats_for($data->{uri});
+    if (my $t = delete $data->{'meta-keywords'}) {
+        push @tags => map { @{ $tagmap{$_} || [] } } split /,\s*/, $t;
+    } elsif ($t = $data->{tags}) {
+        for my $tag (split /\s+/, $t) {
+            $tag =~ s/[+]/ /;
+            push @tags, @{ $tagmap{$tag} || [] };
+        }
+    }
+
+    $data->{tags} = tags_for(@tags);
+    $data->{dir} = $dir;
+    return $data, join '', <$fh>;
+}
+
+sub time_for($) {
+    my $file = shift;
+    if (my $time = `git -c log.showsignature=false log -1 --format='%at' --diff-filter=A $file`) {
+        chomp $time;
+        return strftime "%Y-%m-%dT%H:%M:%SZ", gmtime $time;
+    }
+    return strftime "%Y-%m-%dT%H:%M:%SZ", gmtime stat($file)->mtime;
+}
+
+sub cats_for {
+    my $uri = substr shift =~ s/[.][^.]+$//r, 1;
+    my $path = $uri =~ s{/[^/]+$}{}r;
+
+    if (my $c = $convert{$path}) {
+        if ($uri =~ $c->{match}) {
+            return $c->{dir}, $c->{topic};
+        }
+    }
+
+    if (my $spec = $cats{$uri}) {
+        return @{$spec};
+    }
+
+    my $spec = $cats{$path} || die "Unknown category for $uri\n";
+    return @{$spec};
+}
+
+sub tags_for {
+    my %seen;
+    return [ grep { !$seen{lc $_}++ } @_ ];
+}
+
+sub descmap { return (
+    'entries/apple/cloudy-ideas.txt' => q{Apple's not on in the cloud computing business and has no interest in it.},
+    'entries/computers/databases/more-on-database-testing.txt' => q{More thoughts on they whys and hows of database testing, and wondering why one might think that it’s pointless or useless.},
+    'entries/computers/databases/postgresql/pgan-bikeshedding.txt' => q{Help me pick a good name for the PostgreSQL extension distribution network and site.},
+    'entries/computers/databases/postgresql/pgtap-on-pgfoundry_at_yapc.txt' => q{pgTAP is now a pgFoundry project and I've posted the slides from my YAPC::NA 2008 Lightning Talk on pgTAP.},
+    'entries/computers/databases/postgresql/pgtap_site.txt' => q{The new version features compatibility back as far as PostgreSQL 8.0 and lots of cool functions for testing database schemas. The site's cool, too.},
+    'entries/computers/databases/postgresql/no_more_use_pgxs.txt' => q{I'm tired of having to remember to set USE_PGXS=1 when building third-party PostgreSQL extensions like pgTAP. Aren’t you?},
+    'entries/computers/databases/sql-change-management-sans-redundancy.txt' => q{Here’s how I propose to eliminate the duplication of code between deploy and revert SQL change management scripts.},
+    'entries/computers/databases/change-management.txt' => q{Database migration frameworks and ad-hoc solutions leave things…wanting. Herein lie some preliminary thoughts on how to solve this problem.},
+    'entries/computers/databases/vcs-sql-change-management.txt' => q{Some thoughts on how to use VCS history to determine what changes need to be deployed or reverted without relying on a configuration file.},
+    'entries/computers/databases/mysql/introducing_mysql.txt' => q{After some prodding from the MySQL Community Manager, some OSCON hacking yields tangible results.},
+    'entries/computers/databases/simple-sql-change-management.txt' => q{I've been thinking a lot about SQL change management. I think I may finally have cracked this thing wide open.},
+    'entries/computers/internet/mail/need_imap_solution.txt' => q{I've had my own IMAP server and have recently been burned by a commercial solution. So I'd like suggestions for where to go next.},
+    'entries/computers/programming/perl/test-with-xpath.txt' => q{Introducing a Rails-inspired Perl module to test the structure and content of an XML or HTML document using CSS selectors.},
+    'entries/computers/programming/perl/defend-against-mistakes.txt' => q{I'm not sure I want to get into the business of defending against programmer mistakes in DBIx::Connector module. What do you think?},
+    'entries/computers/apps/conde-nast-ipad.txt' => q{I really want to enjoy reading The New Yorker on my iPad. But for a rather large number of reasons, it's just unpleasant. Here's why.},
+    'entries/culture/education/good-at-doing-things.txt' => q{Notes from “Good at Doing Things: Montessori education and higher-order cognitive functions”, presented by Steve Hughes.},
+) }
+
+sub catmap { return (
     'apple' => ['apple', 'Apple'],
 #    'computers' => ['computers', 'Computers'],
     'computers/macbookpro' => ['devices', 'MacBook Pro'],
@@ -123,22 +299,22 @@ my %cats = (
     'culture/tv/tv-providers-hate-customers' => ['culture', 'Culture'],
     'culture/overheard' => ['personal', 'Personal'],
     'culture/journalism' => ['journalism', 'Journalism'],
-);
+) }
 
+sub catconv { return (
+    'computers/databases' => {
+        match => qr{sqitch},
+        dir => 'sqitch',
+        topic => 'Sqitch',
+    },
+    'computers/vcs/git' => {
+        match => qr{bricolage},
+        dir => 'bricolage/vcs',
+        topic => 'Bricolage',
+    },
+) }
 
-# Other imports:
-# https://medium.com/@theory/the-watch-is-you-ef0e416ce0f9 (essays)
-# https://medium.com/on-culture/11cfd5b919f6 (essays)
-# https://theory.svbtle.com/the-xoxo-women-rocked-it (conferences)
-
-# my %seen;
-# for my $v( values %cats) {
-#     $seen{$v->[1]} = 1;
-# }
-
-# say for sort keys %seen; exit;
-
-my %tagmap = (
+sub tagmap { return (
     'ACLs' => ['ACLs'],
     'AJAX' => ['AJAX'],
     'ANSI' => ['ANSI'],
@@ -973,202 +1149,4 @@ my %tagmap = (
     'xpath' => ['XPath'],
     'xslt' => ['xslt'],
     'you' => ['you'],
-);
-
-my %desc_for = (
-    'entries/apple/cloudy-ideas.txt' => q{Apple's not on in the cloud computing business and has no interest in it.},
-    'entries/computers/databases/more-on-database-testing.txt' => q{More thoughts on they whys and hows of database testing, and wondering why one might think that it’s pointless or useless.},
-    'entries/computers/databases/postgresql/pgan-bikeshedding.txt' => q{Help me pick a good name for the PostgreSQL extension distribution network and site.},
-    'entries/computers/databases/postgresql/pgtap-on-pgfoundry_at_yapc.txt' => q{pgTAP is now a pgFoundry project and I've posted the slides from my YAPC::NA 2008 Lightning Talk on pgTAP.},
-    'entries/computers/databases/postgresql/pgtap_site.txt' => q{The new version features compatibility back as far as PostgreSQL 8.0 and lots of cool functions for testing database schemas. The site's cool, too.},
-    'entries/computers/databases/postgresql/no_more_use_pgxs.txt' => q{I'm tired of having to remember to set USE_PGXS=1 when building third-party PostgreSQL extensions like pgTAP. Aren’t you?},
-    'entries/computers/databases/sql-change-management-sans-redundancy.txt' => q{Here’s how I propose to eliminate the duplication of code between deploy and revert SQL change management scripts.},
-    'entries/computers/databases/change-management.txt' => q{Database migration frameworks and ad-hoc solutions leave things…wanting. Herein lie some preliminary thoughts on how to solve this problem.},
-    'entries/computers/databases/vcs-sql-change-management.txt' => q{Some thoughts on how to use VCS history to determine what changes need to be deployed or reverted without relying on a configuration file.},
-    'entries/computers/databases/mysql/introducing_mysql.txt' => q{After some prodding from the MySQL Community Manager, some OSCON hacking yields tangible results.},
-    'entries/computers/databases/simple-sql-change-management.txt' => q{I've been thinking a lot about SQL change management. I think I may finally have cracked this thing wide open.},
-    'entries/computers/internet/mail/need_imap_solution.txt' => q{I've had my own IMAP server and have recently been burned by a commercial solution. So I'd like suggestions for where to go next.},
-    'entries/computers/programming/perl/test-with-xpath.txt' => q{Introducing a Rails-inspired Perl module to test the structure and content of an XML or HTML document using CSS selectors.},
-    'entries/computers/programming/perl/defend-against-mistakes.txt' => q{I'm not sure I want to get into the business of defending against programmer mistakes in DBIx::Connector module. What do you think?},
-    'entries/computers/apps/conde-nast-ipad.txt' => q{I really want to enjoy reading The New Yorker on my iPad. But for a rather large number of reasons, it's just unpleasant. Here's why.},
-    'entries/culture/education/good-at-doing-things.txt' => q{Notes from “Good at Doing Things: Montessori education and higher-order cognitive functions”, presented by Steve Hughes.},
-);
-
-
-my ($src, $dst) = @ARGV;
-die "Usage: $0 [SOURCE DIR] [DEST DIR]\n" unless $src && $dst;
-
-for my $dir ($src, $dst) {
-    die "$dir does not exist\n" unless -e $dir;
-    die "$dir is not a directory\n" unless -d $dir;
-}
-
-#my %seen;
-
-find +{
-    no_chdir => 1,
-    wanted => sub {
-        return if -d;
-        my $bn = basename $_;
-        # Skip files in the root directory.
-        return if $File::Find::name eq "$src/$bn";
-        my ($data, $body) = parse($File::Find::name);
-#        $seen{$_}++ for @{ $data->{tags} };
-
-        # Append via.
-        $body .= "\n<p>()Via $data->{via})</p>\n" if $data->{via};
-
-        # Append past link.
-        $body .= qq{\n<p class="past"><small>Missing something? Try the <a rel="nofollow" href="http://past.justatheory.com$data->{uri}">old layout</a>.</small></p>\n\n};
-
-        # Get the slug.
-        $data->{uri} =~ s/-mony-/-money-/;
-        my $slug = basename $data->{uri};
-        $slug =~ s/[.][^.]+$//;
-        $slug =~ s/_+/-/g;
-
-        # Fixups.
-        if ($data->{dir} eq 'bricolage') {
-            $slug = "bricolage-$slug" if $slug !~ /bricolage/;
-        } elsif ($slug eq 'projectors') {
-            $slug = 'conference-projectors';
-        } elsif ($data->{uri} =~ m{mysql/replace}) {
-            $slug = "mysql-$slug";
-        } elsif ($data->{uri} =~ m{database/change}) {
-            $slug = "database-$slug";
-        } elsif ($data->{uri} =~ m{database/ordering}) {
-            $slug = "sql-$slug";
-        } elsif ($data->{uri} =~ m{database/sqlite/}) {
-            $slug = "sqlite-$slug";
-        } elsif ($data->{dir} eq 'js') {
-            $slug = "js-$slug" if $slug !~ /^test|js/;
-        } elsif ($data->{uri} =~ m{/oscon/}) {
-            $slug = "oscon-$slug" if $slug !~ /oscon/;
-        } elsif ($slug eq 'arrival') {
-            $slug = 'arrived-in-france';
-        } elsif ($slug eq 'departure') {
-            $slug = 'departed-france';
-        } elsif ($slug eq 'more-sun') {
-            $slug= 'french-sun';
-        } elsif ($slug eq 'embed-test') {
-            $slug = "html-$slug";
-        } elsif ($slug eq 'introducing-mysql') {
-            $slug = "introducing-mytap";
-        }
-
-        # Determine destination directory and file.
-        my $dir = "$dst/past/$data->{dir}";
-        my $fn = "$dir/$slug.md";
-        make_path $dir;
-
-        # Write out new file.
-        open my $fh, '>:encoding(UTF-8)', $fn or die "Cannot open $fn: $!\n";
-        say {$fh} join "", (
-            Dump({
-                title => $data->{title},
-                date => $data->{date},
-                ($data->{desc} ? (description => $desc_for{$File::Find::name}) : ()),
-            }),
-            "aliases: [$data->{uri}]\n",
-            "tags: [" . join(', ', @{ $data->{tags} }) . "]\n",
-            "---\n\n",
-            $body,
-        );
-
-#        exit;
-    },
-}, $src;
-
-
-# say 'my %tags = (';
-# for (sort keys %seen) {
-#     s/'/\\'/g;
-#     say "    '$_' => ['", join(" ", map {ucfirst} split /\s+/, $_), "'],";
-# }
-# Say ');';
-
-
-# XXX Report on and map tags.
-
-sub parse {
-    my $fn = shift;
-    open my $fh,  '<:encoding(UTF-8)', $fn or die "Cannot open $fn: $!\n";
-    my $title = <$fh>;
-    say $fn if !defined $title;
-    chomp $title;
-    $title =~ s{<q>([^<]+)</q>}{“$1”};
-    $title =~ s/<[^>]+>//g;
-    say $title if $title =~ /</;
-
-
-    my $data = { title => $title };
-    while (<$fh>) {
-        last if m/^\w*$/;
-        chomp;
-        my ($key, $line) = split /\s*:\s*/, $_, 2;
-        $data->{$key} = $line;
-    }
-    for my $bad (qw(names word wors)) {
-        $data->{'meta-keywords'} = delete $data->{"meta-key$bad"}
-            if exists $data->{"meta-key$bad"};
-    }
-    delete $data->{$_} for qw(meta-tags meta-readmore);
-    $data->{desc} = delete $data->{description};
-    for my $desc (qw(teaser description)) {
-        $data->{desc} = delete $data->{"meta-$desc"} if exists $data->{"meta-$desc"};
-    }
-    $data->{desc} =~ s/<[^>]+>//g if $data->{desc};
-    $data->{via} = delete $data->{'meta-via'} if exists $data->{'meta-via'};
-
-    $data->{date} = time_for($fn);
-    $data->{uri} = $fn =~ s/\Q$src//r;
-    $data->{uri} =~ s/[.]txt$/.html/;
-
-    my ($dir, @tags) = cats_for($data->{uri});
-    if (my $t = delete $data->{'meta-keywords'}) {
-        push @tags => map { @{ $tagmap{$_} || [] } } split /,\s*/, $t;
-    } elsif ($t = $data->{tags}) {
-        for my $tag (split /\s+/, $t) {
-            $tag =~ s/[+]/ /;
-            push @tags, @{ $tagmap{$tag} || [] };
-        }
-    }
-
-    $data->{tags} = tags_for(@tags);
-    $data->{dir} = $dir;
-    return $data, join '', <$fh>;
-}
-
-sub time_for($) {
-    my $file = shift;
-    if (my $time = `git -c log.showsignature=false log -1 --format='%at' --diff-filter=A $file`) {
-        chomp $time;
-        return strftime "%Y-%m-%dT%H:%M:%SZ", gmtime $time;
-    }
-    return strftime "%Y-%m-%dT%H:%M:%SZ", gmtime stat($file)->mtime;
-}
-
-sub cats_for {
-    my $uri = substr shift =~ s/[.][^.]+$//r, 1;
-    my $path = $uri =~ s{/[^/]+$}{}r;
-
-    if (my $c = $convert{$path}) {
-        if ($uri =~ $c->{match}) {
-            return $c->{dir}, $c->{topic};
-        }
-    }
-
-    if (my $spec = $cats{$uri}) {
-        return @{$spec};
-    }
-
-    my $spec = $cats{$path} || die "Unknown category for $uri\n";
-    return @{$spec};
-}
-
-sub tags_for {
-    my %seen;
-    return [ grep { !$seen{lc $_}++ } @_ ];
-}
-
-__END__
+) }
