@@ -2,7 +2,7 @@ Sqitch: Where to Define Dependencies?
 meta-keywords: Sqitch, SQL, database, deployment, plan, dependencies
 tags: Sqitch SQL database deployment plan dependencies
 
-<p>I&rsquo;ve been hard at work the last couple of days working on the new plan file format. It looks like this:</p>
+<p>I’ve been hard at work the last couple of days working on the new plan file format. It looks like this:</p>
 
 <pre><code>roles
 users_table
@@ -15,13 +15,13 @@ upd_user
 @beta     # woo!
 </code></pre>
 
-<p>The new code parses this, finding all steps and tags, and can rewrite the file exactly how it read it, including blank lines and comments. All of this is toward <a href="/computers/databases/sqitch-plan.html">requiring a plan file</a> and depending less on the VCS. I&rsquo;ve also just added methods for adding new steps and tags to the plan. In doing so, made sure that all dependencies properly resolve, and throw an error if they don&rsquo;t. Dependencies will then be written at the top of the deployment file like so:</p>
+<p>The new code parses this, finding all steps and tags, and can rewrite the file exactly how it read it, including blank lines and comments. All of this is toward <a href="/computers/databases/sqitch-plan.html">requiring a plan file</a> and depending less on the VCS. I’ve also just added methods for adding new steps and tags to the plan. In doing so, made sure that all dependencies properly resolve, and throw an error if they don’t. Dependencies will then be written at the top of the deployment file like so:</p>
 
 <pre><code>-- :requires: roles
 -- :requires: users_table
 </code></pre>
 
-<p>The plan parser is smart enough to parse these out of the files when parsing the plan, so it&rsquo;s easy for the user to add dependencies just by editing the deploy file.</p>
+<p>The plan parser is smart enough to parse these out of the files when parsing the plan, so it’s easy for the user to add dependencies just by editing the deploy file.</p>
 
 <p>As I was working on this, I realized that that may not be necessary. Since the plan file will now be required, we could instead specify dependencies in the plan file. Maybe something like this:</p>
 
@@ -52,7 +52,7 @@ upd_user +add_user -dr_evil
 <ul>
 <li>Changing dependencies would require editing the plan file directly.</li>
 <li>The appearance of the plan file is someone more obscure.</li>
-<li>It&rsquo;s more of a PITA to edit the plan file.</li>
+<li>It’s more of a PITA to edit the plan file.</li>
 <li>Adding commands to change dependencies in the plan file might be tricky.</li>
 </ul>
 

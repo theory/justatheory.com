@@ -9,7 +9,7 @@ Why should you care? Well, in addition to the
 the new version features <em>complete documentation</em>. For everything.</p>
 
 <p>This came about because I was trying to understand Template::Declare, with its
-occasional mentioning of “mixins” and “paths” and “roots,” and I just wasn&rsquo;t
+occasional mentioning of âmixinsâ and âpathsâ and âroots,â and I just wasn’t
 getting it out of the
 <a href="http://search.cpan.org/~sartak/Template-Declare-0.40/lib/Template/Declare.pm" title="Template::Declare 0.40">existing documentation</a>.
 Much of my confusion stemmed from how
@@ -21,7 +21,7 @@ enough to give me a commit bit.</p>
 
 <p>I was particularly interested in the <code>import_templates</code> and <code>alias</code> methods.
 There was no documentation, and though there were tests, the two methods were
-so similar that I could barely tell the difference. I also wasn&rsquo;t sure what
+so similar that I could barely tell the difference. I also wasn’t sure what
 the point was, though I had ideas. So I asked a bunch of
 <a href="http://lists.jifty.org/pipermail/jifty-devel/2009-September/002161.html">questions</a>
 and, through the discussion, I started to put the pieces together. I wrote
@@ -44,7 +44,7 @@ inheritance, and wrappers. And, most importantly, an explanation of aliasing
 <code>mix</code>). I greatly appreciate the time the BPS team took to answer my noobish
 questions. And their patience as I ripped things apart and built them up
 again. The result is that, in addition to being better documented, the new
-version&rsquo;s <code>alias</code> method creates build much better-performing and less
+version’s <code>alias</code> method creates build much better-performing and less
 memory-intensive aliases.</p>
 
 <p>So why was I doing all this? Well,
@@ -109,8 +109,8 @@ Template::Declare-&gt;init( dispatch_to =&gt; [&#x0027;MyApp::Templates::Main&#x
 print Template::Declare-&gt;show(&#x0027;/content&#x0027;);
 </pre>
 
-<p>So <code>MyApp::Templates::Main</code>&rsquo;s templates are in the &ldquo;/&rdquo; directory, so to speak,
-while the <code>MyApp::Templates::Util</code>&rsquo;s templates are in the &ldquo;/utils&rdquo;
+<p>So <code>MyApp::Templates::Main</code>’s templates are in the &ldquo;/&rdquo; directory, so to speak,
+while the <code>MyApp::Templates::Util</code>’s templates are in the &ldquo;/utils&rdquo;
 subdirectory. Pretty cool, eh?</p>
 
 <p>So with this understanding in place, I had a much better feel for

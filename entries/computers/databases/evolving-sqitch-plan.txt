@@ -2,7 +2,7 @@ The Ever Evolving Sqitch Plan
 meta-keywords: Sqitch, SQL, changes, change management, plan, deploy, revert, VCS, database
 tags: Sqitch SQL changes change+management plan deploy revert VCS database
 
-<p>I&rsquo;ve been working on the parser for the proposed new <a href="/computers/databases/sqitch-plan.html">deployment plan format</a>, and spent a day thinking it wasn&rsquo;t going to work at all. But by the end of the day yesterday, I was back on board with it. I think I&rsquo;ve also figured out how to eliminate the VCS dependency (and thus a whole level of complication). So first, the plan format:</p>
+<p>I’ve been working on the parser for the proposed new <a href="/computers/databases/sqitch-plan.html">deployment plan format</a>, and spent a day thinking it wasn’t going to work at all. But by the end of the day yesterday, I was back on board with it. I think I’ve also figured out how to eliminate the VCS dependency (and thus a whole level of complication). So first, the plan format:</p>
 
 <ul>
 <li>Names of things (steps and tags) cannot start or end in punctuation characters</li>
@@ -16,7 +16,7 @@ tags: Sqitch SQL changes change+management plan deploy revert VCS database
 </ul>
 
 
-<p>So, here&rsquo;s an example derived from a <a href="/computers/databases/sqitch-plan.html">previous example</a>:</p>
+<p>So, here’s an example derived from a <a href="/computers/databases/sqitch-plan.html">previous example</a>:</p>
 
 <pre><code>%plan-syntax-v1
 +roles
@@ -32,7 +32,7 @@ tags: Sqitch SQL changes change+management plan deploy revert VCS database
 @beta     # woo!
 </code></pre>
 
-<p>So we start with a directive for the version of the plan file (thanks for <a href="/computers/databases/sqitch-plan.html#comment-537891454">the suggestion</a>, Tom Davis!). Then we have deployments of the <code>roles</code>, <code>users_table</code>, and <code>dr_evil</code> steps. After that, it&rsquo;s tagged as <code>alpha</code>.</p>
+<p>So we start with a directive for the version of the plan file (thanks for <a href="/computers/databases/sqitch-plan.html#comment-537891454">the suggestion</a>, Tom Davis!). Then we have deployments of the <code>roles</code>, <code>users_table</code>, and <code>dr_evil</code> steps. After that, it’s tagged as <code>alpha</code>.</p>
 
 <p>Next, we have a comment, then the deployment of the <code>add_user</code> step. It requires that the <code>roles</code> and <code>users_table</code> steps be deployed. Then we deploy <code>del_user</code>. It requires all steps as of the <code>$alpha</code> tag. Next we revert the <code>dr_evil</code> step. Why? Because the next line deploys <code>upd_user</code>, which conflicts with <code>dr_evil</code> (and requires <code>add_user</code>). And finally, we tag it as <code>beta</code>.</p>
 
@@ -60,7 +60,7 @@ tags: Sqitch SQL changes change+management plan deploy revert VCS database
 </ul>
 
 
-<p>Now, as for the VCS dependency, my impetus for this was to allow <code>Sqitch</code> to get earlier versions of a particular deploy script, so that it could be modified in place and redeployed to make changes inline, as described in <a href="/computers/databases/sql-change-management-sans-redundancy.html">an earlier post</a>. However I&rsquo;ve been troubled as to how to indicate in the plan where to look in the VCS history for a particular copy of a file. Yesterday, I had an insight: why do I need the earlier version of a particular deploy script at all? There are two situations where it would be used, assuming a plan that mentions the same step at two different points:</p>
+<p>Now, as for the VCS dependency, my impetus for this was to allow <code>Sqitch</code> to get earlier versions of a particular deploy script, so that it could be modified in place and redeployed to make changes inline, as described in <a href="/computers/databases/sql-change-management-sans-redundancy.html">an earlier post</a>. However I’ve been troubled as to how to indicate in the plan where to look in the VCS history for a particular copy of a file. Yesterday, I had an insight: why do I need the earlier version of a particular deploy script at all? There are two situations where it would be used, assuming a plan that mentions the same step at two different points:</p>
 
 <ol>
 <li>To run it as it existed at the first point, and to run it the second time as it exists at <em>that</em> time.</li>
@@ -68,11 +68,11 @@ tags: Sqitch SQL changes change+management plan deploy revert VCS database
 </ol>
 
 
-<p>As to the first, I could not think of a reason why that would be necessary. If I&rsquo;m bootstrapping a new database, and the changes in that file are idempotent, is it really necessary to run the earlier version of the file at all? Maybe it is, but I could not think of one.</p>
+<p>As to the first, I could not think of a reason why that would be necessary. If I’m bootstrapping a new database, and the changes in that file are idempotent, is it really necessary to run the earlier version of the file at all? Maybe it is, but I could not think of one.</p>
 
 <p>The second item is the bit I wanted, and I realized (thanks in part to prompt from <a href="http://www.pgcon.org/2012/schedule/speakers/244.en.html">Peter van Hardenberg</a> while at PGCon) that I don’t need a VCS to get the script as it was at the time it was deployed. Instead, all I have to do is <em>store the script in the database as it was at the time it was run.</em> Boom, reversion time travel without a VCS.</p>
 
-<p>As an example, take the plan above. Say we have a database that has been deployed all the way to <code>@beta</code>. Let&rsquo;s add the <code>add_user</code> step again:</p>
+<p>As an example, take the plan above. Say we have a database that has been deployed all the way to <code>@beta</code>. Let’s add the <code>add_user</code> step again:</p>
 
 <pre><code>%plan-syntax-v1
 +roles
@@ -116,4 +116,4 @@ tags: Sqitch SQL changes change+management plan deploy revert VCS database
 
 <p>The one thing that scares me a bit is being able to properly detect circular dependencies in the plan parser. I think it will be pretty straight-forward for steps that require other steps. Less so for steps that require tags. Perhaps it will just have to convert a tag into an explicit dependence on all steps prior to that tag.</p>
 
-<p>So, I think this will work. But I&rsquo;m sure I must have missed something. If you notice it please enlighten me in the comments. And thanks for reading this far!</p>
+<p>So, I think this will work. But I’m sure I must have missed something. If you notice it please enlighten me in the comments. And thanks for reading this far!</p>

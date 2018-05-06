@@ -5,14 +5,14 @@ tags: sqitch SQL database changes change+management naming
 <p>After all of the <a href="/computers/databases/evolving-sqitch-plan.html">thinking</a>
 and <a href="/computers/databases/sqitch-vcs-again.html">rethinking</a> about how to
 manage a Sqitch plan, I am just about done with all the changes to make it all
-work. One of the changes I&rsquo;ve made is that tags are no longer objects that
+work. One of the changes I’ve made is that tags are no longer objects that
 stand on their own between change steps, but are simply names the refer to
 specific change steps. Not only is this much more like how a VCS thinks of
 tags (basically another name for a single commit), but it also greatly
 simplifies the code for iterating over a plan and updating metadata in the
 database.</p>
 
-<p>But now that a plan is, in its essence, just a list of &ldquo;steps&rdquo;, I&rsquo;m wondering
+<p>But now that a plan is, in its essence, just a list of &ldquo;steps&rdquo;, I’m wondering
 if I should change that term. I originally used the term &ldquo;steps&rdquo; because the
 original plan was to have a deploy work on a tag-to-tag basis, where a single
 tag could have a series of changes associated with it. By that model, each
@@ -21,16 +21,16 @@ tag failed, they were all reverted.</p>
 
 <p>But while one can still specify a tag as a deploy target (and optionally have
 it revert to an earlier tag one failure), it no longer makes sense to think of
-each change script as a step toward deploying a target. It&rsquo;s just a change.
+each change script as a step toward deploying a target. It’s just a change.
 Yes, as an object it has separate deploy, revert, and test scripts associated
-with it, but I&rsquo;m thinking it still makes sense to call them &ldquo;changes&rdquo; instead
-of &ldquo;steps.&rdquo; Because they&rsquo;re individual things, rather than collections of
+with it, but I’m thinking it still makes sense to call them &ldquo;changes&rdquo; instead
+of &ldquo;steps.&rdquo; Because they’re individual things, rather than collections of
 things that lead to some goal.</p>
 
 <p>What do you think?</p>
 
-<p>In other renaming news, I&rsquo;m thinking of changing the default directory that
-stores the step/change scripts. Right now it&rsquo;s <code>sql</code> (though you can make it
+<p>In other renaming news, I’m thinking of changing the default directory that
+stores the step/change scripts. Right now it’s <code>sql</code> (though you can make it
 whatever you want). The plan file goes into the current directory (assumed to
 be the root directory of your project), as does the local configuration file.
 So the usual setup is:</p>
@@ -43,7 +43,7 @@ So the usual setup is:</p>
 ./sql/test/
 </code></pre>
 
-<p> I&rsquo;m thinking of changing this in two ways:</p>
+<p> I’m thinking of changing this in two ways:</p>
 
 <ul>
 <li>Make the default location of the plan file be in the top-level script
@@ -92,5 +92,5 @@ engine (PostgreSQL and SQLite), and so can be used for all the projects; only
 the <code>--top-dir</code> option would need to change to switch between them. Each
 engine has its own plan file.</p>
 
-<p>And yeah, having written out here, I&rsquo;m pretty convinced. What do you think?
+<p>And yeah, having written out here, I’m pretty convinced. What do you think?
 Comments welcome.</p>

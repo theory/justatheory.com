@@ -2,9 +2,9 @@ Bootstrapping Bucardo Master/Master Replication
 meta-keywords: PostgreSQL, Bucardo, replication, multi-master
 tags: PostgreSQL Bucardo replication multi-master
 
-<p>Let&rsquo;s say you have a production database up and running and you want to set up a second database with <a href="http://bucardo.org/">Bucardo</a>-powered replication between them. Getting a new master up and running without downtime for an existing master, and without losing any data, is a bit fiddly and under-documented. Having just figured out one way to do it with the forthcoming Bucardo 5 code base, I wanted to blog it as much for my own reference as for yours.</p>
+<p>Let’s say you have a production database up and running and you want to set up a second database with <a href="http://bucardo.org/">Bucardo</a>-powered replication between them. Getting a new master up and running without downtime for an existing master, and without losing any data, is a bit fiddly and under-documented. Having just figured out one way to do it with the forthcoming Bucardo 5 code base, I wanted to blog it as much for my own reference as for yours.</p>
 
-<p>First, let&rsquo;s set up some environment variables to simplify things a bit. I&rsquo;m assuming that the database names and usernames are the same, and only the host names are different:</p>
+<p>First, let’s set up some environment variables to simplify things a bit. I’m assuming that the database names and usernames are the same, and only the host names are different:</p>
 
 <pre><code>export PGDATABASE=widgets
 export PGHOST=here.example.com
@@ -12,7 +12,7 @@ export PGHOST2=there.example.com
 export PGSUPERUSER=postgres
 </code></pre>
 
-<p>And here are some environment variables we&rsquo;ll use for Bucardo configuration stuff:</p>
+<p>And here are some environment variables we’ll use for Bucardo configuration stuff:</p>
 
 <pre><code>export BUCARDOUSER=bucardo
 export BUCARDOPASS=*****
@@ -20,7 +20,7 @@ export HERE=here
 export THERE=there
 </code></pre>
 
-<p>First, let&rsquo;s create the new database as a schema-only copy of the existing database:</p>
+<p>First, let’s create the new database as a schema-only copy of the existing database:</p>
 
 <pre><code>createdb -U $PGSUPERUSER -h $PGHOST2 $PGDATABASE
 pg_dump -U $PGSUPERUSER -h $PGHOST --schema-only $PGDATABASE \

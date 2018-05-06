@@ -8,7 +8,7 @@ tags: Catalyst Template::Declare database DBI PostgreSQL SQL aggregate
 
 <h3>A Quick Fix</h3>
 
-<p>But first, a diversion. In the <a href="/computers/programming/perl/catalyst/tutorial-continued.html">second post</a> in this series, I created an SQL statement to insert book authors, but I made a mistake: the values for surnames and given names were reversed. Oops. Furthermore, I included explicit author IDs, even though the <code>id</code> column uses a sequence for it&rsquo;s default value. So first we need to fix these issues. Change  the <code>INSERT INTO authors</code> statement in <code>sql/001-books.sql</code> to:</p>
+<p>But first, a diversion. In the <a href="/computers/programming/perl/catalyst/tutorial-continued.html">second post</a> in this series, I created an SQL statement to insert book authors, but I made a mistake: the values for surnames and given names were reversed. Oops. Furthermore, I included explicit author IDs, even though the <code>id</code> column uses a sequence for it’s default value. So first we need to fix these issues. Change  the <code>INSERT INTO authors</code> statement in <code>sql/001-books.sql</code> to:</p>
 
 <pre>
 INSERT INTO authors (surname, given_name)
@@ -23,7 +23,7 @@ VALUES (&#x27;Bastien&#x27;,      &#x27;Greg&#x27;),
 ;
 </pre>
 
-<p>This time, we're letting the sequence populate the <code>id</code> column. Fortunately, it starts from 1 just like we did, so we don&rsquo;t need to update the values in the <code>INSERT INTO book_author</code> statement. Now let&rsquo;s fix the database:</p>
+<p>This time, we're letting the sequence populate the <code>id</code> column. Fortunately, it starts from 1 just like we did, so we don’t need to update the values in the <code>INSERT INTO book_author</code> statement. Now let’s fix the database:</p>
 
 <pre><code>DELETE FROM book_author;
 DELETE FROM authors;
@@ -33,7 +33,7 @@ DELETE FROM authors;
 
 <h3>Constructing our Query</h3>
 
-<p>Now it&rsquo;s time for the fun. The original SQL query we wrote to get the list of books was:</p>
+<p>Now it’s time for the fun. The original SQL query we wrote to get the list of books was:</p>
 
 <pre><code>SELECT isbn, title, rating FROM books;
 </code></pre>
@@ -62,7 +62,7 @@ DELETE FROM authors;
 </pre>
 
 
-<p>Good start, but note how we now have three rows for “CCSP SNRS Exam Certification Guide” and two for “Perl Cookbook”. We could of course modify our Perl code to look at the ISBN in each row and combine as appropriate, but it&rsquo;s better to get the database to do that work, since it&rsquo;s designed for that sort of thing. So let&rsquo;s use an <a href="http://www.postgresql.org/docs/current/static/functions-aggregate.html" title="PostgreSQL Documentation: “Aggregate Functions”">aggregate function</a> to combine the values over multiple rows into a single row. All we have to do is use the column that changes (<code>surname</code>) in an aggregate function and tell PostgreSQL to use the other columns to group rows into one. PostgreSQL 8.4 introduces a really nice aggregate function, <code>array_agg()</code>, for pulling a series of strings together into an array. Let&rsquo;s put it to use:</p>
+<p>Good start, but note how we now have three rows for âCCSP SNRS Exam Certification Guideâ and two for âPerl Cookbookâ. We could of course modify our Perl code to look at the ISBN in each row and combine as appropriate, but it’s better to get the database to do that work, since it’s designed for that sort of thing. So let’s use an <a href="http://www.postgresql.org/docs/current/static/functions-aggregate.html" title="PostgreSQL Documentation: âAggregate Functionsâ">aggregate function</a> to combine the values over multiple rows into a single row. All we have to do is use the column that changes (<code>surname</code>) in an aggregate function and tell PostgreSQL to use the other columns to group rows into one. PostgreSQL 8.4 introduces a really nice aggregate function, <code>array_agg()</code>, for pulling a series of strings together into an array. Let’s put it to use:</p>
 
 <pre><code>SELECT b.isbn, b.title, b.rating, array_agg(a.surname) as authors
   FROM books       b
@@ -83,7 +83,7 @@ DELETE FROM authors;
  978&#x2d;0&#x2d;7357&#x2d;1201&#x2d;0 | Designing with Web Standards       |      5 | {Zeldman}
 </pre>
 
-<p>Much better. We now have a single row for each book, and the authors are all grouped into a single column. Cool. But we can go one step further. Although we could use Perl to turn the array of author surnames into a comma-delimited string, there&rsquo;s a PostgreSQL function for that, too: <code>array_to_string()</code>. Check it out:</p>
+<p>Much better. We now have a single row for each book, and the authors are all grouped into a single column. Cool. But we can go one step further. Although we could use Perl to turn the array of author surnames into a comma-delimited string, there’s a PostgreSQL function for that, too: <code>array_to_string()</code>. Check it out:</p>
 
 <pre><code>SELECT b.isbn, b.title, b.rating,
        array_to_string(array_agg(a.surname), ', ') as authors
@@ -108,7 +108,7 @@ DELETE FROM authors;
 
 <h3>Create a Database View</h3>
 
-<p>Cool! All the formatting work is done! But since it&rsquo;s likely what we'll often need to fetch book titles along with their authors, let&rsquo;s create an SQL view for this query. That way, we don&rsquo;t have to write the same SQL in different places in the application: we can just use the view. So create a new file, <code>sql/002-books_with_authors.sql</code>, and add this SQL:</p>
+<p>Cool! All the formatting work is done! But since it’s likely what we'll often need to fetch book titles along with their authors, let’s create an SQL view for this query. That way, we don’t have to write the same SQL in different places in the application: we can just use the view. So create a new file, <code>sql/002-books_with_authors.sql</code>, and add this SQL:</p>
 
 <pre><code>CREATE VIEW books_with_authors AS
 SELECT b.isbn, b.title, b.rating,
@@ -124,7 +124,7 @@ SELECT b.isbn, b.title, b.rating,
 <pre><code>psql -U postgres -d myapp -f sql/002-books_with_authors.sql
 </code></pre>
 
-<p>And now we can make use of the view any time we want and get the results of the full query. It&rsquo;s time to do that in our controller. Edit <code>lib/MyApp/Controller/Books.pm</code> and change this line  in the <code>list</code> action:</p>
+<p>And now we can make use of the view any time we want and get the results of the full query. It’s time to do that in our controller. Edit <code>lib/MyApp/Controller/Books.pm</code> and change this line  in the <code>list</code> action:</p>
 
 <pre><code>my $sth = $_-&gt;prepare('SELECT isbn, title, rating FROM books');
 </code></pre>
@@ -136,7 +136,7 @@ SELECT b.isbn, b.title, b.rating,
 });
 </code></pre>
 
-<p>The use of the <code>q{}</code> operator is a style I use for SQL queries in Perl code; you can use whatever style you like. Since this is a very short SQL statement (thanks to the view), it&rsquo;s not really necessary to have it on multiple lines, but I like to be fairly consistent about this sort of thing.</p>
+<p>The use of the <code>q{}</code> operator is a style I use for SQL queries in Perl code; you can use whatever style you like. Since this is a very short SQL statement (thanks to the view), it’s not really necessary to have it on multiple lines, but I like to be fairly consistent about this sort of thing.</p>
 
 <p>The last thing we need to do is a a very simple change to the <code>list</code> template in <code>lib/MyApp/Templates/HTML/Books.pm</code>. In previous posts, I was referring to the non-existent &ldquo;author&rdquo; key in the each hash reference fetched from the database. In the new view, however, I've named that column &ldquo;authors&rdquo;. So change this line:</p>
 
@@ -148,12 +148,12 @@ SELECT b.isbn, b.title, b.rating,
 <pre><code>cell { $book-&gt;{authors} };
 </code></pre>
 
-<p>And that&rsquo;s it. Restart the server and reload <code>http://localhost:3000/books/list</code> and you should now see all of the books listed with their authors.</p>
+<p>And that’s it. Restart the server and reload <code>http://localhost:3000/books/list</code> and you should now see all of the books listed with their authors.</p>
 
 <h3>Notes</h3>
 
-<p>I think you can appreciate why, to a certain degree, I'm starting to think of the database as handling both the &ldquo;M&rdquo; and the &ldquo;V&rdquo; in &ldquo;MVC&rdquo;. It&rsquo;s no mistake that the database object we created is known as a &ldquo;view&rdquo;. It was written in such a way that it not only expressed the relationship between books and authors in a compact but clear way, but it formatted the appropriate data for publishing on the site&mdash;all in a single, efficient query. All the Template::Declare view does is wrap it all up in the appropriate HTML.</p>
+<p>I think you can appreciate why, to a certain degree, I'm starting to think of the database as handling both the &ldquo;M&rdquo; and the &ldquo;V&rdquo; in &ldquo;MVC&rdquo;. It’s no mistake that the database object we created is known as a &ldquo;view&rdquo;. It was written in such a way that it not only expressed the relationship between books and authors in a compact but clear way, but it formatted the appropriate data for publishing on the site&mdash;all in a single, efficient query. All the Template::Declare view does is wrap it all up in the appropriate HTML.</p>
 
-<p>PostgreSQL isn&rsquo;t the only database to support feature such as this, by the way. All of the databases I've used support views, and many offer useful aggregate functions, as well. Among the <a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html" title="MySQL Documentation: “GROUP BY (Aggregate) Functions”">MySQL aggregates</a>, for example, is <code>group_concat()</code>, which sort of combines the <code>array_to_string(array_agg())</code> PostgreSQL syntax into a single function. And I've <a href="http://www.justatheory.com/computers/databases/sqlite/custom_perl_aggregates.html" title="Just a Theory: “Custom Aggregates in Perl”">personally written</a> a custom aggregate for SQLite in Perl. So although I use PostgreSQL for these examples and make use of its functionality, you can do much the same thing in most other databases.</p>
+<p>PostgreSQL isn’t the only database to support feature such as this, by the way. All of the databases I've used support views, and many offer useful aggregate functions, as well. Among the <a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html" title="MySQL Documentation: âGROUP BY (Aggregate) Functionsâ">MySQL aggregates</a>, for example, is <code>group_concat()</code>, which sort of combines the <code>array_to_string(array_agg())</code> PostgreSQL syntax into a single function. And I've <a href="http://www.justatheory.com/computers/databases/sqlite/custom_perl_aggregates.html" title="Just a Theory: âCustom Aggregates in Perlâ">personally written</a> a custom aggregate for SQLite in Perl. So although I use PostgreSQL for these examples and make use of its functionality, you can do much the same thing in most other databases.</p>
 
 <p>Either way, I find this to be a lot less work than using an ORM or other abstraction layer between my app and the database. Frankly, SQL provides just the right level of abstraction.</p>

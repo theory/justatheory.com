@@ -18,16 +18,16 @@ tags: sqitch sql version+control change+management
 <pre><code>SELECT has_function_privilege('insert_user(text, text)', 'execute');
 </code></pre>
 
-<p>PostgreSQL will throw an error if the function does not exist. Not running PostgreSQL? Well, you&rsquo;re probably not using Sqitch <a href="https://github.com/theory/sqitch/issues?labels=engine&amp;state=open">yet</a>, but if you were, you might force an error by dividing by zero. Here&rsquo;s an example verifying that a schema exists:</p>
+<p>PostgreSQL will throw an error if the function does not exist. Not running PostgreSQL? Well, you’re probably not using Sqitch <a href="https://github.com/theory/sqitch/issues?labels=engine&amp;state=open">yet</a>, but if you were, you might force an error by dividing by zero. Here’s an example verifying that a schema exists:</p>
 
 <pre><code>SELECT 1/COUNT(*)
   FROM information_schema.schemata
  WHERE schema_name = 'myapp';
 </code></pre>
 
-<p>At this point, Sqitch doesn&rsquo;t care at all what you put into your verify scripts. You just need to make sure that they indicate failure by throwing an error when passed to the database command-line client.</p>
+<p>At this point, Sqitch doesn’t care at all what you put into your verify scripts. You just need to make sure that they indicate failure by throwing an error when passed to the database command-line client.</p>
 
-<p>The best time to run a change verify script is right after deploying the change. The <code>--verify</code> option to the <a href="https://metacpan.org/module/App::Sqitch::Command::deploy"><code>deploy</code> command</a> does just that. If a verify script fails, the deploy is considered to have failed. Here&rsquo;s what failure looks like:</p>
+<p>The best time to run a change verify script is right after deploying the change. The <code>--verify</code> option to the <a href="https://metacpan.org/module/App::Sqitch::Command::deploy"><code>deploy</code> command</a> does just that. If a verify script fails, the deploy is considered to have failed. Here’s what failure looks like:</p>
 
 <pre><code>&gt; sqitch deploy
 Deploying changes to flipr_test
@@ -48,7 +48,7 @@ Reverting all changes
 Deploy failed
 </code></pre>
 
-<p>Good, right? In addition, you can always verify the state of a database using the <a href="https://metacpan.org/module/App::Sqitch::Command::verify"><code>verify</code> command</a>. It runs the verify scripts for all deployed changes. It also ensures that all the deployed changes were deployed in the same order as they&rsquo;re listed in the plan, and that no changes are missing. The output is similar to that for <code>deploy</code>:</p>
+<p>Good, right? In addition, you can always verify the state of a database using the <a href="https://metacpan.org/module/App::Sqitch::Command::verify"><code>verify</code> command</a>. It runs the verify scripts for all deployed changes. It also ensures that all the deployed changes were deployed in the same order as they’re listed in the plan, and that no changes are missing. The output is similar to that for <code>deploy</code>:</p>
 
 <pre><code>&gt; sqitch verify
 Verifying flipr_test
@@ -68,12 +68,12 @@ Verifying flipr_test
 Verify successful
 </code></pre>
 
-<p>Don&rsquo;t want verification tests/scripts? Use <code>--no-verify</code> when you call <a href="https://metacpan.org/module/App::Sqitch::Command::add"><code>sqitch add</code></a> and none will be created. Or tell it never to create verify scripts by setting the turning off the <code>add.with_verify</code> option:</p>
+<p>Don’t want verification tests/scripts? Use <code>--no-verify</code> when you call <a href="https://metacpan.org/module/App::Sqitch::Command::add"><code>sqitch add</code></a> and none will be created. Or tell it never to create verify scripts by setting the turning off the <code>add.with_verify</code> option:</p>
 
 <pre><code>sqitch config --bool add.with_verify no
 </code></pre>
 
-<p>If you somehow run <code>deploy --verify</code> or <code>verify</code> anyway, Sqitch will emit a warning for any changes without verify scripts, but won&rsquo;t consider them failures.</p>
+<p>If you somehow run <code>deploy --verify</code> or <code>verify</code> anyway, Sqitch will emit a warning for any changes without verify scripts, but won’t consider them failures.</p>
 
 <h3>Up Front Dependency Checking</h3>
 

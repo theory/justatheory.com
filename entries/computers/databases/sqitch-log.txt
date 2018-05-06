@@ -14,7 +14,7 @@ tags: sqitch log sql database change+management
 </ul>
 
 
-<p>Here are a couple of examples searching <a href="https://github.com/theory/sqitch/blob/master/lib/sqitchtutorial.pod">the tutorial</a>&rsquo;s test database:</p>
+<p>Here are a couple of examples searching <a href="https://github.com/theory/sqitch/blob/master/lib/sqitchtutorial.pod">the tutorial</a>’s test database:</p>
 
 <pre style="background:black;color:white"><code>&gt; sqitch -d flipr_test log -n 3
 On database flipr_test
@@ -57,4 +57,4 @@ theory reverted <span style="color:blue">9df095</span>02c559</span> - change_pas
 on 2012-07-07 at 1:26 PM
 </code></pre>
 
-<p>I&rsquo;m pretty happy with this. Not sure how much it will be used, but it works great!</p>
+<p>I’m pretty happy with this. Not sure how much it will be used, but it works great!</p>

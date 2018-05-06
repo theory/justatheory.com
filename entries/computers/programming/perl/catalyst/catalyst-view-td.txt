@@ -2,7 +2,7 @@ Create Catalyst Views with Template::Declare
 meta-keywords: Perl, Catalyst, Template::Declare, templates, templating, MVC, view
 tags: Perl Catalyst Template::Declare templates templating MVC view
 
-<p>Following up on last week&rsquo;s
+<p>Following up on last week’s
 <a href="/computers/programming/perl/modules/template-declare-documented.html" title="Template Declare Explained">release</a> of
 <a href="http://search.cpan.org/perldoc?Template::Declare" title="Template::Declare on CPAN">Template::Declare</a>
 0.41, this week I'm pleased to announce the release of a new
@@ -12,7 +12,7 @@ tags: Perl Catalyst Template::Declare templates templating MVC view
 <p>Yes, I'm aware of
 <a href="http://search.cpan.org/perldoc?Catalyst::View::Template::Declare">Catalyst::View::Template::Declare</a>.
 As I <a href="/computers/programming/perl/modules/template-declare-documented.html" title="Template Declare Explained">mentioned</a>
-last week, it doesn&rsquo;t make very good use of Template::Declare. I don&rsquo;t blame
+last week, it doesn’t make very good use of Template::Declare. I don’t blame
 <a href="http://blog.jrock.us/">jrock</a> for that, though; Template::Declare had very
 poor documentation before 0.41. But now that it is properly documented and I
 have a pretty solid grasp of how it works, I wanted to create a new Catalyst
@@ -34,8 +34,8 @@ for your next project? How about:</p>
 </ul>
 
 
-<p>If you weren&rsquo;t convinced by the first three points, that forth one is the
-killer. It&rsquo;s the reason I wrote a new view. But here&rsquo;s an even better reason:
+<p>If you weren’t convinced by the first three points, that forth one is the
+killer. It’s the reason I wrote a new view. But here’s an even better reason:
 I'm going to show you exactly how to use it, right here in this blog post.</p>
 
 <h3>A Simple Hello</h3>
@@ -109,12 +109,12 @@ table {
 <p>Then point your browser to http://localhost:3000/books/list. If you have
 everything working so far, you should see a web page that displays nothing
 other than our column headers for &ldquo;Title&rdquo;, &ldquo;Rating&rdquo;, and &ldquo;Author(s)&rdquo; &mdash; we
-won&rsquo;t see any books until we get the database and model working below.</p>
+won’t see any books until we get the database and model working below.</p>
 
 <h3>A Few Comments</h3>
 
 <p>The first thing I want to draw your attention to in this example is that
-<code>list</code> template. Isn&rsquo;t it a thing of beauty? It&rsquo;s so easy for Perl hackers to
+<code>list</code> template. Isn’t it a thing of beauty? It’s so easy for Perl hackers to
 read. Compare it to the TT example from the tutorial (with the comments
 removed, just to be fair):</p>
 
@@ -156,7 +156,7 @@ sub list : Local {
 <a href="http://search.cpan.org/perldoc?Catalyst::View::TD" title="Catalyst::View::TD on CPAN">Catalyst::View::TD</a>
 differs from its
 <a href="http://search.cpan.org/perldoc?Catalyst::View::Template::Declare">predecessor</a>.
-Whereas the latter would load all of the modules under the view&rsquo;s namespace
+Whereas the latter would load all of the modules under the view’s namespace
 and shove all of their templates into root path, the former imports templates
 under paths that correspond to their class names. Hence the match with
 controller names.</p>

@@ -4952,7 +4952,7 @@ characters output by my view:
 #   Failed test 'HTML should be valid (http://localhost/)'
 #   at t/view_TD.t line 30.
 # HTML::Lint errors for http://localhost/
-#  (4:3) Invalid character \x2019 should be written as &rsquo;
+#  (4:3) Invalid character \x2019 should be written as ’
 #  (18:5) Invalid character \xA9 should be written as &copy;
 # 2 errors on the page
 

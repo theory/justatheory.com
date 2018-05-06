@@ -13,7 +13,7 @@ tags: Sqitch Windows Perl ActivePerl ActiveState
 
 <p>As of this writing, only PostgreSQL is supported, so you will need to <a href="http://www.postgresql.org/download/windows/">install PostgreSQL</a>.</p>
 
-<p>But otherwise, that&rsquo;s it. In fact, this incantation works for any OS that ActivePerl supports. Here&rsquo;s where you can find the <code>sqitch</code> executable on each:</p>
+<p>But otherwise, that’s it. In fact, this incantation works for any OS that ActivePerl supports. Here’s where you can find the <code>sqitch</code> executable on each:</p>
 
 <ul>
 <li>Windows: <code>C:\perl\site\bin\sqitch.bat</code></li>

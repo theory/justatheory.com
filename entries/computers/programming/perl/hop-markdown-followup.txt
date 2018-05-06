@@ -4,7 +4,7 @@ tags: Perl parser HOP::Parser Higher-Order Perl Markdown
 
 <p>Just to follow up on <a href="/computers/programming/perl/hop-parsing-markdown.html" title="Issues Parsing Markdown with HOP::Parser">my post</a> from last week, in which I was banging my
 head on parsing, I had an insight over the weekend that helped me to solve the
-problem. All I can say is, thank god I&rsquo;ve written a lot of huge regular
+problem. All I can say is, thank god I’ve written a lot of huge regular
 expressions in the past, as that experience really helped me to thinking more
 like a parser. I wanted to share that insight here.</p>
 
@@ -39,8 +39,8 @@ separately. So whereas I previously had</p>
     [ EMROP =&gt; qr/(?&lt;=[^\s*_])[_]{1,2}|(?&lt;=[^\s*_])[*]{1,2}/ ],
 </code></pre>
 
-<p>Yes, I&rsquo;m now also matching &ldquo;middle&rdquo; emphasis operators &mdash; that is, those with
-non-whitespace on <em>both</em> sides. But now I&rsquo;m able to get pretty much exactly
+<p>Yes, I’m now also matching &ldquo;middle&rdquo; emphasis operators &mdash; that is, those with
+non-whitespace on <em>both</em> sides. But now I’m able to get pretty much exactly
 what I need with a rule like this:</p>
 
 <pre><code>my $lstar = match EMLOP =&gt; &#x0027;*&#x0027;;
@@ -84,10 +84,10 @@ my $stem = T(
 </code></pre>
 
 <p>In truth, I ended up with something much more complicated than this, as it
-needed to make sure that the operators were balanced (e.g., you can&rsquo;t do it
+needed to make sure that the operators were balanced (e.g., you can’t do it
 <code>***like this___</code>), but the overall idea is the same. The emphasis, strong,
 and strong/em parsers also handle mid-word markers, such as in
-<code>un*frigging*believable</code>, that I&rsquo;m not showing here. But the overall approach
+<code>un*frigging*believable</code>, that I’m not showing here. But the overall approach
 is fundamentally the same: I was having a problem with two patterns getting in
 the way of my parser, so I simply wrote a separate parser to handle one of
 those patterns. Ultimately, all I had to do was break the problem down into
@@ -111,7 +111,7 @@ smaller parts and solve each part individually. It works pretty well.</p>
     [ EMROP =&gt; qr/(?&lt;=[^\s_*])$stem_re/, $stem_split ],
 </code></pre>
 
-<p>The cool thing about this was that I didn&rsquo;t need a separate strong/emphasis
+<p>The cool thing about this was that I didn’t need a separate strong/emphasis
 parser; these lexer rules were just returning the appropriate emphasis tokens,
 and then I was able to just let the emphasis and strong parsers do their
 things.</p>
@@ -121,7 +121,7 @@ coming out the same, so for <code>***foo***</code>, rather than getting
 <code>&lt;strong&gt;&lt;em&gt;foo&lt;/em&gt;&lt;/strong&gt;</code>, I was getting <code>&lt;strong&gt;&lt;em&gt;foo&lt;/strong&gt;&lt;/em&gt;</code>.
 Oops. I could solve this by using different splitters for left and right, but
 once I added the middle token, wherein there are no whitespace characters on
-either side, it&rsquo;s impossible to tell which token to return first. So I went
+either side, it’s impossible to tell which token to return first. So I went
 back to the separate strong/emphasis operators.</p>
 
 <p>Another path I started down was separate tokens for strong and emphasis
@@ -153,16 +153,16 @@ looks like this:</p>
 <pre><code> [&#x0027;*&#x0027;,[&#x0027;STLOP&#x0027;,&#x0027;_&#x0027;],&#x0027;foo,[&#x0027;STLOP&#x0027;,&#x0027;_&#x0027;],&#x0027;*&#x0027;];
 </code></pre>
 
-<p>In other words, exactly the same. When EMLOP and EMROP are applied to &lsquo;*&rsquo;,
-there is no non-space character before or after it, so it&rsquo;s left alone. But
+<p>In other words, exactly the same. When EMLOP and EMROP are applied to &lsquo;*’,
+there is no non-space character before or after it, so it’s left alone. But
 clearly this is an invalid lexing.</p>
 
 <p>So I had to once again go back to the more complicated solution of a separate
-parser for combined span operators. For now. I&rsquo;m hoping someone can come up
-with a solution to make this lex better, because I&rsquo;m going to be adding more
+parser for combined span operators. For now. I’m hoping someone can come up
+with a solution to make this lex better, because I’m going to be adding more
 span operators, such as for code, deleted text, and added text, and it will
 very quickly get complicated parsing for those combinations of characters.
-It&rsquo;d be much better if the lexer could see something like</p>
+It’d be much better if the lexer could see something like</p>
 
 <pre><code>+**_`test *markdown*`_**+
 </code></pre>

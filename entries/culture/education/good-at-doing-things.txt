@@ -1,16 +1,16 @@
 Good at Doing Things
 meta-keywords: Montessori, education, neurology, brain development, neuropsychology
 tags: montessori neurology neuroscience neuropsychology education early+childhood+development executive+function
-meta-description: <p>Tonight, I attended a talk, <a href="http://www.montessori-nw.org/section.cfm?wSectionID=3747">Good at doing things: Montessori education and higher-order cognitive functions</a>, about the Montessori method of childhood education and its effects on neurological development. If I wasn&rsquo;t a convert to the Montessori method before, I am now. Julie and I went to back to school night at Anna&rsquo;s new school, <a href="http://childpeace.org/">Childpeace Montessori</a> the other night, and we were both jealous. How we wish we could have had this kind of education! This talk really sealed it in my mind. I can&rsquo;t imagine that I'd want Anna to have any other education.</p><p>Anyway, I might write a bit more on this later, but for now, here are my notes from the talk. Enjoy.</p> 
+meta-description: <p>Tonight, I attended a talk, <a href="http://www.montessori-nw.org/section.cfm?wSectionID=3747">Good at doing things: Montessori education and higher-order cognitive functions</a>, about the Montessori method of childhood education and its effects on neurological development. If I wasn’t a convert to the Montessori method before, I am now. Julie and I went to back to school night at Anna’s new school, <a href="http://childpeace.org/">Childpeace Montessori</a> the other night, and we were both jealous. How we wish we could have had this kind of education! This talk really sealed it in my mind. I can’t imagine that I'd want Anna to have any other education.</p><p>Anyway, I might write a bit more on this later, but for now, here are my notes from the talk. Enjoy.</p> 
 
 <p>Tonight, I attended a
 talk, <a href="http://www.montessori-nw.org/section.cfm?wSectionID=3747">Good at doing things: Montessori education and higher-order cognitive functions</a>, about the
 Montessori method of childhood education and its effects on neurological
-development. If I wasn&rsquo;t a convert to the Montessori method before, I am now.
-Julie and I went to back to school night at Anna&rsquo;s new school, <a href="http://childpeace.org/">Childpeace
+development. If I wasn’t a convert to the Montessori method before, I am now.
+Julie and I went to back to school night at Anna’s new school, <a href="http://childpeace.org/">Childpeace
 Montessori</a> the other night, and we were both jealous.
 How we wish we could have had this kind of education! This talk really sealed
-it in my mind. I can&rsquo;t imagine that I'd want Anna to have any other education.</p>
+it in my mind. I can’t imagine that I'd want Anna to have any other education.</p>
 
 <p>Anyway, I might write a bit more on this later, but for now, here are my notes
 from the talk. Enjoy.</p>
@@ -45,7 +45,7 @@ specialist, and pediatric neuropsychologist.</p>
 
 <ul>
 <li>Brain that is <a href="http://en.wikipedia.org/wiki/Myelin" title="Wikipedia: Myelin">myelinated</a> is functional</li>
-<li>Injured brains don&rsquo;t develop well</li>
+<li>Injured brains don’t develop well</li>
 <li>Rats with non-stimulating environment have smaller brains with fewer connections and lower IQ.</li>
 <li>Rats raised in stimulating environment are heavier and more complex</li>
 <li>Emotional support, stimulation good for brain development</li>
@@ -57,7 +57,7 @@ by Montessori education.</p>
 
 <h3> What should school be for?</h3>
 
-<p>In, US, it&rsquo;s about preparing students for multiple choice tests.</p>
+<p>In, US, it’s about preparing students for multiple choice tests.</p>
 
 <p>If ask students, they want:</p>
 
@@ -75,7 +75,7 @@ by Montessori education.</p>
 </ul>
 
 
-<p>List of things from teachers is similar. &ldquo;I think that&rsquo;s pretty neat!&rdquo;
+<p>List of things from teachers is similar. &ldquo;I think that’s pretty neat!&rdquo;
 Reinforced by multiple studies around the world.</p>
 
 <h3> How Steve Discovered Montessori Education</h3>
@@ -135,7 +135,7 @@ Montessori. You have to:</p>
 <h3> A Montessori Parent</h3>
 
 <p>Hughes daughter, Isabel was born. [His daughter, gets choked up.] Isabel went
-to Montessori, has been there since beginning. Almost 11. Couldn&rsquo;t be happier
+to Montessori, has been there since beginning. Almost 11. Couldn’t be happier
 with her progress and experience of seeing a child discover herself.</p>
 
 <p>So the Hughes family fell in love Montessori. 75% of children of his
@@ -147,15 +147,15 @@ Ph.D. in Child Development.</p>
 
 <p>&mdash;Fiona A., Ph.D.</p>
 
-<p>That&rsquo;s where my kid is going to school!</p>
+<p>That’s where my kid is going to school!</p>
 
 <p>&mdash;Terry H., Ph.D.</p>
 
-<p>It&rsquo;s like education designed by a gifted pediatric neuropsychologist.</p>
+<p>It’s like education designed by a gifted pediatric neuropsychologist.</p>
 
 <p>&mdash;Steve Hughes, Ph.D., pediatric neuropsychologist</p>
 
-<p>It&rsquo;s like education designed by a gifted developmental neuropsychologist.</p>
+<p>It’s like education designed by a gifted developmental neuropsychologist.</p>
 
 <p>&mdash;Fiona A., Ph.D., developmental neuropsychologist</p></blockquote>
 
@@ -173,7 +173,7 @@ anyone coined that phrase.</p>
 <p>Some areas are responsible for certain functions. Motor and sensory areas are
 bands that go over the brain. Mapping of functional areas finds that they're
 not the same size as parts of the body for which they control function. From
-brain&rsquo;s point of view, body is huge hands, large face, not much of anything
+brain’s point of view, body is huge hands, large face, not much of anything
 else.</p>
 
 <h3> Way of Thinking About Things Brains Do</h3>
@@ -195,9 +195,9 @@ properly.</p>
 
 <p>These are nuggets that must communicate in order to read properly.</p>
 
-<p>Children with reading disorder have brains that don&rsquo;t activate as much. Such
-children&rsquo;s functions can be improved. Have to do lots of calisthenics of brain
-to develop those nuggets. It&rsquo;s hard, and takes someone who knows what they're
+<p>Children with reading disorder have brains that don’t activate as much. Such
+children’s functions can be improved. Have to do lots of calisthenics of brain
+to develop those nuggets. It’s hard, and takes someone who knows what they're
 doing.</p>
 
 <h3> Reading</h3>
@@ -217,7 +217,7 @@ letters</a>.</p>
 <p>Doing <a href="http://contented-baby.blogspot.com/2008/08/montessori-cylinder-blocks-block-1.html">cylinder
 work</a>,
 child learned perfect pencil grasp. Was easy to learn to hold the pencil when
-started to write, because had already had practice with cylinder&rsquo;s.</p>
+started to write, because had already had practice with cylinder’s.</p>
 
 <p>Child without grasp can still have phonological processing going on, doing
 writing with <a href="http://www.montessorimom.com/moveable-alphabet/">movable
@@ -251,16 +251,16 @@ Once you understand problem, very little brain is required to solve it.
 
 <p>This is what Montessori education is about. Teacher makes sure what child is
 doing is just on the edge of what they've done before. Great to give to child
-something, a task, that&rsquo;s developmentally appropriate to them, so they are
+something, a task, that’s developmentally appropriate to them, so they are
 challenged by it. There is no environment like a Montessori classroom to really
-emphasize this. If there is something you're doing that&rsquo;s developmentally
+emphasize this. If there is something you're doing that’s developmentally
 appropriate for you, every neuron is focused on the task.</p>
 
 <p>What would it be like if we spent every day like this?</p>
 
 <p>How else can we make brains better? Hands-on activity. Learning that things
 have a beginning part, a middle part, and end end part. All meaningful
-learning takes place through error and analysis. Don&rsquo;t solve problems for the
+learning takes place through error and analysis. Don’t solve problems for the
 child; let them figure it out.</p>
 
 <p>How else can we make better brains? Multisensory work. Self-guided learning.
@@ -295,15 +295,15 @@ unique in providing extraordinary role of developing executive functions.</p>
 development environments. &ldquo;Possibly&rdquo; because these things are hard to measure
 in children. If you check off the things you need, they're all in the
 Montessori classroom, and Hughes believes that such an environment <em>does</em>
-promote executive functions, he just hasn&rsquo;t yet done the study to show such
+promote executive functions, he just hasn’t yet done the study to show such
 conclusively.)</p>
 
 <p>Prefrontal cortex modify remote events (through time and space) through
 intentional behavior. Through its development, links the present to the
 future. Once this developed in humans, Humans had won evolutionary contest.</p>
 
-<p>Chimps can solve problems. But they can&rsquo;t plan for the future. Can stack boxes
-to get banana on ceiling, but can&rsquo;t stock up boxes for when bananas reappear
+<p>Chimps can solve problems. But they can’t plan for the future. Can stack boxes
+to get banana on ceiling, but can’t stock up boxes for when bananas reappear
 next week.</p>
 
 <ul>
@@ -326,12 +326,12 @@ this is developed, you are an effective human being.</p>
 
 <p>Unlike with learning problems, there is little to do to develop executive
 functions in later age. For the development in children, there is nothing like
-Montessori classroom to develop executive functions. Those who don&rsquo;t
+Montessori classroom to develop executive functions. Those who don’t
 develop them are simply not that good at doing things.</p>
 
 <p>Normalization represents some aspect of executive functions. Working memory is
 essential to executive planning. And in Montessori classrooms, they plan
-learning games. These develop this. It&rsquo;s deliberate. Need limitation of
+learning games. These develop this. It’s deliberate. Need limitation of
 materials so children have to learn to limit inappropriate behavior. So if
 there is only one pink tower, child has to plan, inhibit impulses, etc., to
 use it.</p>
@@ -359,7 +359,7 @@ environment.</p>
 <h3> What School for Most Children is About</h3>
 
 <p>Remember the lists of what children and teachers consider important? Doing
-well on standardized tests is not in the top 10. It&rsquo;s #23, according to
+well on standardized tests is not in the top 10. It’s #23, according to
 teachers.</p>
 
 <p>Those that receive the most attention int he classroom? #1; Helping students
@@ -370,7 +370,7 @@ standardized tests is #1. Understand what is happening i the world is #10!</p>
 
 <blockquote><p>If education is always to be conceived along the same antiquated lines of a
 mere transmission of knowledge, there is little to be hoped from it in the
-bettering of man&rsquo;s future.</p>
+bettering of man’s future.</p>
 
 <p>&mdash;Maria Montessori</p></blockquote>
 
@@ -408,7 +408,7 @@ bettering of man&rsquo;s future.</p>
 
 <ul>
 <li>Recognize unique talents in each student</li>
-<li>Create individualized education processes that foster each student&rsquo;s unique abilities</li>
+<li>Create individualized education processes that foster each student’s unique abilities</li>
 <li>Work with other teachers to understand of how growth is promoted</li>
 <li>Help parents create developmental environments for their students at home</li>
 <li>Analyze and harness sociological forces that control what happens in schools</li>
@@ -462,14 +462,14 @@ schools graduate from high school.</li>
 
 <h3> And How is Conventional Education Doing?</h3>
 
-<p>Hasn&rsquo;t changed much in last 100 years.</p>
+<p>Hasn’t changed much in last 100 years.</p>
 
-<p>Schools struggle to meet state marks. It&rsquo;s in the news all the time. Saddest
-part about it is that it&rsquo;s no longer surprising.</p>
+<p>Schools struggle to meet state marks. It’s in the news all the time. Saddest
+part about it is that it’s no longer surprising.</p>
 
-<p>It&rsquo;s time to do something different! We've tried the existing approach, it
-doesn&rsquo;t work, it&rsquo;s not good for children. No reason schools have to be the way
-they are. There is a better way. That&rsquo;s what Montessori teachers provide.</p>
+<p>It’s time to do something different! We've tried the existing approach, it
+doesn’t work, it’s not good for children. No reason schools have to be the way
+they are. There is a better way. That’s what Montessori teachers provide.</p>
 
 <h3> Three components of Classical Montessori Education</h3>
 
@@ -477,14 +477,14 @@ they are. There is a better way. That&rsquo;s what Montessori teachers provide.<
 Method
 Curriculum and Materials</p>
 
-<p>Everyone falls in love with materials, but the culture is most important. It&rsquo;s
-an exposure for children that&rsquo;s transforming.</p>
+<p>Everyone falls in love with materials, but the culture is most important. It’s
+an exposure for children that’s transforming.</p>
 
 <p>The social environment of a child influences the child, but also helps them
 recover from trauma or disease. Humans are shaped by their social experiences.
 We learn how to be humans from other humans. Children take what is given to
 them by adults and their world and the convey them. Montessori provides
-culture that&rsquo;s supportive of what we identify as civilization. Civilization is
+culture that’s supportive of what we identify as civilization. Civilization is
 optional.</p>
 
 <blockquote><p>Whoever touches the life of a child touches the most sensitive point of a
@@ -495,9 +495,9 @@ future.</p>
 
 <p>In infancy, we believe parents can solve all our problems</p>
 
-<p>As children, it&rsquo;s that teachers can</p>
+<p>As children, it’s that teachers can</p>
 
-<p>As adults, it&rsquo;s that governments.</p>
+<p>As adults, it’s that governments.</p>
 
 <p>It as never been more important to raise generations who:</p>
 

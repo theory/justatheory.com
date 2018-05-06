@@ -3,7 +3,7 @@ meta-keywords:sql,database,change management,versioning,deploy,revert
 tags: sql database change+management versioning deploy revert
 meta-description:<p>I've been thinking a lot about SQL change management. I've <a href="/computers/databases/change-management.html">written about this before</a>, implemented a <a href="https://metacpan.org/module/Module::Build::DB">dubious implementation of SQL migrations</a>, and used a <a href="http://www.depesz.com/index.php/2010/08/22/versioning/">dependency-tracking solution</a> with its own set of challenges. Nothing has satisfied me. But I think I may finally have cracked this thing wide open.</p>
 
-<p>I&rsquo;ve been thinking a lot about SQL change management. I know I have
+<p>I’ve been thinking a lot about SQL change management. I know I have
 <a href="/computers/databases/change-management.html">written about this before</a>. But
 I was never satisfied with that idea, mostly because it required managing
 database changes in two separate but interdependent ways. Blargh. So for my
@@ -11,10 +11,10 @@ Perl projects the last couple of years, I have stuck to the very simple but
 ugly Rails-style migration model, as implemented in
 <a href="https://metacpan.org/module/Module::Build::DB">Module::Build::DB</a>.</p>
 
-<p>But it has been on my brain more lately because I&rsquo;m writing more and more
+<p>But it has been on my brain more lately because I’m writing more and more
 database applications <a href="http://iovation.com/">at work</a>, and managing changes
-over time is becoming increasingly annoying. I&rsquo;ve been using a variation on
-<a href="http://www.depesz.com/index.php/2010/08/22/versioning/">Depesz&rsquo;s Versioning</a>
+over time is becoming increasingly annoying. I’ve been using a variation on
+<a href="http://www.depesz.com/index.php/2010/08/22/versioning/">Depesz’s Versioning</a>
 package, mainly because its idea of specifying dependencies instead of ordered
 deployment scripts is so useful. However, its implementation in pure SQL, with
 accompanying shell and Perl scripts, is not entirely satisfying. Worse, one
@@ -27,7 +27,7 @@ This makes tracking diffs annoying.</p>
 
 <p>Oh, and did I mention that there is no simple built-in way to revert changes,
 and even if there were, because there are no named releases, it can be
-difficult to decide what to revert <em>to</em>? I don&rsquo;t often need that capability,
+difficult to decide what to revert <em>to</em>? I don’t often need that capability,
 but when I need it, I <strong>need it.</strong></p>
 
 <p>Then, this week, Robert Haas
@@ -38,7 +38,7 @@ he implemented. It was simple:</p>
 server with one column, a UUID. The deployment tarball contained a file with
 a list of UUIDs in it, each one associated to an SQL script. At install
 time, the install script ran through that file in order and ran any scripts
-whose UUID didn&rsquo;t yet appear in the table, and then added the UUIDs of the
+whose UUID didn’t yet appear in the table, and then added the UUIDs of the
 run scripts to the table.</p></blockquote>
 
 <p>I like this simplicity, but there are some more things I think could be done,
@@ -48,7 +48,7 @@ groups of changes for easy reference.</p>
 
 <h3>Yet Another SQL Deployment Strategy</h3>
 
-<p>So here&rsquo;s my proposal. Following Robert, we create a configuration file, but
+<p>So here’s my proposal. Following Robert, we create a configuration file, but
 instead of just listing changes, we fill it with tags and the names of the
 changes are associated with each. An example:</p>
 
@@ -65,7 +65,7 @@ add_user
 
 <p>Our change management app will parse this file, finding the tag for each stage
 of the migration in brackets, and apply the associated changes, simply finding
-each of them in <code>sql/deploy/$change.sql</code>. If it&rsquo;s reverting changes, it finds
+each of them in <code>sql/deploy/$change.sql</code>. If it’s reverting changes, it finds
 the reversion scripts named <code>sql/revert/$change.sql</code>. The tags can be anything
 you want; release tags might be useful. Easy so far, right?</p>
 
@@ -76,7 +76,7 @@ first, it will fail, because the <code>widgets</code> table does not yet exist.<
 
 <p>Of course we can re-order the lines in the configuration file. But given that
 one might have many changes for a particular tag, with many cross-referencing
-dependencies, I think it&rsquo;s better to overcome this problem in the scripts
+dependencies, I think it’s better to overcome this problem in the scripts
 themselves. So I suggest that the <code>sql/deploy/add_widget.sql</code> file look
 something like this:</p>
 
@@ -90,9 +90,9 @@ CREATE OR REPLACE FUNCTION add_widget(
 $$;
 </code></pre>
 
-<p>Here I&rsquo;m stealing Depesz&rsquo;s dependency tracking idea. With a simple comment at
+<p>Here I’m stealing Depesz’s dependency tracking idea. With a simple comment at
 the top of the script, we specify that this change requires that the
-<code>widgets_table</code> change be run first. So let&rsquo;s look at
+<code>widgets_table</code> change be run first. So let’s look at
 <code>sql/deploy/widgets_table.sql</code>:</p>
 
 <pre><code>-- requires: users_table
@@ -105,7 +105,7 @@ CREATE TABLE widgets (
 
 <p>Ah, now here we also require that the <code>users_table</code> change be deployed first.
 Of course, it likely would be, given that it appears under a tag earlier in
-the file, but it&rsquo;s best to be safe and explicitly spell out dependencies.
+the file, but it’s best to be safe and explicitly spell out dependencies.
 Someone might merge the two tags at some point before release, right?</p>
 
 <p>The <code>users_table</code> change has no dependencies, but the later <code>add_user</code> change
@@ -143,7 +143,7 @@ that if we tell it to revert to <code>beta</code>, it can do so in the proper or
 <p>Now, as the deployment app runs the scripts, deploying or reverting changes,
 it tracks them and their dependencies in its own metadata table in the
 database, not unlike
-<a href="http://www.depesz.com/index.php/2010/08/22/versioning/">Depesz&rsquo;s Versioning</a>
+<a href="http://www.depesz.com/index.php/2010/08/22/versioning/">Depesz’s Versioning</a>
 package. But because dependencies are parsed from comments in the scripts, we
 are free to <em>include</em> the contents of one script in another. For example, say
 that we later need to revise the <code>add_widget()</code> function to log the time a
@@ -183,7 +183,7 @@ is simple, of course:</p>
 <p>But what should <code>sql/revert/add_widget_v2.sql</code> look like? Why, to go back to
 the first version of <code>add_widget()</code>, it would be identical to
 <code>sql/deploy/add_widget.sql</code>. But it would be silly to copy the whole file,
-wouldn&rsquo;t it? Why duplicate when we can just include?</p>
+wouldn’t it? Why duplicate when we can just include?</p>
 
 <pre><code>\i sql/deploy/add_widget.sql
 </code></pre>
@@ -193,9 +193,9 @@ between deployment and reversion scripts, and all dependencies are nicely
 resolved. Plus, the tags in the configuration file make it easy to deploy and
 revert change sets as necessary, with dependencies properly followed.</p>
 
-<h3>There&rsquo;s More!</h3>
+<h3>There’s More!</h3>
 
-<p>To recap, I had two primary challenges with Depesz&rsquo;s Versioning package to
+<p>To recap, I had two primary challenges with Depesz’s Versioning package to
 overcome: inability to easily revert to an earlier implementation; and the
 inability to easily include one script in another. Both of course are do-able
 with workarounds, but I think that the addition of a deployment configuration

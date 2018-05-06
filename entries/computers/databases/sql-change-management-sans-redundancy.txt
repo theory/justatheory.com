@@ -1,7 +1,7 @@
 SQL Change Management Sans Duplication
 meta-keywords:sql,database,change management,deploy,revert,vcs,git,duplication
 tags: sql database change+management deploy revert vcs git duplication
-meta-description:<p>In the <a href="/computers/databases/vcs-sql-change-management.html">previous episode</a> in this series, I had one issue with regard to SQL change management that I wanted to resolve: duplication of code between deploy and revert scripts sucks. Worse still is the duplication of code to change just one line of a procedure. Here&rsquo;s how I propose to eliminate the dupes.</p>
+meta-description:<p>In the <a href="/computers/databases/vcs-sql-change-management.html">previous episode</a> in this series, I had one issue with regard to SQL change management that I wanted to resolve: duplication of code between deploy and revert scripts sucks. Worse still is the duplication of code to change just one line of a procedure. Here’s how I propose to eliminate the dupes.</p>
 
 <p>In the <a href="/computers/databases/vcs-sql-change-management.html">previous episode</a>
 in this series, I had one more issue with regard to SQL change management that
@@ -14,7 +14,7 @@ to a new script for any changes, even simple single-line changes.</li>
 </ol>
 
 
-<p>So let&rsquo;s see what we can do about that. Loading it into Git, our
+<p>So let’s see what we can do about that. Loading it into Git, our
 <a href="/computers/databases/simple-sql-change-management.html">first example</a> looks
 like this:</p>
 
@@ -33,19 +33,19 @@ sql/deploy/widgets_table.sql
 sql/deploy/add_user.sql
 </code></pre>
 
-<p>(Aside: I&rsquo;ve created an alias, <code>sqlhist</code>, on the first line, so that all the Git
-and Awk magic doesn&rsquo;t clutter the remaining examples.)</p>
+<p>(Aside: I’ve created an alias, <code>sqlhist</code>, on the first line, so that all the Git
+and Awk magic doesn’t clutter the remaining examples.)</p>
 
-<p>So, we&rsquo;ve got the creation of the <code>users</code> table under the <code>alpha</code> tag, the
+<p>So, we’ve got the creation of the <code>users</code> table under the <code>alpha</code> tag, the
 addition of the <code>widgets</code> table and an accompanying <code>add_widget()</code> function
 under the <code>beta</code> tag, and the creation of the <code>add_user()</code> function under the
-<code>gamma</code> tag. So far so good. Now, let&rsquo;s say that <code>gamma</code> has been deployed to
-production, and now we&rsquo;re ready to add a feature for the next release.</p>
+<code>gamma</code> tag. So far so good. Now, let’s say that <code>gamma</code> has been deployed to
+production, and now we’re ready to add a feature for the next release.</p>
 
 <h3>Modify This</h3>
 
 <p>It turns out that our users really want a timestamp for the time a widget was
-created. So let&rsquo;s add a new change script that adds a <code>created_at</code> column to
+created. So let’s add a new change script that adds a <code>created_at</code> column to
 the <code>widgets</code> table. First we add <code>sql/deploy/widgets_created_at.sql</code> with:</p>
 
 <pre><code>-- requires: widgets_table
@@ -104,7 +104,7 @@ sql/deploy/add_widget_v2.sql
 </code></pre>
 
 <p>Which would be fine, except that if someone else wanted to see what had
-changed, here&rsquo;s what <code>git diff</code> would output:</p>
+changed, here’s what <code>git diff</code> would output:</p>
 
 <pre><code>&gt; git diff HEAD^ sql/deploy 
 diff --git a/sql/deploy/add_widget_v2.sql b/sql/deploy/add_widget_v2.sql
@@ -125,7 +125,7 @@ index 0000000..9132195
 
 <p>So, what changed in the <code>add_widget()</code> function between <code>gamma</code> and now? One
 cannot tell from this diff: it looks like a brand new function. And no
-web-based VCS interface will show you, either; it&rsquo;s just not inherent in the
+web-based VCS interface will show you, either; it’s just not inherent in the
 commit. We have to actually <em>know</em> that it was just an update to an existing
 function, and what files to manually diff, like so:</p>
 
@@ -146,11 +146,11 @@ function, and what files to manually diff, like so:</p>
  $$;
 </code></pre>
 
-<p>Much better, but how annoying is that? It doesn&rsquo;t allow us to really take
+<p>Much better, but how annoying is that? It doesn’t allow us to really take
 advantage of the VCS, all because we need SQL changes to run in a very
 specific order.</p>
 
-<p>But let&rsquo;s ignore that for the moment. Let&rsquo;s just throw out the commit with
+<p>But let’s ignore that for the moment. Let’s just throw out the commit with
 <code>add_widgets_v2.sql</code> and go ahead and change the <code>add_widget</code> change script
 directly. So the history now looks like this:</p>
 
@@ -174,7 +174,7 @@ sql/deploy/add_widget.sql
 </code></pre>
 
 <p>Naturally, the <code>add_widget</code> script appears twice now, once under the <code>beta</code>
-tag and once under <code>epsilon</code> (which I&rsquo;ve just tagged). What are the
+tag and once under <code>epsilon</code> (which I’ve just tagged). What are the
 consequences for our migration? Well, if we were to build a new database from
 the beginning, running these migrations as listed here, we would get an error
 while applying the <code>beta</code> changes:</p>
@@ -183,8 +183,8 @@ while applying the <code>beta</code> changes:</p>
 LINE 5:     INSERT INTO widgets (created_by, name, created_at)
 </code></pre>
 
-<p>This is because the <code>created_at</code> column won&rsquo;t exist until the
-<code>widgets_created_at</code> change is applied. That won&rsquo;t do, will it? Fortunately,
+<p>This is because the <code>created_at</code> column won’t exist until the
+<code>widgets_created_at</code> change is applied. That won’t do, will it? Fortunately,
 Git knows exactly what the <code>add_widget</code> deploy script looked like under the
 <code>beta</code> tag, and we can ask it:</p>
 
@@ -224,7 +224,7 @@ Git history <em>and</em> can exploit it to manage the changes.</p>
 to revert back to <code>gamma</code>? Recall that in the
 <a href="/computers/databases/simple-sql-change-management.html">first article</a>, I
 eliminated duplication by having the <code>add_widget_v2</code> revert script simply
-call the <code>add_widget</code> deploy script. But such is not possible now that we&rsquo;ve
+call the <code>add_widget</code> deploy script. But such is not possible now that we’ve
 changed <code>add_widget</code> in place. What to do?</p>
 
 <p>The key is for the change management script to know the difference between a
@@ -276,12 +276,12 @@ $$;
 
 <p>And there we are, right back to where we should be. Of course, the remaining
 <code>epsilon</code> deploy script, <code>widget_created_at</code>, was added in its commit, so we
-just apply the revert script and we&rsquo;re set, back to <code>gamma</code>.</p>
+just apply the revert script and we’re set, back to <code>gamma</code>.</p>
 
 <h3>Still Configurable</h3>
 
 <p>To get back to the original idea of a migration configuration file, I still
-think it&rsquo;s entirely do-able. All we need to is to have the change management
+think it’s entirely do-able. All we need to is to have the change management
 app generate it, just <a href="/databases/vcs-sql-change-management.html">as before</a>.
 When it comes to modified &mdash; rather than added &mdash; deploy scripts, it can
 automatically insert new scripts with the full copies of previous versions,
@@ -312,10 +312,10 @@ was under the <code>gamma</code> tag.</p>
 <h3>Too Baroque?</h3>
 
 <p>Having written down these ideas that have plagued by brain for the last week,
-along with some examples using Git to confirm them, I&rsquo;m convinced more than
-ever that this is entirely workable. But it also leads me to wonder if it&rsquo;s
+along with some examples using Git to confirm them, I’m convinced more than
+ever that this is entirely workable. But it also leads me to wonder if it’s
 too baroque. I intend these posts as a rough spec for how this thing should
-work, and I plan to implement it in the coming weeks. But I&rsquo;m wondering how
+work, and I plan to implement it in the coming weeks. But I’m wondering how
 difficult it will be to explain it all to people?</p>
 
 <p>So let me see if I can break it down to a few simple rules.</p>
@@ -331,7 +331,7 @@ simply modify the deploy script in-place.</li>
 </ul>
 
 
-<p>That&rsquo;s about it. The <a href="http://en.wikipedia.org/wiki/Idempotence">idempotence</a>
+<p>That’s about it. The <a href="http://en.wikipedia.org/wiki/Idempotence">idempotence</a>
 of the deploy script is important for ensuring consistency, and applies very
 well to features such as
 <a href="http://www.postgresql.org/docs/current/static/xfunc.html">user-defined functions</a>.

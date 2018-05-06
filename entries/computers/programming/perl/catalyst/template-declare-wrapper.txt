@@ -2,7 +2,7 @@ Create a Template::Declare Wrapper
 meta-keywords: Catalyst, Template::Declare, Perl, wrapper, MVC, Template Toolkit
 tags: Catalyst Template::Declare Perl wrapper MVC Template+Toolkit
 
-<p>Next in my ongoing <a href="/computers/programming/perl/catalyst%20title=" title="Just a Theory: “Catalyst”">series</a> of posts on using Catalyst with Template::Declare and DBIx::Connector, we pick up again in chapter 3 to <a href="http://search.cpan.org/perldoc?Catalyst::Manual::Tutorial::03_MoreCatalystBasics#CREATE_A_WRAPPER_FOR_THE_VIEW" title="Catalyst Tutorial - Chapter 3: More Catalyst Application Development Basics">create a wrapper for the view</a>. I added the wrapper support to <a href="http://search.cpan.org/perldoc?Template::Declare" title="Template::Declare on CPAN">Template::Declare</a> over a year ago, and while the idea is sound, the interface makes it feel like it&rsquo;s bolted on. See if you agree with me.</p>
+<p>Next in my ongoing <a href="/computers/programming/perl/catalyst%20title=" title="Just a Theory: âCatalystâ">series</a> of posts on using Catalyst with Template::Declare and DBIx::Connector, we pick up again in chapter 3 to <a href="http://search.cpan.org/perldoc?Catalyst::Manual::Tutorial::03_MoreCatalystBasics#CREATE_A_WRAPPER_FOR_THE_VIEW" title="Catalyst Tutorial - Chapter 3: More Catalyst Application Development Basics">create a wrapper for the view</a>. I added the wrapper support to <a href="http://search.cpan.org/perldoc?Template::Declare" title="Template::Declare on CPAN">Template::Declare</a> over a year ago, and while the idea is sound, the interface makes it feel like it’s bolted on. See if you agree with me.</p>
 
 <p>Returning to the MyApp project, open <code>lib/MyApp/Templates/HTML.pm</code> and implement a wrapper like so:</p>
 
@@ -79,7 +79,7 @@ create_wrapper wrapper => sub {
 
 <p>This looks like more work than it is because of the copious use of whitespace I've used. Personally, I find the pure Perl syntax easier to read than the mix of HTML and TT syntax in the Template Toolkit wrapper. Anyway, this is a nearly direct port of the Template Toolkit wrapper from the tutorial. Template::Declare wrappers expect at least one argument: a code reference that will output the content of the main template. You can see it used here near the end of the code, with the line <code>$code-&gt;($args)</code>.</p>
 
-<p>Unfortunately, Template::Declare doesn&rsquo;t make such wrappers easily available to templates. So we have to add the <code>Sub::Exporter</code> line at the top to export the wrapper function it creates, named <code>wrapper</code>.</p>
+<p>Unfortunately, Template::Declare doesn’t make such wrappers easily available to templates. So we have to add the <code>Sub::Exporter</code> line at the top to export the wrapper function it creates, named <code>wrapper</code>.</p>
 
 <p>Next, open up <code>lib/MyApp/Templates/HTML/Books.pm</code>  and edit the <code>list</code> template to take advantage of the wrapper. The new code looks like this:</p>
 
@@ -109,9 +109,9 @@ template list =&gt; sub {
 </pre>
 
 
-<p>First we import the <code>wrapper</code> function from MyApp::Templates::HTML, and then we simply use it to wrap the contents of our template. Note that the context object and template arguments must be passed on to the wrapper; they're not provided to the wrapper by Template::Declare. That&rsquo;s something else I'd like to adjust.</p>
+<p>First we import the <code>wrapper</code> function from MyApp::Templates::HTML, and then we simply use it to wrap the contents of our template. Note that the context object and template arguments must be passed on to the wrapper; they're not provided to the wrapper by Template::Declare. That’s something else I'd like to adjust.</p>
 
-<p>In the meantime, contrary to the tutorial, I don&rsquo;t think the template should set the title of the page. It seems to me that&rsquo;s more the responsibility of the controller. So while this template could easily add a <code>title</code> key to the <code>$args</code> hash before passing it on to the wrapper, I recommend editing the <code>list</code> action in MyApp::Controller::Books instead:</p>
+<p>In the meantime, contrary to the tutorial, I don’t think the template should set the title of the page. It seems to me that’s more the responsibility of the controller. So while this template could easily add a <code>title</code> key to the <code>$args</code> hash before passing it on to the wrapper, I recommend editing the <code>list</code> action in MyApp::Controller::Books instead:</p>
 
 <pre>
 sub list : Local {
@@ -126,7 +126,7 @@ sub list : Local {
 }
 </pre>
 
-<p>So, with the wrapper in place, let&rsquo;s create the stylesheet the wrapper uses:</p>
+<p>So, with the wrapper in place, let’s create the stylesheet the wrapper uses:</p>
 
 <pre>
 $ mkdir root/static/css

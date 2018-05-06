@@ -2,7 +2,7 @@ Sqitch Status: Now With Status
 meta-keywords: sqitch, sql, database, change management
 meta-keywords: sqitch sql database change+management
 
-<p>I&rsquo;ve just released <a href="https://metacpan.org/release/DWHEELER/App-Sqitch-0.60-TRIAL">Sqitch v0.60</a>. The main change is the implementation of the <code>status</code> command, which allows one to see the current deployment status of a database. An example from the <a href="https://metacpan.org/module/DWHEELER/App-Sqitch-0.60-TRIAL/lib/sqitchtutorial.pod">updated tutorial</a>:</p>
+<p>I’ve just released <a href="https://metacpan.org/release/DWHEELER/App-Sqitch-0.60-TRIAL">Sqitch v0.60</a>. The main change is the implementation of the <code>status</code> command, which allows one to see the current deployment status of a database. An example from the <a href="https://metacpan.org/module/DWHEELER/App-Sqitch-0.60-TRIAL/lib/sqitchtutorial.pod">updated tutorial</a>:</p>
 
 <pre><code>&gt; sqitch status
 # On database flipr_test
@@ -75,4 +75,4 @@ Nothing to deploy (up-to-date)
 
 <p>Want to give it a try? Install it with <code>cpan D/DW/DWHEELER/App-Sqitch-0.60-TRIAL.tar.gz</code> and follow along <a href="https://github.com/theory/sqitch/blob/master/lib/sqitchtutorial.pod">the tutorial</a>.</p>
 
-<p>Now I&rsquo;m off to add the <code>log</code> command, which shows a history of all deploys and reverts.</p>
+<p>Now I’m off to add the <code>log</code> command, which shows a history of all deploys and reverts.</p>

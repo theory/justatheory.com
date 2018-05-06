@@ -1,7 +1,7 @@
 name: Smylers
 url: 
 title: 
-comment: <p>The problem seems to be that the call to <code>time</code> is &lsquo;frozen&rsquo; in <code>DateTime</code> at compile time, before it's been overridden.</p><p>Removing <code>use DateTime</code> from the top and putting <code>require DateTime</code> between the <code>local</code> and <code>is</code> lines seems to make it work.</p><p>Smylers</p>
+comment: <p>The problem seems to be that the call to <code>time</code> is &lsquo;frozen’ in <code>DateTime</code> at compile time, before it's been overridden.</p><p>Removing <code>use DateTime</code> from the top and putting <code>require DateTime</code> between the <code>local</code> and <code>is</code> lines seems to make it work.</p><p>Smylers</p>
 excerpt: 
 blog_name: 
 -----

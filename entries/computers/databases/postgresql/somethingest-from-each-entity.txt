@@ -41,7 +41,7 @@ SELECT sender, recipient, sent_at, body
 HAVING sent_at = max(sent_at);
 </pre>
 
-<p>That&rsquo;s wrong because one can&rsquo;t have columns in the <code>SELECT</code> expression that are not either aggregate expressions or included in the<code>GROUP BY</code> expression. It&rsquo;s a violation of the standard (and prone to errors, I suspect). <a href="http://people.planetpostgresql.org/andrew/" title="Andrew's PostgreSQL blog">Andrew</a> immediately said, &ldquo;Classic case for <code>DISTINCT ON</code>&rdquo;. This lovely little expression is a PostgreSQL extension not included in the SQL standard. It&rsquo;s implementation looks like this:</p>
+<p>That’s wrong because one can’t have columns in the <code>SELECT</code> expression that are not either aggregate expressions or included in the<code>GROUP BY</code> expression. It’s a violation of the standard (and prone to errors, I suspect). <a href="http://people.planetpostgresql.org/andrew/" title="Andrew's PostgreSQL blog">Andrew</a> immediately said, &ldquo;Classic case for <code>DISTINCT ON</code>&rdquo;. This lovely little expression is a PostgreSQL extension not included in the SQL standard. It’s implementation looks like this:</p>
 
 <pre>
 SELECT DISTINCT ON (
@@ -84,7 +84,7 @@ SELECT sender, receiver, sent_at, body
  WHERE rnum = 1;
 </pre>
 
-<p>Same nasty <code>CASE</code> statement as before (no way around it with this database design, alas), but this is fully conforming SQL. It&rsquo;s also the first time I've ever used window functions. If you just focus on the <code>row_number() OVER ()</code> expression, it&rsquo;s simply partitioning the table according to the same value as in the <code>DISTINCT ON</code> value, but it&rsquo;s ordering it by <code>sent_at</code> directly. The result is a row number, where the first is 1 for the most recent message for each combination of recipients. Then we just filter for that in the <code>WHERE</code> clause.</p>
+<p>Same nasty <code>CASE</code> statement as before (no way around it with this database design, alas), but this is fully conforming SQL. It’s also the first time I've ever used window functions. If you just focus on the <code>row_number() OVER ()</code> expression, it’s simply partitioning the table according to the same value as in the <code>DISTINCT ON</code> value, but it’s ordering it by <code>sent_at</code> directly. The result is a row number, where the first is 1 for the most recent message for each combination of recipients. Then we just filter for that in the <code>WHERE</code> clause.</p>
 
 <p>Not exactly intuitive (I'm really only understanding it now as I explain write it out), but quite straight-forward once you accept the expressivity in this particular <code>OVER</code> expression. It might be easier to understand if we remove some of the cruft. If instead we wanted the most recent message from each sender (regardless of the recipient), we'd write:</p>
 
@@ -128,7 +128,7 @@ WITH t AS (
    WHERE rnum = 1;
 </pre>
 
-<p>So it&rsquo;s kind of like putting the subquery first, only it&rsquo;s not a subquery, it&rsquo;s more like a <em>temporary view</em>. Nice, eh? Either way, the results are the same as before:</p>
+<p>So it’s kind of like putting the subquery first, only it’s not a subquery, it’s more like a <em>temporary view</em>. Nice, eh? Either way, the results are the same as before:</p>
 
 <pre>
   sender   | receiver |            sent_at            |     body     
@@ -137,7 +137,7 @@ WITH t AS (
  Strongrrl | Theory   | 2010-01-12 05:00:07.02589+00  | Hi yourself.
 </pre>
 
-<p>I hereby dub this &ldquo;The Entity&rsquo;s Something-est&rdquo; pattern (I'm certain someone else has already come up with a good name for it, but this will do). I can see it working any place requiring the highest, lowest, latest, earliest, or something else-est item from each of a list of entities. Perhaps the latest headline from every news source:</p>
+<p>I hereby dub this &ldquo;The Entity’s Something-est&rdquo; pattern (I'm certain someone else has already come up with a good name for it, but this will do). I can see it working any place requiring the highest, lowest, latest, earliest, or something else-est item from each of a list of entities. Perhaps the latest headline from every news source:</p>
 
 <pre>
 WITH t AS (
