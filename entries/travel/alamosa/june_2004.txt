@@ -17,8 +17,7 @@ food you want there, as long as it's Mexican food, and the high altitude
 <p>Mostly I just worked with our clients, but I did manage to take a couple of
 photos, but I did manage to get a couple of photographs with my <a
 href="http://www.amazon.com/exec/obidos/redirect?tag=justatheory-20&path=tg/detail/-/B00022NE6I/qid%3D1088445154/sr%3D8-4"
-title="Buy the Nokia 6600 at Amazon.com" onclick="window.open(this.href, 'buy
-from amazon'">Nokia 6600</a>. The <q>cool</q> coffeehouse in Alamosa is <a
+title="Buy the Nokia 6600 at Amazon.com">Nokia 6600</a>. The <q>cool</q> coffeehouse in Alamosa is <a
 href="http://www.lapuente.net/programs/milagros.htm" title="Milagro's
 Coffeehouse home page">Milagro's Coffeehouse</a>, but to judge by their sign,
 I wasn't sure I wanted what they were selling.</p>

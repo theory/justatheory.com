@@ -12,15 +12,15 @@ meta-keywords: vote, voter, voter registration, MoveOn, MoveOn.org, voter regist
     </div>
 </form>
 
-<p>We just hosted our first <a href="http://www.moveonpac.org/" title="MoveOn
-PAC">MoveOn.org</a> voter registration party. (You <em>are</em> registered to
-vote, aren't you? If not, register <a href="http://www.moveonpac.org/vote/"
-title="Register to vote">register here</a>.) Julie did all the hard work of
-organizing the party, preparing the munchies, going through MoveOn's rather
-overwhelming and confusing instructions to make things simple for the rest of
-us, and getting the lists of unregistered voters to call. She's great at the
-organizational stuff, and that the party was a success is due to her hard
-work.</p>
+<p>We just hosted our first
+<a href="http://www.moveonpac.org/" title="MoveOn PAC">MoveOn.org</a> voter
+registration party. (You <em>are</em> registered to vote, aren't you? If not,
+register <a href="http://www.moveonpac.org/vote/" title="Register to vote">register here</a>.)
+Julie did all the hard work of organizing the party, preparing the munchies,
+going through MoveOn's rather overwhelming and confusing instructions to make
+things simple for the rest of us, and getting the lists of unregistered voters
+to call. She's great at the organizational stuff, and that the party was a
+success is due to her hard work.</p>
 
 <p>We had 10 participants, and each of us called 24-36 people, mainly women in
 Florida who didn't vote in the last presidential election. We registered three

@@ -1,8 +1,6 @@
 Test.Simple 0.11 Released
 meta-keywords: JavaScript, testing, Test::Simple, Test::More, Test::Harness, Test.Simple, Test.More, Test.Harness, Test.Browser, TAP
 
-<!-- <a href="http://technorati.com/tag/jsan" rel="tag">jsan</a> -->
-
 <p>I'm pleased to announce the release of Test.Simple 0.11. This release fixes a number of bugs in the framework's IE and Safari support, adds <a href="http://www.openjsan.org/" title="JSAN">JSAN</a> support, and includes an experimental harness for Macromedia^Adobe Director. You can download it from <a href="http://www.openjsan.org/doc/theory/Test/Simple/0.11/index.html" title="Download Test.Simple 0.11 from JSAN!">JSAN</a>, and all future releases will be available on JSAN. See the harness in action <a href="http://www.justatheory.com/code/Test.Simple-0.11/tests/index.html" title="Run the Test.Simple 0.11 Test Suite now!">here</a> (or <a href="http://www.justatheory.com/code/Test.Simple-0.11/tests/index.html?verbose=1" title="Run the Test.Simple 0.11 Tests verbosely!">verbosely</a>!). This release has the following changes:</p>
 
 <ul>
