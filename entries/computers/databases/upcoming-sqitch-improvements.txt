@@ -14,7 +14,7 @@ tags: sqitch mysql cubrid sqlite
 
 <p>But if you can afford to take advantage of a relatively modern MySQL, give it a shot!</p>
 
-<p>The next release also makes a backwards-incompatible change to the SQLite engine: the default Sqitch database is no longer <code>$db_dir/$db_name-sqitch.$suffix</code>, but <code>$db_dir/sqitch.$suffix</code>. In other words, if you were deploying to a db named <code>/var/db/myapp.db</code>, Sqitch previously kept its metadata in <code>/var/db/myapp-sqitch.db</code>, but now will keep it in <code>/var/db/sqitch.db</code>. This is to make it more like the other engines (MySQL defaults to a database named &ldquo;sqitch&rdquo;, and Postgres and Oracle default to a schema named &ldquo;sqitch&rdquo;).</p>
+<p>The next release also makes a backwards-incompatible change to the SQLite engine: the default Sqitch database is no longer <code>$db_dir/$db_name-sqitch.$suffix</code>, but <code>$db_dir/sqitch.$suffix</code>. In other words, if you were deploying to a db named <code>/var/db/myapp.db</code>, Sqitch previously kept its metadata in <code>/var/db/myapp-sqitch.db</code>, but now will keep it in <code>/var/db/sqitch.db</code>. This is to make it more like the other engines (MySQL defaults to a database named “sqitch”, and Postgres and Oracle default to a schema named “sqitch”).</p>
 
 <p>It’s also useful if you use the SQLite <a href="http://www.sqlite.org/lang_attach.html"><code>ATTACHDATABASE</code></a> command to manage multiple database files in a single project. In that case, you will want to use the same metadata file for all the databases. Keep them all in the same directory with the same suffix and you get just that with the default sqitch database.</p>
 
@@ -22,7 +22,7 @@ tags: sqitch mysql cubrid sqlite
 
 <p>I haven’t released this change yet, and I am not a big-time SQLite user. So if this makes no sense, please <a href="https://github.com/theory/sqitch/issues/98">comment on this issue</a>. It’ll be a couple of weeks before I release v0.980, so there is time to reverse if if there’s consensus that it’s a bad idea.</p>
 
-<p>But given another idea I’ve had, I suspect it will be okay. The idea is to expand on the concept of a Sqitch &ldquo;target&rdquo; by giving it <a href="https://github.com/theory/sqitch/issues/100">its own command</a> and configuration settings. Basically, it would be sort of like Git remotes: use URIs to specify database connection and parameter info (such as the sqitch database name for SQLite). These can be passed to database-touching commands, such as <code>deploy</code>, <code>revert</code>, <code>log</code>, and the like. They can also be given names and stored in the configuration file. The upshot is that it would enable invocations such as</p>
+<p>But given another idea I’ve had, I suspect it will be okay. The idea is to expand on the concept of a Sqitch “target” by giving it <a href="https://github.com/theory/sqitch/issues/100">its own command</a> and configuration settings. Basically, it would be sort of like Git remotes: use URIs to specify database connection and parameter info (such as the sqitch database name for SQLite). These can be passed to database-touching commands, such as <code>deploy</code>, <code>revert</code>, <code>log</code>, and the like. They can also be given names and stored in the configuration file. The upshot is that it would enable invocations such as</p>
 
 <pre><code>sqitch deploy production
 sqitch log qa

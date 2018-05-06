@@ -9,7 +9,7 @@ expressions in the past, as that experience really helped me to thinking more
 like a parser. I wanted to share that insight here.</p>
 
 <p>The issue I had came down to an inability to parse both standalone emphasis
-characters &mdash; that is, <code>_</code> or <code>*</code> with whitespace on both sides &mdash; and
+characters — that is, <code>_</code> or <code>*</code> with whitespace on both sides — and
 doubled-up emphasis characters, such as <code>***</code>, <code>___</code>, <code>**_</code>, or <code>_**</code>, among a
 few others. It seemed that I could handle one or the other issue, but not
 both.</p>
@@ -39,7 +39,7 @@ separately. So whereas I previously had</p>
     [ EMROP =&gt; qr/(?&lt;=[^\s*_])[_]{1,2}|(?&lt;=[^\s*_])[*]{1,2}/ ],
 </code></pre>
 
-<p>Yes, I’m now also matching &ldquo;middle&rdquo; emphasis operators &mdash; that is, those with
+<p>Yes, I’m now also matching “middle” emphasis operators — that is, those with
 non-whitespace on <em>both</em> sides. But now I’m able to get pretty much exactly
 what I need with a rule like this:</p>
 

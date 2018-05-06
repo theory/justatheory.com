@@ -257,8 +257,8 @@ A   sql/deploy/widgets_created_at.sql
 M   sql/deploy/add_widget.sql
 </code></pre>
 
-<p>Now we have a letter defining the status of each file. An &ldquo;A&rdquo; means the file
-was added in that commit; an &ldquo;M&rdquo; means it was modified. But the upshot is
+<p>Now we have a letter defining the status of each file. An “A” means the file
+was added in that commit; an “M” means it was modified. But the upshot is
 that, to revert to <code>gamma</code>, our change management can see that <code>add_widget</code>
 was modified in <code>epsilon</code>, and, rather than apply a revert change script, it
 can just apply the version of the script as it existed under <code>gamma</code>:</p>
@@ -283,7 +283,7 @@ just apply the revert script and we’re set, back to <code>gamma</code>.</p>
 <p>To get back to the original idea of a migration configuration file, I still
 think it’s entirely do-able. All we need to is to have the change management
 app generate it, just <a href="/databases/vcs-sql-change-management.html">as before</a>.
-When it comes to modified &mdash; rather than added &mdash; deploy scripts, it can
+When it comes to modified — rather than added — deploy scripts, it can
 automatically insert new scripts with the full copies of previous versions,
 much as before. The resulting configuration would look something like this:</p>
 

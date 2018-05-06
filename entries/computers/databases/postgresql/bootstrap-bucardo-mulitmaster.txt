@@ -52,7 +52,7 @@ bucardo add db $THERE$PGDATABASE dbname=$PGDATABASE host=$PGHOST2 user=$BUCARDOU
 
 <p>Note <code>autokick=0</code>. This ensures that, while deltas are logged, they will not be copied anywhere until we tell Bucardo to do so.</p>
 
-<p>And now that we know that any changes from here on in will be queued for replication, we can go ahead and copy over the data. The only caveat is that we need to disable the Bucardo triggers on the target system, so that our copying does not try to queue up. We do that by setting the <a href="http://www.postgresql.org/docs/9.2/static/runtime-config-client.html#GUC-SESSION-REPLICATION-ROLE"><code>session_replication_role</code> GUC</a> to &ldquo;replica&rdquo; while doing the copy:</p>
+<p>And now that we know that any changes from here on in will be queued for replication, we can go ahead and copy over the data. The only caveat is that we need to disable the Bucardo triggers on the target system, so that our copying does not try to queue up. We do that by setting the <a href="http://www.postgresql.org/docs/9.2/static/runtime-config-client.html#GUC-SESSION-REPLICATION-ROLE"><code>session_replication_role</code> GUC</a> to “replica” while doing the copy:</p>
 
 <pre><code>pg_dump -U $PGSUPERUSER -h $PGHOST --data-only -N bucardo $PGDATABASE \
 | PGOPTIONS='-c session_replication_role=replica' \

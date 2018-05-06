@@ -25,8 +25,8 @@ result into a scalar. Plus it’s redundant with the expected-output file.</p></
 <li><p>It’s ridiculously slow; at least a factor of ten slower than doing
 equivalent tests directly in SQL.  This is a very bad thing.  Speed of
 regression tests matters a lot to those of us who run them a dozen times
-per day &mdash;&ndash; and I do not wish to discourage any developers who don’t
-work that way from learning better habits ;&ndash;)</p></li>
+per day —– and I do not wish to discourage any developers who don’t
+work that way from learning better habits ;–)</p></li>
 </ol>
 
 
@@ -76,11 +76,11 @@ analyze its output using a <a href="http://search.cpan.org/perldoc?TAP::Harness"
 is driven by the legacy of <code>pg_regress</code>.</p>
 
 <p>A bigger issue, and the one I'll focus on for the remainder of this post, is
-the requirement currently inherent in pgTAP to &ldquo;contort what could naturally
-be expressed in SQL as a table result into a scalar.&rdquo; The issue is apparent in
+the requirement currently inherent in pgTAP to “contort what could naturally
+be expressed in SQL as a table result into a scalar.” The issue is apparent in
 the above example: even though I'm selecting a number of rows from a table, I
-use the <code>ARRAY()</code> constructor function to force them into a scalar value&mdash;an
-array&mdash;in order to easily do the comparison. It also results in a useful
+use the <code>ARRAY()</code> constructor function to force them into a scalar value—an
+array—in order to easily do the comparison. It also results in a useful
 diagnostic message in case the test fails:</p>
 
 <pre><code># Failed test 40: "The words should be case-insensitively sorted"
@@ -89,8 +89,8 @@ diagnostic message in case the test fails:</p>
 </code></pre>
 
 <p>So for simple cases like this, it doesn’t bother me much personally. But I've
-also had to write tests for functions that return composite types&mdash;that is,
-<em>rows</em>&mdash;and again I had to fall back on coercing them into scalar values to do
+also had to write tests for functions that return composite types—that is,
+<em>rows</em>—and again I had to fall back on coercing them into scalar values to do
 the comparison. For example, say that the <code>fooey()</code> function returns a <code>dude</code>
 value, which is a composite type with an integer and a text string. Here’s how
 to test it with pgTAP:</p>
@@ -111,8 +111,8 @@ diagnostics on failure:</p>
 #         want: (42,Bob)
 </code></pre>
 
-<p>It gets much worse with set returning functions&mdash;Tom’s &ldquo;table result:&rdquo; it
-requires both type <em>and</em> row coercion (or &ldquo;contortion&rdquo; if you'd prefer). Here’s
+<p>It gets much worse with set returning functions—Tom’s “table result:” it
+requires both type <em>and</em> row coercion (or “contortion” if you'd prefer). Here’s
 an example of a <code>fooies()</code> function that returns a set of <code>dude</code>s:</p>
 
 <pre><code>SELECT is(
@@ -169,8 +169,8 @@ failures. And besides, <code>EXCEPT</code> compares sets, which are inherently u
 That means that if you need to test that results come back in a specific
 order, you can’t use this approach.</p>
 
-<p>That said, if someone knows of a way to do this in one query&mdash;somehow make
-some sort of <code>NOT EXCEPT</code> operator work&mdash;I'd be very glad to hear it!</p>
+<p>That said, if someone knows of a way to do this in one query—somehow make
+some sort of <code>NOT EXCEPT</code> operator work—I'd be very glad to hear it!</p>
 
 <h3>Prior Art</h3>
 
@@ -212,7 +212,7 @@ SQLish to me. I mean, if you needed to write a really complicated query, it
 might be harder to maintain: even using dollar quoting, it’s harder to track
 stuff. Furthermore, it’s slow, as PL/pgSQL’s <code>EXECUTE</code> must be called twice
 and thus plan twice. And don’t even try to test a query with
-side-effects&mdash;such as a function that inserts a row and returns an ID&mdash;as the
+side-effects—such as a function that inserts a row and returns an ID—as the
 second run will likely lead to test failure just might blow something up.</p>
 
 <h3>SQL Blocks?</h3>

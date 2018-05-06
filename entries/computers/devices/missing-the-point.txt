@@ -2,7 +2,7 @@ Missing the Point
 meta-keywords: Kindle, iPad, cheap, junk, disposable, disposability, minimalism, durability, build quality, Starbucks, advertising, dixie
 tags: Kindle iPad cheap junk disposable disposability minimalism durability build+quality Starbucks advertising Dixie
 
-<p>Thanks for all the comments on my <a href="/computers/devices/disposable-computing.html">Disposable Computing</a> post. Alas, I’m beginning to see why sites like <a href="http://daringfireball.net/">Daring Fireball</a> don’t allow comments. Not that anyone was rude; it’s just that everyone missed the point. Every last one of you. (Well, except commenter &ldquo;John&rdquo;, who pointed out an inaccuracy in my post.) Here’s what that post was <em>not</em> about:</p>
+<p>Thanks for all the comments on my <a href="/computers/devices/disposable-computing.html">Disposable Computing</a> post. Alas, I’m beginning to see why sites like <a href="http://daringfireball.net/">Daring Fireball</a> don’t allow comments. Not that anyone was rude; it’s just that everyone missed the point. Every last one of you. (Well, except commenter “John”, who pointed out an inaccuracy in my post.) Here’s what that post was <em>not</em> about:</p>
 
 <ul>
 <li>How many iPhones I’ve had over the years</li>
@@ -18,7 +18,7 @@ tags: Kindle iPad cheap junk disposable disposability minimalism durability buil
 
 <ul>
 <li>Apple products tend to have great build quality and durability</li>
-<li>Marco Arment’s <a href="http://www.marco.org/2011/10/07/review-79-kindle-with-ads-and-buttons">$79 Kindle review</a> used the terms &ldquo;cheap&rdquo; and &ldquo;disposable&rdquo; to describe the Kindle.</li>
+<li>Marco Arment’s <a href="http://www.marco.org/2011/10/07/review-79-kindle-with-ads-and-buttons">$79 Kindle review</a> used the terms “cheap” and “disposable” to describe the Kindle.</li>
 <li>The last thing I want in my life is cheap and disposable objects</li>
 <li>I’d rather have objects that are more durable and likely to last</li>
 <li>So I’d rather have an iPad than a $79 Kindle.</li>

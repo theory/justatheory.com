@@ -2,7 +2,7 @@ SQL Hack: The Something-est From Each Entity
 meta-keywords: PostgreSQL, SQL, window functions, common table expressions, distinct on, with queries
 tags: PostgreSQL SQL window functions common table expressions distinct+on with+queries
 
-<p>This is a pattern that I have dealt with many times, but never figured out how to adequately handle. Say that you have imported a mailbox into your database, and you want a list of the latest messages between each pair of recipients (sender and receiver &mdash; I'm ignoring multiple receivers for the moment). The data might look like this:</p>
+<p>This is a pattern that I have dealt with many times, but never figured out how to adequately handle. Say that you have imported a mailbox into your database, and you want a list of the latest messages between each pair of recipients (sender and receiver — I'm ignoring multiple receivers for the moment). The data might look like this:</p>
 
 <pre>
 BEGIN;
@@ -41,7 +41,7 @@ SELECT sender, recipient, sent_at, body
 HAVING sent_at = max(sent_at);
 </pre>
 
-<p>That’s wrong because one can’t have columns in the <code>SELECT</code> expression that are not either aggregate expressions or included in the<code>GROUP BY</code> expression. It’s a violation of the standard (and prone to errors, I suspect). <a href="http://people.planetpostgresql.org/andrew/" title="Andrew's PostgreSQL blog">Andrew</a> immediately said, &ldquo;Classic case for <code>DISTINCT ON</code>&rdquo;. This lovely little expression is a PostgreSQL extension not included in the SQL standard. It’s implementation looks like this:</p>
+<p>That’s wrong because one can’t have columns in the <code>SELECT</code> expression that are not either aggregate expressions or included in the<code>GROUP BY</code> expression. It’s a violation of the standard (and prone to errors, I suspect). <a href="http://people.planetpostgresql.org/andrew/" title="Andrew's PostgreSQL blog">Andrew</a> immediately said, “Classic case for <code>DISTINCT ON</code>”. This lovely little expression is a PostgreSQL extension not included in the SQL standard. It’s implementation looks like this:</p>
 
 <pre>
 SELECT DISTINCT ON (
@@ -57,7 +57,7 @@ SELECT DISTINCT ON (
           END, sent_at DESC;
 </pre>
 
-<p>This query is saying, &ldquo;fetch the rows where the sender and the receiver are distinct, and order by <code>sent_at DESC</code>. THE <code>CASE</code> statement to get a uniform value for the combination of sender and receiver is a bit unfortunate, but it does the trick:</p>
+<p>This query is saying, “fetch the rows where the sender and the receiver are distinct, and order by <code>sent_at DESC</code>. THE <code>CASE</code> statement to get a uniform value for the combination of sender and receiver is a bit unfortunate, but it does the trick:</p>
 
 <pre>
   sender   | receiver |            sent_at            |     body     
@@ -66,7 +66,7 @@ SELECT DISTINCT ON (
  Strongrrl | Theory   | 2010-01-12 05:00:07.02589+00  | Hi yourself.
 </pre>
 
-<p>Great, exactly the data I wanted. And the <code>CASE</code> statement can actually be indexed to speed up filtering. But I wondered if it would be possible to get the same results without the <code>DISTINCT ON</code>. In other words, can this be done with standard SQL? If you're using PostgreSQL 8.4, the answer is &ldquo;yes.&rdquo; All you have to do is exploit <a href="http://www.postgresql.org/docs/current/static/tutorial-window.html" title="PostgreSQL Documentation: Window Functions">window functions</a> and a subquery. It looks like this:</p>
+<p>Great, exactly the data I wanted. And the <code>CASE</code> statement can actually be indexed to speed up filtering. But I wondered if it would be possible to get the same results without the <code>DISTINCT ON</code>. In other words, can this be done with standard SQL? If you're using PostgreSQL 8.4, the answer is “yes.” All you have to do is exploit <a href="http://www.postgresql.org/docs/current/static/tutorial-window.html" title="PostgreSQL Documentation: Window Functions">window functions</a> and a subquery. It looks like this:</p>
 
 <pre>
 SELECT sender, receiver, sent_at, body
@@ -137,7 +137,7 @@ WITH t AS (
  Strongrrl | Theory   | 2010-01-12 05:00:07.02589+00  | Hi yourself.
 </pre>
 
-<p>I hereby dub this &ldquo;The Entity’s Something-est&rdquo; pattern (I'm certain someone else has already come up with a good name for it, but this will do). I can see it working any place requiring the highest, lowest, latest, earliest, or something else-est item from each of a list of entities. Perhaps the latest headline from every news source:</p>
+<p>I hereby dub this “The Entity’s Something-est” pattern (I'm certain someone else has already come up with a good name for it, but this will do). I can see it working any place requiring the highest, lowest, latest, earliest, or something else-est item from each of a list of entities. Perhaps the latest headline from every news source:</p>
 
 <pre>
 WITH t AS (

@@ -28,7 +28,7 @@ tags: TV cable+tv satellite+tv BitTorrent iTunes Netflix HBO FirstWorldProblems
 <ul>
 <li>The remote is impenetrably complicated; I don’t have any faith a DVR remote would be much better</li>
 <li>The on-screen menus are miserable to navigate and read</li>
-<li>I couldn’t find shit about what &ldquo;package&rdquo; we had on the web site</li>
+<li>I couldn’t find shit about what “package” we had on the web site</li>
 <li>Comcast.com thought we didn’t have HBO and so wouldn’t let us access HBO Go</li>
 <li>There are 1000s of channels of shit</li>
 <li>I called support, and before I gave up, at some point an ad for pay-per-view programming streamed into my auditory canal</li>
@@ -42,7 +42,7 @@ tags: TV cable+tv satellite+tv BitTorrent iTunes Netflix HBO FirstWorldProblems
 
 <p>I can only conclude that cable and satellite providers hate their customers. They get them to sign up for a plan to auto-pay $80 or $90 or $125 a month, and then they don’t have to care about what kind of service they provide. Interfaces don’t matter. Design doesn’t matter. Simplicity doesn’t matter. <em>Complication</em> matters.</p>
 
-<p>I don’t want this. Why do I have to pay such a heavy price in terms of usability and quality just so I can pay for the shows I actually want to watch? I don’t want to give Comcast my money. I don’t want to give &ldquo;Real Housewives of Miami&rdquo; my money. I want to give <a href="http://www.imdb.com/company/co0019588/">Blown Deadline</a> and HBO my money.</p>
+<p>I don’t want this. Why do I have to pay such a heavy price in terms of usability and quality just so I can pay for the shows I actually want to watch? I don’t want to give Comcast my money. I don’t want to give “Real Housewives of Miami” my money. I want to give <a href="http://www.imdb.com/company/co0019588/">Blown Deadline</a> and HBO my money.</p>
 
 <h3>A Plea</h3>
 

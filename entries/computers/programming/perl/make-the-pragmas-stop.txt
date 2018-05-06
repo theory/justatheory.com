@@ -51,8 +51,8 @@ use 5.12;
 <ul>
 <li><code>strict</code></li>
 <li><code>warnings</code></li>
-<li><code>features</code> &mdash; all of them</li>
-<li><code>UTF-8</code> &mdash; all input and output to the scope, as well as the source code</li>
+<li><code>features</code> — all of them</li>
+<li><code>UTF-8</code> — all input and output to the scope, as well as the source code</li>
 </ul>
 
 

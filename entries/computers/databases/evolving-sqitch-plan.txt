@@ -102,7 +102,7 @@ tags: Sqitch SQL changes change+management plan deploy revert VCS database
 </ul>
 
 
-<p>Note that this works because <code>crypto</code> declares no dependencies itself. If it did, it would be shuffled as appropriate. It would not work if it required, say, <code>upd_user</code>, as that would create a circular dependency (<code>add_user</code> &mdash; <code>crypto</code> &mdash; <code>upd_user</code> &mdash; <code>add_user</code>).</p>
+<p>Note that this works because <code>crypto</code> declares no dependencies itself. If it did, it would be shuffled as appropriate. It would not work if it required, say, <code>upd_user</code>, as that would create a circular dependency (<code>add_user</code> — <code>crypto</code> — <code>upd_user</code> — <code>add_user</code>).</p>
 
 <p>Now say we want to deploy the changes to the production database, which is currently on <code>@beta</code>. That simply runs:</p>
 

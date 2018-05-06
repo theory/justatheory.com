@@ -5,7 +5,7 @@ tags: sqitch sql change+management database migrations
 <p>This week, I released v0.50 of <a href="http://sqitch.org/">Sqitch</a>, the database change management app I’ve been working on for the last couple of months. Those interested in how it works should read <a href="https://github.com/theory/sqitch/blob/master/lib/sqitchtutorial.pod">the tutorial</a>. A lot has changed since v0.30; here are some highlights:</p>
 
 <ul>
-<li>The plan file is now required. This can make merges more annoying, but thanks to a comment <a href="/computers/databases/sqitch-dependencies.html#comment-538970287">from Jakub Narębski </a>, I discovered that Git can be configured to use a &ldquo;union merge driver&rdquo;, which seems to simplify things a great deal. See <a href="https://github.com/theory/sqitch/blob/master/lib/sqitchtutorial.pod#emergency">the tutorial</a> for a detailed example.</li>
+<li>The plan file is now required. This can make merges more annoying, but thanks to a comment <a href="/computers/databases/sqitch-dependencies.html#comment-538970287">from Jakub Narębski </a>, I discovered that Git can be configured to use a “union merge driver”, which seems to simplify things a great deal. See <a href="https://github.com/theory/sqitch/blob/master/lib/sqitchtutorial.pod#emergency">the tutorial</a> for a detailed example.</li>
 <li>The plan now consists solely of a list of
 changes, roughly analogous to Git commits. Tags are simply pointers to specific changes.</li>
 <li>Dependencies are now specified in the plan file, rather than in the deployment scripts. Once the plan file became required, this seemed like the <a href="/computers/databases/sqitch-dependencies.html">much more obvious</a> place for them.</li>
@@ -13,21 +13,21 @@ changes, roughly analogous to Git commits. Tags are simply pointers to specific 
 </ul>
 
 
-<p>Seems like a short list, but in reality, this release is the first I would call almost usable. Most of the core functionality and infrastructure is in place, and the architectural designs have been finalized. There should be much less flux in how things work from here on in, though this is still very much a developer release. Things <em>might</em> still change, so I’m being conservative and not doing a &ldquo;stable&rdquo; release just yet.</p>
+<p>Seems like a short list, but in reality, this release is the first I would call almost usable. Most of the core functionality and infrastructure is in place, and the architectural designs have been finalized. There should be much less flux in how things work from here on in, though this is still very much a developer release. Things <em>might</em> still change, so I’m being conservative and not doing a “stable” release just yet.</p>
 
 <h3>What works</h3>
 
 <p>So what commands actually work at this point? All of the most important functional ones:</p>
 
 <ul>
-<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-init.pod"><code>sqitch init</code></a> &ndash; Initialize a Sqitch project. Creates the project configuration file, a plan file, and directories for deploy, revert, and test scripts</li>
-<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-config.pod"><code>sqitch config</code></a> &ndash; Configure Sqitch. Uses the same configuration format as Git, including cascading local, user, and system-wide configuration files</li>
-<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-help.pod"><code>sqitch help</code></a> &ndash; Get documentation for specific commands</li>
-<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-add.pod"><code>sqitch add</code></a> &ndash; Add a new change to the plan. Generates deploy, revert, and test scripts based on user-modifiable templates</li>
-<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-tag.pod"><code>sqitch tag</code></a> &ndash; Tag the latest change in the plan, or show a list of existing tags</li>
-<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-deploy.pod"><code>sqitch deploy</code></a> &ndash; Deploy changes to a database. Includes a <code>--mode</code> option to control how to revert changes in the event of a deploy failure (not at all, to last tag, or to starting point)</li>
-<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-revert.pod"><code>sqitch revert</code></a> &ndash; Revert changes from a database</li>
-<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-rework.pod"><code>sqitch rework</code></a> &ndash; Copy and modify a previous change</li>
+<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-init.pod"><code>sqitch init</code></a> – Initialize a Sqitch project. Creates the project configuration file, a plan file, and directories for deploy, revert, and test scripts</li>
+<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-config.pod"><code>sqitch config</code></a> – Configure Sqitch. Uses the same configuration format as Git, including cascading local, user, and system-wide configuration files</li>
+<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-help.pod"><code>sqitch help</code></a> – Get documentation for specific commands</li>
+<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-add.pod"><code>sqitch add</code></a> – Add a new change to the plan. Generates deploy, revert, and test scripts based on user-modifiable templates</li>
+<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-tag.pod"><code>sqitch tag</code></a> – Tag the latest change in the plan, or show a list of existing tags</li>
+<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-deploy.pod"><code>sqitch deploy</code></a> – Deploy changes to a database. Includes a <code>--mode</code> option to control how to revert changes in the event of a deploy failure (not at all, to last tag, or to starting point)</li>
+<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-revert.pod"><code>sqitch revert</code></a> – Revert changes from a database</li>
+<li><a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-rework.pod"><code>sqitch rework</code></a> – Copy and modify a previous change</li>
 </ul>
 
 
@@ -46,11 +46,11 @@ changes, roughly analogous to Git commits. Tags are simply pointers to specific 
 <p>I think I might hold off a bit on the VCS integration, since the <code>rework</code> command no longer requires it. There also needs to be support for database engines other than PostgreSQL. But otherwise, mostly what needs to be done is the informational commands, packaging, and testing:</p>
 
 <ul>
-<li><a href="https://github.com/theory/sqitch/issues/11"><code>sqitch status</code></a> &ndash; Show the current deployment status of a database</li>
-<li><a href="https://github.com/theory/sqitch/issues/12"><code>sqitch log</code></a> &ndash; Show the deploy and revert history of a database</li>
-<li><a href="https://github.com/theory/sqitch/issues/14"><code>sqitch bundle</code></a> &ndash; Bundle up the configuration, plan, and scripts for distribution packaging</li>
-<li><a href="https://github.com/theory/sqitch/issues/15"><code>sqitch test</code></a> &ndash; Test changes. Mostly hand-wavy; see below</li>
-<li><a href="https://github.com/theory/sqitch/issues/13"><code>sqitch check</code></a> &ndash; Validate a database deployment history against the plan</li>
+<li><a href="https://github.com/theory/sqitch/issues/11"><code>sqitch status</code></a> – Show the current deployment status of a database</li>
+<li><a href="https://github.com/theory/sqitch/issues/12"><code>sqitch log</code></a> – Show the deploy and revert history of a database</li>
+<li><a href="https://github.com/theory/sqitch/issues/14"><code>sqitch bundle</code></a> – Bundle up the configuration, plan, and scripts for distribution packaging</li>
+<li><a href="https://github.com/theory/sqitch/issues/15"><code>sqitch test</code></a> – Test changes. Mostly hand-wavy; see below</li>
+<li><a href="https://github.com/theory/sqitch/issues/13"><code>sqitch check</code></a> – Validate a database deployment history against the plan</li>
 </ul>
 
 

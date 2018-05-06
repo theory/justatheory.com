@@ -2,7 +2,7 @@ Sqitch: Depend On It!
 meta-keywords: sqitch, sql, change management, deployment, dependencies
 tags: sqitch sql change+management deployment dependencies
 
-<p><a href="https://metacpan.org/release/App-Sqitch">Sqitch v0.90</a> dropped last week (updated to v0.902 today). The focus of this release of the &ldquo;sane database change management&rdquo; app was cross-project dependencies. <a href="http://jim.nasby.net/">Jim Nasby</a> first put the idea for this feature into my head, and then I discovered that our first Sqitch-using project at <a href="http://iovation.com/">work</a> needs it, so blame them.</p>
+<p><a href="https://metacpan.org/release/App-Sqitch">Sqitch v0.90</a> dropped last week (updated to v0.902 today). The focus of this release of the “sane database change management” app was cross-project dependencies. <a href="http://jim.nasby.net/">Jim Nasby</a> first put the idea for this feature into my head, and then I discovered that our first Sqitch-using project at <a href="http://iovation.com/">work</a> needs it, so blame them.</p>
 
 <h3>Depend On It</h3>
 

@@ -10,9 +10,9 @@ release. The biggest issue I fixed was the handling of serialization failures.</
 
 <p>When copying deltas from one database to another, Bucardo sets the
 <a href="http://www.postgresql.org/docs/current/static/transaction-iso.html">transaction isolation</a>
-to &ldquo;Serializable&rdquo;. As of PostgreSQL 9.1, this is true serializable isolation.
+to “Serializable”. As of PostgreSQL 9.1, this is true serializable isolation.
 However, there were no tests for it in Bucardo. And since pervious versions of
-PostgreSQL had poorer isolation (retained in 9.1 as &ldquo;Repeatable Read&rdquo;), I
+PostgreSQL had poorer isolation (retained in 9.1 as “Repeatable Read”), I
 don’t think anyone really noticed it much. As I’m doing all my testing against
 9.2, I was getting the serialization failures about half the time I ran the
 test suite. It took me a good week to chase down the issue. Once I did, I
@@ -47,15 +47,15 @@ throw the serialization error?</p>
 
 <p>Studying the Bucardo source code, I discovered that Bucardo itself does not
 disable triggers and rules. Rather, it sets the <code>session_replica_role</code> GUC to
-&ldquo;replica&rdquo;. This causes PostgreSQL to disable the triggers and rules &mdash; except
+“replica”. This causes PostgreSQL to disable the triggers and rules — except
 for those that have been set to <code>ENABLE REPLICA</code>. The PostgreSQL
 <a href="http://www.postgresql.org/docs/9.2/static/sql-altertable.html"><code>ALTER TABLE</code> docs</a>:</p>
 
 <blockquote><p>The trigger firing mechanism is also affected by the configuration
 variable session_replication_role. Simply enabled triggers will
-fire when the replication role is &ldquo;origin&rdquo; (the default) or
-&ldquo;local&rdquo;. Triggers configured as ENABLE REPLICA will only fire if the
-session is in &ldquo;replica&rdquo; mode, and triggers configured as ENABLE ALWAYS
+fire when the replication role is “origin” (the default) or
+“local”. Triggers configured as ENABLE REPLICA will only fire if the
+session is in “replica” mode, and triggers configured as ENABLE ALWAYS
 will fire regardless of the current replication mode.</p></blockquote>
 
 <p>Well how cool is that? So all I needed to do was plug in a replica trigger and have it throw an exception once but not twice. Via email, Kevin Grittner pointed out that a sequence might work, and indeed it does. Because sequence values are non-transactional, sequences return different values every time they’re access.</p>

@@ -2,9 +2,9 @@ My Catalyst Tutorial: Add Authors to the View
 meta-keywords: Catalyst, Template::Declare, database, DBI, PostgreSQL, SQL, aggregate
 tags: Catalyst Template::Declare database DBI PostgreSQL SQL aggregate
 
-<p>Another post in my ongoing <a href="/computers/programming/perl/catalyst%20title=" title="Just a Theory: “Catalyst”">series</a> of posts on using Catalyst with Template::Declare and DBIx::Connector. This will be the last post covering material from <a href="http://search.cpan.org/perldoc?Catalyst::Manual::Tutorial::03_MoreCatalystBasics" title="Catalyst Tutorial - Chapter 3: More Catalyst Application Development Basics">chapter 3</a>, I promise. This is a fun one, though, because we continue to use this really nice <a href="http://en.wikipedia.org/wiki/Domain-specific_language" title="Wikipedia: “Domain-Specific Language”">DSL</a> called &ldquo;SQL,&rdquo; which I think is more expressive than an ORM would be.</p>
+<p>Another post in my ongoing <a href="/computers/programming/perl/catalyst%20title=" title="Just a Theory: “Catalyst”">series</a> of posts on using Catalyst with Template::Declare and DBIx::Connector. This will be the last post covering material from <a href="http://search.cpan.org/perldoc?Catalyst::Manual::Tutorial::03_MoreCatalystBasics" title="Catalyst Tutorial - Chapter 3: More Catalyst Application Development Basics">chapter 3</a>, I promise. This is a fun one, though, because we continue to use this really nice <a href="http://en.wikipedia.org/wiki/Domain-specific_language" title="Wikipedia: “Domain-Specific Language”">DSL</a> called “SQL,” which I think is more expressive than an ORM would be.</p>
 
-<p>To whit, the next task is to add the missing list of authors to the book list. The thing is, the more I work with databases, the more I'm inclined to think about them not only as the &ldquo;M&rdquo; in &ldquo;<a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller" title="Wikipedia: “Model-view-controller”">MVC</a>&rdquo;, but also the &ldquo;V&rdquo;. I'll show you what I mean.</p>
+<p>To whit, the next task is to add the missing list of authors to the book list. The thing is, the more I work with databases, the more I'm inclined to think about them not only as the “M” in “<a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller" title="Wikipedia: “Model-view-controller”">MVC</a>”, but also the “V”. I'll show you what I mean.</p>
 
 <h3>A Quick Fix</h3>
 
@@ -138,7 +138,7 @@ SELECT b.isbn, b.title, b.rating,
 
 <p>The use of the <code>q{}</code> operator is a style I use for SQL queries in Perl code; you can use whatever style you like. Since this is a very short SQL statement (thanks to the view), it’s not really necessary to have it on multiple lines, but I like to be fairly consistent about this sort of thing.</p>
 
-<p>The last thing we need to do is a a very simple change to the <code>list</code> template in <code>lib/MyApp/Templates/HTML/Books.pm</code>. In previous posts, I was referring to the non-existent &ldquo;author&rdquo; key in the each hash reference fetched from the database. In the new view, however, I've named that column &ldquo;authors&rdquo;. So change this line:</p>
+<p>The last thing we need to do is a a very simple change to the <code>list</code> template in <code>lib/MyApp/Templates/HTML/Books.pm</code>. In previous posts, I was referring to the non-existent “author” key in the each hash reference fetched from the database. In the new view, however, I've named that column “authors”. So change this line:</p>
 
 <pre><code>cell { $book-&gt;{author} };
 </code></pre>
@@ -152,7 +152,7 @@ SELECT b.isbn, b.title, b.rating,
 
 <h3>Notes</h3>
 
-<p>I think you can appreciate why, to a certain degree, I'm starting to think of the database as handling both the &ldquo;M&rdquo; and the &ldquo;V&rdquo; in &ldquo;MVC&rdquo;. It’s no mistake that the database object we created is known as a &ldquo;view&rdquo;. It was written in such a way that it not only expressed the relationship between books and authors in a compact but clear way, but it formatted the appropriate data for publishing on the site&mdash;all in a single, efficient query. All the Template::Declare view does is wrap it all up in the appropriate HTML.</p>
+<p>I think you can appreciate why, to a certain degree, I'm starting to think of the database as handling both the “M” and the “V” in “MVC”. It’s no mistake that the database object we created is known as a “view”. It was written in such a way that it not only expressed the relationship between books and authors in a compact but clear way, but it formatted the appropriate data for publishing on the site—all in a single, efficient query. All the Template::Declare view does is wrap it all up in the appropriate HTML.</p>
 
 <p>PostgreSQL isn’t the only database to support feature such as this, by the way. All of the databases I've used support views, and many offer useful aggregate functions, as well. Among the <a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html" title="MySQL Documentation: âGROUP BY (Aggregate) Functionsâ">MySQL aggregates</a>, for example, is <code>group_concat()</code>, which sort of combines the <code>array_to_string(array_agg())</code> PostgreSQL syntax into a single function. And I've <a href="http://www.justatheory.com/computers/databases/sqlite/custom_perl_aggregates.html" title="Just a Theory: âCustom Aggregates in Perlâ">personally written</a> a custom aggregate for SQLite in Perl. So although I use PostgreSQL for these examples and make use of its functionality, you can do much the same thing in most other databases.</p>
 

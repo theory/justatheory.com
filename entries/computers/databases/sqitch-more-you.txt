@@ -91,13 +91,13 @@ Date:      2012-08-01 22:20:46 +0200
 </ul>
 
 
-<p>The second point is the more important. The plan is to require the name of a project before the <code>:</code> in a dependency. For example, if I wanted to require the <code>insert_user</code> change from the &ldquo;flipr&rdquo; project plan above, I would declare it as <code>flipr:insert_user</code>. Sqitch will then know to check for it. I will be adding this pretty soon, since it requires some database changes and we’re going to need it at work. The need for database changes is also why v0.80 is still a dev release. (However I don’t expect the plan format to change beyond this tweak to dependency specification.)</p>
+<p>The second point is the more important. The plan is to require the name of a project before the <code>:</code> in a dependency. For example, if I wanted to require the <code>insert_user</code> change from the “flipr” project plan above, I would declare it as <code>flipr:insert_user</code>. Sqitch will then know to check for it. I will be adding this pretty soon, since it requires some database changes and we’re going to need it at work. The need for database changes is also why v0.80 is still a dev release. (However I don’t expect the plan format to change beyond this tweak to dependency specification.)</p>
 
 <p>Beyond that, next steps include:</p>
 
 <ul>
 <li>Creating an RPM targeting <a href="http://iovation.com/">work</a>’s servers. This will probably not be public, though I might add the spec file to the public project.</li>
-<li>Starting to use Sqitch for some work projects. This will be the first real-world use, which I deem essential for proving the technology. I hope that it does not lead to any more radical redesigns. :&ndash;)</li>
+<li>Starting to use Sqitch for some work projects. This will be the first real-world use, which I deem essential for proving the technology. I hope that it does not lead to any more radical redesigns. :–)</li>
 <li>Implement the SQLite interface to iron out any kinks in the engine API.</li>
 <li><a href="https://github.com/theory/sqitch/issues/17">Switch to Dist::Zilla</a> for building the distribution. I would love a volunteer to help with this; I expect it to be simple for someone well-versed in Dist::Zilla.</li>
 <li>Add support for localization. Sqitch already uses <a href="https://metacpan.org/module/Locale::TextDomain">Locale::TextDomain</a> throughout, so it’s localization-ready. We just need the tools put in place as described in <a href="https://github.com/theory/sqitch/issues/17">the dzil ticket</a>. Again, I would love help with this.</li>

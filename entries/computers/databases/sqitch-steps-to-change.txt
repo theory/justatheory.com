@@ -12,19 +12,19 @@ tags (basically another name for a single commit), but it also greatly
 simplifies the code for iterating over a plan and updating metadata in the
 database.</p>
 
-<p>But now that a plan is, in its essence, just a list of &ldquo;steps&rdquo;, I’m wondering
-if I should change that term. I originally used the term &ldquo;steps&rdquo; because the
+<p>But now that a plan is, in its essence, just a list of “steps”, I’m wondering
+if I should change that term. I originally used the term “steps” because the
 original plan was to have a deploy work on a tag-to-tag basis, where a single
 tag could have a series of changes associated with it. By that model, each
-change was a &ldquo;step&rdquo; toward deploying the tag. If any of the steps for a single
+change was a “step” toward deploying the tag. If any of the steps for a single
 tag failed, they were all reverted.</p>
 
 <p>But while one can still specify a tag as a deploy target (and optionally have
 it revert to an earlier tag one failure), it no longer makes sense to think of
 each change script as a step toward deploying a target. It’s just a change.
 Yes, as an object it has separate deploy, revert, and test scripts associated
-with it, but I’m thinking it still makes sense to call them &ldquo;changes&rdquo; instead
-of &ldquo;steps.&rdquo; Because they’re individual things, rather than collections of
+with it, but I’m thinking it still makes sense to call them “changes” instead
+of “steps.” Because they’re individual things, rather than collections of
 things that lead to some goal.</p>
 
 <p>What do you think?</p>

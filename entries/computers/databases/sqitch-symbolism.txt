@@ -19,12 +19,12 @@ tags: sqitch sql deployment change+management localization internationalization 
 
 <p>The addition of <code>@FIRST</code> and <code>@LAST</code> may not sounds like much, but there’s more.</p>
 
-<p>I also added forward and reverse change reference modifiers <code>^</code> and <code>~</code>. The basic idea was stolen from <a href="http://git-scm.com/docs/gitrevisions">Git Revisions</a>, though the semantics vary. For <a href="https://metacpan.org/module/sqitchchanges">Sqitch changes</a>, <code>^</code> appended to a name or tag means &ldquo;the change before this change,&rdquo; while <code>~</code> means &ldquo;the change after this change&rdquo;. I find <code>^</code> most useful when doing development, where I’m constantly deploying and reverting a change as I work. Here’s how I do that revert:</p>
+<p>I also added forward and reverse change reference modifiers <code>^</code> and <code>~</code>. The basic idea was stolen from <a href="http://git-scm.com/docs/gitrevisions">Git Revisions</a>, though the semantics vary. For <a href="https://metacpan.org/module/sqitchchanges">Sqitch changes</a>, <code>^</code> appended to a name or tag means “the change before this change,” while <code>~</code> means “the change after this change”. I find <code>^</code> most useful when doing development, where I’m constantly deploying and reverting a change as I work. Here’s how I do that revert:</p>
 
 <pre><code>sqitch revert --to @LAST^
 </code></pre>
 
-<p>That means &ldquo;revert to the change before the last change&rdquo;, or simply &ldquo;revert the last change&rdquo;. If I want to revert two changes, I use two <code>^</code>s:</p>
+<p>That means “revert to the change before the last change”, or simply “revert the last change”. If I want to revert two changes, I use two <code>^</code>s:</p>
 
 <pre><code>sqitch revert --to @LAST^^
 </code></pre>

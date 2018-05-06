@@ -12,7 +12,7 @@ CREATE TYPE article_states AS ENUM (
 );
 </pre>
 
-<p>Nice: we now have a simple data type that’s self-documenting. An an important feature of enums is that the ordering of values is the same as the declared labels. For a workflow such as this, it makes a lot of sense, because the workflow states are inherently ordered: &ldquo;draft&rdquo; comes before &ldquo;copy&rdquo; and so on.</p>
+<p>Nice: we now have a simple data type that’s self-documenting. An an important feature of enums is that the ordering of values is the same as the declared labels. For a workflow such as this, it makes a lot of sense, because the workflow states are inherently ordered: “draft” comes before “copy” and so on.</p>
 
 <p>Unfortunately, enums aren’t a panacea. I would use them all over the place if I could, but, alas, the value-set data types I tend to need tend not to have inherently ordered values other than the collation order of the text. For example, say that we need a table describing people’s faces. Using an enum to manage eye colors might look something like this:</p>
 
@@ -49,7 +49,7 @@ VALUES (&#x27;David&#x27;, &#x27;blue&#x27; ),
  Noriko | brown
 </pre>
 
-<p>Hrm. That’s not good. I forgot to put &ldquo;green&rdquo; after &ldquo;brown&rdquo; when I created the enum. Oh, and I forgot the color &ldquo;hazel&rdquo;:</p>
+<p>Hrm. That’s not good. I forgot to put “green” after “brown” when I created the enum. Oh, and I forgot the color “hazel”:</p>
 
 <pre>
 % INSERT INTO faces (name, eye_color) VALUES (&#x27;Kat&#x27;, &#x27;hazel&#x27; );

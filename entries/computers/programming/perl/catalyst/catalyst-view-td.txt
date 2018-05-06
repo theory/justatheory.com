@@ -108,7 +108,7 @@ table {
 
 <p>Then point your browser to http://localhost:3000/books/list. If you have
 everything working so far, you should see a web page that displays nothing
-other than our column headers for &ldquo;Title&rdquo;, &ldquo;Rating&rdquo;, and &ldquo;Author(s)&rdquo; &mdash; we
+other than our column headers for “Title”, “Rating”, and “Author(s)” — we
 won’t see any books until we get the database and model working below.</p>
 
 <h3>A Few Comments</h3>

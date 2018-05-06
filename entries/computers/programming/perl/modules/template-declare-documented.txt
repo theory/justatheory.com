@@ -109,8 +109,8 @@ Template::Declare-&gt;init( dispatch_to =&gt; [&#x0027;MyApp::Templates::Main&#x
 print Template::Declare-&gt;show(&#x0027;/content&#x0027;);
 </pre>
 
-<p>So <code>MyApp::Templates::Main</code>’s templates are in the &ldquo;/&rdquo; directory, so to speak,
-while the <code>MyApp::Templates::Util</code>’s templates are in the &ldquo;/utils&rdquo;
+<p>So <code>MyApp::Templates::Main</code>’s templates are in the “/” directory, so to speak,
+while the <code>MyApp::Templates::Util</code>’s templates are in the “/utils”
 subdirectory. Pretty cool, eh?</p>
 
 <p>So with this understanding in place, I had a much better feel for

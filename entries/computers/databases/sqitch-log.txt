@@ -9,7 +9,7 @@ tags: sqitch log sql database change+management
 <ul>
 <li>Colorized output</li>
 <li>Searching against change and committer names via regular expressions</li>
-<li>A variety of formatting options (&ldquo;full&rdquo;, &ldquo;long&rdquo;, &ldquo;medium&rdquo;, &ldquo;oneline&rdquo;, etc.)</li>
+<li>A variety of formatting options (“full”, “long”, “medium”, “oneline”, etc.)</li>
 <li>Extensible formatting with <a href="https://github.com/theory/sqitch/blob/master/lib/sqitch-log.pod#formats"><code>printf</code>-style codes</a></li>
 </ul>
 

@@ -31,7 +31,7 @@ tags: Sqitch SQL changes change+management plan deploy revert VCS database
 
 <p>Notice that <code>crypto</code> would be deployed <em>before</em> the <code>@beta</code> tag, despite the fact that it appears in the plan <em>after</em> <code>@beta</code>. Yes, one would end up with the correct database, but the actual deployment varies from the plan in a way that might be disconcerting to a user. I don’t like it.</p>
 
-<p>Another issue is that there is no way to go back to <code>@beta</code> here, because there are no previous copies of   <code>add_user</code> in the database. In theory this probably would not often be a big deal, but in practice, hey, sometimes you just need to go back in time no matter what. Maybe you need to repeatedly test a data migration (as opposed to a DDL change). I can certainly imagine needing that flexibility. So much for my &ldquo;insight.&rdquo;</p>
+<p>Another issue is that there is no way to go back to <code>@beta</code> here, because there are no previous copies of   <code>add_user</code> in the database. In theory this probably would not often be a big deal, but in practice, hey, sometimes you just need to go back in time no matter what. Maybe you need to repeatedly test a data migration (as opposed to a DDL change). I can certainly imagine needing that flexibility. So much for my “insight.”</p>
 
 <p>I’m back to thinking about VCS integration again. I know I keep going back and forth on this stuff. I apologize. I appreciate the <a href="/computers/databases/evolving-sqitch-plan.html#tb">thoughtful comments</a> and feedback I’ve received, and am taking the time to try to get this stuff right so that I can <em>stop</em> thinking about it in the future. I really want to reduce the complexity of database change management, but retain flexibility for those who need it. So yeah, I keep taking two steps forward and one step back, but there is overall forward momentum (I have had to trash less code than I expected).</p>
 
@@ -67,7 +67,7 @@ sql/revert/add_user.sql
 sql/test/add_user.sql
 </code></pre>
 
-<p>I use added verbosity (<code>-vv</code>) here to show what files are copied for the &ldquo;backup&rdquo; (the &ldquo;notice&rdquo; lines).
+<p>I use added verbosity (<code>-vv</code>) here to show what files are copied for the “backup” (the “notice” lines).
 So now the plan looks like this:</p>
 
 <pre><code>%plan-syntax-v1
@@ -80,7 +80,7 @@ So now the plan looks like this:</p>
 +add_user :add_user@alpha
 </code></pre>
 
-<p>Note how the new step implicitly requires the previous version of the step (as of <code>@alpha</code>), and thus all of its dependencies. This is a clean way to &ldquo;upgrade&rdquo; the step.</p>
+<p>Note how the new step implicitly requires the previous version of the step (as of <code>@alpha</code>), and thus all of its dependencies. This is a clean way to “upgrade” the step.</p>
 
 <p>Now you can edit <code>sql/deploy/add_user.sql</code> to make your changes, starting with the existing code. You can also edit <code>sql/test/add_user.sql</code> in order to update the tests for the new version. You don’t need to edit <code>sql/revert/add_user.sql</code> unless your changes are not idempotent.</p>
 
@@ -96,7 +96,7 @@ sql/revert/add_user.sql
 sql/test/add_user.sql
 </code></pre>
 
-<p>Other than the &ldquo;Backed up&rdquo; line, the output is the same as for adding any other step. Maybe there would be something to say that the previous version was copied to the new version. But the point is to make it clear to the user what files are available to be edited.</p>
+<p>Other than the “Backed up” line, the output is the same as for adding any other step. Maybe there would be something to say that the previous version was copied to the new version. But the point is to make it clear to the user what files are available to be edited.</p>
 
 <h3>VCS Integration</h3>
 
@@ -123,7 +123,7 @@ sql/revert/add_user.sql
 sql/test/add_user.sql
 </code></pre>
 
-<p>Note the lack of a &ldquo;Backed up&rdquo; line. It’s not necessary, since the code is already preserved in the Git history. Now we can edit the files in place and commit them to Git as usual. Sqitch will ask Git for the <code>add_user</code> step files as of the <code>alpha</code> tag when deploying the first instance of the step, and the current version for the latter. One can add <code>add_user</code> as many times as one likes, as long as there are always tags between instances.</p>
+<p>Note the lack of a “Backed up” line. It’s not necessary, since the code is already preserved in the Git history. Now we can edit the files in place and commit them to Git as usual. Sqitch will ask Git for the <code>add_user</code> step files as of the <code>alpha</code> tag when deploying the first instance of the step, and the current version for the latter. One can add <code>add_user</code> as many times as one likes, as long as there are always tags between instances.</p>
 
 <h3>Unbungled Bundle</h3>
 

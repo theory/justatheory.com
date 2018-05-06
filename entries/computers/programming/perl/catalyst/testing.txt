@@ -28,7 +28,7 @@ make test
 </pre>
 
 
-<p>You should see some output after this &mdash; lots of stuff, actually &mdash; ending something like this:</p>
+<p>You should see some output after this — lots of stuff, actually — ending something like this:</p>
 
 <pre>
 [debug] Loaded Path actions:

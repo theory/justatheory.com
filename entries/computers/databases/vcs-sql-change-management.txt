@@ -269,9 +269,9 @@ sql/deploy/add_bar.sql
 </code></pre>
 
 <p>Awesome, now everything is in the correct order. We did lose the <code>feature_foo</code>
-&ldquo;tag,&rdquo; though. That’s because it wasn’t a tag, and neither is <code>feature_bar</code>
+“tag,” though. That’s because it wasn’t a tag, and neither is <code>feature_bar</code>
 here. They are, rather, branch names, which we becomes obvious when using
-&ldquo;full&rdquo; decoration:</p>
+“full” decoration:</p>
 
 <pre><code>git log --format='%d' --decorate=full HEAD^..      
  (HEAD, refs/heads/master, refs/heads/feature_foo)

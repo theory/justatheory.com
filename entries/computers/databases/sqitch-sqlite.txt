@@ -4,12 +4,12 @@ tags: sqitch git sqlite database changes
 
 <p>This week I released <a href="https://metacpan.org/release/DWHEELER/App-Sqitch-0.961/">Sqitch v0.961</a>. There are a number of great new features v0.95x, including the beginning of two features I’ve had in mind since the beginning: VCS integration and support for multiple databases.</p>
 
-<p>First the VCS integration. This comes in the form of the new <a href="https://metacpan.org/module/sqitch-checkout"><code>checkout</code> command</a>, which automatically makes database changes for you when you change VCS branches. Say you have two branches, &ldquo;widgets&rdquo; and &ldquo;big-fix&rdquo;, and that their Sqitch plans diverge. If you’re in the &ldquo;widgets&rdquo; branch and want to switch to &ldquo;big-fix&rdquo;, just run</p>
+<p>First the VCS integration. This comes in the form of the new <a href="https://metacpan.org/module/sqitch-checkout"><code>checkout</code> command</a>, which automatically makes database changes for you when you change VCS branches. Say you have two branches, “widgets” and “big-fix”, and that their Sqitch plans diverge. If you’re in the “widgets” branch and want to switch to “big-fix”, just run</p>
 
 <pre><code>sqitch checkout big-fix
 </code></pre>
 
-<p>Sqitch will look at the &ldquo;big-fix&rdquo; plan, figure out the last change in common with &ldquo;widgets&rdquo;, and revert to it. Then it checks out &ldquo;big-fix&rdquo; and deploys. That’s it. Yes, you could do this yourself, but do you really remember the last common change between the two branches? Do you want to take the time to look for it, then revert, check out the new branch, and deploy? This is exactly the sort of common developer task that Sqitch aims to take the pain out of, and I’m thrilled to provide it.</p>
+<p>Sqitch will look at the “big-fix” plan, figure out the last change in common with “widgets”, and revert to it. Then it checks out “big-fix” and deploys. That’s it. Yes, you could do this yourself, but do you really remember the last common change between the two branches? Do you want to take the time to look for it, then revert, check out the new branch, and deploy? This is exactly the sort of common developer task that Sqitch aims to take the pain out of, and I’m thrilled to provide it.</p>
 
 <p>You know what’s awesome, though? <em>This feature never occurred to me.</em> I didn’t come up with it, and didn’t implement it. No, it was dreamt up and submitted in a pull request by <a href="https://github.com/rdunklau/">Ronan Dunklau</a>. I have wanted VCS integration since the beginning, but had yet to get &lsquo;round to it. Now Ronan has jumpstarted it. A million thanks!</p>
 
@@ -40,4 +40,4 @@ ae1263 deploy appschema
 
 <p>I personally will be using this a lot, Yep, scratching my own itch here. What itch do you have to scratch with Sqitch?</p>
 
-<p>In related news, I’ll be giving a tutorial at <a href="http://pgcon.org/2013/">PGCon</a> next month, entitled &ldquo;<a href="http://www.pgcon.org/2013/schedule/events/615.en.html">Agile Database Development</a>&rdquo;. We’ll be developing a database for a web application using <a href="http://git-scm.com/">Git</a> for source code management, <a href="http://sqitch.org/">Sqitch</a> for database change management, and <a href="http://pgtap.org/">pgTAP</a> for unit testing. This is the stuff I do all day long at work, so you can also think of it as &ldquo;Theory’s Pragmatic approach to Database Development.&rdquo; See you there?</p>
+<p>In related news, I’ll be giving a tutorial at <a href="http://pgcon.org/2013/">PGCon</a> next month, entitled “<a href="http://www.pgcon.org/2013/schedule/events/615.en.html">Agile Database Development</a>”. We’ll be developing a database for a web application using <a href="http://git-scm.com/">Git</a> for source code management, <a href="http://sqitch.org/">Sqitch</a> for database change management, and <a href="http://pgtap.org/">pgTAP</a> for unit testing. This is the stuff I do all day long at work, so you can also think of it as “Theory’s Pragmatic approach to Database Development.” See you there?</p>

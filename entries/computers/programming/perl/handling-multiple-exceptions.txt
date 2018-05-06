@@ -2,7 +2,7 @@ Handling Multiple Exceptions
 meta-keywords: Perl, exception, exception handling, eval
 tags: Perl exception exception+handling eval
 
-<p>I ran into an issue with <a href="http://search.cpan.org/perldoc?DBIx::Connector">DBIx::Connector</a> tonight: <a href="http://www.sqlite.org">SQLite</a> started throwing an exception from within a call to <code>rollback()</code>: &ldquo;DBD::SQLite::db rollback failed: cannot rollback transaction &ndash; SQL statements in progress&rdquo;. This is rather annoying, as it ate the underlying exception that led to the rollback.</p>
+<p>I ran into an issue with <a href="http://search.cpan.org/perldoc?DBIx::Connector">DBIx::Connector</a> tonight: <a href="http://www.sqlite.org">SQLite</a> started throwing an exception from within a call to <code>rollback()</code>: “DBD::SQLite::db rollback failed: cannot rollback transaction – SQL statements in progress”. This is rather annoying, as it ate the underlying exception that led to the rollback.</p>
 
 <p>So I've added a test to DBIx::Connector that looks like this:</p>
 
@@ -18,7 +18,7 @@ ok my $err = $@, 'We should have died';
 like $err, qr/Transaction WTF/, 'Should have the transaction error';
 </code></pre>
 
-<p>It fails as expected: the error is &ldquo;Rollback WTF&rdquo;. So far so good. Now the question is, how should I go about fixing it? Ideally I'd be able to access <em>both</em> exceptions in whatever exception handling I do. How to go about that?</p>
+<p>It fails as expected: the error is “Rollback WTF”. So far so good. Now the question is, how should I go about fixing it? Ideally I'd be able to access <em>both</em> exceptions in whatever exception handling I do. How to go about that?</p>
 
 <p>I see three options. The first is that taken by <a href="http://www.bricolagecms.org/">Bricolage</a> and <a href="http://search.cpan.org/perldoc?DBIx::Class">DBIx::Class</a>: create a new exception that combines both the transaction exception and the rollback exception into one. DBIx::Class does it like this:</p>
 
