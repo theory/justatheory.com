@@ -91,10 +91,10 @@ find +{
         if (my $links = $linkmap{$slug}) {
             $dir = "$dir/$slug";
             $fn = "$dir/index.md";
-            my ($y, $m, $d) = $data->{date} =~ /^(\d{4})-(\d\d)-(\d\d)/;
+            my ($y, $m) = $data->{date} =~ /^(\d{4})-(\d\d)/;
             for my $link (@{ $links }) {
                 my $bn = basename $link;
-                my $new = "$y/$m/$d/$slug/$bn";
+                my $new = "$y/$m/$slug/$bn";
                 $body =~ s/\Q$link/$new/g;
                 say "cp $link $dir";
             }
