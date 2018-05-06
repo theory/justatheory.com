@@ -4,7 +4,7 @@ tags: job career postgresql data+architect bricolage pgxn kineticode pgx
 
 <p>Since June, as part of my work for <a href="http://pgexperts.com/">PGX</a>, I’ve been doing on-site full-time consulting for <a href="http://iovation.com/">iovation</a> here in Portland. iovation is in the business of deterring online fraud via device identification and reputation. Given the nature of that business, a whole lot of data arrives every day, and I’ve been developing PostgreSQL-based solutions to help get a handle on it. The work has been truly engaging, and a whole hell of a lot of fun. And there are some really great, very smart people at iovation, whom I very much like and respect.</p>
 
-<p><a href="http://iovation.com/" title="iovation"><img src="http://justatheory.com/autobiographical/iovation.jpg" alt="iovation" title="" /></a></p>
+<p><a href="http://iovation.com/" title="iovation"><img class="right" src="/autobiographical/iovation.jpg" alt="iovation" title="" /></a></p>
 
 <p>So much so, in fact, that I decided to accept their offer of a full time position as “Senior Data Architect.” I started on Monday.</p>
 
@@ -12,11 +12,11 @@ tags: job career postgresql data+architect bricolage pgxn kineticode pgx
 
 <p>Don’t get me wrong, those ten years have been <em>great!</em> Not only have I been able to support myself doing the things I love—and learned a <em>ton</em> in the process—but I’ve managed to write a <a href="https://github.com/theory/repositories">lot</a> <a href="https://github.com/bricoleurs/repositories">of</a> <a href="https://github.com/pgxn/repositories">great</a> <a href="https://github.com/pgexperts/repositories">code</a>. Hell, I will be continuing as an associate with <a href="http://pgexperts.com/">PGX</a>, though with greatly reduced responsibilities. And someday I may go indy again. But in the meantime, the challenges, opportunities, and culture at iovation are just too good to pass up. I’m loving the work I’m doing there, and expect to learn a lot over the next few years.</p>
 
-<p><a href="http://kineticode.com/" title="Kineticode"><img src="http://justatheory.com/autobiographical/kineticode.gif" alt="kineticode" title="" /></a></p>
+<p><a href="http://kineticode.com/" title="Kineticode"><img src="/autobiographical/kineticode.gif" alt="kineticode" title="" class="left" /></a></p>
 
 <p>So what, you might ask, does this mean for Kineticode, the company I founded to offer support, consulting, and training services for <a href="http://bricolagecms.org/">Bricolage CMS</a>? The truth is that Kineticode has only a few technical support customers left; virtually all of my work for the last two years has been through PGX. So I’ve decided to shut Kineticode down. I’m shifting the Bricolage tech support offerings <a href="http://pgexperts.com/bricolage.html" title="Bricolage Technical Support from PGX">over to PGX</a> and having Kineticode’s customers move there as their contacts come up for renewal. They can expect the same great service as always. Better even, as there are 10 associates in PGX, and, lately, only me at Kineticode. Since Kineticode itself is losing its Raison d’être, it’s going away.</p>
 
-<p><a href="http://pgexperts.com/" title="PGX"><img src="http://justatheory.com/autobiographical/pgx.png" alt="PGX" title="" /></a></p>
+<p><a href="http://pgexperts.com/" title="PGX"><img src="/autobiographical/pgx.png" alt="PGX" title="" class="right" /></a></p>
 
 <p>I intend to remain involved in the various open-source projects I work on. I still function as the benevolent dictator of <a href="http://bricolagecms.org/">Bricolage CMS</a>, though other folks have stepped up their involvement quite a lot in the last few years. And I expect to keep improving <a href="http://pgxn.org/">PGXN</a> and <a href="http://www.designsceneapp.com/">DesignScene</a> as time allows (I’ve actually been putting some effort into both in the last few weeks; watch for <a href="http://blog.pgxn.org/" title="PGXN Blog">PGXN</a> and <a href="http://blog.lunar-theory.com/" title="Lunar/Theory Blog">Lunar/Theory</a> announcements in the coming weeks and months!). And, in fact, I expect that a fair amount of the work I do at iovation will lead to blog posts, conference presentations, and more open-source code.</p>
 

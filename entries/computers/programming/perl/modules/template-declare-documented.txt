@@ -5,11 +5,11 @@ tags: perl template templating Template::Declare mixin delegation
 <p>Today, <a href="http://blog.sartak.org/">Sartak</a> uploaded a new version of
 <a href="http://search.cpan.org/perldoc?Template::Declare" title="Template::Declare on CPAN">Template::Declare</a>.
 Why should you care? Well, in addition to the
-<a href="http://justatheory.com/computers/programming/perl/xml-generation.html" title="Just a Theory: “Generating XML in Perl”">nice templating syntax</a>,
+<a href="/computers/programming/perl/xml-generation.html" title="Just a Theory: “Generating XML in Perl”">nice templating syntax</a>,
 the new version features <em>complete documentation</em>. For everything.</p>
 
 <p>This came about because I was trying to understand Template::Declare, with its
-occasional mentioning of âmixinsâ and âpathsâ and âroots,â and I just wasn’t
+occasional mentioning of “mixins” and “paths” and “roots,” and I just wasn’t
 getting it out of the
 <a href="http://search.cpan.org/~sartak/Template-Declare-0.40/lib/Template/Declare.pm" title="Template::Declare 0.40">existing documentation</a>.
 Much of my confusion stemmed from how

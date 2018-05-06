@@ -1,3 +1,4 @@
+
 Sqitch - VCS-powered SQL Change Management
 meta-keywords: SQL, Sqitch, migration, deployment, reversion, database, VCS, Git
 tags: SQL Sqitch migration deployment reversion database VCS Git
@@ -711,13 +712,13 @@ string      = ? non-EOL characters ? ;</code></pre>
 
 <ul>
 
-<li><p><a href="http://justatheory.com/computers/databases/simple-sql-change-management.html">Simple SQL Change Management</a></p>
+<li><p><a href="/computers/databases/simple-sql-change-management.html">Simple SQL Change Management</a></p>
 
 </li>
-<li><p><a href="http://justatheory.com/computers/databases/vcs-sql-change-management.html">VCS-Enabled SQL Change Management</a></p>
+<li><p><a href="/computers/databases/vcs-sql-change-management.html">VCS-Enabled SQL Change Management</a></p>
 
 </li>
-<li><p><a href="http://justatheory.com/computers/databases/sql-change-management-sans-redundancy.html">SQL Change Management Sans Duplication</a></p>
+<li><p><a href="/computers/databases/sql-change-management-sans-redundancy.html">SQL Change Management Sans Duplication</a></p>
 
 </li>
 </ul>
