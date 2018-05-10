@@ -2,7 +2,7 @@ More Sun
 meta-keywords: travel, France, summer, Arles, Provence
 tags: travel France summer Arles Provence
 
-<div class="box" style="float:none"><a href="https://www.flickr.com/photos/decar66/8583754790/" title="Arles from the Arena"><img style="float:none" src="http://farm9.staticflickr.com/8102/8583754790_3297ccf5f7_c.jpg" alt="Arles from the Arena" /></a>
+<div class="box" style="float:none"><a href="https://www.flickr.com/photos/decar66/8583754790/" title="Arles from the Arena"><img style="float:none" src="https://farm9.staticflickr.com/8102/8583754790_3297ccf5f7_c.jpg" alt="Arles from the Arena" /></a>
 <p class="caption" style="text-align:left !important">Arles from the Arena by <a href="https://www.flickr.com/photos/decar66/">Salva Barbera</a> (<a href="http://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>)</p>
 </div>
 
