@@ -1,0 +1,740 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Practical PL/pgSQL: Managing Ordered Sets</title>
+    <meta name="keywords" content="PostgreSQL, PL/pgSQL, functions, performance, SQL, database, object oriented programming, OOP, object relational mapping, ORM collection set performance benchmark" />
+    <style type="text/css">
+      pre    { background:#ddd; padding: 1em; border: 1px solid black; }
+      dfn    { font-style: italic; } /* Some browsers don't do this automatically */
+      .lines { text-align: right; }
+    </style>
+  </head>
+  <body>
+    <h1>Practical PL/pgSQL: Managing Ordered Sets</h1>
+
+<p>A common pattern when managing the relationship between object-oriented
+applications and databases is the many-to-many relationship. Such
+relationships are often managed in the an object-relational mapper as
+collections of objects, wherein one class has an accessor that returns a
+collection of related objects. For example, say that you're creating (yet
+another) blogging application. You want your blog entries to be associated
+with tags. Tags can be used over and over again for different blog entries,
+and each blog entry can of course have more than one tag. In this scenario,
+the blog entry class might have a method that returns a collection of tag
+objects. (Whether or not the tag class has a method that returns a collection
+of blog entry objects is an implementation-specific issue that I'll just leave
+up to you.)</p>
+
+<p>As an added twist, oftentimes you might want the relationship to be
+ordered. That is to say, for a given blog entry, the order of the tags might
+be meaningful. Perhaps the first tag is the most important, and the last tag
+is the least important. The collection of tags is then an ordered set. To
+manage this relationship in a database, one typically creates a join table to
+manage the relationship, viz.:</p>
+
+<pre>
+-- Create a table for blog entries.
+CREATE TABLE entry (
+  id      SERIAL PRIMARY KEY,
+  title   TEXT,
+  content TEXT
+);
+
+-- Create a table for tags.
+CREATE TABLE tag (
+  id   SERIAL PRIMARY KEY,
+  name TEXT
+);
+
+-- Create a join table to collect tags for entries.
+CREATE TABLE entry_coll_tag (
+  entry_id  INTEGER REFERENCES entry(id)
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE,
+  tag_id    INTEGER REFERENCES tag(id)
+                    ON UPDATE CASCADE
+                    ON DELETE CASCADE,
+  tag_order SMALLINT,
+  PRIMARY KEY (entry_id, tag_id)
+);
+
+-- Keep things orderly.
+CREATE UNIQUE INDEX idx_entry_coll_tag_order
+ON entry_coll_tag (entry_id, tag_order);
+</pre>
+
+<p>So far so good, right? Blog entries are stored in the <var>entry</var>
+table, tags in the <var>tag</var> table, and the one-to-many relationship is
+managed by the <var>entry_coll_tag</var> table. Note that in the
+<var>entry_coll_tag</var> table, the combination of <var>entry_id</var>
+and <var>tag_id</var> is the primary key, as each entry can only be associated
+with a given tag only once, and vice-versa. We also create a unique index
+on <var>entry_id</var> and <var>tag_order</var>, so that a given blog entry has
+its tag associations ordered, but each order number can appear only once per
+blog entry (otherwise they wouldn't really be ordered, would they?). To select
+all the tags in the collection for a given blog entry, we'd execute a query
+like this:</p>
+
+<pre>
+SELECT tag.id, tag.name
+FROM   tag, entry_coll_tag
+WHERE  tag.id = entry_coll_tag.tag_id
+       AND entry_coll_tag.entry_id = ?
+ORDER BY entry_coll_tag.tag_order;
+</pre>
+
+<p>And to insert the data for a new blog entry, we might do something like
+this in the entry class (using pseudo-code here; error handling elided for
+clarity):</p>
+
+<pre>
+# Use prepared statements.
+insert = dbh.prepare('INSERT INTO entry (title, content) VALUES (?, ?)');
+sel_id = dbh.prepare(&quot;SELECT CURRVAL('entry_id_seq')&quot;);
+
+ins_coll = dbh.prepare('
+    INSERT INTO entry_coll_tag (entry_id, tag_id, tag_order)
+    VALUES (?, ?, ?)
+');
+
+# Do everything inside a transaction.
+dbh.begin;
+
+# Insert the new entry.
+insert.execute(entry.title, entry.content);
+sel_id.execute;
+entry.id = sel_id.fetch;
+
+# Associate the tags with the entry.
+i = 0;
+foreach tag in (tag_array) {
+    ins_coll.execute(entry.id, tag.id, ++i);
+}
+
+# Make it so!
+dbh.commit;
+</pre>
+
+<p>To reorder the associated tags for an existing blog entry, we'd just
+execute the <code>foreach</code> loop with the new order. If we wanted to
+simply add new tags to an existing collection, it gets a bit more
+complicated:</p>
+
+<pre>
+# Transactions make us safer!
+dbh.begin;
+
+# Get the current highest value of tag_order.
+max_ord = dbh.selectcol(
+    'SELECT COALESCE(MAX(tag_order), 0) FROM entry_coll_tag WHERE entry_id = ?',
+    entry.id
+);
+
+# Add the new tags to the entry.
+i = 0;
+foreach tag in (new_tag_array) {
+    ins_coll.execute(entry.id, tag.id, max_ord + ++i);
+}
+
+dbh.commit;
+</pre>
+
+<p>And indeed, this is the approach taken by most object-relational mapping
+applications to manage ordered many-to-many relationships. But there's a major
+problem with this approach: we have a race condition. What happens if two
+different processes are updating the collection of tags on the same blog entry
+at the same time? They might both grab the same value for the previous maximum
+value of the <var>tag_order</var> column, but one commit would fail. And while
+it's good and proper that the the integrity of the data be maintained in this
+way, it's not a great idea to expose customers to an unexpected error screen
+indicating a constraint violation.</p>
+
+<p>But what's more, this code is <em>slow.</em> We're making <em>a lot</em> of
+calls to the database here. What if there were 100 tags associated with a blog
+entry? That's 100 calls for each insert into the join table. It also lengthens
+the duration of the transaction, increasing the likelihood of an error due to
+the race condition.</p>
+
+<p>Wouldn't it be a lot cleaner if there was a way to tell the database to
+manage the collection associations for us? If there were functions that we
+could call that eliminate the race condition and update the collection
+relationships in a single database call?</p>
+
+<p>Fortunately for PostgreSQL users, there is. All we have to do is factor our
+collection relationship maintenance code out of the application layer and into
+database functions. In a <a href="plpgsql_functions.html" title="Introduction
+to PL/pgSQL">previous article</a>, I introduced PL/pgSQL with some impractical
+examples. Now I want to get practical by using PL/pgSQL to solve this
+object-relational mapping problem.</p>
+
+<h2>Clearing a Collection</h2>
+
+<p>Given that we're dealing with collections of objects, I've decided to
+create four functions to manage them: one to clear the collection (empty it of
+all tags for a given entry), one to remove specific tags from the collection,
+one to set all of the tags in the collection at once, and one to add new tags
+to the collection without changing the existing collection members. I'll
+demonstrate how to create each in that order, since they're from the simplest
+to the most complex. Here's the clear function:</p>
+
+<table>
+<tr><td><pre class="lines">
+1
+2
+3
+3
+4
+5
+6
+</pre></td><td>
+<pre>
+CREATE OR REPLACE FUNCTION entry_coll_tag_clear (
+    obj_id  integer
+) RETURNS VOID AS $$
+BEGIN
+    DELETE FROM entry_coll_tag WHERE entry_id = obj_id;
+END;
+$$ LANGUAGE plpgsql;
+</pre>
+</td></tr></table>
+
+<p>If you've read my <a href="plpgsql_functions.html" title="Introduction to
+PL/pgSQL">previous article</a> or are already familiar with PL/pgSQL, this
+function should be pretty easy to figure out. The body of the function
+constitutes all of one line, the one with the <code>DELETE</code> statement.
+Of course, one could simply execute that <code>DELETE</code> statement from
+client code, but doing so would mean that there were essentially two different
+interfaces for managing collections: this <code>DELETE</code> statement,
+and some of the more complex functions we'll bet getting to in a moment. So
+I provide this function for the sake of interface consistency.</p>
+
+<p>To use this function to clear a blog entry with the ID 24 of all tags,
+you'd call it like this:</p>
+
+<pre>
+SELECT entry_coll_tag_clear(24);
+</pre>
+
+<h2>Deleting Select Tags from a Collection</h2>
+
+<p>Next up is the delete function, which allows a number of specific tags to
+be removed from the collection at once. Here's the function:</p>
+
+<table>
+<tr><td><pre class="lines">
+1
+2
+3
+3
+4
+5
+6
+8
+9
+10
+</pre></td><td>
+<pre>
+CREATE OR REPLACE FUNCTION entry_coll_tag_del (
+    obj_id   integer,
+    coll_ids integer[]
+) RETURNS VOID AS $$
+BEGIN
+    DELETE FROM entry_coll_tag
+    WHERE  entry_id = obj_id
+           AND tag_id = ANY(coll_ids);
+END;
+$$ LANGUAGE plpgsql;
+</pre></td></tr></table>
+
+<p>Only a few things are different here. First, we have a second argument in
+the signature, <var>coll_ids</var>, which is an array of integers. This is how
+a number of tag IDs can be passed to the function at once. In client code,
+you'll likely have to use the stringified representation of an array. Thus, to
+remove tags with the IDs 5, 7, 10, and 14 from the collection associated with
+entry 24, you'd call the function like so:</p>
+
+<pre>
+SELECT entry_coll_tag_del(24, '{5,7,10,14}');
+</pre>
+
+<p>Here, <code>'{5,7,10,14}'</code> represents an array with the IDs 5, 7, 10,
+and 14. See the PostgreSQL documentation
+for <a href="http://www.postgresql.org/docs/current/static/arrays.html"
+title="PostgreSQL Arrays">more</a>
+<a href="http://www.postgresql.org/docs/current/static/functions-array.html" title="PostgreSQL Array Functions">on</a>
+<a
+href="http://www.postgresql.org/docs/current/static/sql-expressions.html#SQL-SYNTAX-ARRAY-CONSTRUCTORS"
+title="PostgreSQL Array Constructors">arrays</a>.</p>
+
+
+<p>The other thing that's different about this function is the use of
+the <code>ANY</code> hyper operator in the <code>WHERE</code> clause.
+<code>ANY</code> is similar to the familiar SQL <code>IN</code> expression,
+except that it acts on an array of values instead of a list. So that last part
+of the <code>WHERE</code> expression ensures that all rows are deleted that
+have a value in the <var>tag_id</var> column equal to any of the values in the
+array. Note that <code>ANY</code> expressions may not be as fast as
+their <code>IN</code> counterparts when a lot of rows must be compared,
+although this issue has been addressed for the PostgreSQL 8.2 release slated
+for later this year.</p>
+
+<p>Now, as with <code>entry_coll_tag_clear()</code>, this code could easily be
+handled in the client application, but again, I'm providing it for the sake of
+interface consistency. So let's make things a little more interesting.</p>
+
+<h2>Setting All Tags in a Collection</h2>
+
+<p>Let's take a look at the function that we'll use to set all of the objects
+in a collection at once:</p>
+
+<table>
+<tr><td><pre class="lines">
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre></td><td>
+<pre>
+CREATE OR REPLACE FUNCTION entry_coll_tag_set (
+    obj_id   integer,
+    coll_ids integer[]
+) RETURNS VOID AS $$
+BEGIN
+    PERFORM true FROM entry WHERE id = obj_id FOR UPDATE;
+
+    UPDATE entry_coll_tag
+    SET    tag_order = -tag_order
+    WHERE  entry_id = obj_id
+
+    FOR iloop IN 1..array_upper(coll_ids, 1) LOOP
+        IF coll_ids[iloop] IS NULL THEN
+            CONTINUE;
+        END IF;
+
+        UPDATE entry_coll_tag
+        SET    tag_order = iloop
+        WHERE  entry_id = obj_id
+               AND tag_id = coll_ids[iloop];
+
+        IF FOUND IS false THEN
+            INSERT INTO entry_coll_tag (entry_id, tag_id, tag_order)
+            VALUES (obj_id, coll_ids[iloop], iloop);
+        END IF;
+    END LOOP;
+
+    DELETE FROM entry_coll_tag
+    WHERE  entry_id = obj_id AND tag_order &lt; 0;
+END;
+$$ LANGUAGE plpgsql;
+</pre></td></tr></table>
+
+<p>The idea behind this function is that you can call it to assign all of the
+tags to the collection for a given entry at once, like so:</p>
+
+<pre>
+SELECT entry_coll_tag_set(24, '{67,43,1,104}');
+</pre>
+
+<p>Then, when the function exits, all of the tags with the IDs 67, 43, 1, and
+104 will be associated in that order with entry 24. As you might guess, this
+single call to the database incurs a lot less overhead than calling
+<code>INSERT</code> or <code>UPDATE</code> for each tag ID—especially if you
+associate a lot of tags with an entry!</p>
+
+<p>This function introduces quite a bit more syntax. Looking it over, the
+first line with something new is line six's unfamiliar <code>PERFORM</code>
+statement. This is a special PL/pgSQL statement that can be used in lieu of a
+<code>SELECT</code> statement when you want to ignore the rows to be returned
+by the <code>SELECT</code> statement. Here we're using the <code>SELECT…FOR
+UPDATE</code> statement. What is the <code>FOR UPDATE</code> part?
+Essentially, this statement tells PostgreSQL to lock the row in the
+<var>entry</var> table for which we're associating tags. This lock is how we
+overcome the race condition. And since we're only concerned with creating the
+lock, rather than fetching values returned by a <code>SELECT</code> statement,
+we use <code>PERFORM</code>, instead.</p>
+
+<p>Now, you might reasonably ask why we're locking the entry object since
+we're not making any modifications to it. The problem with the race condition
+is that, while we <em>could</em> lock all of the existing rows associated with
+the entry ID in the <var>entry_coll_tag</var> table and thus prevent a race
+condition on existing rows, that wouldn't stop another process from
+<em>inserting</em> new rows associated with the entry ID. Thus the race
+condition still exists.</p>
+
+<p>But we eliminate this issue by locking the entry object row. This lock
+prevents any rows with a foreign key relationship with <var>entry</var> from
+being inserted or updated. And why not? Because for all PostgreSQL knows, we
+might be <em>changing</em> the primary key value in the <var>entry</var> table
+(but you never, <em>ever</em> actually do that, right?). Of course,
+the <var>entry_coll_tag</var> table has a foreign key relationship with
+the <var>entry</var> table. Therefore, by locking the entry row, we have
+effectively prevented any other process for inserting or updating rows
+in <var>entry_coll_tag</var> that reference that entry. The race condition is
+thus completely eliminated.</p>
+
+<p>After getting the lock (which may be blocked until another transaction that
+has a lock on the same row finishes), we execute an <code>UPDATE</code>
+statement (lines 8-10) to set all existing rows associated with the entry ID
+so that the value of the <var>tag_order</var> column is negative. In doing so,
+we avoid problems with the unique constraint. This is necessary because you
+might be updating a collection with some existing records, so in order to
+avoid conflicts with unique constraint on the <var>tag_order</var> column, we
+set the existing record so that its <var>tag_order</var> column a negative
+value. Why not just delete it, you might ask? Well, perhaps we have other
+dependencies on this row, such as foreign key constraints or an <code>ON
+DELETE</code> trigger that we don't want to set off unless we're actually
+eliminating the relationship. Furthermore, the same object might still be in
+the collection with a different <var>tag_order</var> value, so why move it to
+a new row? This technique allows us to keep existing records around until
+we're convinced that we no longer need them. Note that the simple application
+code in the first section of this article failed to take this subtlety into
+account.</p>
+
+<p>Next up, at line 12, we use a <code>FOR</code> loop to iterate over each of
+the values in the <var>coll_ids</var> array passed to the function. We start
+with index 1 (because SQL arrays start at 1, not 0 as in most programming
+languages with which you might be familiar), and continue up to the last index
+in the array, which is returned by the call to
+<code>array_upper(coll_ids, 1)</code>. The <var>iloop</var> variable is
+implicitly created by the <code>FOR</code> loop to store each index as we
+iterate over the array.</p>
+
+<p>As we iterate over each value in the array, we first check to see if it is
+<code>NULL</code>, and if it is, execute the <code>CONTINUE</code> statement
+to restarts the loop with the next value. Now, PostgreSQL does not currently
+allow <code>NULL</code>s in arrays, but that's slated to change for the 8.2
+release, due out later this year. So we're doing some defensive coding
+here.</p>
+
+<p>But there's a better reason to be checking for <code>NULL</code>s even in
+earlier versions of PostgreSQL. A reviewer reading an earlier draft of this
+article pointed out a problem with iterating over the array starting at index
+1: in PostgreSQL arrays, the lower bound isn't necessarily 1! This example
+demonstrates the issue:</p>
+
+<pre>
+try=% <strong>select array_lower('[3:5]={1,2,3}'::int[], 1);</strong>
+ array_lower 
+-------------
+           3
+(1 row)
+</pre>
+
+<p>This <q>feature</q> actually violates the SQL standard, and so will likely
+be changed in a future version of PostgreSQL. But in the meantime, the
+solution is either to start with the return value of
+<code>array_lower()</code> instead of 1, or to check each value as we
+iterate over the array. So what value is stored in index 1 when the lower
+bound is not index 1? Let's have a look:</p>
+
+<pre>
+try=% <strong>select coalesce(foo.bar[1], 0)</strong>
+try-% <strong>from (select '[3:5]={1,2,3}'::int[]) as foo(bar);</strong>
+ coalesce 
+----------
+        0
+(1 row)
+</pre>
+
+<p>The standard <code>COALESCE()</code> function returns the first
+non-<code>NULL</code> value passed to it. Since it here returns 0, we know
+that the value stored in index 1 is <code>NULL</code>, so our defensive coding
+against future improvements to arrays in PostgreSQL has covered this issue, as
+well.</p>
+
+<p>For each non-<code>NULL</code> value in <var>coll_ids</var>, we execute a
+couple of SQL statements. At lines 17-20, we attempt to update an existing row
+with the relevant entry ID and tag ID to set the <var>tag_order</var> column
+to the current value of <var>iloop</var>. We have thus avoided breaking any
+foreign key dependencies or triggering any <code>ON DELETE</code> (or
+even <code>ON INSERT</code>) triggers on the row by not deleting it and
+inserting a new row.</p>
+
+<p>Of course, a given tag might not have been previously associated with the
+entry, so we need to check to see if the update actually updated a row, and if
+not, insert a new one. This is just what rows 22-25 accomplish. First, we use
+the <code>IF…THEN</code> block to check the <var>FOUND</var> boolean variable,
+which is always available in PL/pgSQL functions, and is set to
+<code>true</code> when an <code>UPDATE</code> or <code>INSERT</code> statement
+affects a row, among
+<a
+href="http://www.postgresql.org/docs/current/static/plpgsql-statements.html#PLPGSQL-STATEMENTS-DIAGNOSTICS"
+title="PL/pgSQL: Obtaining the Result Status">other events</a>. For our
+purposes, if it's <code>false</code>, then we know that the
+<code>UPDATE</code> statement updated no rows, so we insert a new row.</p>
+
+<p>Now, once we've updated or inserted all of the rows to properly represent
+the tags associated with the given entry, and in the proper order, we need to
+make sure that we clean up any extras. Perhaps earlier in life the collection
+had a tag that has since been discarded, or the collection used to have more
+tags than it currently has. The <code>DELETE FROM</code> statement at lines
+28-29 takes care of this, by deleting any rows associated with the entry with
+a <var>tag_order</var> less than 0 (because we set it to a negative value and
+then never updated it with a new value).</p>
+
+<p>As you can see, this function does quite a lot of processing in order to
+avoid race conditions and to try to be as careful as possible in setting up
+the collection. Old rows are preserved, new ones are created, and discarded
+rows are properly deleted. Needless to say, we hadn't caught all of these
+conditions in the application code in the first section, but if we had, it
+would have been even slower and more difficult to maintain. By factoring the
+collection management into the database, our application code becomes much
+simpler (just a single database function call) and consumes far fewer network
+resources.</p>
+
+<h2>Adding New Tags</h2>
+
+<p>But we're not quite done yet. Sometimes you might want to just add new tags
+to an existing collection. It seems silly to take the time and resources to
+load all of the existing tags in the collection just to append to that list.
+So let's create a PL/pgSQL function that takes on the responsibility for
+adding the new tags to the collection:</p>
+
+<table>
+<tr><td><pre class="lines">
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre></td><td>
+<pre>
+CREATE OR REPLACE FUNCTION entry_coll_tag_add (
+    obj_id   integer,
+    coll_ids integer[]
+) RETURNS VOID AS $$
+DECLARE
+    last_ord smallint;
+    got_ord  boolean;
+    iord     integer := 1;
+BEGIN
+    PERFORM true FROM entry WHERE id = obj_id FOR UPDATE;
+
+    SELECT INTO last_ord COALESCE(max(tag_order), 0)
+    FROM   entry_coll_tag
+    WHERE  entry_id = obj_id;
+
+    FOR iloop IN 1..array_upper(coll_ids, 1) LOOP
+        IF coll_ids[iloop] IS NULL THEN
+            CONTINUE;
+        END IF;
+
+        SELECT INTO got_ord true 
+        FROM   entry_coll_tag
+        WHERE  entry_id = obj_id
+               AND tag_id = coll_ids[iloop];
+
+        IF got_ord IS NULL THEN
+            INSERT INTO entry_coll_tag (entry_id, tag_id, tag_order)
+            VALUES (obj_id, coll_ids[iloop], last_ord + iord);
+            iord := iord + 1;
+        END IF;
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;
+</pre></td></tr></table>
+
+<p>The syntax for using this function is identical to that of
+<code>entry_coll_tag_set()</code>:</p>
+
+<pre>
+SELECT entry_coll_tag_add(24, '{223,12,52}');
+</pre>
+
+<p>This call will add the tags with the IDs 223, 12, and 52 to the collection,
+without molesting the previously-existing tags in the collection. If any of
+the tag IDs in the array are already in the collection,
+<code>entry_coll_tag_add()</code> will simply leave them where they are.</p>
+
+<p>This function declares a number of variables, and again, the first thing we
+do in the function body is to get a lock on the entry object so that we can
+add tags to the collection with impunity. Then, at lines 12-14, we use the
+special PL/pgSQL <code>SELECT INTO</code> expression to collect the current
+maximum value for the <var>tag_order</var> column for the blog entry. And just
+in case no row exists in the <var>entry_coll_tag</var> table already (in which
+case <code>MAX()</code> will return <code>NULL</code>), we use the
+<code>COALESCE()</code> function to force the result to default to 0.</p>
+
+<p>At line 16, we start looping through the IDs in the <var>coll_ids</var>
+array, just as we did in <code>person_coll_tag_set()</code>, and again skip
+<code>NULL</code> values at lines 17-19. Now it could be that a call is made
+to <code>person_coll_tag_add()</code> with one or more tag IDs that
+<em>already</em> exist in the collection. So at lines 21-24, we once again use
+the <code>SELECT INTO</code> expression, this time to fetch <code>true</code>
+into the <var>got_ord</var> variable if the row exists. If it doesn't
+exist, <var>got_ord</var> will be <code>NULL</code>, and indeed, this is just
+what we check at line 26. So if it's <code>NULL</code>, we insert the new
+value, using <code>iord + last_ord</code> to set the value of the
+<var>tag_order</var> column.</p>
+
+<p>So once again, we've saved quite a bit of overhead by creating a function
+that can be called once from application code to safely add any number of tags
+to the collection at once. If we were to do it all in application space, we'd
+have to send many more queries to the server—two for each tag, plus one for
+the lock and one to determine the previous maximum value of the
+<var>tag_order</var> column.</p>
+
+<h2>Benchmarks</h2>
+
+<p>So how much time do these functions really save us in the performance
+department? We've established that we can take quite a few precautions in the
+functions to ensure that they work as smoothly as possible, avoiding race
+conditions and duplicate record errors. That's all well and good, but of
+course we could get the same results by executing the same queries in the
+application space, viz. the <var>entry</var> table row lock,
+the <code>UPDATE</code> statements to check for existing records, etc. Its a
+lot of SQL to maintain in application space, but of course do-able.</p>
+
+<p>But the real advantage of the functions vs. multiple database calls comes
+in the form of performance improvements. To test the difference, I wrote a
+Perl script using the extremely fast DBI database interface to test both
+approaches and compare their performance. The script inserts 100,000 entry
+records and ca. 500,000 tag records (a random number of tags between 1 and 10
+for each entry) before running the benchmarks, as an empty database
+is <em>always</em> a fast database and therefore would not provide accurate
+benchmark results. The script also runs the PostgreSQL <code>VACUUM</code>
+and <code>ANALYZE</code> commands before each test, to ensure that the
+database is as clean and the statistics as up-to-date as possible. Each
+approach to collection management runs the following code three hundred times
+(this is the function-call version; the Perl version does the equivalent, but
+much more verbosely, of course):</p>
+
+<pre>
+BEGIN;
+SELECT entry_coll_tag_set(100, '{1,2,3,4,5,6,7,8}');
+COMMIT;
+
+BEGIN;
+SELECT entry_coll_tag_del(100, '{3,5,7}');
+COMMIT;
+
+BEGIN;
+SELECT entry_coll_tag_add(100, '{9,10,11}');
+COMMIT;
+
+BEGIN;
+SELECT entry_coll_tag_set( 100, '{11,10,9,8,7,6,5,4,3,2,1}');
+COMMIT;
+
+BEGIN;
+SELECT entry_coll_tag_clear(100);
+COMMIT;
+</pre>
+
+<p>(That certainly is very clean code to maintain in the application space,
+no?)</p>
+
+<p>The idea is to have a variety of typical collection management queries
+execute in order to measure the overall performance of collection management.
+I ran the benchmark on a single-processor Intel Pentium 2.26 GHz box with
+512MB of RAM running Fedora Core release 4 (Stentz), Perl 5.8.8, DBI 1.50, and
+PostgreSQL 8.1.3, and with no other non-essential processes running. The
+results were stunning to say the least:</p>
+
+<pre>
+func: 13.52 wallclock seconds (0.13 usr + 1.79 sys = 1.92 CPU) @ 22.19/s
+perl: 42.39 wallclock seconds (0.29 usr + 7.09 sys = 7.38 CPU) @  7.08/s
+</pre>
+
+<p>Yes, the use of the PL/pgSQL functions was <em>over three times faster</em>
+than the execution of the same code from the application space. Furthermore, the
+application approach used nearly 3.85 times more CPU time. So not only do we
+have a huge performance boost in terms of overall wallclock seconds, but with
+the functional approach, the application uses far less CPU time, allowing
+valuable processor time to be used for other tasks.</p>
+
+<p>Curiously, after the server I was using was rebooted, I got somewhat different
+results as I was putting the final tweaks on this article:</p>
+
+<pre>
+func:  5.71 wallclock seconds (0.02 usr + 0.58 sys = 0.60 CPU) @ 52.53/s
+perl: 14.78 wallclock seconds (0.10 usr + 2.05 sys = 2.15 CPU) @ 20.29/s
+</pre>
+
+<p>But the use of PL/pgSQL function is still nearly 2.6 times faster than just
+doing the work in application space, so it's still a huge win. Not sure about
+these results?
+<a
+href="http://www.justatheory.com/code/bench_plpgsql_collection_functions.tgz"
+title="Download the benchmark test">Download the test</a> for yourself and see
+what results you get.</p>
+
+<h2>Conclusion</h2>
+
+<p>Writing database functions in languages like PL/pgSQL offers the potential
+for huge performance boosts for your applications, facilitates the the
+practice of maintaining database integrity, and keeps application code much
+cleaner and thus easier to maintain. By using PL/pgSQL functions, you can rest
+easy in the knowledge that your the integrity of your data will be maintained,
+and all applications that access the database will hum along happily. Give it
+a shot! You won't regret it.</p>
+
+<h2>Acknowledgements</h2>
+
+<p>Many thanks to Josh Berkus for reading a draft of this article and
+providing feedback and PL/pgSQL implementation hints. This article would not
+have been possible without his generous help! I'm also grateful to
+<code>AndrewSN</code> for bringing up a number of issues with the functions as
+they were originally written. The functions are much better, and the article
+therefore also improved, thanks to his feedback.</p>
+
+  </body>
+</html>

@@ -1,0 +1,365 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Bricolage Runtime Configuration</title>
+    <meta name="keywords" content="Bricolage, Perl, content management, content management system, Bricolage content management system, CMS, Bricolage CMS, Mason, HTML::Mason, Template Toolkit, HTML::Template, PostgreSQL, Apache, mod_perl Unicode, documents, document models, document modeling, workflow, templating, Bricolage templating, separation of content from presentation, categories, categorization, content categorization, smarl URLs, multisite, SOAP, SOAP interface, elements, fields, scalability, security, return on investment, ROI, installation, configuration, bricolage.conf" />
+  </head>
+  <body>
+
+<h1>Bricolage Runtime Configuration</h1>
+
+<p>In my <a href="http://www.perl.com/pub/a/2004/10/28/bricolage_installation.html" title="Installing Bricolage">last article</a>, I provided a guided tour of the Bricolage installation process. If you followed along, you should now have a nice, functioning installation of Bricolage 1.8 all ready to go. But as <a href="http://www.com-www.com/weirdal/mrpopeil.html" title="Mr. Popeil">Mr. Popeil</a> used to say, <em>but wait, there's more!</em></p>
+
+<p>Like many other applications, Bricolage comes with a runtime configuration file. This file, named <em>bricolage.conf</em>, lives in the <em>conf</em> subdirectory of your Bricolage root. It contains a list of settings that tell Bricolage how to find things, how to connect to the database, what optional features to include, and other good stuff. This article provides a guided tour of all of the configuration settings in <em>bricolage.conf</em> to enable you to get things configured exactly the way you need them, so that you can more effectively manage your sites with Bricolage.</p>
+
+<h3><a id="configurationformat">Configuration Format</a></h3>
+
+<p>The format of <em>bricolage.conf</em>, derived from the <a href="http://www.oreilly.com/catalog/cookbook/" title="Perl Cookbook in the O'Reilly Catalog"> <q>Perl Cookbook</q></a>, is quite simple. A directive is specified on a single line, followed by a space, an equal sign, and then the value. Anything after a pound sign (<q>#</q>) is a comment. Typical entries look like this:</p>
+
+<pre>
+APACHE_BIN   = /usr/local/apache/bin/httpd
+APACHE_CONF  = /usr/local/bricolage/conf/httpd.conf
+LISTEN_PORT  = 80
+SSL_PORT     = 443
+SSL_ENABLE   = No
+</pre>
+
+<p>Most <em>bricolage.conf</em> configuration options are specified in one of two ways: as boolean values or as strings. A boolean configuration directive can be either enabled or disabled, but you have a number of ways in which to do so. To enable a boolean directive, simply set its value to <q>Yes</q>, <q>On</q>, or <q>1</q> (the number one). To disable it, set it to <q>No</q>, <q>Off</q>, or <q>0</q> (zero). String values are simply defined after the equal sign. They can be as long as necessary, but cannot break across lines.</p>
+
+<h3><a id="apacheconfiguration">Apache Configuration</a></h3>
+
+<p>The first section of <em>bricolage.conf</em> configures Bricolage to use the Apache Web server. Since Bricolage runs on top of Apache but uses its own startup scripts, it needs to know where to find Apache resources so that it can properly configure and start Apache. Bricolage's default method of  dynamically configuring Apache therefore relies on these directives.  Many of them are set for you during installation, but some are not, so it's worth it to have a look to see if you need to tweak any of them:</p>
+
+<dl>
+  <dt><a id="apachebin"><code>APACHE_BIN</code></a></dt>
+  <dd><p>This directive tells Bricolage where to find your Apache <em>httpd</em> executable, which it uses to start itself up.</p></dd>
+
+  <dt><a id="apachecon"><code>APACHE_CON</code></a></dt>
+  <dd><p>This directive points to the <em>httpd.conf</em> file. This, of course, is the famous Apache configuration file. It, too, needs to be configured to start up Bricolage (the Bricolage installer configures the default <em>httpd.conf</em> in the <em>conf</em> subdirectory of your Bricolage root directory), and Bricolage, in turn, uses this directive to tell <em>httpd</em> where to find the configuration file when it starts up.</p></dd>
+
+  <dt><a id="listenport"><code>LISTEN_PORT</code></a></dt>
+  <dd><p>This is the TCP/IP port on which Bricolage will listen for requests. It uses the HTTP standard port 80 by default, but you can change it to another port if you already have another server listening on port 80. See, for example, <a href="http://www.bricolage.cc/docs/howtos/2004/04/19/virtual_host_config/" title="How to run Bricolage on a Virtual Host and on Non-Standard Ports">this how-to</a> on the Bricolage Website for examples.</p></dd>
+
+  <dt><a id="sslport"><code>SSL_PORT</code></a></dt>
+  <dd><p>This is the TCP/IP port on which Bricolage will listen for secure sockets layer (SSL) requests. It defaults to the standard HTTP SSL port 443, but again, you can change it to another port if something else is already using port 443. SSL is disabled by default, however, so read on for details on how to turn it on.</p></dd>
+
+  <dt><a id="sslenable"><code>SSL_ENABLE</code></a></dt>
+  <dd><p>This directive turns on SSL support. You must have either <code>mod_ssl</code> or Apache-SSL installed and properly configured in your Apache server. Not quite a boolean configuration directive, he possible values for <code>SSL_ENABEL</code> are <q>No</q> (or <q>Off</q> or <q>0</q> [zero]), <q>mod_ssl</q>, or <q>apache-ssl</q>. SSL is a useful feature for keeping communications encrypted between the server and users' browsers.</p></dd>
+
+  <dt><a id="alwaysusessl"><code>ALWAYS_USE_SSL</code></a></dt>
+  <dd><p>By default, an SSL-enabled Bricolage installation uses SSL only for logging in to Bricolage and in the user profile (where passwords can be changed). Users can elect to encrypt all communications by checking the <q>Always use SSL</q> checkbox when logging in, but some security policies may require that <em>all</em> communications be encrypted. In such cases, you can enable this boolean directive and then <em>all</em> communications between the Bricolage server and users' browsers will be encrypted.</p></dd>
+
+  <dt><a id="sslcertificatekeyfile"><code>SSL_CERTIFICATE_KEY_FILE</code></a></dt>
+  <dt><a id="sslcertificatefile"><code>SSL_CERTIFICATE_FILE</code></a></dt>
+  <dd><p>These directives specify the location of your SSL keys. If you've configured <code>mod_ssl</code> or Apache-SSL, you should already be familiar with this files. They are used to encrypt and decrypt requests between the server and the browser. If you use <code>make certificate</code> to generate your SSL certificateduring the Apache build process, by default your server key file will be named <em>server.key</em> and be stored in the <em>conf/ssl.key</em> subdirectory of your Apache root directory, while the server public key file will be named <em>server.crt</em> and be stored in the <em>conf/ssl.crt</em> subdirectory. Bricolage uses these directives to set the Apache <code>SSLCertificateKeyFile</code> and <code>SSLCertificateFile</code> directives, respectively, in its dynamic configuration of Apache.</p></dd>
+
+  <dt><a id="namevhost"><code>NAME_VHOST</code></a></dt>
+  <dd><p>This directive roughly corresponds to the Apache <em>httpd.conf</em> <code>NameVirtualHost</code> directive. Set it to the IP address on which the Bricolage Apache server will be listening for requests. If you have only one IP address on your server, the simplest thing to do is to leave this directive set to <q>*</q>, which applies to all IP addresses. Again, Bricolage uses this directive in its dynamic configuration of Apache.</p></dd>
+
+  <dt><a id="vhostservername"><code>VHOST_SERVER_NAME</code></a></dt>
+  <dd><p>This is the virtual host name under which to run Bricolage. Bricolage requires a full host or virtual host to run, and will use this directive to dynamically configure the virtual host. Leave it set to <q>_default_</q> to simply use the default host name set your your <em>httpd.conf</em> file.</p></dd>
+
+  <dt><a id="manualapache"><code>MANUAL_APACHE</code></a></dt>
+  <dd><p>Bricolage uses Apache::ReadConfig to configure the httpd daemon. There is no httpd include file. If you want to take control of your Bricolage Apache server by manually configuring it, enable this boolean directive. It will generate a file, <em>bric_httpd.conf</em>,
+in the <em>briclage</em> subdirectory of your temporary directory (see the <a href="#tempdir">TEMP_DIR</a> directive for the location of the temporary directory). This file will contain all of the Apache configuration directives that Bricolage uses to dynamically configure Apache. This file will be rewritten every time you restart Bricolage, but if you want to use it and edit it manually, copy it to the <em>conf</em> subdirectory of your Bricolage root directory, disable the <code>MANUAL_APACHE</code> directive, and then change the section of the <em>httpd.conf</em> file that configures Bricolage from:</p>
+
+<pre>PerlPassEnv BRICOLAGE_ROOT
+PerlModule Bric::App::ApacheConfig
+</pre>
+
+<p>To this:</p>
+
+<pre>Include /usr/local/bricolage/conf/bric_httpd.conf
+PerlPassEnv BRICOLAGE_ROOT
+PerlModule Bric::App::ApacheStartup
+</pre>
+
+<p>Where <em>/usr/local/bricolage/conf/bric_httpd.conf</em> is the full path name to the newly generated <em>bric_httpd.conf</em> file. You can now tweak this file to your heart's content. Just be sure to generate a new one after each upgrade of Bricolage, as certain directives may have changed between releases.</p></dd>
+
+  <dt><a id="sysuser"><code>SYS_USER</code></a></dt>
+  <dt><a id="sysgroup"><code>SYS_GROUP</code></a></dt>
+  <dd><p>These directives configure the system user and group used by Bricolage. They should be set to the same value as the <code>User</code> and <code>Group</code> <em>httpd.conf</em> directives, usually <q>nobody</q> or <q>www</q>. Any files written to the file system by Bricolage will be owned by this user and group.</p></dd>
+
+</dl>
+
+<h3><a id="databaseconfiguration">Database Configuration</a></h3>
+<p>The next major section of the Bricolage configuration file configures the database. Bricolage uses PostgreSQL 7.3 or later for its data store, and connection to that database requires a number of attributes, not least of which are the username and password. These are all set during installation, but it's worth being familiar with them in case things change down the line.</p>
+
+<dl>
+  <dt><a id="dbname"><code>DB_NAME</code></a></dt>
+  <dd><p>The name of the database that stores Bricolage's data. This directive is set for you during installation. The default value, <q>bric</q>, works well in most situations, but it might be set to a different name if you entered one during installation, perhaps because you already had another database named <q>bric</q>; Why would you want to go and do that? Because perhaps you have multiple Bricolage installations on the same host. Another reason it might be different is that your ISP provides you with a single database that they name according to their own naming conventions. At any rate, you're unlikely ever to need to change the value of this directive.</p></dd>
+
+  <dt><a id="dbuser"><code>DB_USER</code></a></dt>
+  <dd><p>The username that Bricolage will use when connecting to the database. Again, you are unlikely ever to need to change this directive, especially since, when Bricolage creates the database, it specifically assigns permissions for this user to access the appropriate tables, sequences, and such. Note that, for security reasons, you should <em>never</em> use the PostgreSQL superuser for this directive.</p></dd>
+
+  <dt><a id="dbpass"><code>DB_PASS</code></a></dt>
+  <dd><p>The password for the <code>DB_USER</code> to use to connect to the PostgreSQL database. Note that you'll need to change this directive if the password is ever changed in the database. Depending on your PostgreSQL server's security model, it might not matter what the password is set to. For example, if the PostgreSQL is on the same host as your Bricolage server and configured to trust local users (the default), the password is ignored. Consult your PostgreSQL <a href="http://www.postgresql.org/docs/current/static/client-authentication.html" title="Documentation for PostgreSQL Client Authentication">authentication settings</a> (in the server's <em>pg_hba.conf</em> file) or check with your PostgreSQL DBA if you have questions.</p></dd>
+
+  <dt><a id="dbhost"><code>DB_HOST</code></a></dt>
+  <dd><p>This is the host name of your PostgreSQL server. If it's on the same host as your Bricolage server, it will likely be commented out, thereby letting Bricolage default to <q>localhost</q>. Otherwise, it will be a different host name or IP address. You would need to change this setting if ever your PostgreSQL server was moved to a different host or had its host name or IP address changed.</p></dd>
+
+  <dt><a id="dbport"><code>DB_PORT</code></a></dt>
+  <dd><p>The TCP/IP port on which your PostgreSQL server is listening for connections. This directive will be commented out if PostgreSQL is installed locally and you're using Unix sockets instead of TCP/IP for its connectivity (a good idea for security-conscious environments). It will also be commented out if Bricolage should use the default PostgreSQL port of 5432. Otherwise, if Bricolage must connect to the PostgreSQL server via TCP/IP on a port other than 5432, this directive should be set the the appropriate port number.</p></dd>
+</dl>
+
+<h3><a id="directorysettings">Directory Settings</a></h3>
+<p>Bricolage stores a lot of files on your server's file system. In general, they will be stored in well-named directories below your Bricolage root directory. But sometimes you may want them installed elsewhere, perhaps for the purposes of conserving disk space or distributing I/O between different partitions. If you want to move any of these directories to a location other than that set by the installer, you'll want to copy over any existing files to ensure that Bricolage continues to operate correctly.</p>
+
+<dl>
+  <dt><a id="tempdir"><code>TEMP_DIR</code></a></dt>
+  <dd><p>Bricolage creates a number of temporary files while it's running, for its cache, user sessions, and the like. If you selected the <q>multi</q> option when installing Bricolage, this directive will point to a directory named <em>tmp</em> under your Bricolage root. Otherwise, it will be set to your system's global <em>tmp</em> directory.</p></dd>
+
+  <dt><a id="masoncomproot"><code>MASON_COMP_ROOT</code></a></dt>
+  <dd><p>The Bricolage UI is written in <a href="http://www.masonhq.com/" title="Mason HQ">HTML::Mason</a>. All of the components to power the UI live in this directory, generally a subdirectory of your Bricolage root named <em>comp</em>. However, media files uploaded to Bricolage are also stored in this directory, which means that it can become quite large if you manage a lot of media documents. It might be useful, therefore, to move this directory to a separate partition.</p></dd>
+
+  <dt><a id="masondataroot"><code>MASON_DATA_ROOT</code></a></dt>
+  <dd><p>The Bricolage UI Mason components get compiled into object files and stored in this directory. For the most part you don't need to worry about where these files live (the default is the <em>data</em> directory under the Bricolage root directory), although Bricolage will read from it quite a lot as it loads the object files into memory, so disk I/O is important. But it's unlikely to get to be too large, except that&#x2026;</p></dd>
+
+  <dt><a id="burnroot"><code>BURN_ROOT</code></a></dt>
+  <dd><p>This directive tells Bricolage where to store formatting templates, object files, and burned files that are ready for distribution. As such, it can get to be quite large, especially if you've published or previewed a lot of documents. And Bricolage never deletes these files, so that you always have a canonical directory of the distribution files output by Bricolage. However, the default location for the <code>BURN_ROOT</code> is under the directory specified by the <code>MASON_DATA_ROOT</code> directive. If you encounter disk space problems, you might want to move this directory to another partition. </p></dd>
+</dl>
+
+<h3><a id="xml::writerconfiguration">XML::Writer Configuration</a></h3>
+<p>The Bricolage Mason burner is responsible for pushing documents through Mason formatting templates. If you're writing templates that output XML (and we'll get to writing templates in a later article, so hang in there!), you might want to simplify things by using an <a href="http://search.cpan.org/dist/XML-Writer/" title="XML::Writer on CPAN">XML::Writer</a> object to generate the XML. Bricolage simplifies things by providing these directives to automatically create an XML::Writer object that's globally available for use in all Mason templates.</p>
+
+<dl>
+  <dt><a id="includexmlwriter"><code>INCLUDE_XML_WRITER</code></a></dt>
+  <dd><p>Enable this boolean directive to tell Bricolage to create an XML::Writer object that's globally available as <code>$writer</code> to all Mason templates. Bricolage is smart enough to configure the XML::Writer object to output XML to Mason's buffer, so that you can even mix standard Mason output in your templates with XML::Writer output.</p></dd>
+
+  <dt><a id="xmlwriterargs"><code>XML_WRITER_ARGS</code></a></dt>
+  <dd>
+    <p>Use this directive to specify a list of options to pass to the XML::Writer constructor when <code>INCLUDE_XML_WRITER</code> is enabled. This directive is a string, but it will be evaluated as a Perl expression to be passed to XML::Writer. The <a href="http://search.cpan.org/dist/XML-Writer/Writer.pm#Writing_XML" title="Read the XML::Writer documentation on CPAN">XML::Writer documentation</a> has the full list of possible parameters, but common parameters include <code>NEWLINES</code> to trigger the output of new lines between XML elements, and <code>DATA_INDENT</code> to indent nested XML elements by a certain number of characters.</p>
+  </dd>
+
+</dl>
+
+<h3><a id="authenticationconfiguration">Authentication Configuration</a></h3>
+<p>A number of configuration directives affect the behavior and security of the Bricolage authentication system. Bricolage handes its own authentication, storing passwords in the database as MD5-encrypted hashes and recording authentication in a browser cookie. In a security-conscious environment, it pays to be familiar with these directives and even to periodically review their settings.</p>
+
+<dl>
+  <dt><a id="authttl"><code>AUTH_TTL</code></a></dt>
+  <dd><p>This directive specifies the time-to-live, in seconds, for an authentication session. Each time an authenticated user sends a request to the server, the elapsed time is reset to zero. You could therefore set <code>AUTH_TTL</code> to 3600 seconds for a one-hour time-to-live, and a user would be able to use Bricolage all day, as long as each request was less than an hour apart. But she might have to re-authenticate after lunch. This directive is especially useful in environments where users are inclined to access Bricolage from public workstations and forget to log out. The default value of 28800 (eight hours) is probably too long in a production environment.</p></dd>
+
+  <dt><a id="authsecret"><code>AUTH_SECRET</code></a></dt>
+  <dd><p>Bricolage stores the user authentication session locally, and keys it off of an MD5 string stored in a browser cookie. The MD5 string is generated from the browser's IP subnet, the expiration time, the user name, and the last access time. But since such a string could potentially be replicated by someone trying to crack the system, Bricolage also uses a random string of characters to salt the MD5 string. <code>AUTH_SECRET</code> is the string used for this purpose, and is generated for you at installation time. You might want to change it now and then, in order to keep it random and meet the specifications of your security policy.  All users will need to re-authenticate after the AUTH_SECRET is changed and Bricolage restarted.</p></dd>
+
+  <dt><a id="loginlength"><code>LOGIN_LENGTH</code></a></dt>
+  <dd><p>This directive simply specifies a minimum user name length. Each user must have a user name of at least this number of characters. The default, <q>5</q>, is generally adequate, and allows the default <q>admin</q> user name to work properly.</p></dd>
+
+  <dt><a id="passwdlength"><code>PASSWD_LENGTH</code></a></dt>
+  <dd><p>This directive corresponds to the <code>LOGIN_LENGTH</code> directive, but applies to passwords. The password length in Bricolage is unlimited, but it's generally a good idea to ensure that they all contain a minimum number of characters. The default is <q>5</q>.</p></dd>
+</dl>
+
+<h3><a id="distributionconfiguration">Distribution Configuration</a></h3>
+<p>When documents are previewed or published in Bricolage, it pushes them through formatting templates (written in Mason, Template Toolkit, or HTML::Template) and writes the resulting files to disk. It then distributes those files to the appropriate servers, which are specified in the destination manager in the user interface. (More on the Bricolage administrative interface in a later article). There are a number of run-time configuration directives that affect the behavior of the Bricolage distribution server.</p>
+
+<dl>
+
+  <dt><a id="enabledist"><code>ENABLE_DIST</code></a></dt>
+  <dd><p>This boolean directive enables Bricolage distribution. The only reason to disable distribution is if you set up a separate distribution server. To my knowledge, no one has actually done this, even though Bricolage supports it. The <a href="#queuepublishjobs">QUEUE_PUBLISH_JOBS</a> directive is more often used to reduce Bricolage server overhead.</p></dd>
+
+  <dt><a id="distattempts"><code>DIST_ATTEMPTS</code></a></dt>
+  <dd><p>Bricolage distributes files via file system copy, FTP, SFTP, or WebDAV&#x2014;depending on your destination configuration. But we all know that failures can occasionally occur. Bricolage will attempt to distribute a file after a failed distribution, and will do it multiple times. Set the <code>DIST_ATTEMPTS</code> directive to the number of times it should attempt to distribute a file before giving up.</p></dd>
+
+  <dt><a id="previewlocal"><code>PREVIEW_LOCAL</code></a></dt>
+  <dd><p>This directive enables Bricolage's internal preview server. This is just a URI in the Bricolage UI that knows to serve previewed content rather than the UI. This is handy for evaluating Bricolage, but it should be disabled in a production environment, especially if your front-end server needs to serve something other than static HTML. The recommended approach is to set up a separate preview server that is identical to your production server and configure a destination to distribute and redirect previews to that server.</p></dd>
+
+  <dt><a id="previewmason"><code>PREVIEW_MASON</code></a></dt>
+  <dd><p>If the <code>PREVIEW_LOCAL</code> directive is enabled and the content you're generating includes Mason calls, you can enable this directive to get Bricolage's internal preview server to evaluate the Mason code before serving documents.</p></dd>
+
+  <dt><a id="defmediatype"><code>DEF_MEDIA_TYPE</code></a></dt>
+  <dd><p>This string directive identifies the default media type (also called a <q>MIME type</q>) of files for which Bricolage cannot determine the media type. The default value, <q>text/html</q>, covers a lot of typical files in a Web content management environment, such as <em>.php</em> or <em>.jsp</em> files. If you want to specify a different type, you can use the media type manager in the UI to add them.</p></dd>
+
+  <dt><a id="enablesftpmover"><code>ENABLE_SFTP_MOVER</code></a></dt>
+  <dd><p>By default, Bricolage does not suport distribution via secure FTP (SFTP). If you need it, install the required Net::SFTP module, enable this directve, and restart Bricolage.</p></dd>
+
+  <dt><a id="sftphome"><code>SFTP_HOME</code></a></dt>
+  <dd><p>If you've enabled SFTP distribution, you'll also want to use this directive specify a home directory for SFTP to use, especially if you want to use public and private SSH keys. Consult the <a href="http://search.capn.org/dist/net-SFTP/" title="Net::SFTP on CPAN">Net::SFTP</a> documentation for details.</p></dd>
+
+  <dt><a id="enablesftpv2"><code>ENABLE_SFTP_V2</code></a></dt>
+  <dd><p>Enable this directive to prefer SSH2 support for SFTP distribution. You'll also need to install more Perl modules from CPAN. Consult the Net::SFTP documentation for details.</p></dd>
+
+  <dt><a id="sftpmovercipher"><code>SFTP_MOVER_CIPHER</code></a></dt>
+  <dd><p>Net::SFTP uses the <a href="http://search.cpan.org/dist/Net-SSH-Perl/" title="Net::SSH::Perl on CPAN">Net::SSH::Perl</a> module to handle the SSH side of things. This module supports a number of encryption ciphers, and if you prefer one, you'll want to specify it via this directive.</p></dd>
+
+  <dt><a id="enablewebdavmover"><code>ENABLE_WEBDAV_MOVER</code></a></dt>
+  <dd><p>Bricolage also supports distribution via <a href="http://www.webdav.org/" title="WebDav Resources">WebDAV</a>, a standard for distributing documents via the HTTP protocol. DAV, as it is also known, is supported by a number of Web servers, including Microsoft's IIS and Apache 2. If you'd like to distribute document files to your production server or servers via DAV, install the <a href="http://search.cpan.org/dist/HTTP-DAV/" title="HTTP::DAV on CPAN">HTTP::DAV</a> module, enable this directive, and restart Bricolage.</p></dd>
+
+  <dt><a id="queuepublishjobs"><code>QUEUE_PUBLISH_JOBS</code></a></dt>
+  <dd>
+    <p>By default, when a document is scheduled to be published immediately, the Bricolage server will immediately execute the distribution. But if users are publishing a lot of documents or you're bulk publishing large sections of your site at once, this can really slow down the Bricolage UI for other users. This is even true even if you've scheduled a bulk of documents to be published at a future date and time, since the way the default <em>bric_dist_mon</em> script works is to tickle the Bricolage server to distribute documents.</p>
+    <p>The way around this problem is to enable the <code>QUEUE_PUBLISH_JOBS</code> boolean directive and then use the <em>bric_queued</em> program instead of <em>bric_dist_mon</em>. With <code>QUEUE_PUBLISH_JOBS</code> enabled, the Bricolage server will <em>never</em> burn and distribute documents, even if a user schedules them to be published <em>yesterday</em>. Instead, <em>bric_queued</em> handles all of the burning and distribution itself, without having the Bricolage server expend resources on the task. With this approach, you'll want to run <em>bric_queued</em> on a fairly aggressive cron job.</p> 
+    </dd>
+
+  <dt><a id="ftpunlinkbeforemove"><code>FTP_UNLINK_BEFORE_MOVE</code></a></dt>
+  <dd><p>When Bricolage distributes files via FTP, it uploads them with a temporary file name, and then, when the transfer is complete, it renames the file to the final name. But if an earlier version of the file is already present, the rename might fail. (This depends on your FTP server, but Microsoft's IIS is the server that led us to add this feature.) In such a case, enable this directive and Bricolage will delete any existing instance of the file before renaming the temporary file.</p></dd>
+</dl>
+
+<h3><a id="alertconfiguration">Alert Configuration</a></h3>
+<p>Bricolage has an interface for sending alert emails when events that meet certain criteria are logged against objects. But Bricolage needs to know a few things before it can send the alerts.</p>
+
+<dl>
+  <dt><a id="smtpserver"><code>SMTP_SERVER</code></a></dt>
+  <dd><p>Bricolage uses an SMTP server to send alert email messages. The default value for this directive, <q>localhost</q>, is fine if you're using a Unix system with sendmail (or some other SMTP server) running locally. But if your organization has a dedicated SMTP server or if your Bricolage host has none of its own, you'll want to change the value of this directive.</p></dd>
+
+  <dt><a id="alertfrom"><code>ALERT_FROM</code></a></dt>
+  <dd><p>Set this directive to an email address that you want to appear in the <q>From</q> header of alert emails. I typically set it to something like <q>Bricolage Admin &lt;www@example.com&gt;</q>, but you should set it to whatever is appropriate for your organization. If your users are inclined to try to reply to alert emails, you may want to set up a special <code>ALERT_FROM</code> email address that has an auto-responder to let the user know that the reply won't be read.</p></dd>
+
+  <dt><a id="alerttometh"><code>ALERT_TO_METH</code></a></dt>
+  <dd><p>This string directive indicates what header to use for specifying alert recipients in email alerts. The possible values are <q>To</q> and <q>Bcc</q>.</p></dd>
+
+</dl>
+
+<h3><a id="userinterfaceconfiguration">User Interface Configuration</a></h3>
+<p>A number of configuration directives enable you to affect how the Bricolage user interface works in subtle ways. If you haven't used the Bricolage browser-based interface much yet, some of these won't make much sense just now. Feel free to come back and look again when you're you've had some experience with the Bricolage interface and want to make it behave more according to your own preconceived notions of correctness.</p>
+
+<dl>
+  <dt><a id="fullsearch"><code>FULL_SEARCH</code></a></dt>
+  <dd>
+    <p>By default, when you search for objects in the Bricolage admin interfaces, or for stories, media, or templates in the asset library, the Bricolage UI appends a wildcard character to the end of your search string. Thus if you perform a search for <q>foo</q>, the search will return results for all records that <em>start with <q>foo</q></em>. If, however, you set the <code>FULL_SEARCH</code> boolean directive to a true value, all searches in the Bricolage UI will become substring searches. So a search for <q>foo</q> will return all records where <q>foo</q> appears anywhere in a record.</p>
+    <p>The downside to this approach is that it prevents the PostgreSQL database indexes from being used. In principal, this is only a problem if you have a large number of objects in Bricolage. If, say, you had 100,000 stories in Bricolage, you would notice that story searches would be noticeably slower with <code>FULL_SEARCH</code> enabled than with it disabled. Leave it disabled if you expect to manage a lot of documents. Your users can always manually prepend the wildcard charcter (<q>%</q>) to the front of search queries if they want a substring search.</p>
+  </dd>
+
+  <dt><a id="allowworkflowtransfer"><code>ALLOW_WORKFLOW_TRANSFER</code></a></dt>
+  <dd><p>Bricolage workflows are made up of a series of desks. In general, workflows have their own desks, but you can have a single desk appear in more than one workflow. In such a case, documents moved to such a shared desk in one workflow will be visible on the same desk in another workflow. This is great for managing common tasks across workflows, such as translation or legal review. The upshot is that, by default, a document placed on a desk in one workflow cannot be transfered from that desk to another desk in a different workflow. It can only be moved to other desks in the workflow in which it originated. However, if you set the <code>ALLOW_WORKFLOW_TRANSFER</code> boolean directive to a true value, this constraint will be removed, so that a document placed on a desk in one workflow can be moved from that desk to other desks in other workflows that the desk is in.</p></dd>
+
+  <dt><a id="allowallsitescx"><code>ALLOW_ALL_SITES_CX</code></a></dt>
+  <dd><p>When managing multiple sites in Bricolage, the user interface will display a <q>site context</q> select list. Only the workflows for the selected site will be displayed. If you want to allow users to see all of the workflows for all of the sites that they have permission to access, set this boolean directive to a true value to add a <q>All Sites</q> option to the <q>Site context</q> select list. But beware! If you have access to a lot of sites, you'll have access to a bewildering number of workflows when you select this option!</p></dd>
+
+  <dt><a id="yearspanbefore"><code>YEAR_SPAN_BEFORE</code></a></dt>
+  <dt><a id="yearspanafter"><code>YEAR_SPAN_AFTER</code></a></dt>
+  <dd><p>For the input of dates in Bricolage, the user interface offers select lists for the day, month, and year. By default, the years available in the <q>Year</q> select list are limited to the ten years before and after the value for the year or the current year. If you need more years in your select list, set these directives to the number of years before and after the current value or current year. For example, if you manage a site of historical photographs with Bricolage, you might need to select years that range back over 100 years. In such a case, set <code>YEAR_SPAN_BEFORE</code> to <q>100</q>. A science fiction book review site, on the other hand, might need years much farther in the future. For such a case, set <code>YEAR_SPAN_AFTER</code> to the appropriately high number.</p></dd>
+
+
+  <dt><a id="defaultfilename"><code>DEFAULT_FILENAME</code></a></dt>
+  <dt><a id="defaultfileext"><code>DEFAULT_FILE_EXT</code></a></dt>
+  <dd><p>The file names generated for story documents are set on a per-output channel basis. The user interface offers default values for these settings in the output channel profile. The default file name is <q>index</q>, and the default file name suffix is <q>html</q>. If, say, you were outputing content to an IIS server, you might want to set the <code>DEFAULT_FILENAME</code> directive to <q>default</q> and the <code>DEFAULT_FILE_EXT</code> directive to <q>htm</q>, instead. But it's not a big deal either way, since you can actually set the values you need for each output in the user interface. These are just the displayed defaults, settable as directives for the ultimate in laziness.</p></dd>
+
+
+  <dt><a id="enableocassetassociation"><code>ENABLE_OC_ASSET_ASSOCIATION</code></a></dt>
+  <dd><p>Document models are associated with output channels in Bricolage. When you create a new document based on a model, it will automatically have the output channel associations defined by the model. If you'd like users to be able to change the associations&#x2014;say, to assign output channels defined by the model to be optionally associated with documents based on that model&#x2014;set this directive to a true value. If, however, the added complexity of output channel associations will only confuse your users, set this directive to a false value to remove the user interface for changing document output channel associations.</p></dd>
+
+  <dt><a id="enablecategorybrowser"><code>ENABLE_CATEGORY_BROWSER</code></a></dt>
+  <dd><p>When editing a story document in Bricolage, a select list of all categories that you have READ permission to access will be displayed, to allow you to optionally add the story to a new category. Most of the time, however, you'll only add a story to one or two categories, and then never change these settings. Therefore, if you have a lot of categories in your Bricolage installation (and there are systems in production with over 2000 categories), it's wasteful to load them all every time you edit a story document when you're never going to change them again. In such a case, set the boolean <code>ENABLE_CATEGORY_BROWSER</code> directive to a true value and restart Bricolage. This will change the story profile to offer a link to a category browser, which enables you to search for the category or categories to associate with a story. Now, not only will you no longer be loading all categories every time you access the story profile (and the story profile is, for content producers, the most commonly accessed page in the Bricolage UI), but you'll only load those you search for in the category browser. I highly recommend to every Bricolage admin that this directive be set to a true value.</p></dd>
+
+</dl>
+
+<h3><a id="documentmanagementconfiguration">Document Management Configuration</a></h3>
+<p>These directives relate to how documents are managed in Bricolage.</p>
+
+<dl>
+
+  <dt><a id="publishrelatedassets"><code>PUBLISH_RELATED_ASSETS</code></a></dt>
+  <dd><p>Bricolage allows you to create relationships between documents. These can be used to point to <q>related stories</q> or to add an image to a document, among other things. By default, when you publish a document, Bricolage will also try to publish any related documents. This will help to prevent 404s or broken image problems. But in some cases, you might not want this behavior, and in such cases, you can set the <code>PUBLISH_RELATED_ASSETS</code> boolean directive to a false value.</p></dd>
+
+  <dt><a id="storyuriwithfilename"><code>STORY_URI_WITH_FILENAME</code></a></dt>
+  <dd>
+    <p>Story documents in Bricolage must have unique URIs. URIs consist of the the category a story is in and optionally other parts of the story, such as its cover date and its slug (a one-word description of a story). They do not, however, consist of the file name. This is in keeping with W3C <a href="http://www.w3.org/Provider/Style/URI.html" title="&#x201c;Cool URIs don't change,&#x201c; by Tim Berners-Lee">suggestions</a>. The idea is that the story has a directory URI, and there may be several forms of the story with different file names in that directory, such as <q>index.html</q> for HTML, <q>rdf.xml</q> for RDF, and <q>index.pdf</q> for PDFs.</p>
+    <p>However, some organization have Website policies that demand that the file name be included in the URI. This is so that different documents can be in the same directory. A common example might be a <q>About Us</q> directory with separate <q>/about/index.html</q>, <q>/about/contact.html</q>, and <q>/about/copyright.html</q> documents. Such URIs are not possible by default in Bricolage, which requires that all stories have unique URIs, since each of these stories would have the same URI, namely <q>/about</q>. To get around this issue, set the <code>STORY_URI_WITH_FILENAME</code> boolean directive to a true value. From then on, all stories will include their file names in their URIs. But be careful! Existing stories will not have their URIs changed. It therefore recommended that you decide how you want this directive to be set when  you start using Bricolage, and never change it.</p>
+  </dd>
+
+  <dt><a id="allowsluglessnonfixed"><code>ALLOW_SLUGLESS_NONFIXED</code></a></dt>
+  <dd><p>The URIs for story documents are determined by patterns specified on a per-output channel basis. There are two different URI formats in each output channel: One for fixed documents and one for non-fixed documents. Non-fixed documents typically use parts of the cover date in their URIs, while fixed URIs do not. Each document model has a flag set to indicate whether documents based on the model will use the fixed for non-fixed URI patterns. The result is that, for non-fixed stories, you might have URIs like <q>/reviews/books/2004/12/23/princess_bride</q>. Here the URI format includes the slug, a one-word summary of the contents of a story (the <q>princess_bride</q> part of this example). However, slugs are optional in stories, even non-fixed stories. If you want to force all non-fixed stories to include the slug in order to guarantee the creation of more meaningful URIs, set this boolean directive to a true value. </p></dd>
+
+  <dt><a id="autogenerateslug"><code>AUTOGENERATE_SLUG</code></a></dt>
+  <dd><p>This boolean directive complements the <code>ALLOW_SLUGLESS_NONFIXED</code> directive. If you want to keep the slug optional but generate one when a user neglects to type one in, set <code>AUTOGENERATE_SLUG</code> to a true value. This will cause Bricolage to generate a simple slug based on the title of the story. For example, a story with the title <q>Essential Perl 6</q> would have the slug <q>essential_perl_6</q> generated for it.</p></dd>
+
+</dl>
+
+<h3><a id="apache::sizelimitconfiguration">Apache::SizeLimit Configuration</a></h3>
+<p>Bricolage is a large application that includes many CPAN modules as well as its own 120,000+ lines of code. When you start it up, its processes can take up 30 MB of memory or more. In general this isn't a problem, because that memory is shared between the processes. As each process handles requests, however, its size can swell independent of other processes. And if you're performing resource intensive activities, such as publishing a lot of documents at once, the process that handles the request can become quite large. Since Perl (and, by extension, <code>mod_perl</code>) does not return memory to the system, this can give the appearance that you have a memory leak.</p>
+  <p>The solution to this problem is to use the <a href="http://search.cpan.org/dist/mod_perl-1.29/lib/Apache/SizeLimit.pm" title="Apache::SizeLimit on CPAN">Apache::SizeLimit</a> module distributed with <code>mod_perl</code> to periodically check your <code>mod_perl</code> processes and kill them when they get to be over a certain size. Bricolage has integrated support for Apache::SizeLimit that's quickly enabled and configured via these directives</p>
+
+<dl>
+  <dt><a id="checkprocesssize"><code>CHECK_PROCESS_SIZE</code></a></dt>
+  <dd><p>This boolean directive turns on the Apache::SizeLimit support. After you set it to a true value and restart Bricolage, it will use the settings in the following directives to decide how often to check your processes and to kill them when they get to be too big.</p></dd>
+
+  <dt><a id="maxprocesssize"><code>MAX_PROCESS_SIZE</code></a></dt>
+  <dd><p>This is the maximum size processes are allowed to get to, in bytes, before Apache::SizeLimit will kill them.</p></dd>
+
+  <dt><a id="checkfrequency"><code>CHECK_FREQUENCY</code></a></dt>
+  <dd><p>This directive determines how often Apache::SizeLimit will check the size of your <code>mod_perl</code> processes. If you set it to, say, <q>5</q>, it will check a process after every fifth request by that process. The default is <q>1</q>.</p></dd>
+
+  <dt><a id="minsharesize"><code>MIN_SHARE_SIZE</code></a></dt>
+  <dd><p>This directive indicates the minimum amount of shared memory the process must employ to not be considered a candidate for termination. Consult the Apache::SizeLimit documentation for more information. The default is <q>0</q>, meaning that all Apache <code>mod_perl</code> processes will have their sizes checked.</p></dd>
+
+  <dt><a id="maxunsharedsize"><code>MAX_UNSHARED_SIZE</code></a></dt>
+  <dd><p>This directive sets a limit on the amount of unshared memory a process may consume to not be a candidate for termination. You can use this directive to tweak your settings if you find that processes are getting terminated when they are still mainly using shared memory. The default is <q>0</q>.</p></dd>
+</dl>
+
+<h3><a id="virtualftpserverconfiguration">Virtual FTP Server Configuration</a></h3>
+<p>Bricolage pushes story documents through formatting templates to generate output when you preview or publish them. Formatting templates can be written in Mason, Template Toolkit, or HTML::Template. If you have a lot of different types of story documents, or just elements of story documents, you'll likely end up with a lot of templates to manage. Editing templates in the browser interface's <code>textarea</code> fields can be a pain. A better approach is to use the Bricolage virtual FTP server, which provides access to all Bricolage templates via FTP. If the security of your password isn't a serious consideration (because FTP requires that passwords be sent in the clear, and maybe you work behind a firewall over a virtual private network), enable the virtual FTP server and edit Bricolage templates from within your favorite FTP-enabled editor (Emacs, Vim, HomeSite, etc.). Here's how.</p>
+
+<dl>
+  <dt><a id="enableftpserver"><code>ENABLE_FTP_SERVER</code></a></dt>
+  <dd><p>This boolean directive of course enables the virtual FTP server. Set it to a true value, tune the other FTP directives, reboot Bricolage, fire up the <a href="http://www.bricolage.cc/docs/current/api/bric_ftpd.html" title="bric_ftpd man page"><em>bric_ftpd</em></a> application, and get to work! Just connect to your Bricolage FTP server on the port specified by the <code>FTP_PORT</code> directive, login with your Bricolage username and password, and you can browse templates by site, output channel, and category.</p></dd>
+
+  <dt><a id="ftpport"><code>FTP_PORT</code></a></dt>
+  <dd><p>This directive specifies a TCP/IP port on which the Bricolage virtual FTP server will listen for connections. The default is <q>2121</q>.</p></dd>
+
+  <dt><a id="ftpaddress"><code>FTP_ADDRESS</code></a></dt>
+  <dd><p>If your host has more than one IP address, specify one of them here to have the virtual FTP server to listen for connections on that IP address only. By default, the FTP server will listen on all of your host's IP addresses.</p></dd>
+
+  <dt><a id="ftplog"><code>FTP_LOG</code></a></dt>
+  <dd><p>The location of the virtual FTP server log. By default, it will be in the <em>log</em> subdirectory of your Bricolage root directory.</p></dd>
+
+  <dt><a id="ftppidfile"><code>FTP_PID_FILE</code></a></dt>
+  <dd><p>Specify the location of the PID file for the Bricolage FTP server. <em>bric_ftpd</em> will use this file to record the PID of the server when you start it, and to stop the server when you execute <code>bric_ftpd -k</code>. The default is to store the PID file in the <em>log</em> subdirectory of your Bricolage root directory.</p></dd>
+
+  <dt><a id="ftpdeployonupload"><code>FTP_DEPLOY_ON_UPLOAD</code></a></dt>
+  <dd>
+    <p>As of Bricolage 1.8 and later, the Bricolage FTP server will save templates to your private sand box when you upload them. This means that they will be checked out to you, appear in your personal workspace in the UI, and be executed when you (and only you) preview stories that use them. To check in and deploy a template, so that it will be used in production when other users preview and publish documents, simply append the string <em>.deploy</em> to the end of the file name when you upload it and Bricolage will do the rest.</p>
+    <p>Prior to version 1.8.0, the Bricolage virtual FTP server checked out, updated, checked in, and deployed templates every time they were uploaded. If for some reason you prefer this approach (and to be honest, I can't imagine why <em>anyone</em> would!), set the <code>FTP_DEPLOY_ON_UPLOAD</code> directive to a true value and restart <em>bric_ftpd</em>.</p>
+    </dd>
+
+  <dt><a id="ftpdebug"><code>FTP_DEBUG</code></a></dt>
+  <dd><p>If for some reason the virtual FTP server isn't behaving the way you expect, set this boolean directive to a true value and restart <em>bric_ftpd</em>. Then tail the FTP log (specified by the <code>FTP_LOG</code> directive) to diagnose the problem.</p></dd>
+
+</dl>
+
+<h3><a id="preloadingconfiguration">Preloading Configuration</a></h3>
+<p>Because Bricolage runs on Apache 1.3, all of its code is loaded up by the parent process at startup time, before any children are forked off. This is memory efficient, because most modern operating systems use a copy-on-write forking design. This means that the children all share memory with the parent until they write to that memory, at which time the memory is copied to the child process.</p>
+<p>But when a lot of code is loaded, so much of it is never overwritten. So it's highly advantageous to load as much code as you think you'll need into the parent process at startup time, to prevent each of the children from loading it themselves and taking up that much more memory. These directives help you to do just that.</p>
+
+<dl>
+  <dt><a id="perlloader"><code>PERL_LOADER</code></a></dt>
+  <dd><p>This string directive can be any Perl code you like, as long as it's all on one line in the <em>bricolage.conf</em> file. Bricolage will execute this code at startup time, in the namespace use by the Mason burner. This is very useful for loading Perl modules that your templates use, so that you're not loading them in each child process. The default value loads <a href="http://search.cpan.org/dist/mod_perl-1.29/Util/Util.pm" title="Apache::Util on CPAN">Apache::Util</a>, which has a number of useful HTML output utility functions, and <a href="http://www.bricolage.cc/docs/current/api/Bric::Util::Burner" title="Bric::Util::Burner documentation">Bric::Util::Burner</a>, which exports a number of constants that you can use in templates to tell what type of burn is being executed (preview or publish). Other common modules you might want to load here include <a href="http://search.cpan.org/dist/CGI.pm/" title="CGI on CPAN">CGI.pm</a> or <a href="http://search.cpan.org/dist/XML-RSS/" title="XML::RSS on CPAN">XML::RSS</a> to assist with HTML and RSS output, respectively. But you can load anything here, really.</p></dd>
+
+  <dt><a id="loadlanguages"><code>LOAD_LANGUAGES</code></a></dt>
+  <dd><p>Bricolage has localizations for a number of languages, including German, Portuguese, Italian, Cantonese, Mandarin, and Russian. The localization libraries are managed as Perl modules loaded at server startup time. For the most efficient use of memory, load the language you expect to be used most often by specifying the appropriate language codes (such as <q>en</q> for English, <q>pt_pt</q> for Portuguese, <q>de_de</q> for German, etc.) in a space-delimited list via the <code>LOAD_LANGUAGES</code> directive.</p></dd>
+
+  <dt><a id="loadcharsets"><code>LOAD_CHAR_SETS</code></a></dt>
+  <dd><p>This directive functions just like the <code>LOAD_LANGUAGES</code> directive, except that it is used to load the libraries that convert to and from UTF-8. Bricolage allows individual users to use different character sets when access the Bricolage UI, including ISO-8859-1, ISO-8859-2, Big5, ShiftJIS, GB-2312, and others. To save memory overhead, specify each character set that you expect your users will need to use day-to-day in Bricolage in a space-delimited list in the <code>LOAD_CHAR_SETS</code> directive.</p></dd>
+</dl>
+
+<h3><a id="thumbnailconfiguration">Thumbnail Configuration</a></h3>
+<p>As of Bricolage 1.8.0, Bricolage can generate thumbnail versions of image files uploaded for media documents. All you need to do is install the <a href="http://search.cpan.org/dist/Imager/" title="Imager on CPAN">Imager</a> module from CPAN (along with the necessary libraries for the image formats you use&#x2014;see the Imager <a href="http://search.cpan.org/src/TONYC/Imager-0.44/README" title="Imager README">README</a> file for details) and configure thumbnail support via these directives.</p>
+
+<dl>
+  <dt><a id="usethumbnails"><code>USE_THUMBNAILS</code></a></dt>
+  <dd><p>Set this boolean directive to a true value and restart Bricolage to have thumbnails generated for all image files in Bricolage. Imager must of course be installed. You might also want to consider installing media type icons to get icons specific to particular types of non-image files. See the <em>README</em> file and script in <em>contrib/copy_gnome_icons</em> in the Bricolage sources for information on what icon files to use and how to install them using the <em>copy_gnome_icons</em> script.</p></dd>
+
+  <dt><a id="thumbnailsize"><code>THUMBNAIL_SIZE</code></a></dt>
+  <dd><p>Set this directive to the maximum dimension of thumbnail images, in pixels. Bricolage will use this number to constrain the size of the thumbnail so that its greatest dimension does not exceed this number. For example, if <code>THUMBNAIL_SIZE</code> is set to its default value, <q>75</q>, and you upload a 150 x 100 pixel image file, Bricolage will generate a 75 x 50 pixel thumbnail.</p></dd>
+</dl>
+
+<h3><a id="htmlareaconfiguration">htmlArea Configuration</a></h3>
+<p>Bricolage 1.8.0 added support for WYSIWYG (what you see is what you get) editing via the <a href="http://www.htmlarea.com/" title="htmlArea Website">htmlArea</a> JavaScript editor. However, this feature is disabled by default. To enable it, download and install htmlArea 3.0 (in beta release as of this writing) in the <em>comp/media/htmlarea</em> directory under your Bricolage root. Then configure it via these directives and restart Bricolage. You will then be able to specify a <q>WYSIWYG</q> field type in document element definitions, and content editors will be able to take advantag of htmlArea's WYSIWYG features when editing content in those fields.</p>
+
+<dl>
+  <dt><a id="enablehtmlarea"><code>ENABLE_HTMLAREA</code></a></dt>
+  <dd><p>Set this boolean directive to a true value to enable Bricolage's htmlArea support. htmlArea must be installed in the <em>comp/media/htmlarea</em> directory under your Bricolage root.</p></dd>
+
+  <dt><a id="htmlareatoolbar"><code>HTMLAREA_TOOLBAR</code></a></dt>
+  <dd><p>The htmlArea editor offers a lot of WYSIWYG features as controls (buttons) in its interface. The controls handle tasks such as copy, paste, italicize, boldface, link, etc. By default, Bricolage enables only a subset of these controls. The subset excludes layout type features such as font selection and color, line justification, and the like. The idea is to provide only the tools needed for users to easily add semantically meaningful markup rather than layout markup, so as to keep content independent of presentation. But if you really need to allow your users to use six different type faces in twelve colors, you can enable the htmlArea controls for these features via the <code>HTMLAREA_TOOLBAR</code> directive. The contents of the directive is a comma-separated list of single-quoted strings with brackets at either end. See the htmlArea documentation for a <a href="http://www.htmlarea.com/htmlarea_2/documentation.html#setup3" title="htmlArea documentation: &#x201c;How can I change what controls are displayed on the toolbar?&#x201d;">complete list of supported controls</a>.</p></dd>
+</dl>
+
+<h3><a id="upnext">Up Next</a></h3>
+
+<p>Now you have all the information you need to configure how Bricolage operates to your heart's content. In my next article, we'll get into the nitty gritty of defining document models in Bricolage.</p>
+</body>
+</html>
+

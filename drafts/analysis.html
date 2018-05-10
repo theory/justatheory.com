@@ -1,0 +1,425 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Bricolage Element Specification</title>
+    <meta name="keywords" content="Bricolage, Perl, content management, content management system, Bricolage content management system, CMS, Bricolage CMS, Mason, HTML::Mason, Template Toolkit, HTML::Template, PostgreSQL, Apache, mod_perl Unicode, documents, document models, document modeling, workflow, templating, Bricolage templating, separation of content from presentation, categories, categorization, content categorization, smart URLs, multisite, SOAP, SOAP interface, elements, fields, scalability, security, return on investment, ROI, installation, configuration, bricolage.conf" />
+    <style type="text/css">
+      /* Figures */
+      .figure     { border: 1px solid black; background:#ddd; }
+      .figure img { border-bottom:1px solid black; }
+      .figure p   { margin: .5em; }
+      .left       { float:left; margin: 1em 1em 1em 0; }
+      .right      { float:right; margin: 1em 0 1em 1em; }
+      dl dt       { font-weight: bold; }
+      dl dd       { margin: 0; padding: 0; margin-bottom: 1em; }
+      dl dd p     { margin: 0; padding: 0; }
+      pre         { background:#ddd; padding: 1em; border: 1px solid black; }
+      dfn         { font-style: italic; } /* Some browsers don't do this automatically */
+
+      /* Tables */
+      .table { padding: .5em; border: 1px solid black; background:#ddd; border-spacing: 0; font-family: verdana, arial, sans-serif; font-size: .8em; }
+      .table p { border-top: 1px solid black; padding: 1em .5em .5em .5em; margin: 0; clear: left;  }
+      .check { text-align: center; }
+      .model { border: 1px solid black; border-spacing 0; margin: .5em; background:#fff; float: left; }
+      .model th { border-bottom: 1px solid black; }
+      .fields th { border: 0; font-weight: normal; font-style:italic; text-align: left; border-bottom: 1px dotted black; }
+      .model td { margin: 2em; padding: 0; }
+      .model .fields { border-spacing: .5em; }
+      .subelem { border-top: 1px solid black; text-align:center; }
+    </style>
+  </head>
+  <body>
+
+<h1>Bricolage Element Specification</h1>
+
+<p>In previous Perl.com articles, we've reviewed where Bricolage fits into the universe of content management systems and worked through a complete installation and configuration of Bricolage. Now it's time to go through the steps required to model the structure of an existing Web page in Bricolage. Part of the motivation for the redesign of the <a href="http://www.bricolage.cc/" title="Visit the Bricolage Web site">Bricolage Web site</a> last summer was to create good examples of document types and templates for use in Bricolage itself. We'll take advantage of that work by analyzing a page on the current Bricolage site to determine how to break it down into its basic elements.</p>
+
+<p>But first, a brief introduction to document types in Bricolage.</p>
+
+<h2>The Elements of Bricolage Stories</h2>
+
+<p>Bricolage features two types of documents: <dfn>stories</dfn> and <dfn>media</dfn>. Stories contain text content and metadata; media are just like stories, but can have a single media file associated with them (an image file, movie, sound file, PDF, etc.). But whether a document is a story document or a media document, its structure is defined by elements.</p>
+
+<p><dfn>Elements</dfn> are the basic building blocks of all documents in Bricolage. There are two types of elements: <dfn>container elements</dfn> and <dfn>field elements</dfn>. Container elements can, er, contain any number of fields and other container elements. Fields, on the other hand, contain text content, and Bricolage presents them as standard HTML fields such as text, textarea, pulldown, radio, etc.&#x2014;even a date and time widget. In a document model, one container element is the top element, and it, along with all of the fields and <dfn>subelements</dfn> it contains, constitutes the the structural model for the content of documents based on it.</p>
+
+<p>The important point here is that Bricolage encourages a highly structured model for your documents; documents based on the models are thus structurally consistent. It also makes it easy to write incredibly flexible templates to output content in a variety of formats. (We'll cover Bricolage templating in the next article in this series.) Document models can also be deeply hierarchical, to whatever extent is required to accurately model the structure of the documents to be managed. But one must always be careful, because if the model has too many levels of hierarchy, it will be more difficult for users to conceptualize when editing documents, as well as more work to drill down into deeply nested elements in the Bricolage user interface.</p>
+
+<h2>Document Analysis</h2>
+
+    <div id="figure1" class="figure left" style="width: 207px;">
+      <img src="full_spread.jpg"
+           alt="Bricolage.cc Article Screenshot" />
+      <p><strong>Figure 1:</strong> A screenshot of the article we're
+      analyzing.</p>
+    </div>
+
+<p><dfn>Document analysis</dfn> is the process of analyzing the layout of a document and breaking it down into its basic elements. Examining a page on a Web site, we determine how all of the basic parts fit together and in what hierarchy, so that they we can to model the element structure necessary to accurately represent the document in Bricolage. That is, we determine the container elements and fields that would be necessary to accurately recreate the document in Bricolage.</p>
+
+<p>For the sake of this article, we'll analyze the structure of a typical page on the Bricolage Web site. The page we'll use for the analysis is <a href="http://www.bricolage.cc/news/coverage/2002/12/18/online_tonight/index.html" title="David Wheeler Interviewed on Online Tonight">this one</a>, since it makes for a nice representative sample of the elements that are likely to be needed in articles on the site (<a href="#figure1" title="Figure 1">Figure 1</a>).</p>
+
+<h3>Identifying Content</h3>
+
+<p>The first thing we need to do is to determine what part of that page constitutes <em>content</em> and what does not. We use the term <q>content</q> here to distinguish those parts of the page that are important to the document itself, as opposed to the site overall or to a section of the site. For example, the banner at the top of the page appears on every page on the site; it is not specific to this document, nor is it significant to the document's contents. Likewise, the footer section is global to the site and contributes nothing to the document. The <q>Recent News</q> list in the right-hand column also has nothing to do with the contents of the article, it being a simple list of the five most recent articles published on the entire site.</p>
+
+<p>We call these components <q>includes</q>, because they're <em>included</em> on many pages&#x2014;or even on every page of the site. It also doesn't hurt that they are generally pulled into the layout by the Web server via a server-side includes technology (such as mod_include, HTML::Mason, PHP, JSP, or similar technology). Since they're not significant to the content of the document, we'll ignore them for the rest of this analysis. What we're left with is depicted in <a href="#figure2" title="Figure 2">Figure 2</a>.</p>
+
+    <div id="figure2" class="figure right" style="width: 275px;">
+      <img src="article.jpg"
+           alt="Article Content Only" />
+      <p><strong>Figure 2:</strong> With the content included in the page at
+	delivery time removed, we're left with the important part of the
+	document for the purposes of analysis: the actual content.</p>
+    </div>
+
+<h3>Defining the Top Element</h3>
+
+<p>Now that we've isolated the content of the page, we can start breaking its content down into its component parts. First, we need to give the document type a name; this name will also be the name of the top-level element. Since we're looking at an article in the Bricolage Web site, this is simple: we'll call the document type an <q>Article.</q></p>
+
+<p>With that out of the way, it's time to pick out the field subelements of the document element. As fields are meaningful blocks of text, this is generally simple to do: They're headlines, paragraphs, subheads, and the like. In <a href="#figure2" title="Figure 2">Figure 2</a>, we do indeed see meaningful blocks of text:</p>
+
+<dl>
+  <dt>Headline</dt>
+  <dd><p>This is the title of the article. In this case, it's <q>David Wheeler Interviewed on Online Tonight.</q></p></dd>
+
+  <dt>Dateline</dt>
+  <dd><p>This is the date for the article, here <q>2002.12.18</q></p></dd>
+
+  <dt>Paragraph</dt>
+  <dd><p>These blocks of text make up the bulk of the content of the article. The first paragraph starts with <q>Bricolage maintainer and lead developer David Wheeler appeared on the Online Tonight&reg; with David Lawrence radio show&#x2026;</q></p></dd>
+
+  <dt>Header</dt>
+  <dd><p>Section headers break up the content into sections, such as <q>How it All Started</q> and <q>Bricolage vs. Blogging Tools.</q></p></dd>
+</dl>
+
+<h3>Identifying Subelements</h3>
+
+    <div id="figure3" class="figure left" style="width: 267px;">
+      <img src="related_image.jpg"
+           alt="Related Image" />
+      <p><strong>Figure 3:</strong> The <q>Related Image</q> element is made
+      up of a link to a related media document, alt text (not shown), and a
+      caption.</p>
+    </div>
+
+<p>Pretty simple, right? Well the interesting part comes as we identify the container subelements of the layout. The way to do so is to look for areas where content has been logically grouped together as a unit, for instance to combine an image and its caption. Such is exactly the case with the picture of David Lawrence in our layout. We'll call this container element a <q>Related Image,</q> because it creates a link to an image document that's related to the current article content. <a href="#figure3" title="Figure 3">Figure 3</a> illustrates the breakdown of our newly-identified element: It has a link to a related media document and it has an <q>Alt Text</q> field and a <q>Caption</q> field.</p>
+
+    <div id="figure4" class="figure right" style="width: 342px;">
+      <img src="related_audio.jpg"
+           alt="Related Audio" />
+      <p><strong>Figure 4:</strong> The <q>Related Audio</q> element is made
+      up of a link to a related media document, a title, a caption, link text,
+      and a tooltip (not shown). The speaker icon is layout, rather than
+      content, so we ignore it.</p>
+    </div>
+
+<p>Another clearly grouped collection of content in our layout is the box entitled, <q>David Wheeler Takes to the Airwaves.</q> This one has a link to an audio document and a description of its contents. It also has a speaker icon, but this isn't really content; it's more a hint to the viewer as to what she's linking to. That is, it's not content, but <dfn>presentation</dfn>. It adds no semantic meaning to the article. To parallel our <q>Related Image</q> subelement, we'll call this one <q>Related Audio.</q> <a href="#figure4" title="Figure 4">Figure 4</a> highlights its subelements.</p>
+
+    <div id="figure5" class="figure right" style="width: 406px;">
+      <img src="pull_quote.jpg"
+           alt="Pull Quote" />
+      <p><strong>Figure 5:</strong> The <q>Pull Quote</q> element simply has a
+      Paragraph field and an attribution field.</p>
+    </div>
+
+<p>And finally, one last subelement, the <q>Pull Quote.</q> This one is simple: it groups together a quotation paragraph and an attribution. See <a href="#figure5" title="Figure 5">Figure 5</a>.</p>
+
+<h3>A Note on Layout</h3>
+
+<p>Ideally, our analysis would now be complete, as we've successfully identified all of the elements of our Article document type using this layout. But there is one more thing we need to take into consideration: the placement of the Related Audio, Related Image, and Pull Quote subelements.</p>
+
+<p>The ideal in content management is to separate content from presentation. We've successfully done so here: we've identified the parts of an article (paragraphs, pull quotes, headers, etc.) without specifying anything about the layout (colors, type faces, spacing, placement, etc.). But in looking at this example more closely, we note that the related audio box is on the right, the related image is on the left, and the pull quote is on the right again. The question is, when a template formats this document for output, how will it determine what goes on the left and what goes on the right?</p>
+
+<p>Now, just looking at this layout, we might guess that related audio always goes on the right, related images always on the left, and pull quotes always on the right. But if an article has no related audio or pull quotes and 5 different related images, the layout would end up looking lopsided. Your editors (well, those who have the least bit of design sensibility) won't like that.</p>
+
+<p>Another way to handle it is to come up with an algorithm to place these suckers. We might decide, for example, that between the three boxed subelements (Related Audio, Related Image, and Pull Quote), placement might rotate back and forth between the right and the left. Or perhaps one on the right, two on the left, two on the right, etc. Of course, the problem with this approach is that, depending on how algorithmic you need it to be, the algorithm might be tricky to write. Plus, you editors still might not like it, and ask you, <q>Why can't I just tell it to put it on the left?</q></p>
+
+<p>Well, why not? The separation of content from presentation is the ideal, yes, but not always practical. Plus, sometimes, we can give people the sort of control they need without unduly sacrificing the separation. In this case, we can solve the problem simply by adding an extra field to each of the subelements, <q>Position,</q> with two possible values, <q>right</q> and <q>left.</q> Now when an editor adds a pull quote to a document, she can specify the placement in such a way that the template can easily, well, place it. And as for the separation of content from presentation: this information is more metadata about the element than content, and can thus be ignored when you need to create purely semantic representations (such as XML).</p>
+
+<p>The upshot is that, during a document analysis, one must pay careful attention to the semantically meaningful parts of a document and model the appropriate elements, and then weigh the importance of providing additional, non-semantic presentation metadata fields to give editors the control they need to get their jobs done. Go for the middle road and keep everyone happy.</p>
+
+<div class="table left" style="width: 34em;" id="table1">
+<table class="model">
+  <tr><th>Article</th></tr>
+  <tr><td>
+      <table class="fields">
+        <tr><th>Field</th><th>Type</th><th>Req</th><th>Repeat</th></tr>
+        <tr><td>Headline</td><td>Text</td><td class="check">&#x2713;</td><td class="check">&nbsp;</td></tr>
+        <tr><td>Dateline</td><td>Date</td><td class="check">&#x2713;</td><td class="check">&nbsp;</td></tr>
+        <tr><td>Paragraph</td><td>Textarea</td><td class="check">&nbsp;</td><td class="check">&#x2713;</td></tr>
+        <tr><td>Header</td><td>Text</td><td class="check">&nbsp;</td><td class="check">&#x2713;</td></tr>
+      </table>
+  </td></tr>
+  <tr><td class="subelem">
+
+<table class="model">
+  <tr><th>Related Audio</th></tr>
+  <tr><td>
+      <table class="fields">
+        <tr><th>Field</th><th>Type</th><th>Req</th></tr>
+        <tr><td>Title</td><td>Text</td><td class="check">&#x2713;</td><td class="check">&nbsp;</td></tr>
+        <tr><td>Description</td><td>Textarea</td><td class="check">&#x2713;</td><td class="check">&nbsp;</td></tr>
+        <tr><td>Link Text</td><td>Text</td><td class="check">&#x2713;</td><td class="check">&nbsp;</td></tr>
+        <tr><td>Tooltip</td><td>Text</td><td class="check">&#x2713;</td><td class="check">&nbsp;</td></tr>
+        <tr><td>Position</td><td>Pulldown</td><td class="check">&#x2713;</td><td class="check">&nbsp;</td></tr>
+      </table>
+  </td></tr>
+</table>
+
+<table class="model">
+  <tr><th>Related Image</th></tr>
+  <tr><td>
+      <table class="fields">
+        <tr><th>Field</th><th>Type</th><th>Req</th></tr>
+        <tr><td>Alt Text</td><td>Text</td><td class="check">&#x2713;</td><td class="check">&nbsp;</td></tr>
+        <tr><td>Caption</td><td>Textarea</td><td class="check">&#x2713;</td><td class="check">&nbsp;</td></tr>
+        <tr><td>Position</td><td>Pulldown</td><td class="check">&#x2713;</td><td class="check">&nbsp;</td></tr>
+      </table>
+  </td></tr>
+</table>
+
+<table class="model">
+  <tr><th>Pull Quote</th></tr>
+  <tr><td>
+      <table class="fields">
+        <tr><td>Paragraph</td><td>Textarea</td><td class="check">&#x2713;</td><td class="check">&nbsp;</td></tr>
+        <tr><td>Attribution</td><td>Text</td><td class="check">&#x2713;</td><td class="check">&nbsp;</td></tr>
+        <tr><td>Position</td><td>Pulldown</td><td class="check">&#x2713;</td><td class="check">&nbsp;</td></tr>
+      </table>
+  </td></tr>
+</table>
+
+  </td></tr>
+</table>
+<p><strong>Table 1:</strong> The completed document model. In Bricolage, all subelements are optional, meaning that users can add any number of Related Image, Related Audio, and Pull Quote elements to a document.</p>
+</div>
+
+<h2>The Document Model</h2>
+
+<p>Having performed our document analysis (and of course, in practice, you should examine at a number of different pages on a site to ensure that you don't miss any elements that are present in some articles but not others), it's time to synthesize our breakdown of the elements into a comprehensive model. In practice, that's pretty simple. See <a href="#table1" title="Table 1">Table 1</a> for the complete representation. Based on the analysis, we've decided on the types of the fields (text, textarea, pulldown, etc.), whether they're required to be a part of the element they're in, and whether they're repeatable. For example, the headline of the article is required, but not repeatable, because all articles must have a headline but not more than one headline. Paragraphs, on the other hand, are not required, but there can be more than one of them. We could also have said that paragraphs were required <em>and</em> repeatable, in which case at least one would need to be in the element. When doing your own document analysis, take the path that makes the most sense to you.</p>
+
+<p>Container elements, on the other hand, currently have no such occurrence specification. Any number of any of the defined subelements can be added to a document, including none. Occurrence specification for container elements <a href="http://bugs.bricolage.cc/show_bug.cgi?id=986" title="To do: Add Support for Pre-populating Subelements">may be added</a> in a future version of Bricolage.</p>
+
+<p>This example is pretty simple. However, the Article document type for the Bricolage Web site is quite a bit more complex. See the <a href="http://www.bricolage.cc/about/doc_models/article/" title="View the full Article document model">complete model</a> of the Article document type. In fact, a graphical representation of all of the Bricolage Web site document models can be found <a href="http://www.bricolage.cc/about/doc_models/" title="The Bricolage Web site document models">here</a>. The tables displaying the models were all generated by a special <a href="http://www.bricolage.cc/templates/story/introspect.mc" title="Download the Bricolage introspection template">introspection template</a>.</p>
+
+<h2>Element Administration</h2>
+
+    <div id="figure6" class="figure left" style="width: 163px;">
+      <img src="element_nav.jpg"
+           alt="Navigate to the Element Magager" />
+      <p><strong>Figure 6:</strong> Navigate to the Element Type Manager and
+      the Element Manager to administer elements.</p>
+    </div>
+
+<p>The next step is to model, in Bricolage, the elements we've discovered. There are two administrative tools we'll need to use to create the elements: The Element Type Manager and the Element Manager. To access these managers, use the Bricolage side menus (see <a href="#figure6" title="Figure 6">Figure 6</a>) to navigate to ADMIN -&gt; PUBLISHING -&gt; and select the appropriate manager. You will be presented with a search interface to search for and edit element or element type objects. Clicking the <q>Edit</q> link for an element type, for example, brings up the Element Type Profile, wherein you can edit the attributes of the element type.</p>
+
+<h3>Element Types</h3>
+
+<p>Each element in Bricolage is associated with an <dfn>element type</dfn> that defines a few attributes that its associated element share. There three different kinds of element types: story element types, which define the structure of story documents; media element types, which define the structure of media documents; and subelement element types, which define the structure of container subelements. See <a href="#figure7" title="">Figure 7</a> for a snippet of the element type interface. The attributes we can set on element types are:</p>
+
+    <div id="figure7" class="figure right" style="width: 290px;">
+      <img src="story_et.jpg"
+           alt="Stories Element Type" />
+      <p><strong>Figure 7:</strong> A segment of an element type
+      profile. This is a story element type called <q>Story,</q> and it
+      represents the structure of non-fixed story documents.</p>
+    </div>
+
+<dl>
+  <dt>Page</dt>
+  <dd><p>Indicates whether or not an element is a <dfn>page</dfn>. Sometimes documents need to have multiple pages through which readers can navigate. You'll be familiar with multi-page documents from <a href="http://www.perl.com/" title="Perl.com">Perl.com</a>, wherein you navigate from page to page via <q>Next page</q> and <q>Previous Page</q> links.</p></dd>
+  <dt>Fixed</dt>
+  <dd><p>A <dfn>fixed</dfn> document is typically one that does not have the date as a part of its URI. <dfn>Output channels</dfn> defined in Bricolage specify two URI formats for the documents published to them, and one of those formats is called the <q>fixed URI format.</q> If a story based on an element with the <q>Fixed</q> checkbox checked in its element type, the story use the <q>fixed URI format.</q> Otherwise, it'll use the non-fixed URI format. (We'll cover output channels in detail in the next article in this series.)</p></dd>
+  <dt>Related Story</dt>
+  <dd><p>Elements associated with an element type with the <dfn>Related Story</dfn> checkbox checked can be associated with a story document. This is useful for creating lists of stories related to the current story, for example.</p></dd>
+
+  <dt>Related Media</dt>
+  <dd><p>The <dfn>Related Media</dfn> checkbox is just like the Related Story checkbox, except that it allows the creation of a relationship to a media document rather than to a story document. Our Related Image and Related Audio element depend on this checkbox being checked.</p></dd>
+
+  <dt>Media Type</dt>
+  <dd><p>Applies only to media element types&#x2014;that is, elements that define the structure of media documents. This attribute is a pulldown list, featuring the options <q>Image,</q> <q>Video</q>, <q>Audio,</q> or <q>Other.</q> Of these options, only <q>Image</q> has any effect; image elements automatically have fields associated with them for height, width, color depth, and a few others. These fields are also automatically populated by Bricolage when you upload an image file.</p></dd>
+</dl>
+
+<p>Now, given how element types work, our Article document type requires the following element types:</p>
+
+<dl>
+  <dt>Audio</dt>
+  <dd><p>Well, first off, there are some media documents we're going to need to manage. The first is <q>Audio,</q> required to manage the audio recordings associated with the Related Audio subelement. The Audio element type is a media element type with its media type set to <q>Audio,</q> surprisingly enough.</p></dd>
+
+  <dt>Image</dt>
+  <dd><p>The <q>Image</q> element type sets attributes for image document types. It is just like the Audio element type, except that it has its media type set to <q>Image</q> instead of <q>Audio.</q> Go figure.</p></dd>
+
+  <dt>Story</dt>
+  <dd><p>This defines the shared attributes of story elements, of which our Article element is one. It does not use a fixed URL (because we want the article's cover date to show up in the URI), and has neither a related story nor related media. The <q>Page</q> attribute is irrelevant to this element type.</p></dd>
+
+  <dt>Subelement</dt>
+  <dd><p>This simple element type defines generic subelements. There are no special attributes of these subelements, so we don't check any. The Pull Quote subelement is an example: it's not a page, and it doesn't have an associated media document or story document.</p></dd>
+
+  <dt>Related Media</dt>
+  <dd><p>This subelement element type defines elements that have media files associated with them. It has its Related Media checkbox checked, and will be used to define our Related Audio and Related Image elements.</p></dd>
+</dl>
+
+    <div id="figure8" class="figure right" style="width: 344px;">
+      <img src="new_element.jpg"
+           alt="Creating the Related Image element" />
+      <p><strong>Figure 8:</strong> Creating the Related Image element. The key name uniquely identifies the element, while the burner determines the kind of templates that will be used to format Related Image elements. Be sure to select the Related Media element type!</p>
+    </div>
+
+<h3>Elements</h3>
+
+<p>Now we get to our building blocks. Recall that we defined a number of elements in our analysis of the Bricolage.cc page. Now we'll need to model them in Bricolage, basing each on an element type. When administering elements, we typically first create those farthest down the hierarchy, since we'll need to have them available to associate when we create those farther up. So we'll start with the Pull Quote, Related Image, and Related Audio elements, and then create the Article story type element.</p>
+
+<p>First we create the Related Image element (<a href="#figure8" title="Figure 8">Figure 8</a>). The <q>Key Name</q> field uniquely identifies the element throughout Bricolage. This is useful for a number of things, including giving templates the ability to easily get a handle on an element, as well as providing the file name for templates based on this element. It's generally a good idea to make the key name the same as the element name, but lowercased and with spaces replaced with underscores (uppercase letters and spaces are not allowed in key names).</p>
+
+<p>The <q>Burner</q> pulldown list allows selection of the <dfn>burner</dfn> that will be used to format the element. As mentioned in the <a href="http://www.perl.com/pub/a/2004/08/27/bricolage.html" title="Content Management with Bricolage">first article</a> in this series, Bricolage currently supports three templating systems for formatting content: <a href="http://www.masonhq.com/" title="Mason HQ">Mason</a>, <a href="http://www.template-toolkit.org/" title="Template Toolkit home">Template Toolkit</a>, and <a href="http://html-template.sourceforge.net/" title="HTML::Template home">HTML::Template</a> (but with <a href="http://www.php.net/" title="PHP?">PHP</a> support arriving in the forthcoming Bricolage 1.10, due out in September; stay tuned!). The Bricolage objects that push stories through the templates in a particular output channel are known as burners, ostensibly because they <q>burn</q> files to disk (but rumor has it that they <em>really</em> got that name when the original developer of the Mason burner wanted to write a <code>burn_one()</code> method). We've selected <q>Mason</q> here because all of the Bricolage site templates use Mason.</p>
+
+    <div id="figure9" class="figure left" style="width: 385px;">
+      <img src="custom_fields.jpg"
+           alt="Element custom field definition" />
+      <p><strong>Figure 9:</strong> The fields subelements defined for the
+      Related Image element. Click an <q>Edit</q> link to edit an individual
+      field element definition, or use the <q>Add New Field</q> section to add
+      new fields to the element.</p>
+    </div>
+
+<p>Once we click the <q>Next</q> button, the Related Image element has been created. Now we need to add any necessary subelements and fields. Looking back at our <a href="#table1" title="Table 1">model</a>, we note that the Related Image element has no subelements, but it does have a few fields. <a href="#figure9" title="Figure 9">Figure 9</a> pulls out the relevant part of the element profile. Note that we've already added the necessary fields. Should we decide that they should display in a different order, we simply change the values of the numbered fields (changing one will cause the others to renumber automatically). Each can also be deleted or edited to change its values.</p>
+
+<p>The <q>Add New Field</q> section allows us to define new fields for the element, selecting from a number of available types (text, textarea, pulldown, date, etc.) and filling in the appropriate fields. Each option features different fields to fill in, but the important ones are as follows:</p>
+
+<dl>
+  <dt>Key Name</dt>
+  <dd><p>This field uniquely identifies the field among all the fields in the container element. While no field in a single element can have the same key name, a field in one element can have the same key name as a field in another element. Like container element key names, they must be lowercase and have no spaces. Again, we tend to use a key name that is the same as the name except for those two rules.</p></dd>
+
+  <dt>Label</dt>
+  <dd><p>This is the name of the field. A field can have the same name as another field, but that would be silly, now wouldn't it?</p></dd>
+
+  <dt>Default Value</dt>
+  <dd><p>The default value for a field when a new one is added to an element. For example, a URL field might have a default value of <q>http://</q> as a sort of reminder to editors as to what belongs in the field. It might also make sense to use the most common value for the default (such as with our Position field, where the default is <q>left</q>).</p></dd>
+
+  <dt>Size</dt>
+  <dd><p>The size of the field in the display. Text fields use this value to set the width of the field (in characters), while Select fields use it to set the number of values to be displayed in a scrollable select field. The textarea field has <q>Rows</q> and <q>Columns</q> fields, instead, to indicate the size at which the field should be displayed in the interface.</p></dd>
+
+  <dt>Maximum Size</dt>
+  <dd><p>The maximum size of the allowed value. This option limits the length of a text or textarea value to a certain number of letters.</p></dd>
+
+  <dt>Required</dt>
+  <dd><p>Indicates whether, when a new element is added, the field is already included in the element or needs to be added by the editor. The <q>required</q> moniker is unfortunate in this case, because it <em>does not</em> mean that the field is required to have a value, only that it's required to be present in the user interface.</p></dd>
+
+  <dt>Repeatable</dt>
+  <dd><p>Indicates whether or not a field is repeatable. For example, a paragraph field would be repeatable, because we want an editor to be able to add more than one paragraph to a story.</p></dd>
+
+  <dt>Position</dt>
+  <dd><p>Indicates the order in which the field appears in the user interface. This value affects only required fields, and causes all required fields to be displayed in the order indicated. This does not prevent an editor from re-ordering fields, however.</p></dd>
+
+  <dt>Options</dt>
+  <dd><p>This field allows you to specify a range of values for a field. It applies only to Radio Buttons, Pulldown, and Select fields. Each value is on a single line, with the option first and then an optional label, separated by a comma.</p></dd>
+
+  <dt>Allow Multiple</dt>
+  <dd><p>This checkbox is specific to the Select field. When checked, users can select more than one value.</p></dd>
+</dl>
+
+<p>Each of these fields, with the exception of the key name, may also be edited for an existing field by clicking its <q>Edit</q> link.</p>
+
+<p>Following our <a href="#table1" title="Table 1">model</a>, creating the necessary fields for the Related Audio element becomes simple. The <q>Title</q>, <q>Link Text</q>, and <q>Tooltip</q> fields are simple non-repeating text fields; the <q>Description</q> is a non-repeating textarea field; and the <q>Position</q> field is a non-repeating pulldown field. It's fine to accept the default values for the other fields (size, columns, rows, max size, etc.). For the Position field, however, we must add two values to the Options field, like so:</p>
+
+    <pre>left,Left<br />right,Right</pre>
+
+<p>We also need to set the default value. We've opted for <q>left</q> (and, indeed, that's what shows up as the default value as the field is displayed in <a href="#figure9" title="Figure 9">Figure 9</a>), but you could also set it to <q>right.</q></p>
+
+<p>Creating the Related Audio and Pull Quote elements is much the same. The only difference is in the fields included and in the selection of an element type (Related Audio is a Related Media type, like Related Image, but Pull Quote is a Subelement).</p>
+
+<p>Now, the Article element&#x2014;the element that determines the structure of all articles, and therefore defines the Article document type&#x2014;is a bit different. Defining its fields is of course the same, but we actually have modeled more fields than we need. You see, all documents in Bricolage have a <q>Title</q> field and a <q>Cover Date.</q> These can be used in place of of custom <q>Headline</q> and <q>Dateline</q> fields; therefore, we don't have to define them. What's left, <q>Paragraph</q> and <q>Header,</q> are defined in the same way as fields in all elements.</p>
+
+    <div id="figure10" class="figure left" style="width: 590px;">
+      <img src="subelements.jpg"
+           alt="Subelements of Article" />
+      <p><strong>Figure 10:</strong> The subelements of the Article element. Click the <q>Add Subelement</q> button to search for other elements and add them to Article.</p>
+    </div>
+
+<p>And defining subelements is the same, too, although since the other elements had no subelements of their own, we'll describe how to create them here. <a href="#figure10" title="Figure 10">Figure 10</a> shows the <q>Existing Subelements</q> section of the element profile. In this example, the Related Audio and Related Image subelements have already been associated with  the Article element, but we still need to add the Pull Quote element. Clicking the <q>Add Subelement</q> button brings up a page very similar to the element manager: there's a search box, and you can view the results of your search. Unlike the element manager, however, this interface displays only subelements (that is, those elements that are associated with subelement element types, not story or media element types). So we type in and search on the string <q>pull</q>, and then wen we get the search results, select the <q>Add to Element</q> checkbox, and click the <q>Add Elements</q> button. <a href="#figure11" title="Figure 11">Figure 11</a> illustrates this process.</p>
+
+    <div id="figure11" class="figure left" style="width: 594px;">
+      <img src="add_subelement.jpg"
+           alt="Adding the Pull Quote subelment" />
+      <p><strong>Figure 11:</strong> Use the search field to find the element you want, check the <q>Add to Element</q> checkbox, and click the <q>Add Elements</q> button.</p>
+    </div>
+
+<p>And now the Article document type is complete! Well, almost. What we've left out is that there are other fields that need to be filled in for story type and media type elements: <dfn>sites</dfn> and output channels. Because Bricolage is designed to manage multiple sites, each story or media type element must be associated with one or more sites. Each site associated with the element can create documents based on the element. By default, Bricolage has only one Site, <q>Default,</q> so you can just leave it associated with the Article element (if your installation has only one site, then that one site will be associated with all new story and media type elements).</p>
+
+<p>As for output channels, each site has a primary output channel associated with the element, and extra output channels can be added as needed. Bricolage has a single output channel by default, called <q>Web,</q> and you can leave this as the selected value. Again, we'll cover output channels in more depth in the next article in this series.</p>
+
+<p><em>Now</em> our Article document type is complete, and we're ready to start creating documents based on it.</p>
+
+<h2>Categories</h2>
+We have one last topic to discuss before we can create a story document based on our Article document type, and that topic is categories. <dfn>Categories</dfn> are hierarchically organized content locations. You can think of them as similar to a file system of directories (or folders, for you Mac fans out there). Indeed, categories in Bricolage are used in the URIs of story and media documents, so the translation is close (modulo date parts and slugs). But they are also used to, well, categorize content. So it makes sense to create category hierarchies that make sense for your site.</p>
+
+    <div id="figure12" class="figure right" style="width: 423px;">
+      <img src="new_category.jpg"
+           alt="Creating a new category" />
+      <p><strong>Figure 12:</strong> Create new categories starting with top-level categories added as subcategories to the root category, <q>/</q>.</p>
+    </div>
+
+<p>For example, if your site was a newspaper featuring movie and book reviews, you might want to create a category named <q>Reviews</q> as a subcategory of the root category (<q>/</q>), and then subcategories of the <q>Reviews</q> category named <q>Books</q> and <q>Movies.</q> The full URIs for these categories would be <code>/reviews</code>, <code>/reviews/books</code>, and <code>/reviews/movies</code>, respectively.</p>
+
+<p>To create categories for your site, navigate to the <q>Categories</q> manager under ADMIN -&gt; PUBLISHING and click <q>Add a New Category</q> for each category you wish to add. The root category already exists for each site, so start by creating your top-level categories and make your way down. See <a href="#figure12" title="Figure 12">Figure 12</a> for an example creating a top-level <q>Reviews</q> category.</p>
+ 
+    <div id="figure13" class="figure left" style="width: 161px;">
+      <img src="workflow_nav.jpg"
+           alt="Navigating to the Story workflow" />
+      <p><strong>Figure 13:</strong> Navigate to the <q>Story</q> workflow and click <q>New Story</q> to create and edit a new story.</p>
+    </div>
+
+<h2>Document Editing</h2>
+
+<p>Now that we've created the categories we need, we can create a story document based on the Article story type. Open the <q>Story</q> workflow in the side navigation and select <q>New Story</q> (<a href="#figure13" title="Figure 13">Figure 13</a>) to bring up the <q>New Story</q> screen shown in <a href="#figure14" title="Figure 14">Figure 14</a>. Enter a title and slug. A <dfn>slug</dfn> is a very short (one or two words separated by an underscore or dash) hint as to the contents of the story. Generally, the slug should complement the category selection rather than repeat it. For example, if you were creating a review of <q>The Princess Bride</q> in your <code>/reviews/books</code> category, you might make the slug <q>princess_bride</q>. Select the Article story type, and cover date and press the <q>Create</q> button. This action creates a new story in the Story workflow and puts it on that workflow's <q>start desk</q>, in this case the <q>Edit</q> desk.</p>
+
+    <div id="figure14" class="figure right" style="width: 406px;">
+      <img src="new_story.jpg"
+           alt="Creating a new story" />
+      <p><strong>Figure 14:</strong> Create a new story based on the Article story type. Be sure to enter a meaningful slug and cover date, and put the article in the relevant category.</p>
+    </div>
+
+    <div id="figure15" class="figure left" style="width: 445px;">
+      <img src="story_content.jpg"
+           alt="Editing story content" />
+      <p><strong>Figure 15:</strong> Add fields and elements to the story in the <q>Content</q> section of the story profile.</p>
+    </div>
+
+<p>The new story will then open up in the story profile. The first section of the profile, <q>Properties,</q> mostly covers the same data points as the <q>New Story</q> screen, and it's the second section, <q>Content,</q> that interests us most (<a href="#figure15" title="Figure 15">Figure 15</a>). At the bottom of this section, you'll find an <q>Add Element</q> button and select list. From this list, you can select the fields or container subelements you'd like to add to the story. Once a field has been added, you can simply edit it, as with the <q>Teaser</q> and <q>Long Teaser</q> fields in <a href="#figure15" title="Figure 15">Figure 15</a>.</p>
+
+<p>Notice that the names of the elements available in the <q>Add Element</q> select list is identical to the names of the container elements and fields associated with the Article story type element we modeled. Since these are the only content containers that editors can add to a story, the structural integrity of the story strictly adheres to the model we've created. The advantage is that the structure of the stories to be published to our site will be consistent across stories. This approach enables the maintenance of document standards and styles across a site, which can be very important in a large organization with thousands of pages of content to maintain. It also allows for simple yet extremely flexible templating, so that documents can be output to a variety of formats (XHTML, RSS, PDF, etc.) while maintaining identity and design standards.</p>
+
+<p>And why are container elements and fields all listed together in one select list? Because as an editor works on a story, she doesn't need to think in great detail about what to add. It's unnatural for a writer to have to stop and think, <q>Do I want to add a container element or a field?</q> as she decides from which list to select. She only has to think, <q>I need to add a paragraph</q> or <q>I think a pull quote would work well here.</q> The difference is important to us a document modelers and, later, as template developers, but for editors, the distinction is irrelevant.</p>
+
+    <div id="figure16" class="figure right" style="width: 442px;">
+      <img src="subelement.jpg"
+           alt="Editing the Related Image subelement" />
+      <p><strong>Figure 16:</strong> Edit the fields of the Related Image subelement. Click the <q>Edit</q> button in the <q>Related Media</q> section to search for an image document to relate to this element.</p>
+    </div>
+
+<p>If you elect to add a subelement, say by selecting the <q>Related Image</q> option, you will be taken to the profile for that element. <a href="#figure16" title="Figure 16">Figure 16</a> illustrates the Related Image element profile. Note how the required fields we've modeled for this element, <q>Title</q>, <q>Alt Text</q>, <q>Position</q>, and <q>Caption</q> have been added to the profile. Furthermore, because this is a related media element, there's an extra section called, curiously enough, <q>Related Media.</q> By clicking the <q>Edit</q> button, we can search your existing media documents to create a relationship, much as we searched for subelements to add to an element in the element manager. In Bricolage 1.10.0, due for release next month, we'll also be able to upload a media file directly in this interface, implicitly creating a media document in the same category and with the same cover date as the current story.</p>
+
+<p>Press the <q>Save</q> button to save the element. Back in the main story profile the new Related Image subelement will be listed in the <q>Content Section</q>. You can re-order elements and fields by selecting new values from the <q>Position</q> select lists adjacent to each element. To edit a field, simply do so directly. To edit the Related Media subelement again, click its <q>Edit</q> button an you'll be returned to its profile.</p>
+
+<p>Before we finish with this story, there's one more editing interface that it's important to be familiar with. Adding individual fields to a story so as to keep their contents in independent records is all well and good, but the first time you tell an editor that she has to add each paragraph one at a time, you're likely to be shot. Just as an editor doesn't want to think about whether to add a container element or field to a story, she also doesn't want to have to go to a select list, click a button, and wait for a browser reload every time she wants to add a single paragraph.</p>
+
+    <div id="figure17" class="figure left" style="width: 444px;">
+      <img src="sbe.jpg"
+           alt="Super Bulk Edit" />
+      <p><strong>Figure 17:</strong> Super Bulk Edit allows editors to use POD-like syntax to edit all of the fields in an element in a single textarea box. They can also create and reorder subelements, although the contents of subelements cannot themselves be changed.</p>
+    </div>
+
+<p>For this reason, Bricolage features two other interfaces for editing. The first, <q>Bulk Edit</q>, allows editors to edit all instances of a repeatable field in a single textarea. This is convenient if the majority of the content of a story is, say paragraphs. The the editor can simply write all the paragraphs she wants in a textarea box, separating each with a blank line. To use it, simply select the type of repeatable field to be edited and click the <q>Bulk Edit</q> button to the right of the <q>Add Element</q> button and list.</p>
+
+<p>But since most documents are not simple lists of paragraphs (if they were, we wouldn't need a tool as sophisticated as Bricolage), but a mix of different blocks of content, the so-called <q>Super Bulk Edit</q> feature will likely prove to be more useful. To use it, select <q>- Super Bulk Edit -</q> from the <q>Bulk Edit</q> select list and then click the <q>Bulk Edit</q> button. Doing so will bring up the screen depicted in <a href="#figure17" title="Figure 17">Figure 17</a>. Here, all of the fields and subelements of the current element can be edited in a single textarea field. Each individual field or subelement is identified by a <a href="http://search.cpan.org/dist/Pod-Simple/lib/perlpod.pod" title="Read the POD documentation on CPAN">POD</a>-like tags that start with an equal sign (<code>=</code> and end with the key name of the element or field. The tags for subelements exist on a line by themselves, while field tags identify the field to which the contents below them belong. You can even select a default element, say <q>Paragraph,</q> from the <q>Default Element</q> select list, and then any blocks of text that have no POD tag will default to that element. This approach makes it easy for writers to edit all the different parts of an element without having to select, reload, and wait for every one.</p>
+
+<p>Click <q>Save</q> to return to the story profile, and the <q>Save</q> button there to save the story and return to <q>My Workspace.</q> Now we have create a story based on the article model. Go ahead, create as many as you like.</p>
+
+<h2>Up Next: Templating</h2>
+
+<p> In the next article, we'll write our first templates in Bricolage to format stories for output, so that we can actually see what our documents will look like when they're published. Stay tuned!</p>
+
+</body>
+</html>

@@ -1,0 +1,532 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Introduction to PostgreSQL PL/pgSQL</title>
+    <meta name="keywords" content="PostgreSQL, PL/pgSQL, functions, performance, SQL, database, performance" />
+    <style type="text/css">
+      pre      { background:#ddd; padding: 1em; border: 1px solid black; }
+      dfn      { font-style: italic; } /* Some browsers don't do this automatically */
+      .linenos { text-align: right; }
+    </style>
+  </head>
+  <body>
+    <h1>Introduction to PostgreSQL PL/pgSQL</h1>
+
+<p>One of the most powerful features of PostgreSQL is its support for
+user-defined functions. These can be written in any number of programming
+languages, including pure SQL, C, Perl, Python, and PHP, among others. Perhaps
+the most common programming language for PostgreSQL functions, however, is
+PL/pgSQL (don't ask me to pronounce it), since it comes with PostgreSQL and is
+easy to set up.</p>
+
+<p>Similar to Oracle's PL/SQL, PL/pgSQL is a procedural language that is much
+more powerful than pure SQL, in that it supports variables, conditional
+expressions, looping constructs, exceptions, and the like. And since it
+natively supports all of PostgreSQL's SQL syntax, it may be considered a
+superset of PostgreSQL SQL. It also respects all data types and their
+associated functions and operators, and is completely safe for use inside of
+the server. Get all of the details in
+the <a href="http://www.postgresql.org/docs/current/static/plpgsql.html"
+title="PL/pgSQL - SQL Procedural Language">PL/pgSQL documentation</a>.</p>
+
+<h2>Installing PL/pgSQL</h2>
+
+<p>To get started with PL/pgSQL, you first need to make sure that it's
+installed in your PostgreSQL database. If it was a part of the template1
+database when your database was created, you'll already have it installed. To
+see whether you have it, execute this query in the <em>psql</em> client:</p>
+
+<pre>
+SELECT true FROM pg_catalog.pg_language WHERE lanname = 'plpgsql';
+</pre>
+
+<p>If a row is displayed with the value <q>true,</q> then you already have
+PL/pgSQL installed in your database. If it's not, then quit <em>psql</em> and
+execute this command in a terminal session:</p>
+
+<pre>
+createlang plpgsql database_name
+</pre>
+
+<p>You must have superuser permission to the database in order to add a
+language. If you've just installed PostgreSQL, then you can likely use the
+default <q>postgres</q> user by passing <code>-U postgres</code>
+to <em>createlang</em>. From here on in, you should be able to follow along by
+pasting the sample functions into <em>psql</em>.</p>
+
+<h2>A First Function</h2>
+
+<p>So let's write our first PL/pgSQL function. We'll start with something
+simple, a function to return
+the <a href="http://en.wikipedia.org/wiki/Fibonacci_number" title="Wikipedia:
+Fibonacci numbers">Fibonacci number</a> for a position in the Fibonacci
+sequence. I know, I know, <em>everyone</em> uses a Fibonacci calculator to
+demonstrate code. So why can't I be original? Because a couple iterations of
+such a function will allow us to explore some of the more useful features of
+PL/pgSQL. It's purely pedagogical. So here's a simple implementation:</p>
+
+<table>
+<tr><td><pre class="linenos">
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td>
+<pre>
+CREATE OR REPLACE FUNCTION fib (
+    fib_for integer
+) RETURNS integer AS $$
+BEGIN
+    IF fib_for &lt; 2 THEN
+        RETURN fib_for;
+    END IF;
+    RETURN fib(fib_for - 2) + fib(fib_for - 1);
+END;
+$$ LANGUAGE plpgsql;
+</pre>
+</td></tr></table>
+
+<p>Using the function is simple:</p>
+
+<pre>
+try=% select fib(8);
+ fib 
+-----
+  21
+(1 row)
+</pre>
+
+<p>So let's look at the code line-by-line. The first line uses PostgreSQL's
+<code>CREATE OR REPLACE FUNCTION</code> statement to create the function. The
+name of the function is <code>fib</code>. The <code>CREATE OR REPLACE
+FUNCTION</code> statement is more useful in practice than the simple
+<code>CREATE FUNCTION</code> statement, since it will drop an existing
+function with the same name and argument signature before creating the new
+one, and this convenience is very useful while you're developing and testing a
+new function.</p>
+
+<p>The second line declares the integer variable <var>fib_for</var> as the
+sole argument to be passed to the function, and thus constitutes its entire
+argument signature. The argument signature must come after the name of the
+function, inside parentheses. In this respect, it's not a lot different than
+function or method declarations to be found in most programming languages.
+Arguments can be of any type supported by PostgreSQL, including user-created
+types and domains, as well as composite data types, such as table row types.
+We'll just be using simple data types in this article, but see
+the <a
+href="http://www.postgresql.org/docs/current/static/plpgsql-declarations.html"
+title="PL/pgSQL Declarations">PL/pgSQL Declarations documentation</a> for
+details.</p>
+
+<p>Note that named arguments were added to PL/pgSQL in PostgreSQL 8.0. In
+earlier versions of PostgreSQL, you'd have to either use the default, numbered
+variable names for the arguments, or declare aliases in a <code>DECLARE</code>
+block, like so:</p>
+
+<pre>
+CREATE OR REPLACE FUNCTION fib ( integer ) RETURNS integer AS $$
+DECLARE
+  fib_for ALIAS FOR $1;
+BEGIN
+-- ...
+</pre>
+
+<p>But unless you have an older version of PostgreSQL, named arguments are the
+recommended way to go—and they're more convenient, besides.</p>
+
+<p>The third line closes out the argument signature and specifies the function
+return value (<code>integer</code>). As with arguments, the return value of a
+function can be any PostgreSQL data type, including a composite type or even a
+cursor. The end of line three has the odd string <q>$$</q>. This is
+PostgreSQL <q>dollar-quoting,</q> and when used in place of the usual
+single-quotation mark quoting (<q>'</q>), single quotation marks within the
+body of the function need not be escaped. This makes them much easier to
+read.</p>
+
+<p>Line four's <code>BEGIN</code> statement marks the start of the function
+body, while lines 5-8 <em>are</em> the function body. Here we're just using
+the standard recursive algorithm for determining a Fibonacci number. Lines 5-7
+use the PL/pgSQL <code>IF…THEN</code> conditional statement to return the
+sequence number itself if it is less than two. As with all blocks in PL/pgSQL,
+the <code>IF…THEN</code> conditional ends with a final <code>END</code>
+statement. Conditional expressions in PL/pgSQL can be any SQL expression that
+you're accustomed to seeing in the <code>WHERE</code> clause of a typical
+<code>SELECT</code> statement. The nice thing here, however, is that you can
+use a variable—<var>fib_for</var> in this case—in the expression.</p>
+
+<p>Line five demonstrates the ability of PL/pgSQL to not only execute other
+PL/pgSQL functions, but to do so recursively. In this case,
+the <code>fib()</code> function is called twice by the <code>fib()</code>
+function itself in order to properly determine and return the Fibonacci
+number. From these statements, you'll note that the
+PL/pgSQL <code>RETURN</code> keyword can be used anywhere in a PL/pgSQL
+function to terminate the execution of the function and return a value.</p>
+
+<p>Line nine's <code>END</code> statement of course signals the end of the
+function body, while line ten closes the dollar quoting and identifies the
+function implementation language.</p>
+
+<h3>A Note on Statement Termination</h3>
+
+<p>At first glance, the placement of semicolons to terminate statements in the
+example function might appear to be somewhat ad-hoc. I assure that it is not.
+In PL/pgSQL, all blocks must terminate in a semicolon, as must all statements
+within that block. The expression that initiates the block, however, such
+as <code>BEGIN</code> on line 4 or <code>IF fib_for &lt; 2 THEN</code> on line
+five, do <em>not</em> end with semicolons. Line six, as a complete statement
+within the <code>IF…THEN</code> block, ends with a semicolon, as does the
+statement on line eight.</p>
+
+<p>Perhaps the simplest way to remember this rule is to think of statements as
+requiring semicolons, and block initiation expressions as not being complete
+statements. That is, blocks only become complete statements when they
+<code>END</code>.</p>
+
+<h2>Accessing Data</h2>
+
+<p>As a recursive function, our <code>fib()</code> example is none too fast.
+Of course it short-circuits when the argument is less than two, but otherwise
+its use of recursion can be quite slow. Why? Because each time it is called,
+many of the same numbers must be calculated and returned. On my PowerBook, for
+example, when I want to find the 26th Fibonacci number, it takes nearly 3.8
+seconds:</p>
+
+<pre>
+try=% explain analyze select fib(26);
+                                        QUERY PLAN                                        
+------------------------------------------------------------------------------------------
+ Result  (cost=0.00..0.01 rows=1 width=0) (actual time=3772.062..3772.063 rows=1 loops=1)
+ Total runtime: 3772.315 ms
+(2 rows)
+</pre>
+
+<p>Why does it take so long? Because, like any recursive Fibonacci function,
+it has to make 392,835 recursive calls to itself to calculate the 26th
+Fibonacci number. Those recursive calls add up! Since the same arguments are
+passed to the function so many times, and of course always to return the same
+values, what would really improve the performance of the function is
+to <a href="http://en.wikipedia.org/wiki/Memoization" title="Wikipedia:
+Memoization">memoize</a> it. <dfn>Memoization</dfn> caches the results of a
+function call for a given set of arguments so that, when the function is
+called again with the same arguments, it can just return the value from the
+cache without recalculating it—thus, in this case, minimizing the need for
+recursion.</p>
+
+<p>Now, PL/pgSQL itself has no ability to store data outside of a function,
+but we <em>are</em> programming a database here. So let's take advantage of
+it! The trick is to create a table to function as the cache, and then to
+access it from the function. Our new function, <code>fib_cached()</code>, does
+exactly that:</p>
+
+<table>
+<tr><td><pre class="linenos">
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre></td><td>
+<pre>
+CREATE TABLE fib_cache (
+     num integer PRIMARY KEY,
+     fib integer NOT NULL
+);
+
+CREATE OR REPLACE FUNCTION fib_cached(
+    fib_for integer
+) RETURNS integer AS $$
+DECLARE
+    ret integer;
+BEGIN
+    if fib_for &lt; 2 THEN
+        RETURN fib_for;
+    END IF;
+
+    SELECT INTO ret fib
+    FROM   fib_cache
+    WHERE  num = fib_for;
+
+    IF ret IS NULL THEN
+        ret := fib_cached(fib_for - 2) + fib_cached(fib_for - 1);
+        INSERT INTO fib_cache (num, fib)
+        VALUES (fib_for, ret);
+    END IF;
+    RETURN ret;
+
+END;
+$$ LANGUAGE plpgsql;
+</pre>
+</td></tr></table>
+
+<p>Lines 1-4 create the table for caching the Fibonacci sequence. The
+<var>num</var> column represents the sequence number for which the
+corresponding Fibonacci number is stored in the <var>fib</var> column. We make
+the <var>num</var> column a primary key since it should of course be
+unique.</p>
+
+<p>As you can see, the <code>fib_cached()</code> function defined from lines
+6-28 introduces quite a bit more syntax. Looking it over, the first line with
+something new is line five's <code>DECLARE</code> statement. As you may have
+ascertained by the previous discussion of argument aliases, this statement
+introduces a block for declaring variables for use in the function body. All
+variables used in the function but not declared in the argument signature must
+be declared here, and you can give them a preliminary assignment using the
+PL/pgSQL assignment operator, <code>:=</code> (so named to avoid conflicts
+with the SQL <code>=</code> comparison operator). Again, you can use any
+PostgreSQL data type for your variables, but here we're again keeping things
+quite simple: we've defined a single integer variable, <var>ret</var>, which
+we'll use to keep track of a value to be returned by the function.</p>
+
+<p>The <code>BEGIN</code> statement on line 11 ends the variable declaration
+block and starts the function body. The next thing we see, at line 12, is the
+familiar <code>IF…THEN</code> block that once again short-circuits the
+function if the argument to the function (stored in <var>fib_for</var>) is
+less than two. But then things get more interesting.</p>
+
+<p>We've already seen in the <code>DECLARE</code> function how to assign a
+value to a PL/pgSQL variable. But what if you want to assign a value from
+a <code>SELECT</code> statement to a variable? Lines 16-18 demonstrate the
+approach. A variation of the standard <code>SELECT INTO</code> statement
+allows one to select values into one or more PL/pgSQL variables rather than
+into a table. A comma-delimited list of variables follows the
+<code>INTO</code> expression, while the rest of the statement remains a
+normal <code>SELECT</code> statement. There are a couple of caveats to
+<code>SELECT INTO</code> assignment, however: the <code>SELECT</code>
+statement must return no more than one row, and the selected columns must
+match the number and types of the variables.</p>
+
+<p>Here it's relatively straight-forward. We just want to look in our cache
+(the <var>fib_cache</var> table) to see if the Fibonacci number for the
+sequence number <var>fib_for</var> has already been calculated and cached. So
+the <code>SELECT</code> statement selects the <var>fib</var> column from
+<var>fib_cached</var> where the number is <var>fib_for</var> and stores the
+result in the <var>ret</var> variable.</p>
+
+<p>Now, I said that the <code>SELECT INTO</code> statement can return no more
+than one row, which also means that it can return no rows. If it does, then in
+this function the value of <var>ret</var> will be <code>NULL</code>.
+Accordingly, line 20 begins an <code>IF…THEN</code> block by checking to see
+if the value of <var>ret</var> is indeed <code>NULL</code>. If it is, then we
+know that the Fibonacci number needs to be calculated. Line 21 thus
+recursively calls <code>fib_cached()</code> just as <code>fib()</code> used
+recursion. Only instead of returning the value, we use the <code>:=</code>
+assignment operator to store the value in <var>ret</var>.</p>
+
+<p>And now that we have it, it needs to be inserted into the cache so that it
+never has to be calculated again. Lines 22-23 do just that via a standard
+SQL <code>INSERT</code> statement. The variables <var>fib_for</var> and
+<var>ret</var> can be used right in the <code>INSERT</code> statement, just
+as <var>fib_for</var> was used in the <code>SELECT</code> statement at lines
+16-18. One of the great features of PL/pgSQL is that it precompiles SQL
+statements embedded in it, and variables are used as if they were passed to a
+prepared SQL statement as arguments for placeholders. In other words,
+the <code>INSERT</code> statement magically becomes akin to:</p>
+
+<pre>
+PREPARE some_insert(integer, integer) AS
+INSERT  INTO fib_cache (num, fib)
+VALUES  ($1, $2);
+
+EXECUTE some_insert(fib_for, ret);
+</pre>
+
+<p>The great thing about this feature of PL/pgSQL is that it makes embedded
+SQL statements extremely fast. Fast because the precompiled query plan can
+simply be reused for each call to the function (on a per-connection basis)
+without recompiling and planning.</p>
+
+<p>At any rate, line 25 returns the value of <var>ret</var>, regardless of
+whether it was looked up in the cache table or calculated and then stored in
+the cache. The result of adding the caching support makes the function far
+faster, now:</p>
+
+<pre>
+try=% explain analyze select fib_cached(26);
+                                      QUERY PLAN                                      
+--------------------------------------------------------------------------------------
+ Result  (cost=0.00..0.01 rows=1 width=0) (actual time=50.837..50.838 rows=1 loops=1)
+ Total runtime: 50.889 ms
+(2 rows)
+
+try=% explain analyze select fib_cached(26);
+                                     QUERY PLAN                                     
+------------------------------------------------------------------------------------
+ Result  (cost=0.00..0.01 rows=1 width=0) (actual time=2.197..2.198 rows=1 loops=1)
+ Total runtime: 2.249 ms
+(2 rows)
+</pre>
+
+<p>The first call to <code>fib_cached()</code> finds no cached values, and so
+must create them all as it goes along. But this just means that it needs to
+calculate the values for each number up to 26 once, so that recursion is
+practically eliminated (indeed, <code>fib_cached()</code> is called
+recursively only 24 times, once each for the numbers 2 through 26). The result
+is a much faster query: only .05 seconds, as opposed to the nearly 3.8 seconds
+we saw for <code>fib()</code>. Of course the second time we call
+<code>fib_cached()</code>, it only needs to look up and return the 26th
+Fibonacci number, since it was already cached by the first call, and so now
+we're down to 0.0025 seconds. Not a bad improvement, eh?</p>
+
+<h2>Loop Constructs</h2>
+
+<p>Of course, memoization is not necessarily the best way to speed up a
+function. Some languages provide memoization support natively or via
+easily-added libraries, but PL/pgSQL offers no such facility. We therefore had
+to add a fair bit of code in order to manually add memoization to the
+function. So we end up with something fast, but somewhat more difficult to
+maintain.</p>
+
+<p>It turns out that there's another approach to determining the Fibonacci
+number for a particular position in the sequence that involves neither recursion
+nor memoization. All that we need to do is to execute a
+loop <var>fib_for</var> number of times, and keep track of the calculation
+each time through. So let's try it:</p>
+
+<table>
+<tr><td><pre class="linenos">
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td>
+<pre>
+CREATE OR REPLACE FUNCTION fib_fast(
+    fib_for integer
+) RETURNS integer AS $$
+DECLARE
+    ret integer := 0;
+    nxt integer := 1;
+    tmp integer;
+BEGIN
+    FOR num IN 1..fib_for LOOP
+        tmp := ret;
+        ret := nxt;
+        nxt := tmp + nxt;
+    END LOOP;
+
+    RETURN ret;
+END;
+$$ LANGUAGE plpgsql;
+</pre>
+</td></tr></table>
+
+<p>All should look familiar here up through line eight, but allow me to point
+out how we've declared multiple variables in the <code>DECLARE</code> block
+and assigned initial values to two of them. The new
+variables, <var>nxt</var> and <var>tmp</var>, will be used to track the
+Fibonacci numbers through each iteration of the loop.</p>
+
+<p>And speaking of the loop, it begins on line nine. All loops in PL/pgSQL use
+the <code>LOOP</code> keyword, and of course end with <code>END LOOP</code>. A
+loop can begin with nothing more than <code>LOOP</code>, in which case it will
+be an infinite loop (out of which one can break with the <code>EXIT</code>
+keyword). Otherwise, there are a couple of different approaches to looping in
+PL/pgSQL, including <code>WHILE</code> (such as <code>WHILE foo IS NULL
+LOOP</code>) and <code>FOR</code>—the latter of which we have used here.</p>
+
+<p>A <code>FOR</code> loop is the only context in PL/pgSQL where a variable
+can be used without being predeclared in the <code>DECLARE</code> block. In
+the form we've used here (there are other forms—for
+<a
+href="http://www.postgresql.org/docs/current/static/plpgsql-control-structures.html#PLPGSQL-RECORDS-ITERATING"
+title="PL/pgSQL: Looping Through Query Results">iterating over rows</a> in
+a <code>SELECT</code> query, for example), we use the variable <var>num</var>,
+which is automatically created as a read-only integer variable that exists
+only in the scope of the loop, to loop <var>fib_for</var> times. We're not
+actually using <var>num</var> in the loop in this example, but I thought you
+should know that you could.</p>
+
+<p>All that happens inside the loop is assignment. The <var>ret</var> variable is
+once again used to keep track of our return value, while <var>tmp</var> and
+<var>nxt</var> are used to track the previous and next values in the
+sequence. That's it. Once the loop has run over all of its iterations, the
+last value stored in <var>ret</var> is returned.</p>
+
+<p>So how does the use of the loop affect performance?</p>
+
+<pre>
+try=% explain analyze select fib_fast(26);
+                                     QUERY PLAN                                     
+------------------------------------------------------------------------------------
+ Result  (cost=0.00..0.01 rows=1 width=0) (actual time=0.433..0.433 rows=1 loops=1)
+ Total runtime: 0.485 ms
+(2 rows)
+</pre>
+
+<p>So over four times faster than the cached version, mainly because there are
+no longer any queries to an external table. It'll be even faster with lower
+numbers and slower with higher numbers, as the <var>fib_for</var> argument
+determines the number of iterations required. (Although any number over 45
+won't work at all, because then the return values start too be too big for
+PostgreSQL integers. If you need them that big, use <code>bigint</code>s,
+instead.)</p>
+
+<h2>Practical PL/pgSQL</h2>
+
+<p>Of course these functions are not very practical, unless for some reason
+you need to calculate Fibonacci numbers in your database, but they allowed us
+to explore the basic syntax of PL/pgSQL as well as how it interacts with other
+database objects such as tables. But the real advantages of PL/pgSQL shine
+when it can be used to greatly simplify situations where client code must
+typically make numerous database calls in order to satisfy a data pattern. In
+the interests of illustrating such practical PL/pgSQL, my next article will
+demonstrate how to write PL/pgSQL functions to simplify the management of
+ordered many-to-many relationships.</p>
+
+<h2>Acknowledgements</h2>
+
+<p>My thanks for David Fetter for suggesting the memoized version
+of <code>fib()</code> as an illustrative example for this article, and to Mark
+Jason Dominus and his terrific <a href="http://hop.perl.plover.com/"
+title="&#x201c;Higher Order Perl: Transforming Programs with Programs,&#x201d;
+by Mark Jason Dominus">Higher Order Perl</a> for an excellent discussion and
+examples of the Fibonacci sequence functions. I'd also like to
+thank <q>AndrewSN</q> for providing feedback on a draft of this article.</p>
+
+  </body>
+</html>
