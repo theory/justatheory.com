@@ -2,7 +2,7 @@ Blog Restored, Google Analytics, FeedBurner
 meta-keywords: hard disk, failure, downtime, Blosxom, Google Analytics, FeedBurner, Linux, Debian
 tags: blog downtime blosxom Google+Analytics FeedBurner
 
-<a href="http://www.flickr.com/photos/theory/3236480663/" title="My “Server Room”"><img src="http://farm4.static.flickr.com/3504/3236480663_b2d1fd08be.jpg" alt="My “Server Room”" /></a>
+<a href="https://www.flickr.com/photos/theory/3236480663/" title="My “Server Room”"><img src="http://farm4.static.flickr.com/3504/3236480663_b2d1fd08be.jpg" alt="My “Server Room”" /></a>
 
 <p>Some of you no doubt noticed that this site was down for several days, starting last Friday and lasting until yesterday. Sorry about that. I had a hard disk failure of some kind on the ca. 1999 OptiPlex I was using. I've had a newer box (ca. 2005) to move to for a while, but lacked the tuits. With this change, I was forced to make the switch. Fortunately, a Debian install CD let me login to the OptiPlex and access all my files, so I was able to recover everything. I even managed to keep the file modification times the same, so feeds won't show everything as unread (which I've seen many times when other bloggers I've known have switched providers or recovered from some catastrophe). Unless you tried to hit this site over the weekend or on Monday or Tuesday, you should notice no changes at all (except speed, the new box is a <em>lot</em> faster!).</p>
 
