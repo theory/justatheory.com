@@ -15,3 +15,6 @@ deploy:
 	aws s3 sync --acl public-read --sse --delete ${BUILD_DIR} s3://${BUCKET}
 	aws configure set preview.cloudfront true
 	aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTID} --paths '/*'
+
+clean:
+	rm -rf ${BUILD_DIR}
