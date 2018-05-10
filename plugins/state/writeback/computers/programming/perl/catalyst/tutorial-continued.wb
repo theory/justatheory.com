@@ -22,7 +22,7 @@ blog_name:
 name: Theory
 url: /
 title: Replies
-comment: <p>Thanks for the comments, everyone.</p><p>@Grrr—No thanks. I have this really great <a href="http://en.wikipedia.org/wiki/Domain-specific_language" title="Wikipedia: “Domain-specific language">DSL</a> to talk to the database. I don't need to subvert Perl to do it.</p><p>@omega—Why should the connection handling be in a model? It's a single attribute, nothing more.</p><p>@Tim—Ah, right. Fixed, thanks!</p><p>—Theory</p>
+comment: <p>Thanks for the comments, everyone.</p><p>@Grrr—No thanks. I have this really great <a href="https://en.wikipedia.org/wiki/Domain-specific_language" title="Wikipedia: “Domain-specific language">DSL</a> to talk to the database. I don't need to subvert Perl to do it.</p><p>@omega—Why should the connection handling be in a model? It's a single attribute, nothing more.</p><p>@Tim—Ah, right. Fixed, thanks!</p><p>—Theory</p>
 excerpt: 
 blog_name: 
 -----
@@ -64,7 +64,7 @@ blog_name:
 name: Theory
 url: /
 title: 
-comment: <p>Hey @Aristotle,</p><p>Thanks for the comments. I'm not positive that ISBNs make the best keys, no. But since this isn't a production app, it's not a big deal. Perhaps in a production system you might need to find ways to disambiguate dupes, which as you say, would likely introduce an artificial domain.</p><p>But my larger point is to really examine your data, and consider whether or not there is a viable natural key to use. ISBNs are a decent candidate, despite their flaws. But there's a reason I didn't go with, say, social security numbers as a natural key for authors, since it's well-known that there are duplicates and meaningless SSNs. Either way, the point is that one should think about identity of objects.</p><p>If I were running, say, a book store, I might want to instead use some other kind of identifier, like SKUs or <a href="http://en.wikipedia.org/wiki/Amazon_Standard_Identification_Number">ASIN</a>s. but in any event, I would always try my hardest to avoid a simple auto-incrementing integer. Frankly, I'd like to find a way to kill it off for authors, too.</p><p>—Theory</p>
+comment: <p>Hey @Aristotle,</p><p>Thanks for the comments. I'm not positive that ISBNs make the best keys, no. But since this isn't a production app, it's not a big deal. Perhaps in a production system you might need to find ways to disambiguate dupes, which as you say, would likely introduce an artificial domain.</p><p>But my larger point is to really examine your data, and consider whether or not there is a viable natural key to use. ISBNs are a decent candidate, despite their flaws. But there's a reason I didn't go with, say, social security numbers as a natural key for authors, since it's well-known that there are duplicates and meaningless SSNs. Either way, the point is that one should think about identity of objects.</p><p>If I were running, say, a book store, I might want to instead use some other kind of identifier, like SKUs or <a href="https://en.wikipedia.org/wiki/Amazon_Standard_Identification_Number">ASIN</a>s. but in any event, I would always try my hardest to avoid a simple auto-incrementing integer. Frankly, I'd like to find a way to kill it off for authors, too.</p><p>—Theory</p>
 excerpt: 
 blog_name: 
 -----

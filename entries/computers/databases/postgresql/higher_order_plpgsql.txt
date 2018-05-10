@@ -4,7 +4,7 @@ tags: plpgsql higherorderperl fibonacci
 
 <p>Well, it's not <em>really</em> higher order PL/pgSQL, since the language
 doesn't
-support <a href="http://en.wikipedia.org/wiki/Closure_%28computer_science%29"
+support <a href="https://en.wikipedia.org/wiki/Closure_%28computer_science%29"
 title="Wikipedia: Closure (computer science)">closures</a>, as far as I know.
 But I have been working on a series of articles
 for <a href="http://www.onlamp.com/onlamp/general/database.csp"

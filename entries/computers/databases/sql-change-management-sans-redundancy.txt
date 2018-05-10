@@ -331,7 +331,7 @@ simply modify the deploy script in-place.</li>
 </ul>
 
 
-<p>That’s about it. The <a href="http://en.wikipedia.org/wiki/Idempotence">idempotence</a>
+<p>That’s about it. The <a href="https://en.wikipedia.org/wiki/Idempotence">idempotence</a>
 of the deploy script is important for ensuring consistency, and applies very
 well to features such as
 <a href="http://www.postgresql.org/docs/current/static/xfunc.html">user-defined functions</a>.

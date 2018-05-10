@@ -1,6 +1,6 @@
 More on Database Testing
 meta-keywords: database, SQL, testing, unit testing, pgTAP, pg_regress
-meta-description: <p>More thoughts on they whys and hows of database testing. I've been thinking about it quite a lot as I prepare for my <a href="http://www.pgcon.org/2009/schedule/events/165.en.html" title="PGCon: Unit Test Your Database!">PGCon presentation</a>, and as I've corresponded with a couple of PostgreSQL core developers, and I wanted to share some of my thoughts here. I also want to know more about why one might think that database testing is pointless or useless Let me know!</p>
+meta-description: <p>More thoughts on they whys and hows of database testing. I've been thinking about it quite a lot as I prepare for my <a href="https://www.pgcon.org/2009/schedule/events/165.en.html" title="PGCon: Unit Test Your Database!">PGCon presentation</a>, and as I've corresponded with a couple of PostgreSQL core developers, and I wanted to share some of my thoughts here. I also want to know more about why one might think that database testing is pointless or useless Let me know!</p>
 tags: database SQL testing unit testing pgTAP pg_regress
 
 <p>I've been meaning for a while to come back to the topic of
@@ -150,4 +150,4 @@ rock-solid test suite can actually make your job easier and more enjoyable?
 Perhaps I never will, but I am still very interested in your reasons for
 doubting the utility of database testing. What other points should I be
 thinking about as I prepare for my
-<a href="http://www.pgcon.org/2009/schedule/events/165.en.html" title="PGCon: Unit Test Your Database!">PGCon presentation</a>?</p>
+<a href="https://www.pgcon.org/2009/schedule/events/165.en.html" title="PGCon: Unit Test Your Database!">PGCon presentation</a>?</p>

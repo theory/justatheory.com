@@ -58,7 +58,7 @@ blog_name:
 name: Theory
 url: /
 title: 
-comment: <p>Not given:</p><p>Oh, I gotcha. My new app has a random <a href="http://en.wikipedia.org/wiki/UUID" title="Learn about UUIds on Wikipedia">UUID</a> associated with each user, so I could easily use it for the random secret. It would never change for the lifetime of the user, but every user would have his/her own. I also like your idea of incorporating the username. I think that this will make passwords much more secure:</p><pre>hd5_hex($uuid . $username . md5_hex($password));</pre><p>Now just to decide whether or not to dump MD5 in favor of something else! Maybe I'll just go with <a href="http://search.cpan.org/dist/Digest-SHA2/" title="Digest::SHA2 on CPAN">SHA2</a> for now, since it's currently the recommended hashing function.</p><p>Thanks!</p><p>&#x2014;Theory</p>
+comment: <p>Not given:</p><p>Oh, I gotcha. My new app has a random <a href="https://en.wikipedia.org/wiki/UUID" title="Learn about UUIds on Wikipedia">UUID</a> associated with each user, so I could easily use it for the random secret. It would never change for the lifetime of the user, but every user would have his/her own. I also like your idea of incorporating the username. I think that this will make passwords much more secure:</p><pre>hd5_hex($uuid . $username . md5_hex($password));</pre><p>Now just to decide whether or not to dump MD5 in favor of something else! Maybe I'll just go with <a href="http://search.cpan.org/dist/Digest-SHA2/" title="Digest::SHA2 on CPAN">SHA2</a> for now, since it's currently the recommended hashing function.</p><p>Thanks!</p><p>&#x2014;Theory</p>
 excerpt: 
 blog_name: 
 -----

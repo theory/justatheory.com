@@ -38,7 +38,7 @@ and then another does a search with canonical characters, the search will
 fail. This won't do at all.</p>
 
 <p>The solution is to
-<a href="http://en.wikipedia.org/wiki/Unicode_normalization" title="Wikipedia:
+<a href="https://en.wikipedia.org/wiki/Unicode_normalization" title="Wikipedia:
 “Unicode equivalence”">normalize</a> your Unicode data. In Perl, you can use
 <a href="http://search.cpan.org/perldoc?Unicode::Normalize"
 title="Unicode::Normalize on CPAN">Unicode::Normalize</a>, a C/XS module that

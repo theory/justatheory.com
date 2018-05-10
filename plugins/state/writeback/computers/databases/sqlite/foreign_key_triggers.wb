@@ -154,7 +154,7 @@ blog_name:
 name: Theory
 url: /
 title: Re: CASCADE UPDATE OF PK
-comment: <p>Randy</p><p>Uh, don't change primary keys! If you have an application that is likely to do that, use a <a href="http://en.wikipedia.org/wiki/Surrogate_key" title="Surrogate keys explained on Wikipedia">surrogate key</a>, instead.</p><p>The problem is that your foreign key constraint on <code> smvcModClientSearchProjects</code> is enforcing the constraint, of course. If you <em>must</em> cascade updates to primary keys, change <code> fkuc_smvcModClient_id_smvcModClientSearchProjects_clientId</code> to <code>AFTER UPDATE OF id</code>.</p><p>&#x2014;Theory</p>
+comment: <p>Randy</p><p>Uh, don't change primary keys! If you have an application that is likely to do that, use a <a href="https://en.wikipedia.org/wiki/Surrogate_key" title="Surrogate keys explained on Wikipedia">surrogate key</a>, instead.</p><p>The problem is that your foreign key constraint on <code> smvcModClientSearchProjects</code> is enforcing the constraint, of course. If you <em>must</em> cascade updates to primary keys, change <code> fkuc_smvcModClient_id_smvcModClientSearchProjects_clientId</code> to <code>AFTER UPDATE OF id</code>.</p><p>&#x2014;Theory</p>
 excerpt: 
 blog_name: 
 -----

@@ -64,7 +64,7 @@ the migration tool, but in the end all of our mail was moved and in tact.</p>
   since Mail.app would just choke on such a task. Though my request was
   escalated to the FuseMail developers, the answer came back <q>no.</q> Which
   I guess means that they're not
-  using <a href="http://en.wikipedia.org/wiki/Maildir" title="Maildir as
+  using <a href="https://en.wikipedia.org/wiki/Maildir" title="Maildir as
   described by Wikipedia">Maildir</a>, because in that case it would be a
   cinch, n'est pas?</li>
   <li>Backups are not really feasible. Of course FuseMail has its own

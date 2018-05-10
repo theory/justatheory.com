@@ -50,7 +50,7 @@ blog_name:
 name: i.Skitz
 url: http://ajile.sourceforge.net/
 title: JavaScript Namespace Module Exists
-comment: See http://ajile.sourceforge.net/ for a module that does JavaScript namespaces and more. The Wikipedia gives a good overview: http://en.wikipedia.org/wiki/Javascript_Namespaces.
+comment: See http://ajile.sourceforge.net/ for a module that does JavaScript namespaces and more. The Wikipedia gives a good overview: https://en.wikipedia.org/wiki/Javascript_Namespaces.
 excerpt: 
 blog_name: 
 -----

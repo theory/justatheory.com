@@ -1,7 +1,7 @@
 ame: Nikolas Coukouma
 url: http://atrustheotaku.livejournal.com/
 title: 
-comment: <p>The fibonacci sequence is on my list of "bad examples for recursion that should just die." Even faster than minimal memoization (your last form) is the <a href="http://en.wikipedia.org/wiki/Fibonacci_number#Closed_form_expression">closed form</a>. It runs in constant time, by definition.</p>
+comment: <p>The fibonacci sequence is on my list of "bad examples for recursion that should just die." Even faster than minimal memoization (your last form) is the <a href="https://en.wikipedia.org/wiki/Fibonacci_number#Closed_form_expression">closed form</a>. It runs in constant time, by definition.</p>
 excerpt: 
 blog_name: 
 -----

@@ -6,7 +6,7 @@ tags: perl joe+celko sql database yapc rdbms developer
 <a href="http://twitter.com/Theory/status/1576878753">twittered</a> that, in
 my opinion, application developers should really learn how to use databases.
 And by that I mean SQL, really. I know that a lot of app developers like to
-use <a href="http://en.wikipedia.org/wiki/Object-relational_mapping" title="Wikipedia: “Object-relational mapping”">ORMs</a> to access the
+use <a href="https://en.wikipedia.org/wiki/Object-relational_mapping" title="Wikipedia: “Object-relational mapping”">ORMs</a> to access the
 database, so that you don't have to really think about it, but most ORMs are
 written by people who <a href="http://david.loudthinking.com/arc/2005_09.html" title="Choose a single layer of cleverness">don't like databases</a>, don't
 like SQL, haven't taken the time to learn it in any depth, and thus don't
@@ -14,7 +14,7 @@ write very good SQL. And even if they <a href="http://www.sqlalchemy.org/" title
 queries directly. The reason? Because the ORM does not really understand how
 building more and more complex queries can have negative performance issues,
 and that
-<a href="http://en.wikipedia.org/wiki/There_is_more_than_one_way_to_do_it">there is more than one way to do it</a>. It's pretty common to have to go back to
+<a href="https://en.wikipedia.org/wiki/There_is_more_than_one_way_to_do_it">there is more than one way to do it</a>. It's pretty common to have to go back to
 custom SQL to solve performance issues. So to solve those problems, you gotta
 understand SQL.</p>
 
