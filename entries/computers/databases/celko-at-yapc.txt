@@ -3,7 +3,7 @@ meta-keywords: Perl, SQL, Joe Celko, database, tutorial, class, course, RDBMS
 tags: perl joe+celko sql database yapc rdbms developer
 
 <p>A few weeks ago, I
-<a href="http://twitter.com/Theory/status/1576878753">twittered</a> that, in
+<a href="https://twitter.com/Theory/status/1576878753">twittered</a> that, in
 my opinion, application developers should really learn how to use databases.
 And by that I mean SQL, really. I know that a lot of app developers like to
 use <a href="https://en.wikipedia.org/wiki/Object-relational_mapping" title="Wikipedia: “Object-relational mapping”">ORMs</a> to access the
@@ -47,7 +47,7 @@ pays to learn the ins and outs of SQL, just like any other language. And if
 you're a Perl hacker, you have a great opportunity to do just that at
 <a href="http://yapc10.org/" title="YAPC|10 - Pittsburgh - June 22-24, 2009">YAPC::NA 10</a> this summer.
 In response to my tweet, YAPC organizer Robert Blackwell
-<a href="http://twitter.com/rblackwe/status/1577360108">replied</a> in
+<a href="https://twitter.com/rblackwe/status/1577360108">replied</a> in
 agreement, and pointed out that famed SQL expert
 <a href="http://www.celko.com/">Joe Celko</a>, author of
 <a href="https://www.amazon.com/exec/obidos/search-handle-form/104-8596028-9604762" title="Joe Celko's Books on Amazon.com">numerous volumes</a> on SQL syntax and

@@ -500,7 +500,7 @@ my %sociable_known_sites = (
 
     'TwitThis' => {
         'favicon' => 'twitter.gif',
-        'url' => 'http://twitter.com/home?status=PERMALINK',
+        'url' => 'https://twitter.com/home?status=PERMALINK',
     },
 
     'Upnews' => {

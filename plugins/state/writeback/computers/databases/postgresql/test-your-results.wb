@@ -1,5 +1,5 @@
 name: hisso
-url: http://twitter.com/hissohathair
+url: https://twitter.com/hissohathair
 title: 
 comment: <p>I think what our friend "hrwksxnxs" is trying to say is that pgTAP fails it's "installcheck" target when running under Cygwin.</p><p>That's because the <strong>OS</strong> macro returns the OS name "cygwin_nt-5.1" which doesn't match the regex in your test. You could change the regex to allow for "_" and "-" but maybe osname should just be returning "cygwin"?</p>
 excerpt: 
@@ -13,7 +13,7 @@ excerpt:
 blog_name: 
 -----
 name: hisso
-url: http://twitter.com/hissohathair
+url: https://twitter.com/hissohathair
 title: 
 comment: <p>Bug report filed!</p><p>Although I see you've already patched Makefile! Thanks.</p><p>Now to write some actual tests with it... :-)</p>
 excerpt: 
