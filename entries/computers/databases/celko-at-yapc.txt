@@ -50,7 +50,7 @@ In response to my tweet, YAPC organizer Robert Blackwell
 <a href="http://twitter.com/rblackwe/status/1577360108">replied</a> in
 agreement, and pointed out that famed SQL expert
 <a href="http://www.celko.com/">Joe Celko</a>, author of
-<a href="http://www.amazon.com/exec/obidos/search-handle-form/104-8596028-9604762" title="Joe Celko's Books on Amazon.com">numerous volumes</a> on SQL syntax and
+<a href="https://www.amazon.com/exec/obidos/search-handle-form/104-8596028-9604762" title="Joe Celko's Books on Amazon.com">numerous volumes</a> on SQL syntax and
 techniques, will be offering two classes on SQL at YAPC:</p>
 
 <ul>

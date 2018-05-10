@@ -1,7 +1,7 @@
 Let's get Relational
 meta-keywords: CJ Date, relational model, relational databases, rdbms, sciend, theory, database, SQL, Tutorial D, object/relational databases
 
-<a href="http://www.amazon.com/exec/obidos/ASIN/0596100124/justatheory-20" title="Buy &#x201c;Database In Depth&#x201d; on Amazon.com"><img src="http://images.amazon.com/images/P/0596100124.01._AA240_SCLZZZZZZZ_.jpg" alt="Cover of &#x201c;Database In Depth&#x201d; by C.J. Date" /></a>
+<a href="https://www.amazon.com/exec/obidos/ASIN/0596100124/justatheory-20" title="Buy &#x201c;Database In Depth&#x201d; on Amazon.com"><img src="http://images.amazon.com/images/P/0596100124.01._AA240_SCLZZZZZZZ_.jpg" alt="Cover of &#x201c;Database In Depth&#x201d; by C.J. Date" /></a>
 
 <blockquote cite="http://www.oreillynet.com/lpt/a/6060"><p>The idea that the relational model could handle only rather simple kinds of data (like numbers, and strings, and dates, and times) is a huge misconception, and always was. In fact, the term object/relational, as such, is just a piece of marketing hype ... As far as I'm concerned, an object/relational system done right would simply be a relational system done right, nothing more and nothing less.</p></blockquote>
 
