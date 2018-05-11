@@ -63,23 +63,21 @@
         </ul>
       </div>
       <div class="links">
-	    <h2>PGXN Code</h2>
-	    <script	type="text/javascript">
-function pgxn_distros(data) {
-    document.write('<dl>');
-    for (dist in data.releases) {
-        document.write(
-            '<dt><a href=https://pgxn.org/dist/' + dist.toLowerCase() +
-            '/>' + dist + '</a></dt>' +
-            '<dd>' + data.releases[dist].abstract + '</dd>'
-        );
-    }
-    document.write('</dl>');
-}
+        <h2>PGXN Code</h2>
+        <script type="text/javascript">
+          function pgxn_distros(data) {
+              document.write('<dl>');
+              for (dist in data.releases) {
+                  document.write(
+                      '<dt><a href=https://pgxn.org/dist/' + dist.toLowerCase() +
+                      '/>' + dist + '</a></dt>' +
+                      '<dd>' + data.releases[dist].abstract + '</dd>'
+                  );
+              }
+              document.write('</dl>');
+          }
         </script>
-        <script type="text/javascript"
-                src="https://api.pgxn.org/user/theory.json?callback=pgxn_distros">
-        </script>
+        <script type="text/javascript" src="https://api.pgxn.org/user/theory.json?callback=pgxn_distros"></script>
       </div>
       <div class="links">
         <h2>CPAN Code</h2>
