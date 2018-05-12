@@ -71,6 +71,10 @@ find +{
             $slug = "js-$slug" if $slug !~ /^test|js/;
         } elsif ($data->{uri} =~ m{/oscon/}) {
             $slug = "oscon-$slug" if $slug !~ /oscon/;
+        } elsif ($slug eq 'another-short-trip') {
+            $slug = 'another-short-alamosa-trip';
+        } elsif ($slug eq 'june-2004') {
+            $slug = 'alamosa-visit';
         } elsif ($slug eq 'arrival') {
             $slug = 'arrived-in-france';
         } elsif ($slug eq 'departure') {
@@ -365,6 +369,7 @@ sub local_files { return qw(
     travel/alamosa/stellar_clouds.jpg
     culture/Steve-Jobs-RIP.jpg
     culture/steve_jobs_1982.jpg
+    computers/vcs/git/merges.gif
 ) }
 
 sub linkmap { return (
@@ -385,6 +390,7 @@ sub linkmap { return (
     'another-short-trip' => ['travel/alamosa/lobby.jpg','travel/alamosa/crop_circles.jpg','travel/alamosa/road_wing.jpg','travel/alamosa/under_wing.jpg','travel/alamosa/angry_clouds.jpg','travel/alamosa/over_engine.jpg','travel/alamosa/wing_clouds.jpg','travel/alamosa/stellar_clouds.jpg'],
     'june-2004' => ['travel/alamosa/prop_engine.jpg','travel/alamosa/milagros_coffeehouse.jpg'],
     'thank-you-steve' => ['culture/Steve-Jobs-RIP.jpg'],
+    'bricolage-svn-to-git' => ['computers/vcs/git/merges.gif'],
 ) }
 
 sub tagmap { return (
