@@ -23,7 +23,7 @@ meta-description: <p>I <em>really</em> want to enjoy reading <em>The New Yorker<
 
 <p>I suspect that the reality of the overlap of <em>The New Yorker</em> and <em>Vogue</em> readers resembles the Venn diagram to the right. But I want to see <em>The New Yorker</em> rock on the iPad, so I put aside some time to download the new <em>Vogue</em> app and take it for a spin.</p>
 
-<p><img src="https://farm8.staticflickr.com/7239/7007841235_5559a170e1_o.png" style="width:307pt" alt="The New Yorker &amp; Condé Nast Venn Diagram" title=" The New Yorker &amp; Condé Nast Venn Diagram" /></p>
+<p><img src="https://farm8.staticflickr.com/7239/7007841235_5559a170e1_o.png" style="width:307pt;background-color:white" alt="The New Yorker &amp; Condé Nast Venn Diagram" title=" The New Yorker &amp; Condé Nast Venn Diagram" /></p>
 
 <p>First, the good news. I got a free month's subscription and downloaded the latest issue of <em>Vogue</em>, which does indeed have hi-res images. The articles look great. Ads are still low-res, but some might consider that a feature (not, I daresay, the advertisers). Alas, that's where the good news ends. Overall, this app is almost exactly like the <em>The New Yorker</em> app. I find this a little odd, since in print the magazines could not be much less different: <em>The New Yorker</em> is a slim, staple-bound, mostly-text weekly. <em>Vogue</em> is a phone book-sized perfect bound, glossy fashion magazine. Quite different beasts. Business-wise, I can understand why they would be the same: It's less expensive to have a single "media player" for all of your company's periodical properties, and the tablet form factor allows you to eliminate some of the differences. After all, bits don't weigh anything.</p>
 
