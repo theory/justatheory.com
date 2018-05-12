@@ -6,8 +6,8 @@ CLOUDFRONT_DISTID=EQQ9GCLH4A2YG
 .DEFAULT_GOAL := default
 
 ${BUILD_DIR}:
+	cp -rf static ${BUILD_DIR}
 	./bin/blosxom
-	cp -rf static/* ${BUILD_DIR}
 
 default: ${BUILD_DIR}
 
