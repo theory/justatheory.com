@@ -43,7 +43,7 @@ find +{
         my ($data, $body) = parse($File::Find::name);
 
         # Append via.
-        $body .= "\n<p>()Via $data->{via})</p>\n" if $data->{via};
+        $body .= "\n<p>(Via $data->{via})</p>\n" if $data->{via};
 
         # Append past link.
         $body .= qq{\n<p class="past"><small>Looking for the comments? Try the <a rel="nofollow" href="//past.justatheory.com$data->{uri}">old layout</a>.</small></p>\n\n};
