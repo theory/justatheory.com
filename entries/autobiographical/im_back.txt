@@ -2,7 +2,7 @@ I'm Ba-aack!
 meta-keywords: work, Values of n, Stikkit, Sandy, iwantsandy, Bricolage, Kineticode, justatheory, blog
 tags: iwantsandy kineticode blogging vacation time+off bricolage
 
-<a href="http://iwantsandy.com/"><img src="/autobiographical/iwantsandy_207x207.gif" alt="Sandy - your free personal email assistant" class="right" /></a>
+<a href="http://iwantsandy.com/"><img src="/autobiographical/iwantsandy_207x207.gif" alt="Sandy - your free personal email assistant" class="right" style="border:0" /></a>
 
 <p>Yes indeed, I am back. Was I ever gone? Well, yes, I've been rather busy
 for the last 15 months.</p>
