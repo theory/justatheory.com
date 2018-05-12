@@ -1,0 +1,11 @@
+#!/bin/bash
+
+plackup -MPlack::App::File -e '
+    package PWS;
+    use parent "Plack::App::File";
+    sub locate_file {
+        $_[1]->{PATH_INFO} .= "index.html" if $_[1]->{PATH_INFO} =~ m{/$};
+        $_[0]->SUPER::locate_file($_[1]);
+    }
+    PWS->new(root => "html")->to_app;
+'

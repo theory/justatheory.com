@@ -18,3 +18,6 @@ deploy: ${BUILD_DIR}
 
 clean:
 	rm -rf ${BUILD_DIR}
+
+server: ${BUILD_DIR}
+	./bin/pws
