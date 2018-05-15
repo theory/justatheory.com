@@ -401,3 +401,31 @@ caption {
 .delicious-network-add img { margin: 0; float: none;  }
 
 #ld { margin-bottom: 1em; }
+
+#past {
+    border: 10px solid #990000;
+    background-color: #ffd2d2;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+
+#past h2 {
+  background-color: #fff;
+    color: #990000;
+    border: none;
+    border-bottom: 4px solid #990000;
+    line-height: 2em;
+}
+
+#past h2:before {
+  content: "🛑 "
+}
+
+#past p {
+  margin: 20px;
+}
+
+#past a {
+  font-weight: bold;
+}
+
