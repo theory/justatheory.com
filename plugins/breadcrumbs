@@ -20,11 +20,102 @@ my $divider = ' | ';
 # --------------------------------
 
 our $breadcrumbs; # use as $breadcrumbs::breadcrumbs in flavour templates
+our $newuri;
 our $title;
 
 use FileHandle;
 
 my $fh = FileHandle->new;
+
+my %tag_for = (
+    'apple' => 'apple',
+#    'computers' => 'computers',
+    'computers/macbookpro' => 'apple',
+    'computers/databases' => 'database',
+    'computers/databases/postgresql' => 'postgres',
+    'computers/databases/postgresql/pgxn' => 'pgxn',
+    'computers/databases/postgresql/perl' => 'perl',
+    'computers/databases/sqlite' => 'sqlite',
+    'computers/databases/mysql' => 'mysql',
+    'computers/security' => 'security',
+    'computers/mail' => 'tools',
+    'computers/blog' => 'meta',
+    'computers/markup' => 'web',
+    'computers/humor' => 'tools',
+    'computers/internet' => 'internet',
+    'computers/internet/controversy' => 'web',
+    'computers/internet/mail' => 'tools',
+    'computers/internet/html' => 'web',
+    'computers/internet/weblogs' => 'meta',
+    'computers/internet/weblogs/blosxom' => 'meta',
+    'computers/internet/weblogs/blosxom/sociable' => 'meta',
+    'computers/vcs' => 'vcs',
+    'computers/vcs/svn' => 'subversion',
+    'computers/vcs/cvs' => 'cvs',
+    'computers/vcs/git' => 'git',
+    'computers/programming' => 'programming',
+    'computers/programming/perl' => 'perl',
+    'computers/programming/perl/catalyst' => 'catalyst',
+    'computers/programming/perl/dbi' => 'dbi',
+    'computers/programming/perl/rt' => 'rt',
+    'computers/programming/perl/mod_perl' => 'mod_perl',
+    'computers/programming/perl/modules' => 'perl',
+    'computers/programming/methodology' => 'methodology',
+    'computers/programming/cocoa' => 'xcode',
+    'computers/programming/javascript' => 'javascript',
+    'computers/programming/ruby' => 'ruby',
+    'computers/powerbook' => 'apple',
+#    'computers/os' => 'os',
+    'computers/os/ios' => 'ios',
+    'computers/os/freebsd' => 'freebsd',
+    'computers/os/macosx' => 'macos',
+    'computers/os/windows' => 'windows',
+    'computers/conferences' => 'conferences',
+    'computers/conferences/macworld2006' => 'macworld',
+    'computers/conferences/oscon2006' => 'oscon',
+    'computers/conferences/oscon2010' => 'oscon',
+    'computers/conferences/oscon2004' => 'oscon',
+    'computers/conferences/etech2006' => 'etech',
+    'computers/conferences/oscon2005' => 'oscon',
+    'computers/apps/conde-nast-ipad' => 'design',
+    'computers/apps' => 'design',
+    'computers/policy' => 'security',
+    'computers/devices' => 'quality',
+    'computers/tricks' => 'tools',
+    'learn' => 'math',
+    'learn/math' => 'math',
+    'privacy' => 'privacy',
+    'family' => 'personal',
+    'family/anna' => 'personal',
+    'politics' => 'politics',
+    'politics/economy' => 'politics', # fix slug: s/mony/money/
+    'politics/election_2004' => 'elections',
+    'politics/iraq' => 'iraq',
+    'politics/election_2008' => 'elections',
+    'bricolage' => 'bricolage',
+    'bricolage/svn' => 'bricolage',
+    'bricolage/design' => 'bricolage',
+    'bricolage/announce' => 'bricolage',
+    'bricolage/site' => 'bricolage',
+    'bricolage/dev' => 'bricolage',
+    'bricolage/competition' => 'bricolage',
+    'bricolage/coverage' => 'bricolage',
+    'bricolage/writing' => 'bricolage',
+    'autobiographical' => 'autobiography',
+    'travel' => 'travel',
+    'travel/france' => 'france',
+    'travel/france/2013' => 'france',
+    'travel/france/2012' => 'france',
+    'travel/france/2008' => 'france',
+    'travel/japan' => 'japan',
+    'travel/alamosa' => 'alamosa',
+    'culture' => 'culture',
+    'culture/education' => 'education',
+    'culture/wine' => 'wine',
+    'culture/tv' => 'tv',
+    'culture/overheard' => 'personal',
+    'culture/journalism' => 'journalism',
+);
 
 sub start { 1 }
 
@@ -32,11 +123,11 @@ sub head {
     my ($pkg, $path, $head_ref) = @_;
 
     $title = $blosxom::blog_title;
+    ($newuri = $path) =~ s/[.][^.]+$/.html/;
 
     return 0 unless $path;
 
-
-    ( my $dir = $path ) =~ s{/[^/]+[.]\Q$blosxom::flavour\E$}{};
+    ( my $dir = $newuri ) =~ s{/[^/]+$}{};
 
     my @p = $home
         ? (qq{<a href="$blosxom::url/">$home</a>})
@@ -64,6 +155,7 @@ sub head {
         }
     } else {
         $title .= ': ' . join $divider, @q;
+        $newuri = $tag_for{$path} ? "tags/$tag_for{$path}/" : '';
     }
 
     return 1;
