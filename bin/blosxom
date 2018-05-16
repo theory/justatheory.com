@@ -11,7 +11,7 @@ use FindBin qw($Bin);
 # --- Configurable variables -----
 
 # What's this blog's title?
-our $blog_title = 'Just a Theory';
+our $blog_title = 'Just a Theory [Past]';
 
 # What's this blog's description (for outgoing RSS feed)?
 our $blog_description = 'Theory waxes practical. By David E. Wheeler.';
