@@ -387,8 +387,8 @@ sub linkmap { return (
     'im-back' => ['autobiographical/iwantsandy_207x207.gif'],
     'iovationeering' => ['autobiographical/iovation.jpg', 'autobiographical/pgx.png', 'autobiographical/kineticode.gif'],
     'japan-photos-status' => ['computers/internet/twitter/5000_tweets.png'],
-    'another-short-trip' => ['travel/alamosa/lobby.jpg','travel/alamosa/crop_circles.jpg','travel/alamosa/road_wing.jpg','travel/alamosa/under_wing.jpg','travel/alamosa/angry_clouds.jpg','travel/alamosa/over_engine.jpg','travel/alamosa/wing_clouds.jpg','travel/alamosa/stellar_clouds.jpg'],
-    'june-2004' => ['travel/alamosa/prop_engine.jpg','travel/alamosa/milagros_coffeehouse.jpg'],
+    'another-short-alamosa-trip' => ['travel/alamosa/lobby.jpg','travel/alamosa/crop_circles.jpg','travel/alamosa/road_wing.jpg','travel/alamosa/under_wing.jpg','travel/alamosa/angry_clouds.jpg','travel/alamosa/over_engine.jpg','travel/alamosa/wing_clouds.jpg','travel/alamosa/stellar_clouds.jpg'],
+    'alamosa-visit' => ['travel/alamosa/prop_engine.jpg','travel/alamosa/milagros_coffeehouse.jpg'],
     'thank-you-steve' => ['culture/Steve-Jobs-RIP.jpg'],
     'bricolage-svn-to-git' => ['computers/vcs/git/merges.gif'],
 ) }
