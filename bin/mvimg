@@ -1,0 +1,37 @@
+#!/bin/bash
+
+cp computers/databases/postgresql/learning_plpgsql.pdf ../justatheory/content/posts/past/db/pg/plpgsql-talk-slides
+cp computers/databases/postgresql/pgtap-yapc.pdf ../justatheory/content/posts/past/db/pg/pgtap-on-pgfoundry-at-yapc
+cp computers/blog/fireballed.png ../justatheory/content/posts/past/meta/how-not-to-withstand-a-fireballing
+cp computers/internet/weblogs/feeds.png ../justatheory/content/posts/past/meta/teasers-atom-feed
+cp computers/os/macosx/migrating_to_macosx.pdf ../justatheory/content/posts/past/meta/wheeler.net-migration
+cp computers/os/macosx/mod_ssl_dylib.patch ../justatheory/content/posts/past/meta/wheeler.net-migration
+cp computers/os/macosx/apache_dbm.patch ../justatheory/content/posts/past/meta/wheeler.net-migration
+cp computers/programming/perl/fsa_rules_sample.png ../justatheory/content/posts/past/perl/fsa-rules-graph-improved
+cp computers/programming/perl/rt/User_Local.pm.ldap ../justatheory/content/posts/past/perl/rt/ldap-auth
+cp computers/os/ios/edit_mode.png ../justatheory/content/posts/past/tools/os/byline-google-apple
+cp computers/os/ios/phfish_tweet.png ../justatheory/content/posts/past/tools/os/byline-google-apple
+cp computers/os/ios/configs.png ../justatheory/content/posts/past/tools/os/integrate-testflight-sdk
+cp computers/os/ios/excluded_source_file_names.png ../justatheory/content/posts/past/tools/os/integrate-testflight-sdk
+cp computers/os/ios/configurations.png ../justatheory/content/posts/past/tools/os/integrate-testflight-sdk
+cp computers/os/ios/config_config.png ../justatheory/content/posts/past/tools/os/integrate-testflight-sdk
+cp computers/conferences/oscon2004/nicholas_on_the_rag.jpg ../justatheory/content/posts/past/conference/oscon/nicholas-clark
+cp computers/devices/kindle.jpg ../justatheory/content/posts/past/quality/disposable-computing
+cp computers/devices/ipad.jpg ../justatheory/content/posts/past/quality/disposable-computing
+cp culture/steve_jobs_1982.jpg ../justatheory/content/posts/past/quality/disposable-computing
+cp autobiographical/iwantsandy_207x207.gif ../justatheory/content/posts/past/personal/im-back
+cp autobiographical/iovation.jpg ../justatheory/content/posts/past/personal/iovationeering
+cp autobiographical/pgx.png ../justatheory/content/posts/past/personal/iovationeering
+cp autobiographical/kineticode.gif ../justatheory/content/posts/past/personal/iovationeering
+cp computers/internet/twitter/5000_tweets.png ../justatheory/content/posts/past/travel/japan/japan-photos-status
+cp travel/alamosa/lobby.jpg ../justatheory/content/posts/past/travel/alamosa/another-short-trip
+cp travel/alamosa/crop_circles.jpg ../justatheory/content/posts/past/travel/alamosa/another-short-trip
+cp travel/alamosa/road_wing.jpg ../justatheory/content/posts/past/travel/alamosa/another-short-trip
+cp travel/alamosa/under_wing.jpg ../justatheory/content/posts/past/travel/alamosa/another-short-trip
+cp travel/alamosa/angry_clouds.jpg ../justatheory/content/posts/past/travel/alamosa/another-short-trip
+cp travel/alamosa/over_engine.jpg ../justatheory/content/posts/past/travel/alamosa/another-short-trip
+cp travel/alamosa/wing_clouds.jpg ../justatheory/content/posts/past/travel/alamosa/another-short-trip
+cp travel/alamosa/stellar_clouds.jpg ../justatheory/content/posts/past/travel/alamosa/another-short-trip
+cp travel/alamosa/prop_engine.jpg ../justatheory/content/posts/past/travel/alamosa/june-2004
+cp travel/alamosa/milagros_coffeehouse.jpg ../justatheory/content/posts/past/travel/alamosa/june-2004
+cp culture/Steve-Jobs-RIP.jpg ../justatheory/content/posts/past/personal/thank-you-steve
